@@ -1,0 +1,95 @@
+Dialogue	Step	BranchLevel	Comment	Print	CondJmp	Media	Actions	Var
+p1u	1		Triggered by the user pressing a button that says something like "Discuss the information with the app" while the user is looking at p1's data	Which time period would you like to look at?	Week 1 to week 8;101|Week 9 to week 10;102|Week 11 to week 12;103|Week 7 to week 10;104			
+p1u	101			Ok, let's look at week 1 to week 8 then. 				
+p1u	9101		Case1: User selects any period across the first 8 weeks, where there has been a steady increase in temperature difference.	We can see that the temperature difference between your healthy foot and your foot ulcer increased. This means it's likely that your foot ulcer has been getting worse. Would you like us to look together at the data more closely and see if we can understand why your foot ulcer has been getting worse?	Yes;201|No;601			
+p1u	201		If Yes, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	301			We can see that during this time period you often didn’t wear your boot while you were at home.			HighlightData	
+p1u	9301			We can see that you take around {{p1u1stepsHome}} steps a week while you are at home. Because you weren't wearing your boot much at home, this means that you weren't wearing your boot for many of the steps you took.				
+p1u	401			In total you only wore your boot for {{p1u1stepsPercTotal}}% of the steps you took. It's likely that your foot ulcer has got worse because you haven't been wearing your boot as much as you should.			HighlightData	
+p1u	501			For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you are at home as well as when you go out.				
+p1u	9501			Thanks for talking with me. I hope this has been helpful. Bye!	END;0			
+p1u	601		If No, then	Why not?	Because I don't have time right now;701|Because I don't understand what you mean;801|Because I don’t like you;1401			
+p1u	701	2	If Because I don't have time right now, then	Ok, we can speak again later if you like. Bye!	END;0			
+p1u	801	2	If Because I don't understand what you mean, then	If we look at the information I’ve been collecting about your foot then we can see whether there’s anything you have been doing that could be stopping your ulcer from healing. Would you like us to do this now?	Yes;901|No;1301			
+p1u	901	3	If Yes, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	9901			We can see that you often didn’t wear your boot while you were at home.				
+p1u	91001			We can see that you take around {{p1u1stepsHome}} steps a week while you are at home. Because you weren't wearing your boot much at home, this means that you weren't wearing your boot for many of the steps you took.				
+p1u	1101	3		In total you only wore your boot for {{p1u1stepsPercTotal}}% of the steps you took. It's likely that your foot ulcer has got worse because you haven't been wearing your boot as much as you should.			HighlightData	
+p1u	1201	3		For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you are at home as well as when you go out.				
+p1u	91201			Thanks for talking with me. I hope this has been helpful.	END;0			
+p1u	1301	3	If No, then	Ok, you know where I am if you need me. Bye!	END;0			
+p1u	1401	2	If Because I don’t like you, then	I’m sorry to hear that, I want to be helpful. I’m always here if you need me. Bye.	END;0			
+p1u	102		Case2: User selects any period across weeks 9 and 10, where there has been a modest decrease in temperature difference.	Ok, let's look at week 9 to week 10 then. 				
+p1u	9102			We can see that the temperature difference between your healthy foot and your foot ulcer decreased a bit. This means it's likely that your foot ulcer has been getting better. Would you like us to look together at the data more closely and see if we can understand why your foot ulcer has been getting better? 	Yes;202|No;502			
+p1u	202		If Yes, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	9202			We can see that you always wear your boot while you were at work. We can also see that you were wearing your boot for quite a lot of the steps you took while you were at home. And you almost always wear your boot while you are out.				
+p1u	302			In total you were  wearing your boot for {{p1u2stepsPercTotal}}% of the steps you took. It's likely your ulcer has started to improve because you have been wearing your boot quite a lot of the time.			HighlightData	
+p1u	402			For the best chance of a good recovery, you should wear your boot all the time you are active. 				
+p1u	9402			Thanks for talking with me. I hope this has been helpful. Bye!	END;0			
+p1u	502		If No, then	Why not?	Because I’m busy;602|Because it’s boring;702			
+p1u	602	2	If Because I’m busy, then	Ok, you know where I am if you need me. Bye!	END;0			
+p1u	702	2	If Because it’s boring, then	It will only take a minute or two and it might help you understand more about how foot ulcers heal. Are you sure we can’t spend a few minutes looking at this together?	Ok;802|No, I don’t want to;1102			
+p1u	802	2	If Ok, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	9802			We can see that during this time period you always wore your boot while you were at work. We can also see that you wore your boot for quite a lot of the steps you took while you were at home. And you almost always wear your boot while you are out.				
+p1u	902	2		In total you were wearing your boot for {{p1u2stepsPercTotal}}% of all the steps you took. It's likely your ulcer has started to improve because you have been wearing your boot so much.			HighlightData	
+p1u	1002	2		For the best chance of a good recovery, you should wear your boot all the time you are active. 				
+p1u	91002			Thanks for talking with me. I hope this has been helpful. Bye!	END;0			
+p1u	1102	3	If No I don’t want to, then	Ok, we can speak again later if you like. Bye!	END;0			
+p1u	103		Case3: User selects any period across weeks 11 and 12, where there has been a sharp decrease in temperature difference.	Ok, let's look at week 11 to week 12 then. 				
+p1u	9103			We can see that the temperature difference between your healthy foot and your foot ulcer decreased. This means it's likely that your foot ulcer has been getting better. Would you like us to look together at the data more closely and see if we can understand why your foot ulcer has been getting better? 	Yes;203|No;503			
+p1u	203		If Yes, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	9203			We can see that you always wore your boot while you were at work. We can also see that you were wearing your boot for most of the steps you took while you were at home. And you almost always wear your boot while you are out.				
+p1u	303			In total you were wearing your boot for {{p1u3stepsPercTotal}}% of the steps you took over this period. This is great!			HighlightData	
+p1u	403			You should keep wearing your boot! For the best chance of a good recovery, you should wear your boot all the time you are active.				
+p1u	9403			Thanks for talking with me. I hope this has been helpful. Bye!	END;0			
+p1u	503		If No, then	Why not?	Because I’m busy;603|Because I don’t need you to explain it to me;703			
+p1u	603	2	If Because I’m busy, then	Ok, you know where I am if you need me. Bye!	END;0			
+p1u	703	2	If Because I don’t need you to explain it to me, then	That’s great. Remember I’m here if you ever do have any questions. Bye!	END;0			
+p1u	104		Case4: User selects any period that crosses the boundary of week 8 and 9, where the temperature difference switches from increasing to decreasing.	Ok, let's look at week 7 to week 10 then. 				
+p1u	9104			We can see that in weeks 7 and 8, the temperature difference between your healthy foot and your foot ulcer increased. This means it's likely that your foot ulcer has been getting worse. But in weeks 9 and 10, the temperature difference between your healthy foot and your foot ulcer decreased. This means it's likely that your foot ulcer has been getting better. Would you like us to look together at the data more closely and see if we can understand why your foot ulcer has been getting better? 	Yes;204|No;704			
+p1u	204		If Yes, then	Let's look at the data that shows how often you wear your boot when you are at home, when you are at work and when you are out. 			HighlightData	
+p1u	304			We can see that up in weeks 7 and 8, you usually didn't wear your boot at home, even though you took around {{p1u4stepsHome}} steps a week at home.			HighlightData	
+p1u	404			In total you only wore your boot for {{p1u4stepsPercTotalA}}% of the steps you took. It's likely that your foot ulcer has got worse because you haven't been wearing your boot as much as you should.			HighlightData	
+p1u	9404			There was a change at the end of week 8 and you started wearing your boot more often while you were at home.				
+p1u	504			In weeks 9 and 10, you wore your boot for {{p1u4stepsPercTotalB}}% of the steps you took.  It's likely that your foot ulcer started to improve because you started wearing your boot more.			HighlightData	
+p1u	604			For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you are at home as well as when you go out.				
+p1u	9604			Thanks for talking with me. I hope this has been helpful.	END;0			
+p1u	704		If No, then	Ok, I’ll ask you again later. Bye!	Because I’m busy;804|Because I don’t need you to explain it to me;904			
+p1u	804	2	If Because I’m busy, then	Ok, you know where I am if you need me. Bye!	END;0			
+p1u	904	2	If Because I don’t need you to explain it to me, then	That’s great. Remember I’m here if you ever do have any questions. Bye!	END;0			
+p1sa	1		This dialogue assumes persona 1 at the end of week 12. Triggered by the researcher (to simulate the system being triggered by what it has seen in the data) the system will initiate the following dialogue.	Hi, you are doing really well with your boot at the moment! Have a look at the information for the last two weeks (so for weeks 11 and 12).  	I can’t talk now;20|OK;91			
+p1sa	91			This week you have worn your boot for {{p1s1stepsPercTotal}}% of all the steps you took!	I think my boot has given me back ache. Is there anything I can do to make my back hurt less?;30|That's good, has my ulcer improved?;80			
+p1sa	20		If I can’t talk now, then	Ok, you know where I am if you need me. Bye!	END;0			
+p1sa	30		If I’ve been making myself wear my boot but it’s been giving me really bad back ache, is there anything I can do to make my back hurt less?, then	If you have another boot or shoe that’s a similar height to your boot then you could try wearing that on your healthy foot. This might reduce your back ache.				
+p1sa	40			I’ve sent a message to your healthcare team to let them know that you might be suffering from back ache. They will be able to talk to you about different things you can try to make your pain better.				
+p1sa	50			It’s really important that you keep wearing your boot. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1saTemp}} degrees over the past 2 weeks.			HighlightData	
+p1sa	60			This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.				
+p1sa	70			The foot clinic team will discuss your progress with you in more detail the next time you see them. You should keep wearing your boot, you are doing great!	END;0			
+p1sa	80		If Great, has my ulcer improved?, then	If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1saTemp}} degrees over the past 2 weeks.			HighlightData	
+p1sa	90			This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.				
+p1sa	100			The foot clinic team will discuss your progress with you in more detail the next time you see them. You should keep wearing your boot, you are doing great! Bye!	END;0			
+p1sb	1		This dialogue assumes persona 1 at the end of week 12. The researcher triggers the dialogue to simulate that, as per the patient's preferences, every Sunday at 6pm the system will initiate a dialogue with the patient to review their progress.	Hi, how's your week been?	Great!;30|Ok;30|Really awful;40|I don't want to talk to you now;20			
+p1sb	20		If I don't want to talk to you now, then	Ok, you know where I am if you need me. Bye. 	END;0			
+p1sb	30		If Great|Ok, then	Glad to hear that!	Continue;50			
+p1sb	40		If Really awful, then	I'm sorry to hear that, I hope next week is better for you.				
+p1sb	50			How have you been getting on with wearing your boot this week (so week 12)?	Good, I've barely taken it off;60|I don't think I've worn it as much as I should have done;170|I don't know.;280			
+p1sb	60		If Good, I've barely taken it off, then	That's great! I can see from your data that you're right, you have worn your boot for {{p1sbStepsPercTotal12}}% of all steps you have taken this week.			HighlightData	
+p1sb	960			You are wearing your boot much more than you were last month. 4 weeks ago you only wore your boot for {{p1sbStepsPercTotal8}}% of your steps. 				
+p1sb	70			Do you think your foot ulcer is getting better?	I don't know;80|Yes, I think the data shows that it's getting better;110|I think it's getting worse.;140		HighlightData	
+p1sb	80	2	If I don’t know, then	If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	110	2	If Yes, I think my data shows that it's getting better, then	You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	140	2	If I think it's getting worse, then	Actually, your data suggests it's been getting better. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	170		If I don't think I've worn it as much as I should have done, then	I’m surprised you think that. I can see from your data that  actually you have worn your boot for {{p1sbStepsPercTotal12}}% of all steps you have taken this week.			HighlightData	
+p1sb	180			You are wearing your boot much more than you were last month. 4 weeks ago you only wore your boot for {{p1sbStepsPercTotal8}}% of your steps. 			HighlightData	
+p1sb	9180			Do you think your foot ulcer is getting better?	I don't know;190|Yes, I think the data shows that it's getting better;220|I think it's getting worse.;250			
+p1sb	190	2	If I don’t know, then	If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	220	2	If Yes, I think my data shows that it's getting better, then	You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	250	2	If I think it's getting worse, then	Actually, your data suggests it's been getting better. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	280		If I don't know, then	I can see from your data that you have worn your boot for {{p1sbStepsPercTotal12}}% of all steps you have taken this week.			HighlightData	
+p1sb	9280			You are wearing your boot much more than you were last month. 4 weeks ago you only wore your boot for {{p1sbStepsPercTotal8}}% of your steps. 				
+p1sb	290			Do you think your foot ulcer is getting better?	I don't know;300|Yes, I think the data shows that it's getting better;330|I think it's getting worse.;360		HighlightData	
+p1sb	300	2	If I don’t know, then	If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	330	2	If Yes, I think my data shows that it's getting better, then	You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.	Continue;370		HighlightData	
+p1sb	360	2	If I think it's getting worse, then	Actually, your data suggests it's been getting better. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's gone down by {{p1sbTemp}} degrees this week.			HighlightData	
+p1sb	370	2		This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.				
+p1sb	380	2		The foot clinic team will discuss your progress with you in more detail the next time you see them. You should keep wearing your boot, you are doing great! Bye!	END;0			

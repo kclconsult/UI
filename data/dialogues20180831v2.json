@@ -1,0 +1,4013 @@
+[
+	{
+		"Dialogue": "p1u1",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case1: User selects any period across the first 8 weeks, where there has been a steady increase in temperature difference.",
+		"Print": "The temperature difference increased over this period. This indicates that your foot ulcer was getting worse. Would you like us to look together at the data more closely and see if there are any possible causes of this deterioration?",
+		"CondJmp": [
+			{
+				"msg": "Yes",
+				"n": "20"
+			},
+			{
+				"msg": "No",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you typically didn’t wear your boot while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Now look at the data that shows how many of your steps you take in different locations (home, at work, or when you’re out). We can see that you typically take {{steps}} steps a week while you are at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": "steps;2000"
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that over this time period you were only wearing your boot for {{stepsPerc}}% of the steps you took, which is likely to have contributed to the deterioration of your foot ulcer over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": "stepsPerc;28"
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you’re at home as well as when you go out.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I don't have time right now",
+				"n": "70"
+			},
+			{
+				"msg": "Because I don't understand what you mean",
+				"n": "80"
+			},
+			{
+				"msg": "Because I don’t like you",
+				"n": "140"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "70",
+		"BranchLevel": "2",
+		"Comment": "If Because I don't have time right now, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If Because I don't understand what you mean, then",
+		"Print": "If we look at the data I’ve been collecting about you then we can see whether there’s anything you’ve been doing that could be negatively affecting your recovery. Would you like us to do this now?",
+		"CondJmp": [
+			{
+				"msg": "Yes",
+				"n": "90"
+			},
+			{
+				"msg": "No",
+				"n": "130"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "90",
+		"BranchLevel": "3",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you typically didn’t wear your boot while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "100",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Now look at the data that shows how many of your steps you take in different locations (home, at work, or when you’re out). We can see that you typically take {{steps}} steps a week while you are at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "110"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": "steps;2000"
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "110",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "This means that over this time period you were only wearing your boot for {{stepsPerc}}% of the steps you took, which is likely to have contributed to the deterioration of your foot ulcer over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": "stepsPerc;28"
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "120",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you’re at home as well as when you go out.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "130",
+		"BranchLevel": "3",
+		"Comment": "If No, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u1",
+		"Step": "140",
+		"BranchLevel": "2",
+		"Comment": "If Because I don’t like you, then",
+		"Print": "I’m sorry to hear that. I’m trying to help you, I want your foot to get better. I’m always here if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case2: User selects any period across weeks 9 and 10, where there has been a modest decrease in temperature difference.",
+		"Print": "The temperature difference decreased somewhat over this period. This indicates that your foot ulcer was improving. Would you like us to look together at the data more closely and see if we can identify anything you were doing differently that could have contributed to this improvement?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you always wore your boot while you were at work and that you were wearing your boot for {{stepsPerc}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period, and this is why we started to see an improvement.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I’m busy"
+			},
+			{
+				"msg": "Because it’s boring"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "60",
+		"BranchLevel": "2",
+		"Comment": "If Because I’m busy, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "70",
+		"BranchLevel": "2",
+		"Comment": "If Because it’s boring, then",
+		"Print": "It will only take a minute or two and it might help your foot ulcer to get better. It’s important that you understand how your behaviour can impact on your recovery. Are you sure we can’t spend a few minutes looking at this together?",
+		"CondJmp": [
+			{
+				"msg": "Ok"
+			},
+			{
+				"msg": "No, I don’t want to"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If Ok, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you always wore your boot while you were at work and that you were wearing your boot for {{stepsPerc}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "90",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period, and this is why we started to see an improvement.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "100",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u2",
+		"Step": "110",
+		"BranchLevel": "3",
+		"Comment": "If No I don’t want to, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case3: User selects any period across weeks 11 and 12, where there has been a sharp decrease in temperature difference.",
+		"Print": "The temperature difference decreased over this period. This indicates that your foot ulcer was getting better. Would you like us to look together at the data more closely and see if we can identify anything you have been doing differently that could have contributed to this improvement?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you always wore your boot while you were at work and that you were wearing your boot for {{stepsPerc}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period. Well done!",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Keep wearing your boot! For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I’m busy"
+			},
+			{
+				"msg": "Because I don’t need you to explain it to me"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "60",
+		"BranchLevel": "2",
+		"Comment": "If Because I’m busy, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u3",
+		"Step": "70",
+		"BranchLevel": "2",
+		"Comment": "If Because I don’t need you to explain it to me, then",
+		"Print": "That’s great. Remember I’m here if you ever do have any questions about your data. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case4: User selects any period that crosses the boundary of week 8 and 9, where the temperature difference switches from increasing to decreasing.",
+		"Print": "Up until the end of week 8, the temperature difference was increasing, which indicates that your foot ulcer was getting worse. But since the end of week 8, the temperature difference has been decreasing, which indicates your foot ulcer has been getting better. Would you like us to look together at the data more closely and see if we can identify anything you have been doing differently that could have contributed to this change?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Have a look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "We can see that up until the end of week 8, you weren't wearing your boot while you were at home, even though you typically take {{steps}} steps a week while you are at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that you were taking {{stepsPerc}}% of your steps without putting your boot on, which is likely why your ulcer was deteriorating during this time.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "There was a change at the end of week 8 and you started wearing your boot more often while you were at home. This means that the proportion of steps you were taking without your boot on fell from {{stepsPerc8}}% in week 8 to {{stepsPercZ}}% in week {{z}} [where Z is the week at the end of the boundary the user selected]. This is why your ulcer started to improve over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Keep wearing your boot! For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I’m busy"
+			},
+			{
+				"msg": "Because I don’t need you to explain it to me"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If Because I’m busy, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1u4",
+		"Step": "90",
+		"BranchLevel": "2",
+		"Comment": "If Because I don’t need you to explain it to me, then",
+		"Print": "That’s great. Remember I’m here if you ever do have any questions about your data. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case1: User selects any period across the first 8 weeks, where there has been a modest decrease in temperature difference.",
+		"Print": "The temperature difference decreased somewhat over this period. This indicates that your foot ulcer was getting a bit better. Would you like us to look together at the data more closely and see if see if we can identify anything you were doing that could have contributed to this improvement?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you always wore your boot while you were out of the house and that you spent {{stepsPerc}}% of your waking hours out of the house.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period, and this is why we started to see an improvement.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I’m busy"
+			},
+			{
+				"msg": "Because it’s boring"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "60",
+		"BranchLevel": "2",
+		"Comment": "If Because I’m busy, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "70",
+		"BranchLevel": "2",
+		"Comment": "If Because it’s boring, then",
+		"Print": "It will only take a minute or two and it might help your foot ulcer to get better. It’s important that you understand how your behaviour can impact on your recovery. Are you sure we can’t spend a few minutes looking at this together?",
+		"CondJmp": [
+			{
+				"msg": "Ok"
+			},
+			{
+				"msg": "No, I don’t want to"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If Ok, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you always wore your boot while you were out of the house and that you spent {{hoursPerc}}% of your waking hours out of the house.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "90",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period, and this is why we started to see an improvement.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "100",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u1",
+		"Step": "110",
+		"BranchLevel": "3",
+		"Comment": "If No I don’t want to, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case2: User selects any period across the last 4 weeks, where there has been quite a sharp increase in temperature difference.",
+		"Print": "The temperature difference increased over this period. This indicates that your foot ulcer was deteriorating. Would you like us to look together at the data more closely and see if there are any possible causes of this deterioration?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you spent a lot of time at home --- you spent {{timeHomePerc}}% of your time at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "We can also see that you weren’t wearing your boot as much as you should while you’re at home. During this time period you only wore your boot for {{stepsPerc}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that over this time period you were only wearing your boot for {{stepsPerc}}% of the steps you took, which is likely to have contributed to the deterioration of your foot ulcer over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you’re at home as well as when you go out.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I don't have time right now"
+			},
+			{
+				"msg": "Because I don't understand what you mean"
+			},
+			{
+				"msg": "Because I don’t like you"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "70",
+		"BranchLevel": "2",
+		"Comment": "If Because I don't have time right now, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If Because I don't understand what you mean, then",
+		"Print": "If we look at the data I’ve been collecting about you then we can see whether there’s anything you’ve been doing that could be negatively affecting your recovery. Would you like us to do this now?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "90",
+		"BranchLevel": "3",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that during this time period you spent a lot of time at home --- you spent {{timeHomePerc}}% of your time at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "100",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "We can also see that you weren’t wearing your boot as much as you should while you’re at home. During this time period you only wore your boot for {{stepsPerc}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "110"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "110",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "This means that over this time period you were only wearing your boot for {{stepsPerc}}% of the steps you took, which is likely to have contributed to the deterioration of your foot ulcer over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "120",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you’re at home as well as when you go out.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "130",
+		"BranchLevel": "3",
+		"Comment": "If No, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u2",
+		"Step": "140",
+		"BranchLevel": "2",
+		"Comment": "If Because I don’t like you, then",
+		"Print": "I’m sorry to hear that. I’m trying to help you, I want your foot to get better. I’m always here if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "Case3: User selects any period that crosses the boundary of week 8 and 9, where the temperature difference switches from decreasing to increasing.",
+		"Print": "Up until the end of week 8, the temperature difference was decreasing, which indicates that your foot ulcer was getting better. But since the end of week 8, the temperature difference has been increasing, which indicates your foot ulcer has been deteriorating. Would you like us to look together at the data more closely and see if we can identify anything you have been doing differently that could have contributed to this change?",
+		"CondJmp": [
+			{
+				"msg": "Yes"
+			},
+			{
+				"msg": "No"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If Yes, then",
+		"Print": "Look at the data that shows how often you wear your boot when you’re at home, when you’re at work and when you’re out. We can see that up until the end of week 8 you always wore your boot while you were out of the house and that you spent {{timeHomePerc}}% of your waking hours out of the house.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "In total you were wearing your boot for {{stepsPerc}}% of the steps you took over this period, and this is why we started to see an improvement.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "After week 8, you started to spend much more time at home. --- you spent {{timeHomePerc}}% of your time at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "We can also see that you weren’t wearing your boot as much as you should while you’re at home. During this time period you only wore your boot for {{}}% of the steps you took while you were at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that over this time period you were only wearing your boot for {{stepsPerc}}% of the steps you took, which is likely to have contributed to the deterioration of your foot ulcer over this period.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "70"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "For the best chance of a good recovery, you should wear your boot all the time you are active. This means you need to wear it when you’re at home as well as when you go out.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "80",
+		"BranchLevel": "",
+		"Comment": "If No, then",
+		"Print": "Why not?",
+		"CondJmp": [
+			{
+				"msg": "Because I’m busy"
+			},
+			{
+				"msg": "Because I don’t need you to explain it to me"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "90",
+		"BranchLevel": "2",
+		"Comment": "If Because I’m busy, then",
+		"Print": "Ok, I’ll ask you again later. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2u3",
+		"Step": "100",
+		"BranchLevel": "2",
+		"Comment": "If Because I don’t need you to explain it to me, then",
+		"Print": "That’s great. Remember I’m here if you ever do have any questions about your data. Bye!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "This dialogue assumes persona 1 at the end of week 12. Triggered by the researcher (to simulate the system being triggered by what it has seen in the data) the system will initiate the following dialogue.",
+		"Print": "Hi, you’re doing really well with your boot at the moment! Over the past 2 weeks you’ve worn your boot for {{stepsPerc}}% of all the steps you’ve taken!",
+		"CondJmp": [
+			{
+				"msg": "I can’t talk now"
+			},
+			{
+				"msg": "I’ve been making myself wear my boot but it’s been giving me really bad back ache, is there anything I can do to make my back hurt less?"
+			},
+			{
+				"msg": "Great, has my ulcer improved?"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If I can’t talk now, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "If I’ve been making myself wear my boot but it’s been giving me really bad back ache, is there anything I can do to make my back hurt less?, then",
+		"Print": "If you have another boot or shoe that’s a similar height to your boot then you can try wearing that on your healthy foot, this might reduce your back ache.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "I’ve sent a message to your healthcare team to let them know that you’re suffering from back ache. They will be able to discuss with you different things you can try to reduce your pain.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "It’s really important that you keep wearing your boot. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees2weeks}} degrees over the past 2 weeks.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "70"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "80",
+		"BranchLevel": "",
+		"Comment": "If Great, has my ulcer improved?, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees2weeks}} degrees over the past 2 weeks.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "90",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sa",
+		"Step": "100",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "This dialogue assumes persona 1 at the end of week 12. The researcher triggers the dialogue to simulate that, as per the patient's preferences, every Sunday at 6pm the system will initiate a dialogue with the patient to review their progress.",
+		"Print": "Hi, how's your week been?",
+		"CondJmp": [
+			{
+				"msg": "Great!"
+			},
+			{
+				"msg": "Ok"
+			},
+			{
+				"msg": "Really awful"
+			},
+			{
+				"msg": "I don't want to talk to you now"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If I don't want to talk to you now, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "If Great|Ok, then",
+		"Print": "Glad to hear that!",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "If Really awful, then",
+		"Print": "I'm sorry to hear that, I hope next week is better for you.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "How have you been getting on with wearing your boot this week?",
+		"CondJmp": [
+			{
+				"msg": "Good, I've barely taken it off"
+			},
+			{
+				"msg": "I don't think I've worn it as much as I should have done"
+			},
+			{
+				"msg": "I don't know."
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "If Good, I've barely taken it off, then",
+		"Print": "That's great! I can see from your data that you're right, you've worn your boot for {{stepsPerc}} % of all steps you've taken this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "70"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means you're wearing your boot for more than {{bootTimes}} times as many of your steps than you were 4 weeks ago, which is great. Do you think this has had an impact on your foot ulcer?",
+		"CondJmp": [
+			{
+				"msg": "I don't know"
+			},
+			{
+				"msg": "Yes, I think my data shows that it's getting better"
+			},
+			{
+				"msg": "I think it's getting worse."
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "80",
+		"BranchLevel": "2",
+		"Comment": "If I don’t know, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "90",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "100",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "110",
+		"BranchLevel": "2",
+		"Comment": "If Yes, I think my data shows that it's getting better, then",
+		"Print": "You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "120",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "130"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "130",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "140",
+		"BranchLevel": "2",
+		"Comment": "If I think it's getting worse, then",
+		"Print": "Actually, your data suggests that your foot ulcer has been improving. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "150"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "150",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better. But if there's something you're worried about, if your ulcer feels different to normal or you think it's deteriorating you should contact the foot clinic.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "160"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "160",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "170",
+		"BranchLevel": "",
+		"Comment": "If I don't think I've worn it as much as I should have done, then",
+		"Print": "I’m surprised you think that. If we look at your data we can see that actually you've worn your boot for {{stepsPerc}}% of all steps you've taken this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "180"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "180",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means you're wearing your boot for more than {{bootTimes}} times as many of your steps than you were 4 weeks ago, which is great. Do you think this has had an impact on your foot ulcer?",
+		"CondJmp": [
+			{
+				"msg": "I don't know"
+			},
+			{
+				"msg": "Yes, I think my data shows that it's getting better"
+			},
+			{
+				"msg": "I think it's getting worse."
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "190",
+		"BranchLevel": "2",
+		"Comment": "If I don’t know, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "200"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "200",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "210"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "210",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "220",
+		"BranchLevel": "2",
+		"Comment": "If Yes, I think my data shows that it's getting better, then",
+		"Print": "You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "230"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "230",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "240"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "240",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "250",
+		"BranchLevel": "2",
+		"Comment": "If I think it's getting worse, then",
+		"Print": "Actually, your data suggests that your foot ulcer has been improving. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "260"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "260",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better. But if there's something you're worried about, if your ulcer feels different to normal or you think it's deteriorating you should contact the foot clinic.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "270"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "270",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "280",
+		"BranchLevel": "",
+		"Comment": "If I don't know, then",
+		"Print": "Well if we look at your data we can see that you've worn your boot for {{stepsPerc}} % of all steps you've taken this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "290"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "290",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means you're wearing your boot for more {{bootTimes}} times as many of your steps than you were 4 weeks ago, which is great. Do you think this has had an impact on your foot ulcer?",
+		"CondJmp": [
+			{
+				"msg": "I don't know"
+			},
+			{
+				"msg": "Yes, I think my data shows that it's getting better"
+			},
+			{
+				"msg": "I think it's getting worse."
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "300",
+		"BranchLevel": "2",
+		"Comment": "If I don’t know, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "310"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "310",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "320"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "320",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "330",
+		"BranchLevel": "2",
+		"Comment": "If Yes, I think my data shows that it's getting better, then",
+		"Print": "You're right! If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "340"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "340",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "350"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "350",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "360",
+		"BranchLevel": "2",
+		"Comment": "If I think it's getting worse, then",
+		"Print": "Actually, your data suggests that your foot ulcer has been improving. If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's decreased by {{degrees}} degrees this week.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "370"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "370",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This is what we want to see, it suggests that your ulcer is improving. If you continue to wear your boot for most of your steps then we can expect your ulcer to keep getting better. But if there's something you're worried about, if your ulcer feels different to normal or you think it's deteriorating you should contact the foot clinic.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "380"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p1sb",
+		"Step": "380",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Keep wearing your boot, you're doing great!",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "This dialogue assumes persona 2 at the end of week 12. Triggered by the researcher (to simulate the system being triggered by what it has seen in the data) the system will initiate the following dialogue.",
+		"Print": "Hi, did you know that in the past 4 weeks you’ve only worn your boot for {{stepsPerc}}% of all the steps you’ve taken?",
+		"CondJmp": [
+			{
+				"msg": "I can’t talk now"
+			},
+			{
+				"msg": "That can’t be right, I always put it on when I leave the house"
+			},
+			{
+				"msg": "I haven’t been wearing it so much because it’s been giving me really bad back ache."
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "If I can’t talk now, then",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "If That can’t be right, I always put it on when I leave the house, then",
+		"Print": "I can see that you always wear you’re boot when you go out, but actually over the past 4 weeks {{stepsPerc}}% of all the steps you’ve taken have been at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Because you’re not wearing your boot very much while you’re at home, in total you’ve only been wearing your boot for {{stepsPerc}}% of the steps you’ve taken over the past 4 weeks.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often. During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "70"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "I’ve sent the foot clinic team a message to let them know that you haven’t been wearing your boot very much while you’ve been at home and that you’re foot ulcer seems to be getting worse. They will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "80",
+		"BranchLevel": "",
+		"Comment": "If I haven’t been wearing it so much because it’s been giving me really bad back ache, then",
+		"Print": "If you have another boot or shoe that’s a similar height to your boot then you can try wearing that on your healthy foot, this might reduce your back ache.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "90",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "I’ve sent a message to your healthcare team to let them know that you’re suffering from back ache. They will be able to discuss with you different things you can try to reduce your pain.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "100",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "It’s really important that you wear your boot as much as possible. I can see that you always wear you’re boot when you go out, but actually over the past 4 weeks {{stepsPerc}}% of all the steps you’ve taken have been at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "110"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "110",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Because you’re not wearing your boot very much while you’re at home, in total you’ve only been wearing your boot for {{stepsPerc}}% of the steps you’ve taken over the past 4 weeks.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "120",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "130"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "130",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often. During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "140"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sa",
+		"Step": "140",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "I’ve sent the foot clinic team a message to let them know that you haven’t been wearing your boot very much while you’ve been at home and that you’re foot ulcer seems to be getting worse, as well as telling them about your back ache. They will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "1",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Hi, how's your week been?",
+		"CondJmp": [
+			{
+				"msg": "Great!",
+				"n": "30"
+			},
+			{
+				"msg": "Ok",
+				"n": "30"
+			},
+			{
+				"msg": "Really awful",
+				"n": "40"
+			},
+			{
+				"msg": "I don't want to talk to you now",
+				"n": "20"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "20",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Ok, you know where I am if you need me.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "30",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "Glad to hear that!",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "40",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "I'm sorry to hear that, I hope next week is better for you.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "50"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "50",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "How have you been getting on with wearing your boot this week?",
+		"CondJmp": [
+			{
+				"msg": "Good, I'm always wearing it",
+				"n": "60"
+			},
+			{
+				"msg": "I haven't worn it as much as I should have",
+				"n": "370"
+			},
+			{
+				"msg": "I don't know.",
+				"n": "380"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "60",
+		"BranchLevel": "",
+		"Comment": "Don't know",
+		"Print": "I can see from your data that you always wear your boot when you leave the house, which is good, but it's important to also wear it when you're at home. Do you think you've been wearing it all the time while you're at home?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "70"
+			},
+			{
+				"msg": "No, but I don't do very much walking while I'm at home",
+				"n": "220"
+			},
+			{
+				"msg": "I think I wear it most of the time when I'm at home",
+				"n": "380"
+			},
+			{
+				"msg": "I don't wear it that often at home because I don't worry very much about causing further injury to my foot when I'm at home",
+				"n": "380"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "70",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "If we look at your data over the last 4 weeks we can see that {{stepsPerc}} % of the steps you took were while you were at home, and you were only wearing your boot for {{}}% of these steps.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "80"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "80",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that overall you've only been wearing your boot for {{stepsPerc}} % of the steps you've taken. You should be aiming to wear your boot for close to 100% of the steps you take in order to maximise your healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "90"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "90",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You can get an indication of how well your foot ulcer is healing by looking at the temperature difference between your ulcer and your healthy foot. How do you think your healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "100"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "140"
+			},
+			{
+				"msg": "I'm worried it's getting worse",
+				"n": "180"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "100",
+		"BranchLevel": "",
+		"Comment": "Don't know",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "110"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "110",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "120",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "130"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "130",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "140",
+		"BranchLevel": "",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that actually your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "150"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "150",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "160"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "160",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "170"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "170",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "180",
+		"BranchLevel": "",
+		"Comment": "If I'm worried it's getting worse, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "190"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "190",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "200"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "200",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "210"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "210",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "220",
+		"BranchLevel": "",
+		"Comment": "If No, but I don't do so much walking while I'm at home, then",
+		"Print": "Actually, if we look at your data over the last 4 weeks we can see that {{stepsPerc}} % of the steps you took were while you were at home, and you were only wearing your boot for {{stepsPerc2}} % of these steps.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "230"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "230",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This means that overall you've only been wearing your boot for {{stepsPerc}}% of the steps you've taken. You should be aiming to wear your boot for close to 100% of the steps you take in order to maximise your healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "240"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "240",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You can get an indication of how well your foot ulcer is healing by looking at the temperature difference between your ulcer and your healthy foot. How do you think your healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "250"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "290"
+			},
+			{
+				"msg": "I'm worried it's getting worse",
+				"n": "330"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "250",
+		"BranchLevel": "",
+		"Comment": "If I don’t know, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "260"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "260",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "270"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "270",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "280"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "280",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "290",
+		"BranchLevel": "",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that actually your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "300"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "300",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "310"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "310",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "320"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "320",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "330",
+		"BranchLevel": "",
+		"Comment": "If I'm worried it's getting worse, then",
+		"Print": "If you take a look at the temperature difference between your ulcer and your healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that your foot ulcer has been deteriorating.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "340"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "340",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "You need to wear your boot more often, especially while you're at home. Up until 4 weeks ago you were spending much less time at home, and were wearing your boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "350"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "350",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "During this period your foot ulcer seemed to be improving --- the temperature difference with your healthy foot dropped by {{degrees}} degrees. If you start to wear your boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "360"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "360",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss your progress with you in more detail the next time you see them. Until then, try to wear your boot all the time, even when you're at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "370",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This part of the dialogue is missing. Goodbye",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sb",
+		"Step": "380",
+		"BranchLevel": "",
+		"Comment": "",
+		"Print": "This part of the dialogue is missing. Goodbye",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "1",
+		"BranchLevel": "0",
+		"Comment": "This dialogue assumes persona 2 at the end of week 12. The researcher triggers the dialogue to simulate that, as per the patient's preferences, every Sunday at 6pm the system will initiate a dialogue with the patient to review their progress.",
+		"Print": "Hi! How has Sarah been getting on with wearing her boot this week?",
+		"CondJmp": [
+			{
+				"msg": "Good, she’s always wearing it",
+				"n": "10"
+			},
+			{
+				"msg": "She hasn’t worn it as much as she should have",
+				"n": "10"
+			},
+			{
+				"msg": "I don't know",
+				"n": "10"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "10",
+		"BranchLevel": "1",
+		"Comment": "If Good, she’s always wearing it|She hasn’t worn it as much as she should have|I don't know, then",
+		"Print": "I can see from Sarah’s information that she always wears her boot when she leaves the house. This is good, but it's important that Sarah also wears her boot when she’s at home. Do you think Sarah’s been wearing it all the time while she’s at home?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "20"
+			},
+			{
+				"msg": "No, but I don't think Sarah does very much walking at home",
+				"n": "170"
+			},
+			{
+				"msg": "I think Sarah wears it most of the time when she’s at home",
+				"n": "320"
+			},
+			{
+				"msg": "Sarah probably doesn't wear it that much at home because she doesn't worry so much about causing further injury to her foot when she’s at home",
+				"n": "470"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "20",
+		"BranchLevel": "2",
+		"Comment": "If I don’t know, then",
+		"Print": "If we look at Sarah’s information for the last 4 weeks we can see that {{stepsPerc}} % of the steps Sarah took were while she was at home. We can also see that she was only wearing her boot for {{}stepsPerc} % of these steps.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "30"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "30",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This means that overall Sarah has only been wearing her boot for {{stepsPerc}} % of the steps she has taken. Sarah should aim to wear her boot for close to 100% of the steps she takes for the best chance of healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "40"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "40",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "We can get an idea of how well Sarah’s foot ulcer is healing by looking at the temperature difference between Sarah’s ulcer and her healthy foot. How do you think Sarah’s healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "50"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "90"
+			},
+			{
+				"msg": "I think it’s been getting worse",
+				"n": "130"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "50",
+		"BranchLevel": "3",
+		"Comment": "If I don’t know, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "60"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "60",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "70"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "70",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "80"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "80",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "90",
+		"BranchLevel": "3",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "100"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "100",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "110"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "110",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "120"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "120",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "130",
+		"BranchLevel": "3",
+		"Comment": "If I think it’s been getting worse, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "140"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "140",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "150"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "150",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "160"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "160",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "170",
+		"BranchLevel": "2",
+		"Comment": "If No, but I don't think Sarah does very much walking at home, then",
+		"Print": "Actually, if we look at Sarah’s information for the last 4 weeks we can see that {{stepsPerc}} % of the steps Sarah took were while she was at home. We can also see that she was only wearing her boot for {{stepsPerc}} % of these steps.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "180"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "180",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This means that overall Sarah has only been wearing her boot for {{stepsPerc}} % of the steps she has taken. Sarah should aim to wear her boot for close to 100% of the steps she takes for the best chance of healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "190"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "190",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "We can get an idea of how well Sarah’s foot ulcer is healing by looking at the temperature difference between Sarah’s ulcer and her healthy foot. How do you think Sarah’s healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "200"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "240"
+			},
+			{
+				"msg": "I think it’s been getting worse",
+				"n": "280"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "200",
+		"BranchLevel": "3",
+		"Comment": "If I don’t know, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "210"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "210",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "220"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "220",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "230"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "230",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then,  she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "240",
+		"BranchLevel": "3",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "250"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "250",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "260"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "260",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "270"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "270",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "280",
+		"BranchLevel": "3",
+		"Comment": "If I think it’s been getting worse, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "290"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "290",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "300"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "300",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "310"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "310",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "320",
+		"BranchLevel": "2",
+		"Comment": "If I think Sarah wears it most of the time when she’s at home, then",
+		"Print": "Actually, if we look at Sarah’s information for the last 4 weeks we can see that she was only wearing her boot for {{stepsPerc}} % of the steps she took at home. We can also see that {{stepsPerc}} % of all the steps Sarah took were while she was at home.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "330"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "330",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This means that overall Sarah has only been wearing her boot for {{stepsPerc}} % of the steps she has taken. Sarah should aim to wear her boot for close to 100% of the steps she takes for the best chance of healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "340"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "340",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "We can get an idea of how well Sarah’s foot ulcer is healing by looking at the temperature difference between Sarah’s ulcer and her healthy foot. How do you think Sarah’s healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "350"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "390"
+			},
+			{
+				"msg": "I think it’s been getting worse",
+				"n": "430"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "350",
+		"BranchLevel": "3",
+		"Comment": "If I don’t know, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "360"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "360",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "370"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "370",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "380"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "380",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then,  she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "390",
+		"BranchLevel": "3",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "400"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "400",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "410"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "410",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "420"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "420",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "430",
+		"BranchLevel": "3",
+		"Comment": "If I think it’s been getting worse, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "440"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "440",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "450"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "450",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "460"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "460",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "470",
+		"BranchLevel": "2",
+		"Comment": "If Sarah probably doesn't wear it that much at home because she doesn't worry so much about causing further injury to her foot when she’s at home, then",
+		"Print": "Sarah needs to wear her boot to keep the pressure off her ulcer, even when she’s at home. This is important for the healing process.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "480"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "480",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "If we look at Sarah’s information for the last 4 weeks we can see that {{stepsPerc}} % of the steps Sarah took were while she was at home. We can also see that she was only wearing her boot for {{stepsPerc}} % of these steps.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "490"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "490",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "This means that overall Sarah has only been wearing her boot for {{stepsPerc}} % of the steps she has taken. Sarah should aim to wear her boot for close to 100% of the steps she takes for the best chance of healing.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "500"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "500",
+		"BranchLevel": "2",
+		"Comment": "",
+		"Print": "We can get an idea of how well Sarah’s foot ulcer is healing by looking at the temperature difference between Sarah’s ulcer and her healthy foot. How do you think Sarah’s healing has been going over the past 4 weeks?",
+		"CondJmp": [
+			{
+				"msg": "I don't know",
+				"n": "510"
+			},
+			{
+				"msg": "I think it's been ok",
+				"n": "550"
+			},
+			{
+				"msg": "I think it’s been getting worse",
+				"n": "590"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "510",
+		"BranchLevel": "3",
+		"Comment": "If I don’t know, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "520"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "520",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "530"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "530",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "540"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "540",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then,  she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "550",
+		"BranchLevel": "3",
+		"Comment": "If I think it's been ok, then",
+		"Print": "Well if you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "560"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "560",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "570"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "570",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "580"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "580",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "590",
+		"BranchLevel": "3",
+		"Comment": "If I think it’s been getting worse, then",
+		"Print": "If you look at the temperature difference between Sarah’s ulcer and her healthy foot then you can see that it's increased by {{degrees}} degrees over the past 4 weeks. This suggests that Sarah’s foot ulcer has been getting worse.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "600"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "600",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "Sarah needs to wear her boot more often, especially while she’s at home. Up until 4 weeks ago Sarah was spending much less time at home, and was wearing her boot much more often.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "610"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "610",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "During this period Sarah’s foot ulcer seemed to be improving --- the temperature difference with her healthy foot dropped by {{degrees}} degrees. If Sarah starts to wear her boot more often we can expect to see an improvement again.",
+		"CondJmp": [
+			{
+				"msg": "Continue",
+				"n": "620"
+			}
+		],
+		"Media": "",
+		"Actions": "HighlightData",
+		"Var": ""
+	},
+	{
+		"Dialogue": "p2sbv2",
+		"Step": "620",
+		"BranchLevel": "3",
+		"Comment": "",
+		"Print": "The foot clinic team will discuss Sarah’s progress with her in more detail the next time she goes to see them. Until then, she should try to wear her boot all the time, even when she’s at home.",
+		"CondJmp": [
+			{
+				"msg": "END",
+				"n": "0"
+			}
+		],
+		"Media": "",
+		"Actions": "",
+		"Var": ""
+	}
+]

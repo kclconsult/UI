@@ -1,0 +1,42 @@
+Dialogue	Step	BranchLevel	Comment	Print	CondJmp	Media	Actions	Var
+1	1	1	Triggered by user asking for some advice re painkillers - Advice button	What can I help you with?	Medication;110|Reminder;120|Symptom;130|Overview;140			
+1	110	1.1		Do you want to know more about medication? That will be implemented in the next version of the Stroke Companion.	END;0			
+1	120	1.2		You want a reminder? That will be implemented in the next version of the Stroke Companion.	END;0			
+1	130	1.3		Ok, what symptom?	Headache;131|Backpain;132|Gastrointestinal;135			
+1	131			Do you want to know more about the symptom of headache? That will be implemented in the next version of the Stroke Companion.	END;0			
+1	132	1.1.3	if 'backpain', then	It is recommended that you take: 'ibuprofen", would you like more details?	Yes;133|No;134		instantiates ASPT and this goes into the text in 1.1.3.1 User can ask arg engine "Why x" or "Why not y".	
+1	133	1.1.3.1	if 'yes', then	Given your medical history and that 'Ibuprofen' helps with back pain then 'ibuprofen" is recommended.	END;0		Arg Engine provides list of questions (options) user can ask. Arg Engine answers questions / explains reasoning.	
+1	134	1.1.3.2	if 'no', then	Ok, you know where you can find me.	END;0			
+1	135			Do you want to know more about the symptom of gastronintestinal pain? That will be implemented in the next version of the Stroke Companion.	END;0			
+1	140	1.4		Do you want an overview? That will be implemented in the next version of the Stroke Companion.	END;0			
+2	1	1	Triggered by app	Hi, it looks like your blood pressure <VALUE> is slightly elevated compared to your baseline.  Q1 Last week you enquired about 'back pain' are you still experiencing it?	Yes;110|No;120			BP value
+2	110	1.1	if 'yes', then	Last week it was recommended that you take 'ibuprofen',  are you taking the full dose allowed?	Yes;111|No;115			
+2	111	1.1.1	if 'yes', then	Consider changing your painkiller; there are two options: Given your medical history and that 'paracetamol' helps with back pain then 'paracetamol" is recommended. It is recommended that you consider 'paracetamol'. Given your medical history and that 'codeine' helps with back pain then 'codeine" is recommended. 			instantiates ASPT ArgEngine provides options.	
+	112			Do you have a preference?	Yes;114|No;113			
+2	113	1.1.1.2	if 'no', then	 'paracetamol' may not be as effective at lowering the pain, however it is more gentle on the digestive system. 'codeine' is more effective at loweing pain, however it can cause addiction.			this can be where the GP preferences are imposed ArgEngine explains.	
+	114			What do you prefer?	Codeine;9999|Paracetamol;9999			
+2	115	1.1.2	if 'no', then	Consider taking the maximal dose	END;0			
+2	120	1.2	if 'no', then	Are you feeling anxious or stressed?	Yes;121|No;122			
+2	121	1.2.1	if 'yes', then	Consider talking to your GP about managing stress	END;0			
+2	122	1.2.2	if 'no', then	Consider talking to your GP about possibly adjusting your BP medication	END;0			
+2	9999			Goodbye.	END;0			
+3	1		Triggered by the user asking about a chart	What value do you want to discuss?	SBP;110|DBP;120|HR;130|ECG;140			
+3	110			Follow this link and get all the information you need: https://www.nhs.uk/common-health-questions/lifestyle/what-is-blood-pressure/	END;0			
+3	120			Follow this link and get all the information you need: https://www.nhs.uk/common-health-questions/lifestyle/what-is-blood-pressure/	END;0			
+3	130			Follow this link and get all the information you need: https://www.nhs.uk/common-health-questions/accidents-first-aid-and-treatments/how-do-i-check-my-pulse/	END;0			
+3	140			Follow this link and get all the information you need: https://www.nhs.uk/conditions/electrocardiogram/	END;0			
+4	1	1	Triggered by user considering intervention	What intervention do you want to consider?	Stop smoking;110|Lower cholesterol;120|Lower bp;130|Antiplatelet;140			
+4	110	1.1	Display Cates plots for 'stop smoking' vs baseline. Explain the difference in risk	Please click on the Risk page in the Dashboard and select the "Stop Smoking" diagrams. This diagram shows that ...	END;0	Show diagrams in chat?	can ask if they want to check another intervention?	
+4	120	1.2	Display Cates plots for 'lower cholesterol' vs baseline. Explain the difference in risk	Please click on the Risk page in the Dashboard and select the "Lower Cholesterol" diagrams. This diagram shows that ...	END;0			
+4	130	1.3	Display Cates plots for 'lower bp' vs baseline. Explain the difference in risk	Please click on the Risk page in the Dashboard and select the "Lower Blood Pressure" diagrams. This diagram shows that ...	END;0			
+4	140	1.4	Display Cates plots for 'antiplatelet' vs baseline. Explain the difference in risk	Please click on the Risk page in the Dashboard and select the "Antiplatelet" diagrams. This diagram shows that ...	END;0			
+5	1			Are you still experiencing back pain?	Yes;101|No;201			
+5	101			Are you taking the maximum dose of Ibuprofen?	Yes;102|No;104			
+5	102			Consider changing your painkiller. You have two options: Paracetaol or codamol. Would like to have advice on those painkillers?	Yes;201|No;999			
+5	103			Follow this link and get all the information you need: https://www.nhs.uk/live-well/healthy-body/which-painkiller-to-use/	END;0			
+5	104			Consider taking the maximum dose of the painkiller.	END;0			
+5	201			Are you feeling anxious	Yes;202|No;204			
+5	202			Would you like me to provide some advice on how to handle your anxiety?	Yes;203|No;999			
+5	203			Follow this link and get all the information you need: https://www.mind.org.uk/information-support/types-of-mental-health-problems/anxiety-and-panic-attacks/	END;0			
+5	204			Please book an appointment with your GP to check your blood pressure.	END;0			
+5	999			Ok, you know where you can find me.	END;0			
