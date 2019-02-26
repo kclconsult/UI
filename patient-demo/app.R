@@ -9,16 +9,18 @@ library(scales)
 library(cowplot)
 library(personograph)
 
-
-tabData  <- fread("../data/betsy_dummy_data_dfu20180912.csv")
 # tabSteps <- fread("/home/kai/posture/data/dummy-data_transformed20180909.csv")
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
 # patients <- c("Peter User" = "/p1u", "Sally S a" = "/p1sa", "Sally S b" = "/p1sb", "Harry U" = "/p2u", "Harry S a" = "/p2sa", "Harry S b" = "/p2sb")
 devices  <- c("Tablet 1" = "631855225", "Liz" = "526968496" , "Kai" = "574621511", "Elizabeth" = "425168183", "Isabel" = "681816550" )
 
 # Isabel data bp2 #
-load("../data/isabel-demodata.Rdata") # bp2 table
-load("../data/isabel-daily-hr.Rdata") # daily.hr table
+bpColClasses <- c(datem="Date", date.month="Date");
+bp2<-read.table("../data/bp2-isabel-table.csv", header=TRUE, colClasses=bpColClasses) # bp2 table
+rownames(bp2) <- 1:nrow(bp2);
+# load("../data/isabel-demodata.Rdata") # bp2 table
+daily.hr<-read.csv("../data/daily_hr-isabel-table.csv") # daily.hr table
+# load("../data/isabel-daily-hr.Rdata") # daily.hr table
 risk.evidence<-read.csv("../data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
 
 ui <- fluidPage(
