@@ -16,11 +16,11 @@ devices  <- c("Tablet 1" = "631855225", "Liz" = "526968496" , "Kai" = "574621511
 
 # Isabel data bp2 #
 bpColClasses <- c(datem="Date", date.month="Date");
-bp2<-read.table("../data/bp2-isabel-table.csv", header=TRUE, colClasses=bpColClasses) # bp2 table
+bp2<-read.table("../data/bp2-isabel-table-codes.csv", header=TRUE, colClasses=bpColClasses) # bp2 table
 rownames(bp2) <- 1:nrow(bp2);
 # load("../data/isabel-demodata.Rdata") # bp2 table
-daily.hr<-read.csv("../data/daily_hr-isabel-table.csv") # daily.hr table
-# load("../data/isabel-daily-hr.Rdata") # daily.hr table
+daily.c8867_4<-read.csv("../data/daily_hr-isabel-table.csv") # daily.c8867_4 table
+# load("../data/isabel-daily-c8867_4.Rdata") # daily.c8867_4 table
 risk.evidence<-read.csv("../data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
 
 ui <- fluidPage(
@@ -166,7 +166,7 @@ server <- function(input, output) {
 
 ##-- Isabel Functions --##
 
-  dashboard.hr<-function(period){
+  dashboard.c8867_4<-function(period){
     y_name<-paste("Heart Rate")
     daily.plot.title<-paste("Heart Rate last 24 hours")
     month.plot.title<-paste("Trend for Heart Rate")
@@ -178,18 +178,18 @@ server <- function(input, output) {
     ymax.day<-120
     labels<-seq(0,72, by=6)
     if (period=="month"){
-      print(ggplot(data = bp2, aes(date.month, hr)) + stat_summary(fun.y= mean,  geom = "line")
+      print(ggplot(data = bp2, aes(date.month, c8867_4)) + stat_summary(fun.y= mean,  geom = "line")
             +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
             + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
               scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
     }
     else if (period=="year"){
-      print(ggplot(data=bp2, aes_string(bp2$datem, bp2$hr)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
+      print(ggplot(data=bp2, aes_string(bp2$datem, bp2$c8867_4)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
         geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" )+
         labs(title = year.plot.title, x="Date", y=y_name)
     }
     else {
-      print(ggplot(data=daily.hr, aes(y=hr.day, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
+      print(ggplot(data=daily.c8867_4, aes(y=c8867_4.day, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
               geom_hline(aes(yintercept =yint),colour="grey", linetype="dashed" ) +
               geom_hline(aes(yintercept =ymax),colour="grey", linetype="dashed" ) +
               geom_vline(aes(xintercept=12), colour="blue", linetype="dashed")  +
@@ -207,17 +207,17 @@ server <- function(input, output) {
     }
   }
 
-  dashboard.hr.stats<-function(){
-    resting.hr<-tail(daily.hr$hr.day, n=1)
-    cat(paste("Resting Heart Rate: ", round(resting.hr,1), sep=""))
-    mean.hr<-mean(daily.hr$hr.day)
-    cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.hr,1), sep=""))
-    mean.hr.year<-mean(head(bp2$hr, n=30))
-    cat(paste("\nAverage Heart Rate last month: ", round(mean.hr.year,1), sep=""))
+  dashboard.c8867_4.stats<-function(){
+    resting.c8867_4<-tail(daily.c8867_4$c8867_4.day, n=1)
+    cat(paste("Resting Heart Rate: ", round(resting.c8867_4,1), sep=""))
+    mean.c8867_4<-mean(daily.c8867_4$c8867_4.day)
+    cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867_4,1), sep=""))
+    mean.c8867_4.year<-mean(head(bp2$c8867_4, n=30))
+    cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867_4.year,1), sep=""))
   }
 
-output$plotHR <- renderPlot({ dashboard.hr(period = input$radioHRTimeframe) }  ) # month,year,day
-output$printHR <- renderPrint({ dashboard.hr.stats() }  )
+output$plotHR <- renderPlot({ dashboard.c8867_4(period = input$radioHRTimeframe) }  ) # month,year,day
+output$printHR <- renderPrint({ dashboard.c8867_4.stats() }  )
 
 dashboard.bp<-function(period){
   y1_name<-paste("Diastolic Blood Pressure")
@@ -227,15 +227,15 @@ dashboard.bp<-function(period){
   week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
   year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
   ymin<-60
-  ymax.dia<-100
+  ymax.c271649006<-100
   ymax<-150
   yint1<-80
   yint2<-120
 
   if (period=="month"){
     ggplot() +
-      stat_summary(data = bp2, aes(x = date.month, y = sys), color = "blue", geom = "line") +
-      stat_summary(data = bp2, aes(x = date.month, y = dia), color = "red", geom = "line") +
+      stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "blue", geom = "line") +
+      stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "red", geom = "line") +
       xlab("Dates") +
       ylab("Blood pressure") +
       theme_bw() +
@@ -244,18 +244,18 @@ dashboard.bp<-function(period){
       guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
   }
   else if(period=="week"){
-    g1<-ggplot(bp2, aes(x=weekday, y=dia))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
+    g1<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.c271649006) +
       geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
       labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
-    g2<-ggplot(bp2, aes(x=weekday, y=sys))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
+    g2<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
       geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
       labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
     plot_grid(g1,g2,labels = "AUTO")
   }
   else {
     ggplot(bp2, aes(datem))+
-      geom_line(aes(y=bp2$sys, colour="Systolic"))+
-      geom_line(aes(y=bp2$dia, colour="Diastolic")) + ggtitle("Blood Pressure History") +
+      geom_line(aes(y=bp2$c271650006, colour="Systolic"))+
+      geom_line(aes(y=bp2$c271649006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
       xlab("Date") + ylab("Measurment")
 
   }
