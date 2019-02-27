@@ -16,11 +16,9 @@ devices  <- c("Tablet 1" = "631855225", "Liz" = "526968496" , "Kai" = "574621511
 
 # Isabel data bp2 #
 bpColClasses <- c(datem="Date", date.month="Date");
-bp2<-read.table("../data/bp2-isabel-table-codes.csv", header=TRUE, colClasses=bpColClasses) # bp2 table
+bp2<-read.table("http://192.168.1.110:3002/Observation/3/85354-9/2018-02-26T00:00:00Z/2019-02-28T00:00:00Z", header=TRUE, colClasses=bpColClasses) # bp2 table
 rownames(bp2) <- 1:nrow(bp2);
-# load("../data/isabel-demodata.Rdata") # bp2 table
 daily.c8867_4<-read.csv("../data/daily_hr-isabel-table.csv") # daily.c8867_4 table
-# load("../data/isabel-daily-c8867_4.Rdata") # daily.c8867_4 table
 risk.evidence<-read.csv("../data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
 
 ui <- fluidPage(
