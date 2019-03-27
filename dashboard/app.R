@@ -8,6 +8,8 @@ library(dplyr)
 library(scales)
 library(cowplot)
 library(personograph)
+library(tidyverse)
+library(shinydashboard)
 
 # tabSteps <- fread("/home/kai/posture/data/dummy-data_transformed20180909.csv")
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
@@ -15,8 +17,10 @@ colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB
 devices  <- c("Tablet 1" = "631855225", "Liz" = "526968496" , "Kai" = "574621511", "Elizabeth" = "425168183", "Isabel" = "681816550" )
 
 # Isabel data bp2 #
-bpColClasses <- c(datem="Date", date.month="Date");
-bp2<-read.table("https://martinchapman.co.uk/Observation/3/85354-9/2018-02-26T00:00:00Z/2020-02-28T00:00:00Z", header=TRUE, colClasses=bpColClasses) # bp2 table
+bpColClasses <- c(datem="Date", date.month="Date")
+messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
+messagePasserAddress <- paste("https://", messagePasserHost, "/Observation/4a31dbe0-4f6a-11e9-91b8-7b2d06480f7d/85354-9/2018-02-26T00:00:00Z/2020-02-28T00:00:00Z", sep="")
+bp2<-read.table(messagePasserAddress, header=TRUE, colClasses=bpColClasses) # bp2 table
 rownames(bp2) <- 1:nrow(bp2);
 daily.c8867h4<-read.csv("data/daily_hr-isabel-table.csv") # daily.c8867h4 table
 risk.evidence<-read.csv("data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
@@ -41,7 +45,22 @@ ui <- fluidPage(
                      h3("My Health Summary"),
                      br(),
                      # http://www.ehes.info/rc/tools/EHES_reporting_options_using_R_publish.html !!
-                     img(src="consult_summary_panos_screenshot.png")
+                     # img(src="consult_summary_panos_screenshot.png")
+
+                     dashboardPage(
+                       dashboardHeader(title = "Vital Data"),
+                       dashboardSidebar(disable = TRUE),
+                       dashboardBody(
+                         fluidRow(
+                           valueBoxOutput("boxBP"),
+                           valueBoxOutput("boxHR"),
+                           valueBoxOutput("boxECG"),
+                           valueBoxOutput("boxMood"),
+                           valueBoxOutput("boxPain")
+                         )
+                       )
+                     )
+
               ),
            tabPanel("Heartrate",
                     # img(src="consult_demo_heartrate_Screenshot.png")
@@ -87,7 +106,12 @@ ui <- fluidPage(
           tabPanel("ECG",
                    h3("ECG Monitoring"),
                    br(),
-                   img(src="Normal_Sinus_Rhythm_Unlabeled.jpg")
+                   sliderInput("sliderECG", "Observations:",
+                               min = 0, max = 5000, value = 0, step = 10, animate = animationOptions( interval = 300, loop = TRUE)
+                   ),
+                   plotOutput("plotECG")
+
+                   # img(src="Normal_Sinus_Rhythm_Unlabeled.jpg")
                    # Normal_Sinus_Rhythm_Unlabeled.jpg
                    # p("The heart rhythm is irregular. The P wave morphology is abnormal with negative P waves in the inferior leads, an almost negative P wave in lead I and a positive P wave in lead aVR. This indicates a lower left atrial origin. The cycle length of this rhythm is 640 ms (rate slightly lower than 100 beats/min). The wide intervals on the ECG result from a blocked atrial impulse every fourth beat. The block is at the level of the origin of the atrial impulse, i.e. an exit block of the focal impulse. Atrioventricular and ventricular conduction are normal. Repolarisation is abnormal and might be explained by the use of digoxin. Atrial tachycardia with AV block might be seen in the setting of toxic digoxin concentrations but in this case the level of block is not at the atrioventricular junction. So, there is no reason to consider this cause. Electrical cardioversion could bring this abnormal rhythm back to normal sinus rhythm.")
                    # fluidRow(
@@ -145,7 +169,15 @@ ui <- fluidPage(
                       column(2, style = "margin-top: 25px;",actionButton("actChatSysB", label = "System Chat B") ),
                       column(2, style = "margin-top: 25px;",actionButton("actChatUser", label = "User Chat") )
                     )
-           )
+           ),
+          tabPanel("FAQ",
+                   h3("FAQs for patients (when they do not use the chat)"),
+                   br()
+          ),
+          tabPanel("Feedback",
+                   h3("Link to feedback questionnaires"),
+                   br()
+          )
            # tabPanel("Data",
            #          fluidRow(
            #            column(2, verbatimTextOutput("outWeeksRange")),
@@ -225,15 +257,15 @@ dashboard.bp<-function(period){
   week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
   year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
   ymin<-60
-  ymax.c271649006<-100
+  ymax.dia<-100
   ymax<-150
   yint1<-80
   yint2<-120
 
   if (period=="month"){
     ggplot() +
-      stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "blue", geom = "line") +
-      stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "red", geom = "line") +
+      stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "blue", geom = "line") +
+      stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "red", geom = "line") +
       xlab("Dates") +
       ylab("Blood pressure") +
       theme_bw() +
@@ -242,18 +274,18 @@ dashboard.bp<-function(period){
       guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
   }
   else if(period=="week"){
-    g1<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.c271649006) +
+    g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
       geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
       labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
-    g2<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
+    g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
       geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
       labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
     plot_grid(g1,g2,labels = "AUTO")
   }
   else {
     ggplot(bp2, aes(datem))+
-      geom_line(aes(y=bp2$c271650006, colour="Systolic"))+
-      geom_line(aes(y=bp2$c271649006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
+      geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
+      geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
       xlab("Date") + ylab("Measurment")
 
   }
@@ -356,6 +388,32 @@ mycates<-function(interv){
     p
   })
 
+
+
+  output$plotECG <- renderPlot({
+    rawECG <- read_file("../data/vitalpatch_ecg_data_short-sample.txt")
+    tidyECG <- gsub("[0-9]{13},","", rawECG)
+    tidyECG <- gsub(",","\n", tidyECG)
+    ECGtable = read_csv(tidyECG, col_names = F)
+    ECGtable <- ECGtable %>% mutate(id = row_number())
+    ECGtable %>%
+      filter(between(id, input$sliderECG, input$sliderECG + 500 ) ) %>%
+      ggplot(aes(x=id, y=X1)) +
+      geom_line() +
+      theme(
+        panel.background = element_rect(fill = NA),
+        panel.grid.major = element_line(colour = "grey50"),
+        panel.ontop = TRUE
+      ) +
+      # theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+      scale_y_continuous(name="mV", labels = scales::unit_format(unit = "", scale = 1e-0, sep = "")) +
+      scale_x_discrete(name="Observations")
+      # labs(title = "National Portfolio Organisations in England", subtitle = "2012 - 2022")
+  })
+
+
+
+
   observeEvent(input$actChatUser, {
     triggerId <- paste(  "/p1u", input$inDevice, sep=" ")  # Replace with dialogueId, e.g. p1u
     cat(triggerId ,file="/home/kai/r_shiny_write/trigger.csv", append=TRUE) # False causes file truncated error in NodeRed
@@ -370,6 +428,38 @@ mycates<-function(interv){
     triggerId <- paste( "/p1sb", input$inDevice, sep=" ")
     cat(triggerId ,file="/home/kai/r_shiny_write/trigger.csv", append=TRUE) # False causes file truncated error in NodeRed
   })
+
+
+  # Info Boxes
+  # https://fontawesome.com/icons?d=gallery&c=emoji&m=free for icons
+  output$boxBP <- renderValueBox({
+    valueBox(
+      "Blood Pressure", paste0("135/85", " mmHg"), icon = icon("thumbs-up"), color = "orange"
+    )
+  })
+  output$boxHR <- renderValueBox({
+    valueBox(
+      "Heart Rate", paste0(135, " bpm"), icon = icon("thumbs-up"), color = "green"
+    )
+  })
+  output$boxECG <- renderValueBox({
+    valueBox(
+      "ECG", paste0("Normal", ""), icon = icon("stethoscope"), color = "green"
+    )
+  })
+  output$boxMood <- renderValueBox({
+    valueBox(
+      "Mood", paste0("Positive", ""), icon = icon("grin-alt"), color = "green"
+    )
+  })
+  output$boxPain <- renderValueBox({
+    valueBox(
+      "Pain", paste0("4", " on scale of 1 to 5"), icon = icon("ambulance"), color = "red"
+    )
+  })
+
+
+
 }
 
 # Run the application

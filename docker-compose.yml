@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+
+  proxy:
+    build:
+      context: ./proxy
+    tty: true
+    command: ["./wait-for-it.sh", "--timeout=0", "ui_app_1:8080", "--", "nginx", "-g", "daemon off;"]
+    depends_on:
+      - app
+    ports:
+      - '443:443'
+      - '80:80'
+
+  app:
+    build:
+      context: shinyproxy
+    depends_on:
+      - dns
+
+  # Uncomment for standlone shiny dashboard:
+  #dashboard:
+  #  build:
+  #    context: .
+  #  image: consult-kcl/dashboard
+  #  environment:
+  #    - MESSAGE_PASSER_URL=danvers
+  #    - CURL_CA_BUNDLE=/root/consult.crt
+  #  ports:
+  #    - 3838:3838
+  #  dns:
+  #    - 172.22.0.100
+  #  depends_on:
+  #    - dns
+
+  # Hack for self-signed CA certificates, because the 'extra_hosts' directive is not possible in the shinyproxy app specification. So use dnsmasq service as proxy, and reference its IP in the application.yml config.
+  dns:
+    build:
+      context: dns
+    cap_add:
+      - NET_ADMIN
+    # Supply typical self-signed CA host information mapping here rather than in container directly.
+    extra_hosts:
+      - danvers:192.168.99.102
+    networks:
+      default:
+        ipv4_address: 172.22.0.100
+
+networks:
+  default:
+    name: ui-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.22.0.0/16
