@@ -1,6 +1,6 @@
 # UI (ui)
 
-
+User interface backend.
 
 ## Getting Started
 
@@ -8,26 +8,26 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Before starting, [download and install python](https://www.python.org/downloads/), [pip](https://packaging.python.org/tutorials/installing-packages/#use-pip-for-installing), [virtualenv](https://virtualenv.pypa.io/en/latest/installation/) and [Node.js](https://nodejs.org/en/download/).
+Before starting, [download and install shiny]().
 
 ### Other service communication
 
-Receives messages from: fhir-server ([install](https://github.kcl.ac.uk/consult/fhir-server/blob/master/README.md)) ...
+Receives messages from: message-passer ([install]()) ...
 
-Sends messages to: data-miner ([install](https://github.kcl.ac.uk/consult/data-miner/blob/master/README.md)), fhir-server ([install](https://github.kcl.ac.uk/consult/fhir-server/blob/master/README.md)), dialogue-manager ([install](https://github.kcl.ac.uk/consult/dialogue-manager/blob/native-js/README.md)), UI ([install](https://github.kcl.ac.uk/consult/UI/blob/shiny-simplified/README.md)) ...
+Sends messages to: message-passer ([install]()) ...
 
 ## Download
 
 (Recommended) [Create an SSH key](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and clone this repository.
 
 ```
-git clone git@github.kcl.ac.uk:consult/message-passer.git
+git clone git@github.kcl.ac.uk:consult/ui.git
 ```
 
 (Alternative) Clone this repository using HTTPs, suppling username and password:
 
 ```
-git clone https://github.kcl.ac.uk/consult/message-passer.git
+git clone https://github.kcl.ac.uk/consult/ui.git
 ```
 
 ## Documentation
@@ -47,7 +47,29 @@ git push
 ```
 ## Building and Running
 
-ShinyProxy operates by controlling access to a dockerised version of a Shiny application, which in this case is the CONSULT dashboard.
+To run locally, a shiny server (service) is required, with the content of `dashboard` loaded at the appropriate route (e.g. `/srv/shiny-server/dashboard`).
+
+Repository updates can be copied to a location like this using [copy-shiny.sh](copy-shiny.sh).
+
+Environment variables, which are populated during production by ShinyProxy and Docker, should be specified in the shiny server user's R environemnt variable file (`.Renviron`):
+
+```
+MESSAGE_PASSER_PROTOCOL=[protocol]
+MESSAGE_PASSER_URL=[url]
+SHINYPROXY_USERNAME=[patient ID known to the message-passer]
+```
+
+Alternatively, the shiny application can be run as a standalone docker image. Uncomment the appropriate lines in [docker-compose.yml](docker-compose.yml), and then run:
+
+```
+docker-compose up dashboard
+```
+
+## Running the tests
+
+## Deployment
+
+In production, login is handled by [ShinyProxy](), which operates by controlling access to a dockerised version of a Shiny application, which in this case is the CONSULT dashboard.
 
 To dockerise the CONSULT dashboard run
 
@@ -64,13 +86,9 @@ docker-compose build
 docker-compose up -d
 ```
 
-## Running the tests
-
-## Deployment
-
-
 ## Built With
 
+* [Shiny]() -
 * [ShinyProxy]() -
 
 ## Contributing

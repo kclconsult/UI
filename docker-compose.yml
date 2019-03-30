@@ -18,6 +18,10 @@ services:
       context: shinyproxy
     depends_on:
       - dns
+    environment:
+      - CURL_CA_BUNDLE=/root/consult.crt
+    extra_hosts:
+      - danvers:192.168.99.102
 
   # Uncomment for standlone shiny dashboard:
   #dashboard:
@@ -26,6 +30,8 @@ services:
   #  image: consult-kcl/dashboard
   #  environment:
   #    - MESSAGE_PASSER_URL=danvers
+  #    - MESSAGE_PASSER_PROTOCOL=https://
+  #    - SHINYPROXY_USERNAME=[patient ID from system]
   #    - CURL_CA_BUNDLE=/root/consult.crt
   #  ports:
   #    - 3838:3838

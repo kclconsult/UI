@@ -4,13 +4,12 @@ proxy:
   heartbeat-rate: 20000
   heartbeat-timeout: 60000
   port: 8080
-  authentication: simple
-  admin-groups: scientists
-  # Example: 'simple' authentication configuration
-  users:
-  - name: 3
-    password: password
-    groups: scientists
+  authentication: ldap
+  ldap:
+    url: ldaps://danvers/dc=consult,dc=kcl,dc=ac,dc=uk
+    user-dn-pattern: uid={0}
+    manager-dn: cn=admin,dc=consult,dc=kcl,dc=ac,dc=uk
+    manager-password: root
   docker:
     url: https://192.168.99.105:2376
     cert-path: certs/
@@ -22,9 +21,9 @@ proxy:
     display-name: Dashboard
     container-cmd: ["R", "-e", "shiny::runApp('/root/dashboard')"]
     container-image: consult-kcl/dashboard
-    access-groups: scientists
     container-env:
       MESSAGE_PASSER_URL: danvers
+      MESSAGE_PASSER_PROTOCOL: https://
       CURL_CA_BUNDLE: /root/consult.crt
     container-network: ui-network
     container-dns: ["172.22.0.100"]
@@ -37,3 +36,5 @@ server:
 logging:
   file:
     shinyproxy.log
+  level:
+    org.springframework.security.ldap: DEBUG
