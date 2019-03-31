@@ -7,7 +7,7 @@ proxy:
   authentication: ldap
   ldap:
     url: ldaps://danvers/dc=consult,dc=kcl,dc=ac,dc=uk
-    user-dn-pattern: uid={0}
+    user-dn-pattern: cn={0}
     manager-dn: cn=admin,dc=consult,dc=kcl,dc=ac,dc=uk
     manager-password: root
   docker:
