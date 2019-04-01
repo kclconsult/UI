@@ -188,11 +188,11 @@ server <- function(input, output) {
 ##-- Isabel Functions --##
 
 # Isabel data bp2 #
-bpColClasses <- c(datem="Date", date.month="Date")
+colClasses <- c(datem="Date", date.month="Date")
 messagePasserHostProtocol <- Sys.getenv("MESSAGE_PASSER_PROTOCOL")
 messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
-messagePasserAddress <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
-bp2<-read.table(messagePasserAddress, header=TRUE, colClasses=bpColClasses) # bp2 table
+bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
+bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
 rownames(bp2) <- 1:nrow(bp2);
 daily.c8867h4<-read.csv("data/daily_hr-isabel-table.csv") # daily.c8867h4 table
 risk.evidence<-read.csv("data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
@@ -389,12 +389,13 @@ mycates<-function(interv){
     p
   })
 
-
+  ecgEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/131328/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
+  ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
+  rownames(ecg) <- 1:nrow(ecg);
 
   output$plotECG <- renderPlot({
-    rawECG <- read_file("../data/vitalpatch_ecg_data_short-sample.txt")
-    tidyECG <- gsub("[0-9]{13},","", rawECG)
-    tidyECG <- gsub(",","\n", tidyECG)
+    rawECG <- ecg$c131389
+    tidyECG <- gsub(" ","\n", rawECG)
     ECGtable = read_csv(tidyECG, col_names = F)
     ECGtable <- ECGtable %>% mutate(id = row_number())
     ECGtable %>%
