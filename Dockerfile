@@ -22,7 +22,7 @@ RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-proje
 
 # install dependencies of the consult app
 RUN R -e "install.packages('Rmpfr', repos='https://cloud.r-project.org/')"
-RUN R -e "install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'tidyverse', 'shinydashboard'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'tidyverse', 'shinydashboard', 'RCurl'), repos='https://cloud.r-project.org/')"
 
 # copy the app to the image
 RUN mkdir /root/dashboard

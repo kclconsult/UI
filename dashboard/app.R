@@ -10,6 +10,7 @@ library(cowplot)
 library(personograph)
 library(tidyverse)
 library(shinydashboard)
+library(RCurl)
 
 # tabSteps <- fread("/home/kai/posture/data/dummy-data_transformed20180909.csv")
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
@@ -185,236 +186,172 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-##-- Isabel Functions --##
+  ##-- Isabel Functions --##
 
-# Isabel data bp2 #
-colClasses <- c(datem="Date", date.month="Date")
-messagePasserHostProtocol <- Sys.getenv("MESSAGE_PASSER_PROTOCOL")
-messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
-bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
-bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
-rownames(bp2) <- 1:nrow(bp2);
-daily.c8867h4<-read.csv("data/daily_hr-isabel-table.csv") # daily.c8867h4 table
-risk.evidence<-read.csv("data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
+  # Isabel data bp2 #
+  colClasses <- c(datem="Date", date.month="Date")
+  messagePasserHostProtocol <- Sys.getenv("MESSAGE_PASSER_PROTOCOL")
+  messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
+  bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
+  hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  dashboard.c8867h4<-function(period){
-    y_name<-paste("Heart Rate")
-    daily.plot.title<-paste("Heart Rate last 24 hours")
-    month.plot.title<-paste("Trend for Heart Rate")
-    week.plot.title<-paste("Weekday plots for Heart Rate")
-    year.plot.title<-paste("Trend over time for Heart Rate")
-    ymin<-50
-    ymax<-90
-    yint<-70
-    ymax.day<-120
-    labels<-seq(0,72, by=6)
-    if (period=="month"){
-      print(ggplot(data = bp2, aes(date.month, c8867h4)) + stat_summary(fun.y= mean,  geom = "line")
-            +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
-            + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
-              scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
+  if ( url.exists(bpEndpoint) && url.exists(hrEndpoint) ) {
+
+    bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
+    rownames(bp2) <- 1:nrow(bp2);
+    daily.c8867h4<-read.table(hrEndpoint, header=TRUE, colClasses=colClasses) # daily.c8867h4 table
+    rownames(daily.c8867h4) <- 1:nrow(daily.c8867h4);
+    daily.c8867h4 <- daily.c8867h4 %>% mutate(sq = row_number())
+
+    dashboard.c8867h4<-function(period){
+      y_name<-paste("Heart Rate")
+      daily.plot.title<-paste("Heart Rate last 24 hours")
+      month.plot.title<-paste("Trend for Heart Rate")
+      week.plot.title<-paste("Weekday plots for Heart Rate")
+      year.plot.title<-paste("Trend over time for Heart Rate")
+      ymin<-50
+      ymax<-90
+      yint<-70
+      ymax.day<-120
+      labels<-seq(0,72, by=6)
+      if (period=="month"){
+        print(ggplot(data = bp2, aes(date.month, c8867h4)) + stat_summary(fun.y= mean,  geom = "line")
+              +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
+              + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
+                scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
+      }
+      else if (period=="year"){
+        print(ggplot(data=bp2, aes_string(bp2$datem, bp2$c8867h4)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
+          geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" )+
+          labs(title = year.plot.title, x="Date", y=y_name)
+      }
+      else {
+        print(ggplot(data=daily.c8867h4, aes(y=c8867h4, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
+          geom_hline(aes(yintercept =yint),colour="grey", linetype="dashed" ) +
+          geom_hline(aes(yintercept =ymax),colour="grey", linetype="dashed" ) +
+          geom_vline(aes(xintercept=12), colour="blue", linetype="dashed")  +
+          geom_vline(aes(xintercept=24), colour="blue", linetype="dashed")  +
+          geom_vline(aes(xintercept=36), colour="blue", linetype="dashed")  +
+          geom_vline(aes(xintercept=48), colour="blue", linetype="dashed")  +
+          geom_vline(aes(xintercept=60), colour="blue", linetype="dashed")  +
+          annotate("text", x=12, y=50, label="12 noon")+
+          annotate("text", x=24, y=50, label="4 pm")+
+          annotate("text", x=36, y=50, label="6 pm")+
+          annotate("text", x=48, y=50, label="midnight")+
+          annotate("text", x=60, y=50, label="4 am")+
+          theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
+          labs(title=daily.plot.title, x = "time", y="Heart Rate"))
+      }
     }
-    else if (period=="year"){
-      print(ggplot(data=bp2, aes_string(bp2$datem, bp2$c8867h4)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
-        geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" )+
-        labs(title = year.plot.title, x="Date", y=y_name)
+
+    dashboard.c8867h4.stats<-function(){
+      resting.c8867h4<-tail(daily.c8867h4$c8867h4, n=1)
+      cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
+      mean.c8867h4<-mean(daily.c8867h4$c8867h4)
+      cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
+      mean.c8867h4.year<-mean(head(bp2$c8867h4, n=30))
+      cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
     }
-    else {
-      print(ggplot(data=daily.c8867h4, aes(y=c8867h4.day, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
-              geom_hline(aes(yintercept =yint),colour="grey", linetype="dashed" ) +
-              geom_hline(aes(yintercept =ymax),colour="grey", linetype="dashed" ) +
-              geom_vline(aes(xintercept=12), colour="blue", linetype="dashed")  +
-              geom_vline(aes(xintercept=24), colour="blue", linetype="dashed")  +
-              geom_vline(aes(xintercept=36), colour="blue", linetype="dashed")  +
-              geom_vline(aes(xintercept=48), colour="blue", linetype="dashed")  +
-              geom_vline(aes(xintercept=60), colour="blue", linetype="dashed")  +
-              annotate("text", x=12, y=50, label="12 noon")+
-              annotate("text", x=24, y=50, label="4 pm")+
-              annotate("text", x=36, y=50, label="6 pm")+
-              annotate("text", x=48, y=50, label="midnight")+
-              annotate("text", x=60, y=50, label="4 am")+
-              theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
-              labs(title=daily.plot.title, x = "time", y="Heart Rate"))
+
+    output$plotHR <- renderPlot({ dashboard.c8867h4(period = input$radioHRTimeframe) }  ) # month,year,day
+    output$printHR <- renderPrint({ dashboard.c8867h4.stats() }  )
+
+    dashboard.bp<-function(period) {
+
+      y1_name<-paste("Diastolic Blood Pressure")
+      y2_name<-paste("Systolic Blood Pressure")
+      month.plot.title<-paste("Trend for Diastolic and Sistolic Blood Pressure")
+      week.plot.title1<-paste("Weekday plots for Diastolic Blood Pressure")
+      week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
+      year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
+      ymin<-60
+      ymax.dia<-100
+      ymax<-150
+      yint1<-80
+      yint2<-120
+
+      if (period=="month"){
+        ggplot() +
+          stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "blue", geom = "line") +
+          stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "red", geom = "line") +
+          xlab("Dates") +
+          ylab("Blood pressure") +
+          theme_bw() +
+          ggtitle("Systolic and Diastolic Blood Pressure") +
+          scale_colour_manual(name='', values = c("SBP"="blue", "DBP"="red"), guide='legend') +
+          guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
+      }
+      else if(period=="week"){
+        g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
+          geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
+          labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
+        g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
+          geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
+          labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
+        plot_grid(g1,g2,labels = "AUTO")
+      }
+      else {
+        ggplot(bp2, aes(datem))+
+          geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
+          geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
+          xlab("Date") + ylab("Measurment")
+
+      }
+
     }
-  }
 
-  dashboard.c8867h4.stats<-function(){
-    resting.c8867h4<-tail(daily.c8867h4$c8867h4.day, n=1)
-    cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
-    mean.c8867h4<-mean(daily.c8867h4$c8867h4.day)
-    cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
-    mean.c8867h4.year<-mean(head(bp2$c8867h4, n=30))
-    cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
-  }
-
-output$plotHR <- renderPlot({ dashboard.c8867h4(period = input$radioHRTimeframe) }  ) # month,year,day
-output$printHR <- renderPrint({ dashboard.c8867h4.stats() }  )
-
-dashboard.bp<-function(period){
-  y1_name<-paste("Diastolic Blood Pressure")
-  y2_name<-paste("Systolic Blood Pressure")
-  month.plot.title<-paste("Trend for Diastolic and Sistolic Blood Pressure")
-  week.plot.title1<-paste("Weekday plots for Diastolic Blood Pressure")
-  week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
-  year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
-  ymin<-60
-  ymax.dia<-100
-  ymax<-150
-  yint1<-80
-  yint2<-120
-
-  if (period=="month"){
-    ggplot() +
-      stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "blue", geom = "line") +
-      stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "red", geom = "line") +
-      xlab("Dates") +
-      ylab("Blood pressure") +
-      theme_bw() +
-      ggtitle("Systolic and Diastolic Blood Pressure") +
-      scale_colour_manual(name='', values = c("SBP"="blue", "DBP"="red"), guide='legend') +
-      guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
-  }
-  else if(period=="week"){
-    g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
-      geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
-      labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
-    g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
-      geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
-      labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
-    plot_grid(g1,g2,labels = "AUTO")
-  }
-  else {
-    ggplot(bp2, aes(datem))+
-      geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
-      geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
-      xlab("Date") + ylab("Measurment")
+    output$plotBP <- renderPlot({ dashboard.bp(period = input$radioBPTimeframe) }  ) # week, month, year
 
   }
-}
 
-output$plotBP <- renderPlot({ dashboard.bp(period = input$radioBPTimeframe) }  ) # week, month, year
-
-
-mycates<-function(interv){
-  a<-risk.evidence$tr.risk[risk.evidence$intervention==interv]
-  values<-list(stroke=a, none=(1-a))
-  values.baseline<-list(stroke=0.07, none=(1-0.07))
-  par(mfrow=c(1,2)) #does not work at present version
-  personograph(values.baseline, fig.title = "Baseline", fig.cap = "Risk Estimate", draw.legend = T,
-               colors=list(stroke="red", none="blue"),n.icons = 100, icon.style = 2, force.fill = 'most')
-  personograph(values, fig.title = paste(interv,"Intervention"),fig.cap = "Risk Estimate", draw.legend = T,
-               colors=list(stroke="red", none="blue"), n.icons = 100, icon.style = 2, force.fill = 'most')
-  return(a)
-}
-# mycates("Stop Smoking")
-# mycates("Lower BP")
-# mycates("Lower Cholesterol")
-# mycates("Antiplatelet")
+  risk.evidence<-read.csv("data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
+  mycates<-function(interv){
+    a<-risk.evidence$tr.risk[risk.evidence$intervention==interv]
+    values<-list(stroke=a, none=(1-a))
+    values.baseline<-list(stroke=0.07, none=(1-0.07))
+    par(mfrow=c(1,2)) #does not work at present version
+    personograph(values.baseline, fig.title = "Baseline", fig.cap = "Risk Estimate", draw.legend = T,
+                 colors=list(stroke="red", none="blue"),n.icons = 100, icon.style = 2, force.fill = 'most')
+    personograph(values, fig.title = paste(interv,"Intervention"),fig.cap = "Risk Estimate", draw.legend = T,
+                 colors=list(stroke="red", none="blue"), n.icons = 100, icon.style = 2, force.fill = 'most')
+    return(a)
+  }
+  # mycates("Stop Smoking")
+  # mycates("Lower BP")
+  # mycates("Lower Cholesterol")
+  # mycates("Antiplatelet")
 
 
-##------------------------------##
-
-#  currSteps <- reactive({
-#    tabSteps[Day >= (input$inWeeksRange[1]-1)*7+1 & Day <= (input$inWeeksRange[2])*7 ]})
-  currData <- reactive({
-    t <- tabData[Day >= (input$inWeeksRange[1]-1)*7+1 & Day <= (input$inWeeksRange[2])*7 ]
-    t
-    })
-
-  output$outWeeksRange <- renderPrint({ input$inWeeksRange })
-  output$outView <- renderPrint({ input$inView })
-  output$outLocation <- renderPrint({ input$inLocation })
-  output$outBootUsage <- renderPrint({ input$inBootUsage })
-  output$outPatientId <- renderPrint({ input$inPatientId })
-  output$outStepsBootLoc <- DT::renderDataTable({ DT::datatable(currData() ) })
-
-  output$plotTempBoot <- renderPlotly({
-    # f <- list( family = "Courier New, monospace", size = 18, color = "#7f7f7f" )
-    # titlefont = f,
-    xTitle = paste0("Days of Week ", input$inWeeksRange[1], " to Week ", input$inWeeksRange[2])
-
-    xf <- list(title = xTitle, fixedrange=TRUE,
-               tickvals=1:84, ticktext=rep(c("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"), times=12, each=1) # Day names instead of numbers
-               ) # fixrange: disable zoom
-    yf <- list(fixedrange=TRUE)
-
-      pTemp <- plot_ly(currData(), x = ~Day, y = ~tempDiff) %>%
-        add_lines(name = ~"Temp Diff") %>%
-        layout(yaxis= list(title = "Temperature" , ticksuffix="°C" , tickformat =".1f"),  font = list(size = 14) ) # <br>Difference
-
-      # pSteps <- plot_ly(currData(), x = ~Day, y = ~stepsHomeBooton, name = ~"Home Boot On",
-      #                   type = 'bar', marker = list( color = 'blue4') ) %>%
-      pSteps <- plot_ly(currData(), x = ~Day ) %>%
-        add_bars(y = ~stepsHomeBooton, name = ~"Home Boot On", marker = list( color = colorList[1]) ) %>%
-        add_bars(y = ~stepsHomeBootoff, name = ~"Home Boot Off", marker = list( color = colorList[2] ) ) %>%
-        add_bars(y = ~stepsWorkBooton, name = ~"Work Boot On", marker = list( color = colorList[3])) %>%
-        add_bars(y = ~stepsWorkBootoff, name = ~"Work Boot Off", marker = list( color = colorList[4])) %>%
-        add_bars(y = ~stepsElsewhereBooton, name = ~"Out Boot On", marker = list( color = colorList[5])) %>%
-        add_bars(y = ~stepsElsewhereBootoff, name = ~"Out Boot Off", marker = list( color = colorList[6]) )  %>%
-        layout(yaxis= list(title = "Steps / Day", tickformat ="d"), barmode = 'stack',  font = list(size = 14) )
-
-      p <- subplot(pTemp, pSteps, nrows = 2, shareX = T, titleY=TRUE, heights = c(0.2, 0.8) , margin = 0.06 ) %>%
-      layout(legend = list(orientation = 'h', y=-.4 , traceorder="normal", font = list(size = 14) ))  %>%
-      config(displayModeBar = F) %>% # Disable toolbar
-      layout(xaxis= xf) %>% layout(yaxis= yf) %>%
-        layout(autosize = T, height = 500) # modify general height
-
-      p
-  })
-
-  output$plotStepsDay <- renderPlotly({
-    t <- tabData[Day == (input$inDay)]
-    v <- c(t[,stepsHomeBooton],t[,stepsHomeBootoff],t[,stepsWorkBooton],t[,stepsWorkBootoff],t[,stepsElsewhereBooton],t[,stepsElsewhereBootoff])
-    l <- c("Home Boot On","Home Boot Off","Work Boot On","Work Boot Off", "Out Boot On","Out Boot Off")
-    p <- plot_ly(t,
-                 labels = l,
-                 values = v,
-                 type = 'pie',
-                 textposition = 'inside',
-                 textinfo = 'label+percent',
-                 insidetextfont = list(color = '#FFFFFF'),
-                 hoverinfo = 'text',
-                 text = ~paste('', v, ' steps'),
-                 marker = list(colors = colorList,
-                               line = list(color = '#FFFFFF', width = 1)),
-                 showlegend = FALSE
-                 ) %>%
-      config(displayModeBar = F) %>% # Disable toolbar
-      layout( title = 'Steps with/without Boot by Location',
-              # margin=list(l = 0, r = 0, b = 00, t = 00, pad = 0 ),
-             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE, fixedrange=TRUE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE, fixedrange=TRUE),
-             autosize = F, width = 500, height = 500
-      )
-    p
-  })
+  ##------------------------------##
 
   ecgEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/131328/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
-  ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
-  rownames(ecg) <- 1:nrow(ecg);
 
-  output$plotECG <- renderPlot({
-    rawECG <- ecg$c131389
-    tidyECG <- gsub(" ","\n", rawECG)
-    ECGtable = read_csv(tidyECG, col_names = F)
-    ECGtable <- ECGtable %>% mutate(id = row_number())
-    ECGtable %>%
-      filter(between(id, input$sliderECG, input$sliderECG + 500 ) ) %>%
-      ggplot(aes(x=id, y=X1)) +
-      geom_line() +
-      theme(
-        panel.background = element_rect(fill = NA),
-        panel.grid.major = element_line(colour = "grey50"),
-        panel.ontop = TRUE
-      ) +
-      # theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_y_continuous(name="mV", labels = scales::unit_format(unit = "", scale = 1e-0, sep = "")) +
-      scale_x_discrete(name="Observations")
-      # labs(title = "National Portfolio Organisations in England", subtitle = "2012 - 2022")
-  })
+  if ( url.exists(ecgEndpoint) ) {
 
+    ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
+    rownames(ecg) <- 1:nrow(ecg);
 
+    output$plotECG <- renderPlot({
+      rawECG <- ecg$c131389
+      tidyECG <- gsub(" ","\n", rawECG)
+      ECGtable = read_csv(tidyECG, col_names = F)
+      ECGtable <- ECGtable %>% mutate(id = row_number())
+      ECGtable %>%
+        filter(between(id, input$sliderECG, input$sliderECG + 500 ) ) %>%
+        ggplot(aes(x=id, y=X1)) +
+        geom_line() +
+        theme(
+          panel.background = element_rect(fill = NA),
+          panel.grid.major = element_line(colour = "grey50"),
+          panel.ontop = TRUE
+        ) +
+        # theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+        scale_y_continuous(name="mV", labels = scales::unit_format(unit = "", scale = 1e-0, sep = "")) +
+        scale_x_discrete(name="Observations")
+        # labs(title = "National Portfolio Organisations in England", subtitle = "2012 - 2022")
+    })
 
+  }
 
   observeEvent(input$actChatUser, {
     triggerId <- paste(  "/p1u", input$inDevice, sep=" ")  # Replace with dialogueId, e.g. p1u
@@ -430,7 +367,6 @@ mycates<-function(interv){
     triggerId <- paste( "/p1sb", input$inDevice, sep=" ")
     cat(triggerId ,file="/home/kai/r_shiny_write/trigger.csv", append=TRUE) # False causes file truncated error in NodeRed
   })
-
 
   # Info Boxes
   # https://fontawesome.com/icons?d=gallery&c=emoji&m=free for icons
@@ -459,8 +395,6 @@ mycates<-function(interv){
       "Pain", paste0("4", " on scale of 1 to 5"), icon = icon("ambulance"), color = "red"
     )
   })
-
-
 
 }
 

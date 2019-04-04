@@ -10,3 +10,4 @@ cowplot
 personograph
 tidyverse
 shinydashboard
+RCurl
