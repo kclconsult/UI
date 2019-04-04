@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libssh2-1-dev \
     libssl1.0.0
 
-# system library dependency for the euler app
+# system library dependency for the app
 RUN apt-get update && apt-get install -y \
     libmpfr-dev \
     libxml2-dev

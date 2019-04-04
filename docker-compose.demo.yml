@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+
+  proxy:
+    build:
+      context: ./proxy
+    tty: true
+    command: ["./wait-for-it.sh", "--timeout=0", "ui_app_1:8080", "--", "nginx", "-g", "daemon off;"]
+    depends_on:
+      - app
+    ports:
+      - '8000:443'
+
+  app:
+    build:
+      context: shinyproxy
+    depends_on:
+      - dns
+    environment:
+      - CURL_CA_BUNDLE=/root/consult.crt
+    extra_hosts:
+      - danvers:172.21.0.1
+    volumes:
+      # Shinyproxy needs access from its container to the host daemon in order to launch dashboard in a new container. When running on a single host, we mount the docker socket in the image (fast, secure local way to connect to the docker daemon), and prompt the use of this connection by removing any docker url information in application.yml. If the IP of the host, and thus its daemon, is known (e.g. it is a docker-machine), or TCP is required (e.g. swarm mode, or remote machine) then TCP connections can be made to the daemon instead, and this can be specified in application.yml.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  dns:
+    build:
+      context: dns
+    cap_add:
+      - NET_ADMIN
+    extra_hosts:
+      - danvers:172.21.0.1
+    networks:
+      default:
+        ipv4_address: 172.23.0.100
+
+networks:
+  default:
+    name: ui_network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.23.0.0/16
