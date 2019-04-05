@@ -1,4 +1,5 @@
 library(shiny)
+library(RCurl)
 library(data.table)
 library(DT)
 library(plotly)
@@ -10,7 +11,6 @@ library(cowplot)
 library(personograph)
 library(tidyverse)
 library(shinydashboard)
-library(RCurl)
 
 # tabSteps <- fread("/home/kai/posture/data/dummy-data_transformed20180909.csv")
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
@@ -195,7 +195,7 @@ server <- function(input, output) {
   bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
   hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  if ( url.exists(bpEndpoint) && url.exists(hrEndpoint) ) {
+  if ( url.exists(bpEndpoint, cainfo="/root/consult.crt") && url.exists(hrEndpoint, cainfo="/root/consult.crt") ) {
 
     bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
     rownames(bp2) <- 1:nrow(bp2);
@@ -255,6 +255,13 @@ server <- function(input, output) {
 
     output$plotHR <- renderPlot({ dashboard.c8867h4(period = input$radioHRTimeframe) }  ) # month,year,day
     output$printHR <- renderPrint({ dashboard.c8867h4.stats() }  )
+
+  }
+
+  if ( url.exists(bpEndpoint, cainfo="/root/consult.crt") ) {
+
+    bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
+    rownames(bp2) <- 1:nrow(bp2);
 
     dashboard.bp<-function(period) {
 
@@ -326,7 +333,7 @@ server <- function(input, output) {
 
   ecgEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/131328/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  if ( url.exists(ecgEndpoint) ) {
+  if ( url.exists(ecgEndpoint, cainfo="/root/consult.crt") ) {
 
     ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
     rownames(ecg) <- 1:nrow(ecg);
