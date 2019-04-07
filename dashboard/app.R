@@ -195,7 +195,7 @@ server <- function(input, output) {
   bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
   hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  if ( url.exists(bpEndpoint, cainfo="/root/consult.crt") && url.exists(hrEndpoint, cainfo="/root/consult.crt") ) {
+  if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) && url.exists(hrEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
     bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
     rownames(bp2) <- 1:nrow(bp2);
@@ -210,20 +210,20 @@ server <- function(input, output) {
       week.plot.title<-paste("Weekday plots for Heart Rate")
       year.plot.title<-paste("Trend over time for Heart Rate")
       ymin<-50
-      ymax<-90
+      ymax<-200
       yint<-70
-      ymax.day<-120
+      ymax.day<-200
       labels<-seq(0,72, by=6)
       if (period=="month"){
-        print(ggplot(data = bp2, aes(date.month, c8867h4)) + stat_summary(fun.y= mean,  geom = "line")
-              +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
-              + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
-                scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
-      }
-      else if (period=="year"){
         print(ggplot(data=bp2, aes_string(bp2$datem, bp2$c8867h4)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
           geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" )+
           labs(title = year.plot.title, x="Date", y=y_name)
+      }
+      else if (period=="year"){
+        print(ggplot(data = bp2, aes(date.month, c8867h4)) + stat_summary(fun.y= mean,  geom = "line")
+                +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
+                + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
+                  scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
       }
       else {
         print(ggplot(data=daily.c8867h4, aes(y=c8867h4, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
@@ -258,7 +258,7 @@ server <- function(input, output) {
 
   }
 
-  if ( url.exists(bpEndpoint, cainfo="/root/consult.crt") ) {
+  if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
     bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
     rownames(bp2) <- 1:nrow(bp2);
@@ -272,12 +272,27 @@ server <- function(input, output) {
       week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
       year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
       ymin<-60
-      ymax.dia<-100
-      ymax<-150
+      ymax.dia<-200
+      ymax<-200
       yint1<-80
       yint2<-120
 
-      if (period=="month"){
+      if(period=="week"){
+        g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
+          geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
+          labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
+        g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
+          geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
+          labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
+        plot_grid(g1,g2,labels = "AUTO")
+      }
+      else if (period=="month"){
+        ggplot(bp2, aes(datem))+
+          geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
+          geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
+          xlab("Date") + ylab("Measurment")
+      }
+      else {
         ggplot() +
           stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "blue", geom = "line") +
           stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "red", geom = "line") +
@@ -288,23 +303,6 @@ server <- function(input, output) {
           scale_colour_manual(name='', values = c("SBP"="blue", "DBP"="red"), guide='legend') +
           guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
       }
-      else if(period=="week"){
-        g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
-          geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
-          labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
-        g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
-          geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
-          labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
-        plot_grid(g1,g2,labels = "AUTO")
-      }
-      else {
-        ggplot(bp2, aes(datem))+
-          geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
-          geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
-          xlab("Date") + ylab("Measurment")
-
-      }
-
     }
 
     output$plotBP <- renderPlot({ dashboard.bp(period = input$radioBPTimeframe) }  ) # week, month, year
@@ -333,7 +331,7 @@ server <- function(input, output) {
 
   ecgEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/131328/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  if ( url.exists(ecgEndpoint, cainfo="/root/consult.crt") ) {
+  if ( url.exists(ecgEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
     ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
     rownames(ecg) <- 1:nrow(ecg);
