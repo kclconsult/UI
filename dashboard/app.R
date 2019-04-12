@@ -11,6 +11,7 @@ library(cowplot)
 library(personograph)
 library(tidyverse)
 library(shinydashboard)
+library(anytime)
 
 # tabSteps <- fread("/home/kai/posture/data/dummy-data_transformed20180909.csv")
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
@@ -61,8 +62,8 @@ ui <- fluidPage(
                     fluidRow(
                       column(1 , "Timeframe: "),
                       column(3 , selectInput("radioHRTimeframe", label = NULL,
-                                              choices = list("Day" = "day" , "Month" = "month", "Year" = "year" ),
-                                              selected = "day") )
+                                              choices = list("Overview" = "overview" ),
+                                              selected = "overview") )
                     ),
                     plotOutput("plotHR"),
                     br(),
@@ -88,8 +89,8 @@ ui <- fluidPage(
                       # )
                       column(1 , "Timeframe: "),
                       column(3 , selectInput("radioBPTimeframe", label = NULL,
-                                             choices = list("Week" = "week" , "Month" = "month", "Year" = "year" ),
-                                             selected = "week") )
+                                             choices = list("Overview" = "overview" , "Weekly DBP" = "dbp", "Weekly SBP" = "sbp" ),
+                                             selected = "overview") )
                     ),
                     plotOutput("plotBP")
 
@@ -192,124 +193,99 @@ server <- function(input, output) {
   colClasses <- c(datem="Date", date.month="Date")
   messagePasserHostProtocol <- Sys.getenv("MESSAGE_PASSER_PROTOCOL")
   messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
-  bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
   hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
-  if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) && url.exists(hrEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
+  if ( url.exists(hrEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
-    bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
-    rownames(bp2) <- 1:nrow(bp2);
-    daily.c8867h4<-read.table(hrEndpoint, header=TRUE, colClasses=colClasses) # daily.c8867h4 table
-    rownames(daily.c8867h4) <- 1:nrow(daily.c8867h4);
-    daily.c8867h4 <- daily.c8867h4 %>% mutate(sq = row_number())
+    hr<-read.table(hrEndpoint, header=TRUE, colClasses=colClasses) # daily.c8867h4 table
+    rownames(hr) <- 1:nrow(hr);
 
-    dashboard.c8867h4<-function(period){
-      y_name<-paste("Heart Rate")
-      daily.plot.title<-paste("Heart Rate last 24 hours")
-      month.plot.title<-paste("Trend for Heart Rate")
-      week.plot.title<-paste("Weekday plots for Heart Rate")
-      year.plot.title<-paste("Trend over time for Heart Rate")
-      ymin<-50
-      ymax<-200
-      yint<-70
-      ymax.day<-200
-      labels<-seq(0,72, by=6)
-      if (period=="month"){
-        print(ggplot(data=bp2, aes_string(bp2$datem, bp2$c8867h4)) + geom_line()) + theme_bw() +ylim(ymin,ymax)+
-          geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" )+
-          labs(title = year.plot.title, x="Date", y=y_name)
-      }
-      else if (period=="year"){
-        print(ggplot(data = bp2, aes(date.month, c8867h4)) + stat_summary(fun.y= mean,  geom = "line")
-                +labs(title = month.plot.title, x = "month", y=y_name ) +theme_bw() +ylim(ymin,ymax)
-                + geom_hline(aes(yintercept =yint),colour="#990000", linetype="dashed" ) +
-                  scale_x_date( labels = date_format("%Y-%m"), breaks = "1 month"))
-      }
-      else {
-        print(ggplot(data=daily.c8867h4, aes(y=c8867h4, x=sq, group=1)) + geom_line() + theme_bw()+ ylim(ymin,ymax.day)+
-          geom_hline(aes(yintercept =yint),colour="grey", linetype="dashed" ) +
-          geom_hline(aes(yintercept =ymax),colour="grey", linetype="dashed" ) +
-          geom_vline(aes(xintercept=12), colour="blue", linetype="dashed")  +
-          geom_vline(aes(xintercept=24), colour="blue", linetype="dashed")  +
-          geom_vline(aes(xintercept=36), colour="blue", linetype="dashed")  +
-          geom_vline(aes(xintercept=48), colour="blue", linetype="dashed")  +
-          geom_vline(aes(xintercept=60), colour="blue", linetype="dashed")  +
-          annotate("text", x=12, y=50, label="12 noon")+
-          annotate("text", x=24, y=50, label="4 pm")+
-          annotate("text", x=36, y=50, label="6 pm")+
-          annotate("text", x=48, y=50, label="midnight")+
-          annotate("text", x=60, y=50, label="4 am")+
-          theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
-          labs(title=daily.plot.title, x = "time", y="Heart Rate"))
-      }
+    #Data preparation for HR plots
+    hr$dt<-as.POSIXct(paste(hr$datem, hr$time), format="%Y-%m-%d %H:%M")
+    hr$freq.mod.activity<-hr$c82290h8
+
+    dashboard.c8867h4<-function() {
+
+      ggplot(data=hr, aes(dt, c8867h4, color="Heart Rate")) + geom_line(aes(x=dt, y=c8867h4))+
+        labs(title="Heart Rate Readings", x="date", y="Heart Rate") + theme_bw() + ylim(45,135) +
+        scale_color_discrete(name="Legend") +
+        scale_x_datetime(date_breaks = "12 hour", labels=date_format("%b %d - %H:%M"))+
+        theme(axis.text.x = element_text(angle = 25, vjust = 1.0, hjust = 1.0))
+
     }
 
     dashboard.c8867h4.stats<-function(){
-      resting.c8867h4<-tail(daily.c8867h4$c8867h4, n=1)
-      cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
-      mean.c8867h4<-mean(daily.c8867h4$c8867h4)
-      cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
-      mean.c8867h4.year<-mean(head(bp2$c8867h4, n=30))
-      cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
-    }
+       resting.c8867h4<-tail(hr$c40443h4, n=1)
+       cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
+       mean.c8867h4<-mean(hr$c8867h4)
+       cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
+       mean.c8867h4.year<-mean(head(hr$c8867h4, n=30))
+       cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
+     }
 
-    output$plotHR <- renderPlot({ dashboard.c8867h4(period = input$radioHRTimeframe) }  ) # month,year,day
-    output$printHR <- renderPrint({ dashboard.c8867h4.stats() }  )
+    output$plotHR <- renderPlot({ dashboard.c8867h4() });
+    output$printHR <- renderPrint({ dashboard.c8867h4.stats() });
 
   }
+
+  bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
 
   if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
-    bp2<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
-    rownames(bp2) <- 1:nrow(bp2);
+    bp<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses) # bp2 table
+    #rownames(bp) <- 1:nrow(bp);
+
+    #Data preparation
+    #needed if not using the demo data - use it if using withings data
+    bp$dt<-as.POSIXct(paste(bp$datem, bp$time), format="%Y-%m-%d %H:%M")
+
+    #data preparation for BP plots
+    bp$dt1<-anytime::anytime(bp$dt)
+    bp$hr<-bp$c8867h4
+    bp$sbp<-bp$c271649006
+    bp$dbp<-bp$c271650006
 
     dashboard.bp<-function(period) {
 
-      y1_name<-paste("Diastolic Blood Pressure")
-      y2_name<-paste("Systolic Blood Pressure")
-      month.plot.title<-paste("Trend for Diastolic and Sistolic Blood Pressure")
-      week.plot.title1<-paste("Weekday plots for Diastolic Blood Pressure")
-      week.plot.title2<-paste("Weekday plots for Systolic Blood Pressure")
-      year.plot.title<-paste("Trend over time for Diastolic and Sistolic Blood Pressure")
-      ymin<-60
-      ymax.dia<-200
-      ymax<-200
-      yint1<-80
-      yint2<-120
+      if ( period == "overview") {
 
-      if(period=="week"){
-        g1<-ggplot(bp2, aes(x=weekday, y=c271650006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax.dia) +
-          geom_hline(aes(yintercept =yint1),colour="#990000", linetype="dashed")+
-          labs(title = week.plot.title1, x="Day of the Week", y=y1_name)
-        g2<-ggplot(bp2, aes(x=weekday, y=c271649006))+ geom_boxplot() + theme_bw() + ylim(ymin,ymax) +
-          geom_hline(aes(yintercept =yint2),colour="#990000", linetype="dashed")+
-          labs(title = week.plot.title2, x="Day of the Week", y=y2_name)
-        plot_grid(g1,g2,labels = "AUTO")
+        #SBP week - uses the bp data set
+        #This is the default plot in the BP tab
+
+        ggplot(data=bp, aes(dt1, sbp, color="SBP")) + stat_summary(fun.y=mean, geom = "line") +
+          labs(title="Blood Pressure", x="Date and Time of Measurment") + theme_bw() +ylim(70,180) +
+         # geom_hline(aes(yintercept =135),colour="#990000", linetype="dashed" ) +
+        #  geom_hline(aes(yintercept =85),colour="#990099", linetype="dashed" ) +
+          geom_line(aes(x = dt1, y = dbp, color="DBP")) + scale_color_discrete(name="Legend") +
+          scale_x_datetime(date_breaks = "12 hour", labels=date_format("%b %d - %H:%M"))+
+          theme(axis.text.x = element_text(angle = 25, vjust = 1.0, hjust = 1.0))
+
+      } else if ( period == "dbp") {
+
+        #DBP and SBP side by side boxplots - uses the BP data set
+        #this is the plot to use when the user selects "weekly"
+
+        ggplot(data=bp, aes(x=weekday, y=dbp )) + geom_boxplot(fill='#999999') + theme_bw() + ylim(70,100)+
+          geom_hline(aes(yintercept =85),colour="#990000", linetype="dashed")+
+          labs(title = "DBP", x="Day of the Week", y="dbp")+
+          scale_x_discrete(limits=c("Monday","Tuesday", "Wednesday", "Thursday","Friday", "Saturday", "Sunday"))
+
+      } else if ( period == "sbp") {
+
+        ggplot(data=bp, aes(x=weekday, y=sbp )) + geom_boxplot(fill='#999999') + theme_bw() + ylim(90,180)+
+          geom_hline(aes(yintercept =135),colour="#990000", linetype="dashed")+
+          labs(title = "SBP", x="Day of the Week", y="sbp")+
+          scale_x_discrete(limits=c("Monday","Tuesday", "Wednesday", "Thursday","Friday", "Saturday", "Sunday"))
+
       }
-      else if (period=="month"){
-        ggplot(bp2, aes(datem))+
-          geom_line(aes(y=bp2$c271649006, colour="Systolic"))+
-          geom_line(aes(y=bp2$c271650006, colour="Diastolic")) + ggtitle("Blood Pressure History") +
-          xlab("Date") + ylab("Measurment")
-      }
-      else {
-        ggplot() +
-          stat_summary(data = bp2, aes(x = date.month, y = c271649006), color = "blue", geom = "line") +
-          stat_summary(data = bp2, aes(x = date.month, y = c271650006), color = "red", geom = "line") +
-          xlab("Dates") +
-          ylab("Blood pressure") +
-          theme_bw() +
-          ggtitle("Systolic and Diastolic Blood Pressure") +
-          scale_colour_manual(name='', values = c("SBP"="blue", "DBP"="red"), guide='legend') +
-          guides(colour=guide_legend(override.aes = list(linecolour=c(1,1))))
-      }
+
     }
 
-    output$plotBP <- renderPlot({ dashboard.bp(period = input$radioBPTimeframe) }  ) # week, month, year
+    output$plotBP <- renderPlot({ dashboard.bp(period = input$radioBPTimeframe) }) # week, month, year
 
   }
 
-  risk.evidence<-read.csv("data/isabel-secondary-stroke-intervention-risks.csv") # for cates plot
+  risk.evidence<-read.csv("sample-data/intervention.csv") # for cates plot
   mycates<-function(interv){
     a<-risk.evidence$tr.risk[risk.evidence$intervention==interv]
     values<-list(stroke=a, none=(1-a))

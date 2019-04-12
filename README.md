@@ -8,13 +8,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Before starting, [download and install shiny]().
+Before starting, [download and install shiny](https://shiny.rstudio.com/).
 
 ### Other service communication
 
-Receives messages from: message-passer ([install]()) ...
+Receives messages from: message-passer ([install](https://github.kcl.ac.uk/consult/message-passer)) ...
 
-Sends messages to: message-passer ([install]()) ...
+Sends messages to: message-passer ([install](https://github.kcl.ac.uk/consult/message-passer)) ...
 
 ## Download
 
@@ -32,11 +32,11 @@ git clone https://github.kcl.ac.uk/consult/ui.git
 
 ## Documentation
 
-[View](https://github.kcl.ac.uk/pages/consult/message-passer/).
+[View](https://shinyproxy.io).
 
 ## Editing
 
-This is an [shiny]() project. The majority of the logic is contained within [app.R](dashboard/app.R).
+This is an [shiny](https://shiny.rstudio.com/) project. The majority of the logic is contained within [app.R](dashboard/app.R).
 
 Once a file is edited, stage, commit and push changes from the root folder as follows:
 
@@ -67,9 +67,11 @@ docker-compose up dashboard
 
 ## Running the tests
 
+--
+
 ## Deployment
 
-In production, login is handled by [ShinyProxy](), which operates by controlling access to a dockerised version of a Shiny application, which in this case is the CONSULT dashboard.
+In production, login is handled by [ShinyProxy](https://shinyproxy.io), which operates by controlling access to a dockerised version of a Shiny application, which in this case is the CONSULT dashboard.
 
 To dockerise the CONSULT dashboard run
 
@@ -77,7 +79,7 @@ To dockerise the CONSULT dashboard run
 ./build-docker-image.sh
 ```
 
-being sure to specify the host information of the [message-passer]() in this file if necessary.
+being sure to specify the host information of the [message-passer](https://github.kcl.ac.uk/consult/message-passer) in this file if necessary.
 
 To build and run ShinyProxy so that it can serve a login page, and then subsequently run the dockerised version of the dashboard for each user, run docker-compose:
 
@@ -88,8 +90,8 @@ docker-compose up -d
 
 ## Built With
 
-* [Shiny]() -
-* [ShinyProxy]() -
+* [Shiny](https://shiny.rstudio.com/) - R + webserver
+* [ShinyProxy](https://shinyproxy.io) - Shiny authentiction
 
 ## Contributing
 
