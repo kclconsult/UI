@@ -11,7 +11,8 @@ proxy:
     manager-dn: cn=admin,dc=consult,dc=kcl,dc=ac,dc=uk
     manager-password: root
   docker:
-    url: https://192.168.99.105:2376
+    # If TCP is required due to running in swarm mode, or socket mount not preferable (see docker-compose), and daemon is configured to listen on TCP (e.g. -H tcp://127.0.0.1 in service file), then can reference URL of daemon, as shown here, to make connection through HTTP rather than UNIX socket: http://[IP]:2375. To secure, ensure Docker daemon is listening on 2376, and has TLS params that reference certs in certs/, and use secure IP of docker-machine host, e.g. https://192.168.99.105:2376
+    url: https://10.0.0.18:2376
     cert-path: certs/
     container-protocol: http
     port-range-start: 20000
@@ -22,7 +23,7 @@ proxy:
     container-cmd: ["R", "-e", "shiny::runApp('/root/dashboard')"]
     container-image: consult-kcl/dashboard
     container-env:
-      MESSAGE_PASSER_URL: danvers
+      MESSAGE_PASSER_URL: danvers # Add port if running on same machine.
       MESSAGE_PASSER_PROTOCOL: https://
       CURL_CA_BUNDLE: /root/consult.crt
     container-network: ui_network
