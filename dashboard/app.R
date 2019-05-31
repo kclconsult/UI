@@ -16,9 +16,12 @@ library(anytime)
 colorList <- c( "#00AA2C", "#85D79B",  "#E70000", "#E78A8C", "#0075B7", "#509ECB")
 
 ui <- fluidPage(
-  navbarPage( "CONSULT",
+  includeCSS("styles.css"),
+  navbarPage(
+    windowTitle = "CONSULT",
+    title = div(img(src="consult-logo-large.png", style="margin-top: -15px;", height = 50)),
     tabPanel("Summary",
-      h3("My Health Summary"),
+      h3("My Health Summary", id="pageHeader"),
       br(),
       dashboardPage(
         dashboardHeader(title = "Vital Data"),
@@ -35,7 +38,7 @@ ui <- fluidPage(
       )
     ),
     tabPanel("Heartrate",
-      h3("Heartrate"),
+      h3("Heartrate", id="pageHeader"),
       br(),
       fluidRow(
         column(1 , "Timeframe: "),
@@ -46,7 +49,7 @@ ui <- fluidPage(
       verbatimTextOutput("printHR")
     ),
     tabPanel("Blood Pressure",
-      h3("Blood Pressure"),
+      h3("Blood Pressure", id="pageHeader"),
       br(),
       fluidRow(
         column(1 , "Timeframe: "),
@@ -55,37 +58,45 @@ ui <- fluidPage(
       plotOutput("plotBP")
     ),
     tabPanel("ECG",
-      h3("ECG Monitoring"),
+      h3("ECG Monitoring", id="pageHeader"),
       br(),
       sliderInput("sliderECG", "Observations:", min = 0, max = 5000, value = 0, step = 10, animate = animationOptions( interval = 300, loop = TRUE)
       ),
       plotOutput("plotECG")
     ),
     tabPanel("Risk",
-      h3("Predicted Risk of Stroke if You Stop Smoking"),
+      h3("Predicted Risk of Stroke if You Stop Smoking", id="pageHeader"),
       br(),
       img(src="predicted-risk-of-stroke-if-you-stop-smoking.png")
     ),
     tabPanel("Recommendation",
-      h3("Recommendation"),
+      h3("Recommendation", id="pageHeader"),
       br(),
       p("Consider changing your painkiller; there are two options:"),
       p("Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider 'paracetamol'."),
       p("Given your medical history and that codeine helps with back pain then codeine is recommended.")
     ),
     tabPanel("Chat",
-      h3("Start Interactive Chat"),
+      h3("Start Interactive Chat", id="pageHeader"),
       br(),
       fluidRow(
         column(2, style = "margin-top: 25px;",actionButton("actChatUser", label = "User Chat") )
       )
     ),
     tabPanel("FAQ",
-      h3("FAQs for patients (when they do not use the chat)"),
+    h3("FAQs for patients (when they do not use the chat)", id="pageHeader"),
+      br()
+    ),
+    tabPanel("Medication",
+      h3("Medication summary for patients, with optional reminder", id="pageHeader"),
+      br()
+    ),
+    tabPanel("Mood",
+      h3("Mood selector (images)", id="pageHeader"),
       br()
     ),
     tabPanel("Feedback",
-      h3("Link to feedback questionnaires"),
+      h3("Feedback log for patients", id="pageHeader"),
       br()
     )
   )
