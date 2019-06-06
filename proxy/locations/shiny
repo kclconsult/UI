@@ -1,14 +1,21 @@
+location / {
+
+  return 301 https://$host/ui/app_direct/dashboard/;
+
+}
+
 location /ui {
 
-  proxy_set_header  Host             $http_host;
-  proxy_set_header  X-Real-IP        $remote_addr;
-  proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+  proxy_set_header  Host              $http_host;
+  proxy_set_header  X-Real-IP         $remote_addr;
+  proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
   proxy_set_header  X-Forwarded-Proto $scheme;
 
   proxy_redirect    off;
   proxy_http_version 1.1;
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection "upgrade";
+  proxy_read_timeout 600s;
 
   proxy_pass              http://ui_app_1:8080/ui;
 

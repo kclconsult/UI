@@ -1,4 +1,5 @@
 proxy:
+  # bind-address: 127.0.0.1
   title: CONSULT
   logo-url: https://avatars1.githubusercontent.com/u/36307411?s=400&u=04f40378ef32955ff363a8144c028ec7ffe6838c&v=4
   heartbeat-rate: 20000
@@ -14,7 +15,7 @@ proxy:
     # If TCP is required due to running in swarm mode, or socket mount not preferable (see docker-compose), and daemon is configured to listen on TCP (e.g. -H tcp://127.0.0.1 in service file), then can reference URL of daemon, as shown here, to make connection through HTTP rather than UNIX socket: http://[IP]:2375. To secure, ensure Docker daemon is listening on 2376, and has TLS params that reference certs in certs/, and use secure IP of docker-machine host, e.g. https://192.168.99.105:2376
     url: https://10.0.0.18:2376
     cert-path: certs/
-    container-protocol: http
+    container-protocol: https
     port-range-start: 20000
     internal-networking: true
   specs:

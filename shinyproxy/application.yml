@@ -1,4 +1,5 @@
 proxy:
+  # bind-address: 127.0.0.1
   title: CONSULT
   logo-url: https://avatars1.githubusercontent.com/u/36307411?s=400&u=04f40378ef32955ff363a8144c028ec7ffe6838c&v=4
   heartbeat-rate: 20000
@@ -11,7 +12,6 @@ proxy:
     manager-dn: cn=admin,dc=consult,dc=kcl,dc=ac,dc=uk
     manager-password: root
   docker:
-    container-protocol: http
     internal-networking: true
   specs:
   - id: dashboard
