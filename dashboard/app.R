@@ -107,7 +107,7 @@ server <- function(input, output) {
   colClasses <- c(datem="Date", date.month="Date")
   messagePasserHostProtocol <- Sys.getenv("MESSAGE_PASSER_PROTOCOL")
   messagePasserHost <- Sys.getenv("MESSAGE_PASSER_URL")
-  hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
+  hrEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/8867-4/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")  # 8867-4 = Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
 
   if ( url.exists(hrEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
@@ -115,7 +115,7 @@ server <- function(input, output) {
     rownames(hr) <- 1:nrow(hr);
 
     hr$dt<-as.POSIXct(paste(hr$datem, hr$time), format="%Y-%m-%d %H:%M")
-    hr$freq.mod.activity<-hr$c82290h8
+    hr$freq.mod.activity<-hr$c82290h8 # 82290-8 = activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
 
     dashboard.c8867h4<-function() {
 
@@ -141,7 +141,7 @@ server <- function(input, output) {
 
   }
 
-  bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="")
+  bpEndpoint <- paste(messagePasserHostProtocol, messagePasserHost, "/Observation/", Sys.getenv("SHINYPROXY_USERNAME"), "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", "", sep="") # 8534-9 = Blood pressure (https://details.loinc.org/LOINC/85354-9.html)
 
   if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
@@ -151,9 +151,9 @@ server <- function(input, output) {
     bp$dt<-as.POSIXct(paste(bp$datem, bp$time), format="%Y-%m-%d %H:%M")
 
     bp$dt1<-anytime::anytime(bp$dt)
-    bp$hr<-bp$c8867h4
-    bp$sbp<-bp$c271649006
-    bp$dbp<-bp$c271650006
+    bp$hr<-bp$c8867h4 # 8867-4 = Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
+    bp$sbp<-bp$c271649006 # 271649006 = Systolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271649006)
+    bp$dbp<-bp$c271650006 # 271650006 = Diastolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271650006)
 
     dashboard.bp<-function(period) {
 
@@ -226,11 +226,6 @@ server <- function(input, output) {
     })
 
   }
-
-  observeEvent(input$actChatUser, {
-    triggerId <- paste(  "/p1u", input$inDevice, sep=" ")
-    cat(triggerId ,file="/home/kai/r_shiny_write/trigger.csv", append=TRUE)
-  })
 
   # Info Boxes
   # https://fontawesome.com/icons?d=gallery&c=emoji&m=free for icons

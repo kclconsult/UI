@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Before starting, [download and install shiny](https://shiny.rstudio.com/).
+Before starting, [download and install shiny](https://www.r-project.org/nosvn/pandoc/shiny.html).
 
 ### Other service communication
 
@@ -45,6 +45,7 @@ git add .
 git commit -m "[details of changes]"
 git push
 ```
+
 ## Building and Running
 
 To run locally, a shiny server (service) is required, with the content of `dashboard` loaded at the appropriate route (e.g. `/srv/shiny-server/dashboard`).
@@ -58,6 +59,8 @@ MESSAGE_PASSER_PROTOCOL=[protocol]
 MESSAGE_PASSER_URL=[url]
 SHINYPROXY_USERNAME=[patient ID known to the message-passer]
 ```
+
+Alternatively, `dashboard` can be run from within R using ``runApp("dashboard")``.
 
 Alternatively, the shiny application can be run as a standalone docker image. Uncomment the appropriate lines in [docker-compose.yml](docker-compose.yml), and then run:
 
