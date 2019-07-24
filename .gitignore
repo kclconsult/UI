@@ -13,6 +13,9 @@ shinyproxy/certs/
 .dropbox.attr
 .dropbox.cache
 
+### OS X ###
+.DS_Store
+
 ### Linux ###
 *~
 
