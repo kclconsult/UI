@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{ headContent() }}
+    {{ bootstrapLib() }}
+
+    <link rel = "stylesheet"
+      type = "text/css"
+      href = "consultStyle.css" />
+    </head>
+
+  </head>
+  <body>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrating Client-Server Interactivity</h1>
+      </div>
+      <div class="panel-body">
+        <!-- Button to click -->
+        {{ button }}
+
+        <!-- Display the number of clicks to demonstrate reactive HTML -->
+        {{ buttonHTML }}
+
+        <hr>
+
+        <!-- Slider to move -->
+        {{ slider }}
+
+        <!-- Progress bar demonstrators reactive slider value -->
+        {{ sliderProgressHTML }}
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrate Text Input->Output</h1>
+      </div>
+
+      <div class="panel-body">
+
+        <!-- Input Example Text Area -->
+        {{ textarea }}
+
+        <!-- Output Example Text -->
+        <h5>Recommendations from server</h5>
+        <div class="well">
+          {{ recommendationsText }}
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrate HTML Widget (C3 Gauge)</h1>
+      </div>
+      <div class="panel-body">
+        <!-- Gauge Widget -->
+        {{ updateButton }}
+        {{ gaugeWidget }}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrate HTML Widget (C3 Timeline) with Random Data</h1>
+      </div>
+      <div class="panel-body">
+        <!-- Timeline Widget -->
+        {{ refreshDataButton }}
+        {{ timelineWidget }}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrate Sample Data</h1>
+      </div>
+      <div class="panel-body">
+        <!-- Timeline Widget -->
+        {{ moreDataButton }}
+        {{ sampleTimelineWidget }}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Demonstrating Embedding Mattermost Chat Webapp</h1>
+      </div>
+      <div class="panel-body">
+        {{ chatEmbed }}
+      </div>
+    </div>
+
+  </body>
+</html>
