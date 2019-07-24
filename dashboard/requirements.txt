@@ -12,3 +12,12 @@ tidyverse
 shinydashboard
 RCurl
 anytime
+htmlwidgets
+httr
+
+# Install local packages from repo:
+#
+# C3 custom htmlwidgets
+#    > setwd("dashboard/packages/C3")
+#    > install()
+#
