@@ -12,14 +12,14 @@ library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vig
 loadSampleTimelineData <- function() {
     sampleData <- read.csv("sample-data/bp.csv", header=TRUE)
 
-    # rename 'datem' column to Time  
+    # rename 'datem' column to 'Time'  
     names(sampleData)[names(sampleData) == 'datem'] <- 'Time'
 
     # only return the columns that we want
     sampleData[,c("Time", "c271649006", "c271650006", "c8867h4")]
 }
 
-# Load data from Services via HTTP
+# Example uf using httr to load data from HTTP Service
 requestData <- function() {
   # query are any attributes as part of the request
   r <- GET("http://httpbin.org/get",
@@ -29,7 +29,7 @@ requestData <- function() {
   stop_for_status(r)
  
   # parse the content of the request
-  content(r, "parsed") 
+  data <- content(r, "parsed") 
   
   # content will introspect an attempt to "parse" based on the MIME-type:
   #   text/html: xml2::read_html()
@@ -40,4 +40,7 @@ requestData <- function() {
   #   application/x-www-form-urlencoded: parse_query
   #   image/jpeg: jpeg::readJPEG()
   #   image/png: png::readPNG()
+  
+  # return the data
+  data
 }

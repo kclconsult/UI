@@ -7,8 +7,10 @@
 # run the application by clicking 'Run App' above (if you are working with this in RStudio)
 #
 
-library(C3)
 library(shiny)
+
+# local htmlwidgets
+library(C3)
 
 ## ui.R ##
 
@@ -68,9 +70,6 @@ htmlTemplate("www/template.html",
   
   # Demonstrate Sample Data
   moreDataButton = actionButton("moreDataButton", "More Data"),
-  sampleTimelineWidget = C3TimelineOutput("timeline2"),
-  
-  # Demonstrating Embedding Mattermost Chat Webapp
-  chatEmbed = htmlOutput("chatFrame")
+  sampleTimelineWidget = C3TimelineOutput("timeline2")
   
 )
