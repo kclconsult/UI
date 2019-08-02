@@ -43,7 +43,7 @@ htmlTemplate("www/index.html",
   plotECG = C3TimelineOutput("plotECG"),
 
   # Tab: Risk
-  plotRisk = htmlOutput("summaryBP"), # TBD - htmlwidget
+  plotRisk = htmlOutput("plotRisk"), # TBD - htmlwidget
   
   # Tab: Recommendations
   listRecommendations = htmlOutput("listRecommendations"),

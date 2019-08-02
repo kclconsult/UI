@@ -15,7 +15,7 @@
 # 
 
 # - Blood Pressure Summary
-renderSummaryBP <- function(bp) {
+renderSummaryBP <- function(bp = "N/A") {
   # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
 
   # <div class="alert alert-success" role="alert">
@@ -26,14 +26,14 @@ renderSummaryBP <- function(bp) {
   # so this returns the rendered HTML expression:
   renderUI({
     tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp, "times!"))
+             paste("Blood Pressure:", bp))
   })
   # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
   # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
 }
 
 # - Heart Rate Summary
-renderSummaryHR <- function(hr) {
+renderSummaryHR <- function(hr = "N/A") {
   # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
 
   # <div class="alert alert-success" role="alert">
@@ -44,14 +44,14 @@ renderSummaryHR <- function(hr) {
   # so this returns the rendered HTML expression:
   renderUI({
     tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp, "times!"))
+             paste("Heart Rate:", hr))
   })
   # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
   # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
 }
 
 # - ECG Summary
-renderSummaryECG <- function(ecg) {
+renderSummaryECG <- function(ecg = "N/A") {
   # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
 
   # <div class="alert alert-success" role="alert">
@@ -62,14 +62,14 @@ renderSummaryECG <- function(ecg) {
   # so this returns the rendered HTML expression:
   renderUI({
     tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp, "times!"))
+             paste("ECG:", ecg))
   })
   # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
   # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
 }
 
 # - Mood Summary
-renderSummaryMood <- function(mood) {
+renderSummaryMood <- function(mood = "N/A") {
   # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
 
   # <div class="alert alert-success" role="alert">
@@ -80,14 +80,14 @@ renderSummaryMood <- function(mood) {
   # so this returns the rendered HTML expression:
   renderUI({
     tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp, "times!"))
+             paste("Mood:", mood))
   })
   # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
   # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
 }
 
 # - Mood Summary
-renderSummaryPain <- function(pain) {
+renderSummaryPain <- function(pain = "N/A") {
   # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
 
   # <div class="alert alert-success" role="alert">
@@ -98,29 +98,52 @@ renderSummaryPain <- function(pain) {
   # so this returns the rendered HTML expression:
   renderUI({
     tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp, "times!"))
+             paste("Pain:", pain))
   })
   # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
   # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
 }
 
-
-# Button Alert
-renderButtonAlert <- function(times) {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
+# Risk
+renderRisk <- function() {
   renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("Button Pressed:", times, "times!"))
+    tags$div(class="alert alert-success", role="alert", "Risk")
   })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+# Recommendations
+renderRecommendations <- function() {
+  renderUI({
+    tags$div(class="alert alert-success", role="alert", "Recommendations")
+  })
+}
+
+# FAQ
+renderFAQ <- function() {
+  renderUI({
+    tags$div(class="alert alert-success", role="alert", "FAQ")
+  })
+}
+
+# Meds
+renderSummaryMeds <- function() {
+  renderUI({
+    tags$div(class="alert alert-success", role="alert", "Meds")
+  })
+}
+
+# Mood
+renderMood <- function() {
+  renderUI({
+    tags$div(class="alert alert-success", role="alert", "Mood")
+  })
+}
+
+# Feedback
+renderFeedback <- function() {
+  renderUI({
+    tags$div(class="alert alert-success", role="alert", "Feedback")
+  })
 }
 
 #
