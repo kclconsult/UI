@@ -19,57 +19,44 @@ library(C3)
 #
 # See https://shiny.rstudio.com/articles/templates.html for more info.
 
-htmlTemplate("www/template.html",
+htmlTemplate("www/index.html",
+  # Tab: Summary
+  # - time range selectors (TODO change from actionButtons to tabbed selector)
+  selectLastFourHours = actionButton("selectLastFourHours", "Last 4 Hours"),
+  selectLastDay = actionButton("selectLastDay", "Last 24 Hours"),
+  selectLastMonth = actionButton("selectLastMonth", "Last Month"),
 
-  # htmlTemplate takes a mamed arguement list where the arguements are 
-  # referenced in the HTML template.  
-  #
-  # For example:
-  #   button = actionButton("actionBtn", "Action"),
-  #
-  # In template.html, 'button' is inserted in double brackets:
-  #    {{ button }}
-  #
-  # And in the server function, it is referenced through the "actionBtn" id.
-  # In this case, since an actionButton is an input, it would be referenced
-  # as "input$actionBtn" (as part of the input object)
-  #
-  # Attributes can be either input controls that need to communcate to the server.
-  # Or they can be Output objects, where ther server updates portions of the HTML:
-  #
-  # Types of output:
-  # - dataTableOutput()
-  # - imageOutput()
-  # - tableOutput()
-  # - uiOutput()
-  # - htmlOutput()
-  # - plotOutput()
-  # - textOutput()
-  # - verbatimTextOutput()
+  # - summary boxes (TODO widgetize for more custom styling)
+  summaryBP = htmlOutput("summaryBP"),
+  summaryHR = htmlOutput("summaryHR"),
+  summaryECG = htmlOutput("summaryECG"),
+  summaryMood = htmlOutput("summaryMood"),
+  summaryPain  = htmlOutput("summaryPain"),
+  
+  # Tab: Heart Rate (HR)
+  plotHR = C3TimelineOutput("plotHR"),
+  
+  # Tab: Blood Pressure (BP)
+  plotBP = C3TimelineOutput("plotBP"),
+  
+  # Tab: ECG
+  plotECG = C3TimelineOutput("plotECG"),
 
-  # Inputs and Outputs are organised in the order they appear on the page:
+  # Tab: Risk
+  plotRisk = htmlOutput("summaryBP"), # TBD - htmlwidget
   
-  # Demonstrating Client-Server Interactivity
-  button = actionButton("actionBtn", "Action"),
-  buttonHTML = htmlOutput("buttonHTML"),
-  # --  
-  slider = sliderInput("sliderX", "Slider Input X", 1, 100, 50),
-  sliderProgressHTML = htmlOutput("sliderProgressHTML"),
+  # Tab: Recommendations
+  listRecommendations = htmlOutput("listRecommendations"),
   
-  # Demonstrate Text Input->Output
-  textarea = textAreaInput("exampleText", "Enter recommendations here"),
-  recommendationsText = textOutput("recommendationsText"),
+  # Tab: FAQ
+  listFAQ = htmlOutput("listFAQ"),
   
-  # Demonstrate HTML Widget (C3 Gauge)
-  updateButton = actionButton("updateBtn", "Update Gauge"),
-  gaugeWidget = C3GaugeOutput("gauge1"),
+  # Tab: Medication
+  summaryMeds = htmlOutput("summaryMeds"),
   
-  # Demonstrate HTML Widget (C3 Timeline) with Random Data
-  refreshDataButton = actionButton("refreshDataButton", "Refresh Data"),
-  timelineWidget = C3TimelineOutput("timeline1"),
+  # Tab: Mood
+  selectorMood = htmlOutput("selectorMood"),
   
-  # Demonstrate Sample Data
-  moreDataButton = actionButton("moreDataButton", "More Data"),
-  sampleTimelineWidget = C3TimelineOutput("timeline2")
-  
+  # Tab: Feedback
+  logFeedback = htmlOutput("logFeedback")
 )
