@@ -1,4 +1,4 @@
-# CONSULT Demonstration Shiny Application
+# CONSULT Dashboard HTML Components
 #
 # Author: chipp.jansen@kcl.ac.uk
 # Date: July 2019
@@ -7,6 +7,124 @@
 #
 # Each renderX(...) function returns a HTML object (through the renderUI...) function
 # (See https://shiny.rstudio.com/reference/shiny/1.3.2/renderUI.html).
+#
+
+
+#
+# Tab: Summary
+# 
+
+# - Blood Pressure Summary
+renderSummaryBP <- function(bp) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Blood Pressure:", bp, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+# - Heart Rate Summary
+renderSummaryHR <- function(hr) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Blood Pressure:", bp, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+# - ECG Summary
+renderSummaryECG <- function(ecg) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Blood Pressure:", bp, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+# - Mood Summary
+renderSummaryMood <- function(mood) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Blood Pressure:", bp, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+# - Mood Summary
+renderSummaryPain <- function(pain) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Blood Pressure:", bp, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+
+# Button Alert
+renderButtonAlert <- function(times) {
+  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
+
+  # <div class="alert alert-success" role="alert">
+  #   Button Pressed: N times!
+  # </div>
+
+  # NOTE: in R the "return" value is the last value evaluated in a function,
+  # so this returns the rendered HTML expression:
+  renderUI({
+    tags$div(class="alert alert-success", role="alert",
+             paste("Button Pressed:", times, "times!"))
+  })
+  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
+  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
+}
+
+#
+# EXAMPLES
 #
 
 # Button Alert
