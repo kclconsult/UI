@@ -88,62 +88,85 @@
 		
 		<!-- Tab: Summary -->
     	<div class="tab-pane active" id="summary">
-			<h3>Summary</h3>
-		
+			<h3>My Health Summary</h3>
+			
+			<!-- Action Buttons - TODO: change to tabbed selector, or styled radio box? -->
+			{{ selectLastFourHours }}
+			{{ selectLastDay }}
+			{{ selectLastMonth }}
+			
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-6 col-md-4">{{ summaryBP   }}</div>
+					<div class="col-xs-6 col-md-4">{{ summaryHR   }}</div>
+					<div class="col-xs-6 col-md-4">{{ summaryECG  }}</div>				
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-md-4">{{ summaryMood }}</div>
+					<div class="col-xs-6 col-md-4">{{ summaryPain }}</div>
+					<div class="col-xs-6 col-md-4"></div>				
+				</div>
+			</div>			
 		</div>
 		
 		<!-- Tab: Heart Rate -->		
 		<div class="tab-pane" id="hr">
 			<h3>Heart Rate</h3>
-		
+			{{ plotHR }}
 		</div>
     			
 		<!-- Tab: Blood Pressure -->		
 		<div class="tab-pane" id="bp">
 			<h3>Blood Pressure</h3>
-		
+			{{ plotBP }}
 		</div>
     	
 		<!-- Tab: ECG -->		
 		<div class="tab-pane" id="ecg">
 			<h3>ECG</h3>
-		
+			{{ plotECG }}
 		</div>
     	
 		<!-- Tab: Risk -->		
 		<div class="tab-pane" id="risk">
 			<h3>Risk</h3>
-		
+			<!-- predicted-risk-of-stroke-if-you-stop-smoking.png -->
+			{{ plotRisk }}
 		</div>
     	
-		<!-- Tab: Risk -->				
+		<!-- Tab: Recommendations -->				
 		<div class="tab-pane" id="recommend">
 			<h3>Recommendations</h3>
-		
+			{{ listRecommendations }}
 		</div>
     	
 		<!-- Tab: FAQ -->
 		<div class="tab-pane" id="faq">
 			<h3>FAQ</h3>
-		
+			<p>FAQs for patients (when they do not use the chat)</p>
+			{{ listFAQ }}
 		</div>
     	
 		<!-- Tab: Medication -->		
 		<div class="tab-pane" id="meds">
 			<h3>Medication</h3>
-		
+			<p>Medication summary for patients, with optional reminder
+				(Is this still relevant?) </p>
+			{{ summaryMeds }}
 		</div>
 		
 		<!-- Tab: Mood -->		
 		<div class="tab-pane" id="mood">
 			<h3>Mood</h3>
-		
+			<p>Mood selector (images)</p>
+			{{ selectorMood }}
 		</div>
     	
 		<!-- Tab: Feedback -->				
 		<div class="tab-pane" id="feedback">
 			<h3>Feedback</h3>
-		
+			<p>Feedback log for patients (what is this?)</p>
+			{{ logFeedback }}
 		</div>
 		
 	</div>  
