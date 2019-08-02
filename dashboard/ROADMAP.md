@@ -1,5 +1,65 @@
 # Consult Frontend
 
+# Development Notes
+
+# Tiers of Design (level of design)
+
+1. User Study Patients (Minimal Level)
+2. GP Design / Capabilities (Hypothetical)
+4. All Ideas
+
+# Tab / Features
+* Tabs needs to be able to be turned ON/OFF
+- Configuration via a System Environment Variable, comma-separated list.
+
+Summary (1)
+Vitals -
+  Based on codes
+   Isabell will have a list of codes of the observation being requested (e.g. Blood pressure: 85354-9)):
+   https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-GetObservations
+
+  Heart Rate (1)
+  ECG (1)
+  Blood Pressure (1)
+  * Levels of Granularity to View the Graphs (Buttons to select 1 day, 3 day, week)
+  * Line vs. Bar (User Option)
+  * day/night periods: Day (6-12) | Day (12-6) | Day (6-12) | Night (12-6)
+
+Mood (1) - zip file emotion images (emailed),
+   API service (Github Documentation for the Message Passer):
+   https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations
+   - 285854004 	String 	Recorded emotion (based on the Mood Grid)
+
+  * QuestionnaireResponses - HTML Form to submit a PHQ9 depression screening responses form.
+  - need to ask Isabelle for values and the format of the form.
+  - might have to be asked once a week, as part of the Mood's Tab.
+
+Risk (1) (former "Recommendations" in design documentation) - People Plots
+- Risk of secondary stroke
+- based on ethnicity, age, gender
+
+Recommendations (aka Notifications) (4)
+- Text output from Arg Engine (not present when the Chatbot is not present)
+- Needs to be turned ON and OFF
+
+FAQ - No.
+Medication - No.
+
+Feedback (4) - Notes Application (text field, that is time-stamped).
+(Github Doc: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions-Add)
+- Patient ID = Shiny Username
+- Clinical Impressions (Needs a GET request )
+
+# Implicit Logging From the Interface
+* Needs a logging service
+- Log Poke Stream as Time-stamped.
+- Log the Tabs that they are selecting.
+- Log Actions to the server.
+
+################################################################################
+--------------------------------------------------------------------------------
+################################################################################
+
 # Front-End Development Priorities:
 
 1. GUI reflects the Design Document

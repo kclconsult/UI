@@ -69,9 +69,9 @@ Here a C3 Line graph demonstrates plotting timeline data.
 
 Here the same C3 widget that was used before is used to plot project sample-data.  The data is loaded on the server from a CSV file, but it could have been consumed from a backend service.
 
-### Integrating the mattermost 
+### Integrating the mattermost
 
-To be decided.  Mattermost could be integrated in one of two ways. 
+To be decided.  Mattermost could be integrated in one of two ways.
 
 1. Take the existing mattermost-webapp (https://github.com/mattermost/mattermost-webapp/tree/master/components) and strip it down to a single chat window with a specific bot (i.e. Connie).
 
@@ -82,7 +82,7 @@ To be decided.  Mattermost could be integrated in one of two ways.
 ## Defining an R package and htmlwidget
 
 You will need the R package devtools:
-    
+
     > install.packages("devtools")
 
 Following https://shiny.rstudio.com/articles/js-build-widget.html notes.
@@ -91,16 +91,16 @@ In the R Console, change the working directory to the packages dir:
     > setwd("~git/UI-sandbox/packages")
 
 Note: devtools:create no longer exists, usethis package creaated to support these functions (RStudio might open in a new project):
-    
+
     > library(usethis)
     > create_package("C3")
 
 Navigate to package dir
-    
+
     > setwd("C3")       
 
 Create widget scaffolding
-    
+
     > library(htmlwidgets)
     > scaffoldWidget("C3Gauge", edit = FALSE)
 
@@ -119,4 +119,3 @@ https://consultproject.co.uk/ui/login
 
 ## Chat login
 https://consultproject.co.uk/chat/login
-
