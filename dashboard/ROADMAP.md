@@ -42,8 +42,8 @@ Recommendations (aka Notifications) (4)
 - Text output from Arg Engine (not present when the Chatbot is not present)
 - Needs to be turned ON and OFF
 
-FAQ - No.
-Medication - No.
+X FAQ - No.
+X Medication - No.
 
 Feedback (4) - Notes Application (text field, that is time-stamped).
 (Github Doc: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions-Add)
