@@ -2,6 +2,37 @@
 
 # Development Notes
 
+[] Generalise Observation Service call with API
+[] Use Obs service in vitals calls (comment out)
+[] Stub out sample-data stubs using the Plot HTML for HR and BP
+[] Stats generation for sample-data using existing code
+[] Create Consult package
+[] BP plot widgetah
+[] HR plot widget
+[] ECG Plot???
+[] Graph Granularity for time.
+[] Day-Night Vertical Grids on plots
+[] Bar versus Line Charts
+[] Base Info Box htmlwidget
+[] Implement the 5 vitals widgets
+[] Mood Grid Widget
+[] Observation POST Service Call in services API
+[] Input from Mood widget calls Observation POST
+[] CSS Colors and Font and Button Sizing
+[] Summary Vitals Selector
+[] Time Logic for QuestionnaireResponses form
+[] QuestionnaireResponses HTML form in Mood tab
+[] QuestionnaireResponses Service Call
+[] Risk People Plots Widget (two Widgets from screenshot)
+[] Risk data / or intervention.csv data API? (tbd)
+[] Recommendations List HTML
+[] Recommendations data API? (tbd)
+[] Feedback Textbox on Feedback tab
+[] ClinicalImpressions service API call
+[] ClinicalImpressions list and Notes retrieval
+[] Config via Env Variable and Tabs
+[] Logging service - API call? (tbd)
+
 # Tiers of Design (level of design)
 
 1. User Study Patients (Minimal Level)
