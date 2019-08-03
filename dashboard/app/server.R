@@ -89,16 +89,6 @@ function(input, output) {
     output$listRecommendations = renderRecommendations()
   
     #
-    # Tab: FAQ
-    #
-    output$listFAQ = renderFAQ()
-  
-    #
-    # Tab: Medication
-    #
-    output$summaryMeds = renderSummaryMeds()
-  
-    #
     # Tab: Mood
     #
     output$selectorMood = renderMood()

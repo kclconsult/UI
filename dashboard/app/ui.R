@@ -47,13 +47,7 @@ htmlTemplate("www/index.html",
   
   # Tab: Recommendations
   listRecommendations = htmlOutput("listRecommendations"),
-  
-  # Tab: FAQ
-  listFAQ = htmlOutput("listFAQ"),
-  
-  # Tab: Medication
-  summaryMeds = htmlOutput("summaryMeds"),
-  
+
   # Tab: Mood
   selectorMood = htmlOutput("selectorMood"),
   

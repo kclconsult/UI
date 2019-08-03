@@ -74,8 +74,6 @@
 					<li><a href="#ecg" data-toggle="tab">ECG</a></li>
 					<li><a href="#risk" data-toggle="tab">Risk</a></li>
 					<li><a href="#recommend" data-toggle="tab">Recommendations</a></li>
-					<li><a href="#faq"  data-toggle="tab">FAQ</a></li>
-					<li><a href="#meds" data-toggle="tab">Medication</a></li>
 					<li><a href="#mood" data-toggle="tab">Mood</a></li>
 					<li><a href="#feedback" data-toggle="tab">Feedback</a></li>
       			</ul>
@@ -139,22 +137,7 @@
 			<h3>Recommendations</h3>
 			{{ listRecommendations }}
 		</div>
-    	
-		<!-- Tab: FAQ -->
-		<div class="tab-pane" id="faq">
-			<h3>FAQ</h3>
-			<p>FAQs for patients (when they do not use the chat)</p>
-			{{ listFAQ }}
-		</div>
-    	
-		<!-- Tab: Medication -->		
-		<div class="tab-pane" id="meds">
-			<h3>Medication</h3>
-			<p>Medication summary for patients, with optional reminder
-				(Is this still relevant?) </p>
-			{{ summaryMeds }}
-		</div>
-		
+    			
 		<!-- Tab: Mood -->		
 		<div class="tab-pane" id="mood">
 			<h3>Mood</h3>

@@ -118,20 +118,6 @@ renderRecommendations <- function() {
   })
 }
 
-# FAQ
-renderFAQ <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "FAQ")
-  })
-}
-
-# Meds
-renderSummaryMeds <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "Meds")
-  })
-}
-
 # Mood
 renderMood <- function() {
   renderUI({
