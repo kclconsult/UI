@@ -52,7 +52,7 @@ HTMLWidgets.widget({
 
                       // tick format x-axis
                       tick: {
-                         format: "%Y-%m-%d %H"
+                         format: "%Y-%m-%d"
                       }
                     }
                 },
