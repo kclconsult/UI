@@ -7,7 +7,7 @@
 # application by clicking 'Run App' above.
 #
 
-library(C3)
+library(Consult) # install in local directory packages/Consult
 library(shiny)
 
 # local modules
@@ -57,22 +57,25 @@ function(input, output) {
     #
     # Tab: Heart Rate (HR)
     #
-    output$plotHR = renderC3Timeline({
-        C3Timeline(dataset = datasetHR)
+    output$plotHR = renderHRTimeline({
+        # from packages/Consult/HRTimeline
+        HRTimeline(dataset = datasetHR)
     })
     
     #
     # Tab: Blood Pressure (BP)
     #
-    output$plotBP = renderC3Timeline({
-        C3Timeline(dataset = datasetBP)
+    output$plotBP = renderBPTimeline({
+        # from packages/Consult/BPTimeline
+        BPTimeline(dataset = datasetBP)
     })
 
     #
     # Tab: ECG
     #
-    output$plotECG = renderC3Timeline({
-        C3Timeline(dataset = datasetECG)
+    output$plotECG = renderECGTimeline({
+        # from packages/Consult/ECGTimeline
+        ECGTimeline(dataset = datasetECG)
     })
 
     #

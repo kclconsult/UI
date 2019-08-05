@@ -88,28 +88,40 @@ You will need the R package devtools:
 Following https://shiny.rstudio.com/articles/js-build-widget.html notes.
 In the R Console, change the working directory to the packages dir:
 
-    > setwd("~git/UI-sandbox/packages")
+    > setwd("~git/ui/dashboard/packages")
 
-Note: devtools:create no longer exists, usethis package creaated to support these functions (RStudio might open in a new project):
+Note: devtools:create no longer exists, usethis package created to support these functions (RStudio might open in a new project):
 
     > library(usethis)
-    > create_package("C3")
+    > create_package("Consult")
 
 Navigate to package dir
 
-    > setwd("C3")       
+    > setwd("Consult")       
 
 Create widget scaffolding
 
     > library(htmlwidgets)
-    > scaffoldWidget("C3Gauge", edit = FALSE)
+    > scaffoldWidget("HRTimeline", edit = FALSE)
 
-    Created boilerplate for widget constructor R/C3Gauge.R
-    Created boilerplate for widget dependencies at inst/htmlwidgets/C3Gauge.yaml
-    Created boilerplate for widget javascript bindings at inst/htmlwidgets/C3Gauge.js
+    Created boilerplate for widget constructor R/HRTimeline.R
+    Created boilerplate for widget dependencies at inst/htmlwidgets/HRTimeline.yaml
+    Created boilerplate for widget javascript bindings at inst/htmlwidgets/HRTimeline.js
 
-Edit the files, and then install package before you text it:
-    > install()  
+    > scaffoldWidget("BPTimeline", edit = FALSE)
+
+    Created boilerplate for widget constructor R/BPTimeline.R
+    Created boilerplate for widget dependencies at inst/htmlwidgets/BPTimeline.yaml
+    Created boilerplate for widget javascript bindings at inst/htmlwidgets/BPTimeline.js
+
+    > scaffoldWidget("ECGTimeline", edit = FALSE)
+
+    Created boilerplate for widget constructor R/ECGTimeline.R
+    Created boilerplate for widget dependencies at inst/htmlwidgets/ECGTimeline.yaml
+    Created boilerplate for widget javascript bindings at inst/htmlwidgets/ECGTimeline.js
+
+Edit the files, and then install package before you test it:
+    > devtools::install() 
 
 ## Target Device Size
 Samsung Tablet: SM-T585

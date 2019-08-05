@@ -34,13 +34,13 @@ htmlTemplate("www/index.html",
   summaryPain  = htmlOutput("summaryPain"),
   
   # Tab: Heart Rate (HR)
-  plotHR = C3TimelineOutput("plotHR"),
+  plotHR = HRTimelineOutput("plotHR"),
   
   # Tab: Blood Pressure (BP)
-  plotBP = C3TimelineOutput("plotBP"),
+  plotBP = BPTimelineOutput("plotBP"),
   
   # Tab: ECG
-  plotECG = C3TimelineOutput("plotECG"),
+  plotECG = ECGTimelineOutput("plotECG"),
 
   # Tab: Risk
   plotRisk = htmlOutput("plotRisk"), # TBD - htmlwidget

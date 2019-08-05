@@ -12,6 +12,10 @@ library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vig
 #  provides functions such as 'read_delim'
 library(tidyverse) 
 
+# install.packages("anytime")
+# converts POSIX times to strings
+library(anytime)
+
 # Environment Variables Specific to the services
 # - message passer specifics
 MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
@@ -85,7 +89,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   #     date.month: Month???
   #     time: Time???
   #     weekday (String) day of the week 
-  #
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
   # Load from Observation API
   #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
@@ -107,7 +111,10 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   bp_renamed <- bp %>%
     rename(hr = c8867h4, sbp = c271649006, dbp = c271650006) %>%
     arrange(desc(datem))
-    
+
+  # Create timestamp string for plotting
+  bp_renamed$timestamp <- paste(bp_renamed$datem, bp_renamed$time, sep=" ")
+      
   # Summary Statistics for Blood Pressure
   
   return(bp_renamed)
@@ -146,11 +153,11 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   #     hr.resting (Number) Heart Rate resting 
   #     hr (Number) Heart Rate      
   #     activity.freq (Number) ???
-  #     datem: Date???
-  #     date.month: Month???
-  #     time: Time???
-  #     weekday (String) day of the week 
-  #
+  #     datem: (Date) day as a date
+  #     date.month: (Date) month as defined by the first day of the month
+  #     time: (Date) time of day
+  #     weekday (String) Day of the week 
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
   # Load from Observation API
   #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
@@ -172,6 +179,9 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   hr_renamed <-hr %>%
     rename(hr = c8867h4, hr.resting = c40443h4, activity.freq = c82290h8)
 
+  # Create timestamp string for plotting
+  hr_renamed$timestamp <- paste(hr_renamed$datem, hr_renamed$time, sep=" ")
+  
   # Summary Statistics for Heart Rate
   # from app.R:
   # resting.c8867h4<-tail(hr$c40443h4, n=1)
@@ -219,10 +229,25 @@ loadECGData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #  ECG code = 131328 (???)
-  # ecg <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
+  # ecg_raw <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
 
   # Load from sample-data
-  ecg <- sampleECGData()
+  ecg_raw <- sampleECGData()
+
+  # Note: Sample ECG data file is so strange!
+  # No headers, long rows of what appears to be 2-tuples (unixtime, value)
+  
+  # un-roll the rows into single vector
+  ecg_vector <- c(t(ecg_raw))
+
+  # re-shape vector into 2 column matrix and then converted to table
+  ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
+
+  # name the columns
+  colnames(ecg) <- c("posixtime", "ecg.raw")
+
+  # timestamp column from "posixtime" milliseconds
+  ecg$timestamp <- anytime((ecg$posixtime+0.1)/1000)
 
   # TODO - figure out what the actual ECG columns are! 
   
