@@ -10,7 +10,7 @@
 library(shiny)
 
 # local htmlwidgets
-library(C3)
+library(Consult)
 
 ## ui.R ##
 

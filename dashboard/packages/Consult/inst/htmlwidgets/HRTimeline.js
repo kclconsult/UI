@@ -65,7 +65,7 @@ HTMLWidgets.widget({
                 // display a subchart - this will be used for brushing in a later stage
                 // subchart: {
                 //    show: true
-                // } 
+                // }
             });
         }
 
