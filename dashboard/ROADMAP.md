@@ -2,10 +2,10 @@
 
 # Development Notes
 
-[] Generalise Observation Service call with API
-[] Use Obs service in vitals calls (comment out)
-[] Stub out sample-data stubs using the Plot HTML for HR and BP
-[] Stats generation for sample-data using existing code
+[X] Generalise Observation Service call with API
+[X] Use Obs service in vitals calls (comment out)
+[X] Stub out sample-data stubs using the Plot HTML for HR and BP
+[X] Stats generation for sample-data using existing code
 [] Create Consult package
 [] BP plot widgetah
 [] HR plot widget
@@ -44,7 +44,7 @@
 - Configuration via a System Environment Variable, comma-separated list.
 
 Summary (1)
-Vitals -
+Vitals Observations -
   Based on codes
    Isabell will have a list of codes of the observation being requested (e.g. Blood pressure: 85354-9)):
    https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-GetObservations

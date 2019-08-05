@@ -8,136 +8,247 @@
 
 library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
 
-# Service Environment Variables
+# install.packages("tidyverse")
+#  provides functions such as 'read_delim'
+library(tidyverse) 
+
+# Environment Variables Specific to the services
 # - message passer specifics
-messagePasserHostProtocol = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
-messagePasserHost = Sys.getenv("MESSAGE_PASSER_URL")
+MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
+MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
 
 # - certificate authority
-caBundle = Sys.getenv("CURL_CA_BUNDLE")
+CA_BUNDLE = Sys.getenv("CURL_CA_BUNDLE")
 
-# - username
-consultUserName = Sys.getenv("SHINYPROXY_USERNAME")
+# - username (also patient ID) provided by SHINYPROXY
+USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
+
+#
+# Message Passer API 
+#
+
+getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
+  # Gets Observations for a patient based on codes (i.e. Blood pressure: 85354-9)
+  # 
+  # GET Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-GetObservations)
+  #
+  # Args:
+  #   patientID: Users unique ID.
+  #   code: The code of the observation being requested (e.g. Blood pressure: 85354-9).
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns:
+  #   Table of (raw) Observation Data from the Message Passer Service
+
+  # TODO - validate input parameters
+  
+  # Build the request URL (using paste(...sep="") b/c Env varables (i.e. MP_PROTOCOL) are wrapped with '/')
+  requestUrl <- paste(MP_PROTOCOL, MP_HOST, "/Observation/", USERNAME_PATIENT_ID, "/", 
+                      code, "/",
+                      startTimestamp, "/",
+                      endTimestamp, "",
+                      sep = "")
+
+  # Validate URL with Certificate Authority
+  if(url.exists(requestUrl, cainfo=CA_BUNDLE)) { # valid
+    # Read.table handles HTTP GET request
+    data <- read.table(requestUrl, header = TRUE)
+  } else { # invalid
+    # TODO - exceptions in R?
+    print("Invalid url: ", requestUrl)
+  }
+
+  return(data)
+}
+
 
 #
 # Blood Pressure
 #
 
-bloodPressureEndpoint <- function(from_datetime = "2016-02-26T00:00:00Z", to_date = "2020-02-28T00:00:00Z") {
-   # TODO - validate inputs
-  
-  # build the BP endpoint
-  
-  # endpoint <- paste(messagePasserHostProtocol, 
-  #                    messagePasserHost, 
-  #                    "/Observation/", 
-  #                    consultUserName, 
-  #                    "/85354-9/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", 
-  #                    "", sep="") # 8534-9 = Blood pressure (https://details.loinc.org/LOINC/85354-9.html)
 
-  # validate the URL
-  # if ( url.exists(bpEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) { ...
-  # TODO - Exceptions in R?
+loadBloodPressureData <- function(startTimestamp, endTimestamp) {
+  # Loads Blood Pressure Data for the patient.
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns
+  #   Blood Presure Data set with Summary Statistics
+  #   Columns:
+  #     sbp (Number) Systolic blood pressure      
+  #     dbp (Number) Diastolic blood pressure
+  #     hr  (Number)  Heart rate
+  #     datem: Date???
+  #     date.month: Month???
+  #     time: Time???
+  #     weekday (String) day of the week 
+  #
+  
+  # Load from Observation API
+  #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
+  # bp <- getObservations(USERNAME_PATIENT_ID, "8534-9", startTimestamp, endTimestamp)
+
+  # Load from sample-data
+  bp <- sampleBloodPressureData()
+
+  # Rename the columns for the FIHR codes to more explainable ones:
+  #
+  # New Name | Old Name   | Code      | Details
+  # ---------+------------+-----------+-------------------------------
+  # hr       | c8867h4    | 8867-4    | Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
+  # sbp      | c271649006 | 271649006 | Systolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271649006)
+  # dbp      | c271650006 | 271650006 | Diastolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271650006)
+  # 
+
+  # from plots-for-dashboard.html
+  bp_renamed <- bp %>%
+    rename(hr = c8867h4, sbp = c271649006, dbp = c271650006) %>%
+    arrange(desc(datem))
+    
+  # Summary Statistics for Blood Pressure
+  
+  return(bp_renamed)
 }
 
-loadBloodPressureData <- function() {
+sampleBloodPressureData <- function() {
+  # Loads Blood Pressure Data from a txt file located in sample-data/
+  # 
+  # Returns:
+  #   Compatible Data Table with what is returned from Observation API
+  
+  bp <- read_delim("sample-data/bp.txt", delim = " ")  
+  
+  # lower case the column names
+  colnames(bp) <- tolower(make.names(colnames(bp)))
+  
+  # Column Names as loaded from bp.txt: 
+  #   "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
 
-    # bp<-read.table(bpEndpoint, header=TRUE, colClasses=colClasses)
-    # #rownames(bp) <- 1:nrow(bp);
-    # 
-    # bp$dt<-as.POSIXct(paste(bp$datem, bp$time), format="%Y-%m-%d %H:%M")
-    # 
-    # bp$dt1<-anytime::anytime(bp$dt)
-    # bp$hr<-bp$c8867h4 # 8867-4 = Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-    # bp$sbp<-bp$c271649006 # 271649006 = Systolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271649006)
-    # bp$dbp<-bp$c271650006 # 271650006 = Diastolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271650006)
-
-  # Stub
-  loadSampleTimelineData()
-}
-
-summaryBloodPressureStats<- function(bp) { 
-
+  return(bp)
 }
 
 #
 # Heart Rate
 #
 
-heartRateEndpoint <- function(from_datetime = "2016-02-26T00:00:00Z", to_date = "2020-02-28T00:00:00Z") {
-  # TODO - validate inputs
+loadHeartRateData <- function(startTimestamp, endTimestamp) {
+  # Loads Heart Rate Data for the patient.
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns
+  #   Heart Dataset with Summary Statistics contents:
+  #     hr.resting (Number) Heart Rate resting 
+  #     hr (Number) Heart Rate      
+  #     activity.freq (Number) ???
+  #     datem: Date???
+  #     date.month: Month???
+  #     time: Time???
+  #     weekday (String) day of the week 
+  #
   
-  # build the HR endpoint
-  # TODO - is there a better way of building a URL rather than using paste?
-  # endpoint <- paste(messagePasserHostProtocol, 
-  #                    messagePasserHost, 
-  #                    "/Observation/", 
-  #                    consultUserName, 
-  #                    "/8867-4/", # 8867-4 = Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  #                    from_datetime,
-  #                    "/",
-  #                    to_date, "", sep="")  
+  # Load from Observation API
+  #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
+  # hr <- getObservations(USERNAME_PATIENT_ID, "8867-4", startTimestamp, endTimestamp)
 
-  # validate the URL
-  # if(url.exists(hrEndpoint, cainfo=caBundle) ) {
+  # Load from sample-data
+  hr <- sampleHeartRateData()
+
+  # Rename the columns for the FIHR codes to more explainable ones:
+  #
+  # New Name      | Old Name | Code    | Details
+  # --------------+----------+---------+-------------------------------
+  # hr            | c8867h4  | 8867-4  | Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
+  # hr.resting    | c40443h4 | ???     | ??? 
+  # activity.freq | c82290h8 | 82290-8 | Activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
   # 
-  # }
-  
-}
 
-loadHeartRateData <- function() {
-  # heartRateEndpoint() # get the endpoint
+  # from plots-for-dashboard.html
+  hr_renamed <-hr %>%
+    rename(hr = c8867h4, hr.resting = c40443h4, activity.freq = c82290h8)
 
-  # hr<-read.table(hrEndpoint, header=TRUE, colClasses=colClasses)
-  #  rownames(hr) <- 1:nrow(hr);
-
-  #  hr$dt<-as.POSIXct(paste(hr$datem, hr$time), format="%Y-%m-%d %H:%M")
-  #  hr$freq.mod.activity<-hr$c82290h8 # 82290-8 = activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
-
-  # Stub
-  loadSampleTimelineData()
-}
-
-summaryHeartRateStats = function(hr) {
+  # Summary Statistics for Heart Rate
+  # from app.R:
   # resting.c8867h4<-tail(hr$c40443h4, n=1)
   # cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
   # mean.c8867h4<-mean(hr$c8867h4)
   # cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
   # mean.c8867h4.year<-mean(head(hr$c8867h4, n=30))
   # cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
+    
+  return(hr_renamed)
+}
+
+sampleHeartRateData <- function() {
+  # Loads Heart Rate Data from a txt file located in sample-data/
+  # 
+  # Returns:
+  #   Compatible Data Table with what is returned from Observation API
+  
+  hr <- read_delim("sample-data/hr.txt", delim = " ")  
+  
+  # lower case the column names
+  colnames(hr) <- tolower(make.names(colnames(hr)))
+  
+  # Column Names as loaded from hr.txt: 
+  #   "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
+
+  return(hr)
 }
 
 #
 # ECG 
 #
 
-ecgEndpoint <- function(from_datetime = "2016-02-26T00:00:00Z", to_date = "2020-02-28T00:00:00Z") {
-
-  # endpoint <- paste(messagePasserHostProtocol, 
-  # messagePasserHost, 
-  # "/Observation/", S
-  # Sys.getenv("SHINYPROXY_USERNAME"), 
-  # "/131328/2016-02-26T00:00:00Z/2020-02-28T00:00:00Z", 
-  # "", sep="")
-
-  # if ( url.exists(ecgEndpoint, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
-}
-
-loadECGData <- function() {
- 
-  # ecg<-read.table(ecgEndpoint, header=TRUE, colClasses=colClasses)
-  #  rownames(ecg) <- 1:nrow(ecg);
-
+loadECGData <- function(startTimestamp, endTimestamp) {
+  # Loads ECG Data for the patient.
   #
-  # rawECG <- ecg$c131389
-  # tidyECG <- gsub(" ","\n", rawECG)
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns
+  #   ECG Dataset with Summary Statistics contents:
+  #     ecg.raw (Number) ???
+  #
   
-  # Stub
-  loadSampleTimelineData()
+  # Load from Observation API
+  #  ECG code = 131328 (???)
+  # ecg <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
+
+  # Load from sample-data
+  ecg <- sampleECGData()
+
+  # TODO - figure out what the actual ECG columns are! 
+  
+  # Rename the columns for the FIHR codes to more explainable ones:
+  #
+  # New Name      | Old Name | Code    | Details
+  # --------------+----------+---------+-------------------------------
+  # ecg.raw       | c131389  | ???      | ???
+
+  # ecg_renamed <-ecg %>%
+  #  rename(ecg.raw = c131389)
+  
+  return(ecg)
 }
 
-summaryECGStats <- function(ecg) {
+sampleECGData <- function() {
+  # Loads ECG Data from a txt file located in sample-data/
+  # 
+  # Returns:
+  #   Compatible Data Table with what is returned from Observation API
   
+  ecg <- read.csv("sample-data/ecg.csv", header=FALSE)  
+  
+  # No column names in ecg.csv!
+  
+  return(ecg)
 }
 
 #

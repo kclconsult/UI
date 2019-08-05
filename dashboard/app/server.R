@@ -22,18 +22,15 @@ function(input, output) {
     #
     # Load Datasets and generate statistics
     #
-    # - Blood Pressure
-    datasetBP = loadBloodPressureData()
-    statsBP = summaryBloodPressureStats(datasetBP) # TODO - maybe stats can be generated in loadX function and combined in dataframe?
+    # - Blood Pressure (default time period)
+    datasetBP = loadBloodPressureData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
     
     # - Heart Rate
-    datasetHR = loadHeartRateData()
-    statsHR = summaryHeartRateStats(datasetHR)
+    datasetHR = loadHeartRateData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
 
     # - ECG
-    datasetECG = loadECGData()
-    statsECG = summaryECGStats(datasetECG)
-
+    datasetECG = loadECGData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
+    
     #
     # Tab: Summary
     #
