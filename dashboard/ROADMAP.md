@@ -5,7 +5,7 @@
 [X] Generalise Observation Service call with API
 [X] Use Obs service in vitals calls (comment out)
 [X] Stub out sample-data stubs using the Plot HTML for HR and BP
-[X] Stats generation for sample-data using existing code
+[-] Stats generation for sample-data using existing code
 [] Create Consult package
 [] BP plot widgetah
 [] HR plot widget
