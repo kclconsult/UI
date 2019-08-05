@@ -39,8 +39,8 @@ HTMLWidgets.widget({
 
                     // remap names
                     names: {
-                      "sbp": "Systolic blood pressure",
-                      "dbp": "Diastolic blood pressure"
+                      "sbp": "Systolic blood pressure (SBP)",
+                      "dbp": "Diastolic blood pressure (DBP)"
                     },
 
                     // hide Heart Rate "hr" as there's another Tab
@@ -63,6 +63,20 @@ HTMLWidgets.widget({
                 // hides unused date values, and "hr" Heart Rate
                 legend: {
                   hide: ["datem", "date.month", "time", "weekday", "hr"]
+                },
+
+                // Reference Lines https://c3js.org/samples/grid_y_lines.html
+                grid: {
+                  y: {
+                    lines: [
+                      {value: 85,  text: 'DBP Stage 1',  position: 'start'},
+                      {value: 95,  text: 'DBP Stage 2',  position: 'start'},
+                      {value: 110, text: 'DBP Severe',  position: 'start'},
+                      {value: 135, text: 'SBP Stage 1', position: 'start'},
+                      {value: 150, text: 'SBP Stage 2', position: 'start'},
+                      {value: 180, text: 'SBP Severe',  position: 'start'}
+                    ]
+                  }
                 }
 
                 // display a subchart - this will be used for brushing in a later stage
