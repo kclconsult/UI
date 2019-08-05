@@ -75,7 +75,8 @@ function(input, output) {
     #
     output$plotECG = renderECGTimeline({
         # from packages/Consult/ECGTimeline
-        ECGTimeline(dataset = datasetECG)
+        # NOTE: limiting to last 1000 data-points b/c of the high-resolution
+        ECGTimeline(dataset = tail(datasetECG,1000))
     })
 
     #

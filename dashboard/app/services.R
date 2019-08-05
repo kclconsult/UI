@@ -246,8 +246,8 @@ loadECGData <- function(startTimestamp, endTimestamp) {
   # name the columns
   colnames(ecg) <- c("posixtime", "ecg.raw")
 
-  # timestamp column from "posixtime" milliseconds
-  ecg$timestamp <- anytime((ecg$posixtime+0.1)/1000)
+  # timestamp column from "posixtime" - concatenating milliseconds
+  ecg$timestamp <- paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
 
   # TODO - figure out what the actual ECG columns are! 
   
