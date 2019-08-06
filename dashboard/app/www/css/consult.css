@@ -9,13 +9,39 @@
 
 /* Mast Logos */
 #consult-logo {
-    margin-top: 50px;
+  margin-top: 50px;
 	height: 110px;
 }
 
 #kcl-logo {
-    margin-top: 20px;
+  margin-top: 20px;
 	margin-bottom: 20px;
 	margin-right: 15px;
 	height: 120px;
+}
+
+/* Navbar Cusomisations */
+#consult-main-navbar { /* id targets only the navbar buttons and not the masthead */
+  background-color: #ed6d41;
+}
+
+/* Active Navbar Link */
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #4a4a4a;
+  background-color: #FFE5D1;
+}
+
+/* White Navbar Text Color */
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+}
+
+/* Individual Navbar Buttons Spacing */
+.nav > li {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #fff;
+  border-left-style: solid;
+  border-left-width: 2px;
+  border-left-color: #fff;
 }
