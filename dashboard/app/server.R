@@ -48,11 +48,55 @@ function(input, output) {
     })
 
     # Summary Boxes (TODO - make reactive to selectors)
-    output$summaryBP = renderSummaryBP()
-    output$summaryHR = renderSummaryHR()
-    output$summaryECG = renderSummaryECG()
-    output$summaryMood = renderSummaryMood()
-    output$summaryPain = renderSummaryPain()
+    # - Blood Pressure Summary
+    output$summaryBP = renderSummaryBox({
+      #from packages/Consult/SummaryBox
+      SummaryBox(title = "Blood Pressure",
+                 alert = "green",
+                 status = "135/85 mmHG",
+                 timestamp = "2019-7-31 12:34:56",
+                 source = "Home")
+    })
+
+    # - Heart Rate Summary
+    output$summaryHR = renderSummaryBox({
+      #from packages/Consult/SummaryBox
+      SummaryBox(title = "Heart Rate",
+                 alert = "green",
+                 status = "135 bpm",
+                 timestamp = "2019-7-31 12:34:56",
+                 source = "Home")
+    })
+    
+    # - ECG Summary
+    output$summaryECG = renderSummaryBox({
+      #from packages/Consult/SummaryBox
+      SummaryBox(title = "ECG",
+                 alert = "green",
+                 status = "Normal",
+                 timestamp = "2019-7-31 12:34:56",
+                 source = "Clinic")
+    })
+    
+    # - Mood Summary
+    output$summaryMood = renderSummaryBox({
+      #from packages/Consult/SummaryBox
+      SummaryBox(title = "Mood",
+                 alert = "orange",
+                 status = "",
+                 timestamp = "2019-7-31 12:34:56",
+                 source = "Home")
+    })
+    
+    # - Pain Summary
+    output$summaryPain = renderSummaryBox({
+      #from packages/Consult/SummaryBox
+      SummaryBox(title = "Pain",
+                 alert = "red",
+                 status = "",
+                 timestamp = "2019-7-31 12:34:56",
+                 source = "Home")
+    })
 
     #
     # Tab: Heart Rate (HR)

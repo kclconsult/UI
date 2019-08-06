@@ -39,9 +39,6 @@
 /* Individual Navbar Buttons Spacing */
 .nav > li {
   border-right-style: solid;
-  border-right-width: 2px;
+  border-right-width: 5px;
   border-right-color: #fff;
-  border-left-style: solid;
-  border-left-width: 2px;
-  border-left-color: #fff;
 }

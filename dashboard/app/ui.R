@@ -27,11 +27,11 @@ htmlTemplate("www/index.html",
   selectLastMonth = actionButton("selectLastMonth", "Last Month"),
 
   # - summary boxes (TODO widgetize for more custom styling)
-  summaryBP = htmlOutput("summaryBP"),
-  summaryHR = htmlOutput("summaryHR"),
-  summaryECG = htmlOutput("summaryECG"),
-  summaryMood = htmlOutput("summaryMood"),
-  summaryPain  = htmlOutput("summaryPain"),
+  summaryBP   = SummaryBoxOutput("summaryBP"),
+  summaryHR   = SummaryBoxOutput("summaryHR"),
+  summaryECG  = SummaryBoxOutput("summaryECG"),
+  summaryMood = SummaryBoxOutput("summaryMood"),
+  summaryPain = SummaryBoxOutput("summaryPain"),
   
   # Tab: Heart Rate (HR)
   plotHR = HRTimelineOutput("plotHR"),

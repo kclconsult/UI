@@ -1,0 +1,17 @@
+# (uncomment to add a dependency)
+# dependencies:
+#  - name:
+#    version:
+#    src:
+#    script:
+#    stylesheet:
+
+dependencies:
+- name: d3
+  version: 5.9.7
+  src: htmlwidgets
+  script: ./lib/d3.v5.js
+- name: underscore
+  version: 1.9.1
+  src: htmlwidgets
+  script: ./lib/underscore-min.js

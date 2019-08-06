@@ -6,10 +6,10 @@
 [X] Use Obs service in vitals calls (comment out)
 [X] Stub out sample-data stubs using the Plot HTML for HR and BP
 [-] Stats generation for sample-data using existing code
-[] Create Consult package
-[] BP plot widgetah
-[] HR plot widget
-[] ECG Plot???
+[X] Create Consult package
+[X] BP plot widgetah
+[X] HR plot widget
+[X] ECG Plot???
 [] Graph Granularity for time.
 [] Day-Night Vertical Grids on plots
 [] Bar versus Line Charts
@@ -18,7 +18,7 @@
 [] Mood Grid Widget
 [] Observation POST Service Call in services API
 [] Input from Mood widget calls Observation POST
-[] CSS Colors and Font and Button Sizing
+[X] CSS Colors and Font and Button Sizing
 [] Summary Vitals Selector
 [] Time Logic for QuestionnaireResponses form
 [] QuestionnaireResponses HTML form in Mood tab

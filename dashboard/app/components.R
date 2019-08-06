@@ -11,121 +11,35 @@
 
 
 #
-# Tab: Summary
-# 
-
-# - Blood Pressure Summary
-renderSummaryBP <- function(bp = "N/A") {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
-  renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("Blood Pressure:", bp))
-  })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
-}
-
-# - Heart Rate Summary
-renderSummaryHR <- function(hr = "N/A") {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
-  renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("Heart Rate:", hr))
-  })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
-}
-
-# - ECG Summary
-renderSummaryECG <- function(ecg = "N/A") {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
-  renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("ECG:", ecg))
-  })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
-}
-
-# - Mood Summary
-renderSummaryMood <- function(mood = "N/A") {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
-  renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("Mood:", mood))
-  })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
-}
-
-# - Mood Summary
-renderSummaryPain <- function(pain = "N/A") {
-  # Render a Bootstrap alert: https://getbootstrap.com/docs/3.3/components/#alerts
-
-  # <div class="alert alert-success" role="alert">
-  #   Button Pressed: N times!
-  # </div>
-
-  # NOTE: in R the "return" value is the last value evaluated in a function,
-  # so this returns the rendered HTML expression:
-  renderUI({
-    tags$div(class="alert alert-success", role="alert",
-             paste("Pain:", pain))
-  })
-  # Note: paste concatenates strings (with a DEFAULT single whitespace character): 
-  # https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/paste
-}
-
-# Risk
+# Tab: Risk
+#
 renderRisk <- function() {
   renderUI({
     tags$div(class="alert alert-success", role="alert", "Risk")
   })
 }
 
-# Recommendations
+#
+# Tab: Recommendations
+#
 renderRecommendations <- function() {
   renderUI({
     tags$div(class="alert alert-success", role="alert", "Recommendations")
   })
 }
 
-# Mood
+#
+# Tab: Mood
+#
 renderMood <- function() {
   renderUI({
     tags$div(class="alert alert-success", role="alert", "Mood")
   })
 }
 
-# Feedback
+#
+# Tab: Feedback
+#
 renderFeedback <- function() {
   renderUI({
     tags$div(class="alert alert-success", role="alert", "Feedback")
