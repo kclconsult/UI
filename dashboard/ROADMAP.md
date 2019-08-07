@@ -1,5 +1,75 @@
 # Consult Frontend
 
+# Further Inquiries and Support Requests
+
+## Data Analysis
+
+- Observation Data Round-up (Verify with live API?)
+  Code      | What                | Columns (from sample-data)
+  ------------------------------------------------------------------------------
+  8534-9    | Blood pressure      | "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
+  8867-4    | Heart rate          | "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
+  131328    | ECG                 | wtf (see below)???
+  285854004 | Recorded emotion    | ???
+
+- Does Pain Observation Data exist?
+
+- Observation Data for ECG
+  - ecg.csv in sample-data is not in data.table format.  Is this representative of what the MessagePasser returns?
+
+- ECG timeline - 5 seconds = 1000+ points...
+  - What is desired to show here?  
+  - Live ECG?  Need to profile refreshing every 1-5 seconds with deployment.
+
+- Summary Boxes
+  Options: Last 4 hours, Last 24 hours, Last Week?/Month?
+  3 Levels of Display: Green | Orange | Red
+  - Blood Pressure - mean number?
+  - Heart Rate - mean number?
+  - ECG - Number? or Status?  Is there an Interpretation?
+  - Pain - What maps to levels 1-3?
+  - Mood - 3 Levels Good | Meh | Bad. Interpretation from self-reporting 16 grid?
+
+- QuestionnaireResponses PHQ9 values and Form Guidance:
+  Field                Description
+  ------------------------------------------------------------------------------
+  id 	                 Resource ID ***What Here?***
+  subjectReference     Patient ID a.k.a. SHINYPROXY_USERNAME
+  effectiveDateTime    Timestamp of response, ***format? '%Y-%m-%d %H:%M:%S'***
+  LittleInterest 	     PHQ9 score for LittleInterest
+  FeelingDown 	       PHQ9 score for FeelingDown
+  TroubleSleeping  	   PHQ9 score for TroubleSleeping
+  FeelingTired 	       PHQ9 score for FeelingTired
+  BadAppetite 	       PHQ9 score for BadAppetite
+  FeelingBadAboutSelf  PHQ9 score for FeelingBadAboutSelf
+  TroubleConcentrating PHQ9 score for TroubleConcentrating
+  MovingSpeaking 	     PHQ9 score for MovingSpeaking
+  Difficulty 	         PHQ9 score for Difficulty
+  TotalScore 	         Total PHQ9 score
+
+## MessagePasser / APIs
+
+- ClinicalImpressions for "Notes" display (by date or some ordering)
+  - Listing and Retrieving ClinicalImpression by some ID for display
+
+- Risk assessment for the People Plots (based on ethnicity, age, gender)
+  * unless Risk Logic is client side which would require a look-up table and a way to access ethnicity,age,gender.
+
+- QuestionnaireResponses prompting time-logic
+  - for example know when the last Questionnaire was submitted so that it can be prompted once a week
+
+- Recommendations - list of text based recommendations to be displayed
+  - recommendation format: "timestamp" (to sort recommendation) | "icon" (visual?) | "recommendation" (text)
+
+- Dashboard Logging service:
+  - generic event format: "timestamp (datetime string)" | "event (String)" | "details (String)"
+
+## Dev-Ops
+- Sys.Environment variable:
+  "DASHBOARD_ACTIVE_TABS" = comma separated list of tabs
+  full-set: "summary,hr,bp,ecg,risk,recommendations,mood,feedback"
+  default (if no enviornment variable is present): "???"
+
 # Development Notes
 
 [X] Generalise Observation Service call with API
@@ -13,8 +83,8 @@
 [] Graph Granularity for time.
 [] Day-Night Vertical Grids on plots
 [] Bar versus Line Charts
-[] Base Info Box htmlwidget
-[] Implement the 5 vitals widgets
+[X] Base Info Box htmlwidget
+[X] Implement the 5 vitals widgets
 [] Mood Grid Widget
 [] Observation POST Service Call in services API
 [] Input from Mood widget calls Observation POST

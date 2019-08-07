@@ -132,7 +132,7 @@ sampleBloodPressureData <- function() {
   colnames(bp) <- tolower(make.names(colnames(bp)))
   
   # Column Names as loaded from bp.txt: 
-  #   "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
+  #   "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
 
   return(bp)
 }

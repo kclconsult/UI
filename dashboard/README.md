@@ -121,7 +121,7 @@ Create widget scaffolding
     Created boilerplate for widget javascript bindings at inst/htmlwidgets/ECGTimeline.js
 
 Edit the files, and then install package before you test it:
-    > devtools::install() 
+    > devtools::install()
 
 ## Target Device Size
 Samsung Tablet: SM-T585
