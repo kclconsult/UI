@@ -17,6 +17,8 @@ library(tidyverse)
 library(anytime)
 
 # Environment Variables Specific to the services
+#  Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", CURL_CA_BUNDLE="")
+
 # - message passer specifics
 MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
 MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
@@ -30,6 +32,12 @@ USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
 #
 # Message Passer API 
 #
+# https://github.kcl.ac.uk/pages/consult/message-passer/
+#
+
+#
+# Observation Data
+#
 
 getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
   # Gets Observations for a patient based on codes (i.e. Blood pressure: 85354-9)
@@ -40,7 +48,7 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
   #   patientID: Users unique ID.
   #   code: The code of the observation being requested (e.g. Blood pressure: 85354-9).
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2020-02-28T00:00:00Z).
   #
   # Returns:
   #   Table of (raw) Observation Data from the Message Passer Service
@@ -54,14 +62,16 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
                       endTimestamp, "",
                       sep = "")
 
+  print(requestUrl)
+  
   # Validate URL with Certificate Authority
-  if(url.exists(requestUrl, cainfo=CA_BUNDLE)) { # valid
+  #if(url.exists(requestUrl, cainfo=CA_BUNDLE)) { # valid
     # Read.table handles HTTP GET request
     data <- read.table(requestUrl, header = TRUE)
-  } else { # invalid
+  #} else { # invalid
     # TODO - exceptions in R?
-    print("Invalid url: ", requestUrl)
-  }
+  #  print(paste("Invalid url: ", requestUrl))
+  #}
 
   return(data)
 }
@@ -93,7 +103,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
-  # bp <- getObservations(USERNAME_PATIENT_ID, "8534-9", startTimestamp, endTimestamp)
+  # bp <- getObservations(USERNAME_PATIENT_ID, "85354-9", startTimestamp, endTimestamp)
 
   # Load from sample-data
   bp <- sampleBloodPressureData()
@@ -277,6 +287,45 @@ sampleECGData <- function() {
 }
 
 #
+# Mood Observation Data
+#
+
+sendMoodObservation <- function(recordedEmotion) {
+  # TODO - use https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
+  
+  # Fields for POST request
+  # id 	String 	Resource ID
+  # subjectReference 	String 	  Patient ID
+  subjectReference = USERNAME_PATIENT_ID
+  # effectiveDateTime 	String 	(optional) Timestamp of impression
+  # 285854004 	String 	Recorded emotion
+  
+  print(paste("sendMoodObservation(subjectReference=", subjectReference,
+              ", 285854004=", recordedEmotion,
+              ")"))
+}
+
+#
+# Clinical Impression Data
+#
+
+sendClinicalImpression <- function(note) {
+  # TODO - use https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions
+  
+  # Fields for POST request
+  # id 	String 	Resource ID - TODO What is this?
+  # note 	String 	 Impression details
+  # subjectReference 	String 	  Patient ID
+  subjectReference = USERNAME_PATIENT_ID
+  # effectiveDateTime 	String 	(optional) TODO Timestamp of impression
+  
+  print(paste("sendClinicalImpression(subjectReference=", subjectReference,
+              ", note=", note,
+              ")"))
+}
+
+
+#
 # EXAMPLES
 #
 
@@ -316,3 +365,7 @@ requestData <- function() {
   # return the data
   data
 }
+
+
+
+
