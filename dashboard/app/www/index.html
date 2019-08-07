@@ -83,12 +83,13 @@
 
 		<!-- Tab: Summary -->
     	<div class="tab-pane active" id="summary">
+        <ul class="nav nav-pills">
+          <li class="active">{{ selectLastFourHours }}</li>
+          <li>{{ selectLastDay }}</li>
+          <li>{{ selectLastMonth }}</li>
+        </ul>
 
-			<!-- Action Buttons - TODO: change to tabbed selector, or styled radio box? -->
-			{{ selectLastFourHours }}
-			{{ selectLastDay }}
-			{{ selectLastMonth }}
-
+      <!-- Grid of Summary Boxes -->
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-6 col-md-4">{{ summaryBP   }}</div>

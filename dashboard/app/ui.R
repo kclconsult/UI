@@ -40,12 +40,12 @@ htmlTemplate("www/index.html",
   tabFeedbackLink = actionLink("tabFeedbackLink", "Feedback", href = "#feedback", `data-toggle` = "tab"),
   
   # Tab: Summary
-  # - time range selectors (TODO change from actionButtons to tabbed selector)
-  selectLastFourHours = actionButton("selectLastFourHours", "Last 4 Hours"),
-  selectLastDay = actionButton("selectLastDay", "Last 24 Hours"),
-  selectLastMonth = actionButton("selectLastMonth", "Last Month"),
+  # - Selectors as Bootstrip "nav-pills"
+  selectLastFourHours = actionLink("selectLastFourHours", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastDay = actionLink("selectLastDay", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastMonth = actionLink("selectLastMonth", "Last Month", href = "#", `data-toggle` = "pill"),
 
-  # - summary boxes (TODO widgetize for more custom styling)
+  # - Summary Boxes
   summaryBP   = SummaryBoxOutput("summaryBP"),
   summaryHR   = SummaryBoxOutput("summaryHR"),
   summaryECG  = SummaryBoxOutput("summaryECG"),
