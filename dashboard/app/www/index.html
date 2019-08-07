@@ -132,8 +132,16 @@
 
 		<!-- Tab: Mood -->
 		<div class="tab-pane" id="mood">
-			<p>Mood selector (images)</p>
-			{{ selectorMood }}
+			<h4>Which of the below best represents your current MOOD?</h4>
+      <!-- Grid of Emotion Links -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3">{{ emotionLinkTired }}</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+          <div class="col-md-3"></div>
+				</div>
+			</div>
 		</div>
 
 		<!-- Tab: Feedback -->

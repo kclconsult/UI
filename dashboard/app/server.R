@@ -173,8 +173,11 @@ function(input, output) {
     #
     # Tab: Mood
     #
-    output$selectorMood = renderMood()
-  
+    observeEvent(input$emotionLinkTired, {
+      print("Mood: tired")
+      sendMoodObservation("tired")
+    })
+    
     #
     # Tab: Feedback
     #
