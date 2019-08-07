@@ -65,16 +65,14 @@
     		<!-- Collect the nav links, forms, and other content for toggling -->
     		<div class="collapse navbar-collapse" id="consult-navbar-collapse">
       			<ul class="nav navbar-nav">
-        			<li class="active">
-                <a href="#summary" data-toggle="tab">Summary</a>
-					    </li>
-        			<li><a href="#hr" data-toggle="tab">Heart Rate</a></li>
-					    <li><a href="#bp" data-toggle="tab">Blood Pressure</a></li>
-					    <li><a href="#ecg" data-toggle="tab">ECG</a></li>
-					    <li><a href="#risk" data-toggle="tab">Risk</a></li>
-					    <li><a href="#recommend" data-toggle="tab">Recommendations</a></li>
-					    <li><a href="#mood" data-toggle="tab">Mood</a></li>
-					    <li><a href="#feedback" data-toggle="tab">Feedback</a></li>
+        			<li class="active">{{ tabSummaryLink }}</li>
+        			<li>{{ tabHRLink }}</li>
+					    <li>{{ tabBPLink }}</li>
+					    <li>{{ tabECGLink }}</li>
+					    <li>{{ tabRiskLink }}</li>
+					    <li>{{ tabRecommendationsLink }}</li>
+					    <li>{{ tabMoodLink }}</li>
+					    <li>{{ tabFeedbackLink }}</li>
       			</ul>
     		</div><!-- /.navbar-collapse -->
   		</div><!-- /.container-fluid -->
@@ -85,7 +83,6 @@
 
 		<!-- Tab: Summary -->
     	<div class="tab-pane active" id="summary">
-			<h3>My Health Summary</h3>
 
 			<!-- Action Buttons - TODO: change to tabbed selector, or styled radio box? -->
 			{{ selectLastFourHours }}
@@ -108,45 +105,38 @@
 
 		<!-- Tab: Heart Rate -->
 		<div class="tab-pane" id="hr">
-			<h3>Heart Rate</h3>
 			{{ plotHR }}
 		</div>
 
 		<!-- Tab: Blood Pressure -->
 		<div class="tab-pane" id="bp">
-			<h3>Blood Pressure</h3>
 			{{ plotBP }}
 		</div>
 
 		<!-- Tab: ECG -->
 		<div class="tab-pane" id="ecg">
-			<h3>ECG</h3>
 			{{ plotECG }}
 		</div>
 
 		<!-- Tab: Risk -->
 		<div class="tab-pane" id="risk">
-			<h3>Risk</h3>
 			<!-- predicted-risk-of-stroke-if-you-stop-smoking.png -->
 			{{ plotRisk }}
 		</div>
 
 		<!-- Tab: Recommendations -->
-		<div class="tab-pane" id="recommend">
-			<h3>Recommendations</h3>
+		<div class="tab-pane" id="recommendations">
 			{{ listRecommendations }}
 		</div>
 
 		<!-- Tab: Mood -->
 		<div class="tab-pane" id="mood">
-			<h3>Mood</h3>
 			<p>Mood selector (images)</p>
 			{{ selectorMood }}
 		</div>
 
 		<!-- Tab: Feedback -->
 		<div class="tab-pane" id="feedback">
-			<h3>Feedback</h3>
 			<p>Feedback log for patients (what is this?)</p>
 			{{ logFeedback }}
 		</div>
