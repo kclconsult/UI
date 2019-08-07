@@ -7,35 +7,41 @@
 - Observation Data Round-up (Verify with live API?)
   Code      | What                | Columns (from sample-data)
   ------------------------------------------------------------------------------
-  8534-9    | Blood pressure      | "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
+  85354-9    | Blood pressure      | "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
   8867-4    | Heart rate          | "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
   131328    | ECG                 | wtf (see below)???
   285854004 | Recorded emotion    | ???
 
-- Does Pain Observation Data exist?
+- Does Pain Observation Data exist? No, remove from the Summary Box
 
 - Observation Data for ECG
-  - ecg.csv in sample-data is not in data.table format.  Is this representative of what the MessagePasser returns?
+  - ecg.csv in sample-data is not in data.table format.  Is this representative of what the MessagePasser returns? Yes, it is.  Parsing as tuples
 
 - ECG timeline - 5 seconds = 1000+ points...
   - What is desired to show here?  
   - Live ECG?  Need to profile refreshing every 1-5 seconds with deployment.
+  * don't know? Tabled
+  - Choose a Time to inquire about the ECG.
 
 - Summary Boxes
-  Options: Last 4 hours, Last 24 hours, Last Week?/Month?
+  X Options: Last 4 hours, Last 24 hours, Last Week?/Month?
+  - Just show: Last Values Recorded.
+  - Device Connection Problem Badge.
   3 Levels of Display: Green | Orange | Red
   - Blood Pressure - mean number?
   - Heart Rate - mean number?
   - ECG - Number? or Status?  Is there an Interpretation?
-  - Pain - What maps to levels 1-3?
+    * Don't know: what the interpretation? Grey all the time.
+    * Connectivity of the box?
+  X Pain - What maps to levels 1-3?
   - Mood - 3 Levels Good | Meh | Bad. Interpretation from self-reporting 16 grid?
 
 - QuestionnaireResponses PHQ9 values and Form Guidance:
   Field                Description
   ------------------------------------------------------------------------------
-  id 	                 Resource ID ***What Here?***
+  id 	                 Resource ID *** Generates itself ***
   subjectReference     Patient ID a.k.a. SHINYPROXY_USERNAME
-  effectiveDateTime    Timestamp of response, ***format? '%Y-%m-%d %H:%M:%S'***
+  effectiveDateTime    Timestamp of response, *** auto-generated ***
   LittleInterest 	     PHQ9 score for LittleInterest
   FeelingDown 	       PHQ9 score for FeelingDown
   TroubleSleeping  	   PHQ9 score for TroubleSleeping
@@ -52,14 +58,20 @@
 - ClinicalImpressions for "Notes" display (by date or some ordering)
   - Listing and Retrieving ClinicalImpression by some ID for display
 
-- Risk assessment for the People Plots (based on ethnicity, age, gender)
-  * unless Risk Logic is client side which would require a look-up table and a way to access ethnicity,age,gender.
+- Risk assessment for the People Plots (not based on ethnicity)
+  * based on intervention.csv file. (i.e. Cate's plot)
+  * drop down box to Choose an Intervention.
+  - show the Static Plots?
 
 - QuestionnaireResponses prompting time-logic
   - for example know when the last Questionnaire was submitted so that it can be prompted once a week
+  - PHQ2 - asked once every 2 weeks.
+  - Depending on the answer - give them a PHQ2/9.
+  --> 3 MOOD MODES: PHQ2 | PHQ9 | Mood Grid
 
 - Recommendations - list of text based recommendations to be displayed
   - recommendation format: "timestamp" (to sort recommendation) | "icon" (visual?) | "recommendation" (text)
+  X - STATIC TEXT OF Recommendations
 
 - Dashboard Logging service:
   - generic event format: "timestamp (datetime string)" | "event (String)" | "details (String)"
@@ -68,7 +80,7 @@
 - Sys.Environment variable:
   "DASHBOARD_ACTIVE_TABS" = comma separated list of tabs
   full-set: "summary,hr,bp,ecg,risk,recommendations,mood,feedback"
-  default (if no enviornment variable is present): "???"
+  default (if no environment variable is present): "???"
 
 # Development Notes
 
