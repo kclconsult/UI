@@ -173,10 +173,22 @@ function(input, output) {
     #
     # Tab: Mood
     #
-    observeEvent(input$emotionLinkTired, {
-      print("Mood: tired")
-      sendMoodObservation("tired")
-    })
+    observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
+    observeEvent(input$emotionLinkTense,      { sendMoodObservation("tense") })
+    observeEvent(input$emotionLinkSleepy,     { sendMoodObservation("sleepy") })
+    observeEvent(input$emotionLinkSerene,     { sendMoodObservation("serene") })
+    observeEvent(input$emotionLinkSatisfied,  { sendMoodObservation("satisfied") })
+    observeEvent(input$emotionLinkSad,        { sendMoodObservation("sad") })
+    observeEvent(input$emotionLinkMiserable,  { sendMoodObservation("miserable") })
+    observeEvent(input$emotionLinkHappy,      { sendMoodObservation("happy") })
+    observeEvent(input$emotionLinkGloomy,     { sendMoodObservation("gloomy") })
+    observeEvent(input$emotionLinkGlad,       { sendMoodObservation("glad") })
+    observeEvent(input$emotionLinkFrustrated, { sendMoodObservation("frustrated") })
+    observeEvent(input$emotionLinkExcited,    { sendMoodObservation("excited") })
+    observeEvent(input$emotionLinkDelighted,  { sendMoodObservation("delighted") })
+    observeEvent(input$emotionLinkCalm,       { sendMoodObservation("calm") })
+    observeEvent(input$emotionLinkAngry,      { sendMoodObservation("angry") })
+    observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
     
     #
     # Tab: Feedback

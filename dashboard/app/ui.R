@@ -62,7 +62,7 @@ htmlTemplate("www/index.html",
   plotECG = ECGTimelineOutput("plotECG"),
 
   # Tab: Risk
-  plotRisk = htmlOutput("plotRisk"), # TBD - htmlwidget
+  plotRisk = htmlOutput("plotRisk"),
   
   # Tab: Recommendations
   listRecommendations = htmlOutput("listRecommendations"),
