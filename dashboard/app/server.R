@@ -34,7 +34,8 @@ function(input, output) {
     #
     # Tab: Summary
     #
-    # Select different time-range events (TODO change from actionButtons to tabbed selector)
+    # Select different time-range events
+    #   (TODO change from actionButtons to tabbed selector)
     observeEvent(input$selectLastFourHours, {
         print("Summary: Last Four Hours")
     })
