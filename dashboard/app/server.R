@@ -125,16 +125,6 @@ function(input, output) {
                  source = "Home")
     })
     
-    # - Pain Summary
-    output$summaryPain = renderSummaryBox({
-      #from packages/Consult/SummaryBox
-      SummaryBox(title = "Pain",
-                 alert = "red",
-                 status = "",
-                 timestamp = "2019-7-31 12:34:56",
-                 source = "Home")
-    })
-
     #
     # Tab: Heart Rate (HR)
     #

@@ -50,8 +50,7 @@ htmlTemplate("www/index.html",
   summaryHR   = SummaryBoxOutput("summaryHR"),
   summaryECG  = SummaryBoxOutput("summaryECG"),
   summaryMood = SummaryBoxOutput("summaryMood"),
-  summaryPain = SummaryBoxOutput("summaryPain"),
-  
+
   # Tab: Heart Rate (HR)
   plotHR = HRTimelineOutput("plotHR"),
   
