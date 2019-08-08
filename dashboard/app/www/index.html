@@ -79,15 +79,10 @@
 	</nav>
 
 	<!-- Tab panes -->
-    <div class="tab-content">
+  <div class="tab-content">
 
 		<!-- Tab: Summary -->
-    	<div class="tab-pane active" id="summary">
-        <ul class="nav nav-pills">
-          <li class="active">{{ selectLastFourHours }}</li>
-          <li>{{ selectLastDay }}</li>
-          <li>{{ selectLastMonth }}</li>
-        </ul>
+    <div class="tab-pane active" id="summary">
 
       <!-- Grid of Summary Boxes -->
 			<div class="container-fluid">
@@ -106,12 +101,21 @@
 
 		<!-- Tab: Heart Rate -->
 		<div class="tab-pane" id="hr">
+      <!-- Select Different Time Periods -->
+      <ul class="nav nav-pills">
+        <li class="active">{{ selectLastFourHours }}</li>
+        <li>{{ selectLastDay }}</li>
+        <li>{{ selectLastMonth }}</li>
+      </ul>
+
+      <!-- Heart Rate Plot -->
 			{{ plotHR }}
 		</div>
 
 		<!-- Tab: Blood Pressure -->
 		<div class="tab-pane" id="bp">
-			{{ plotBP }}
+      <!-- Blood Pressure Widget -->
+      {{ plotBP }}
 		</div>
 
 		<!-- Tab: ECG -->
@@ -133,37 +137,38 @@
 		<!-- Tab: Mood -->
 		<div class="tab-pane" id="mood">
 			<h4>Which of the below best represents your current MOOD?</h4>
+
       <!-- Grid of Emotion Links -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-3">{{ emotionLinkTired }}</div>
-					<div class="col-md-3">{{ emotionLinkTense }}</div>
-					<div class="col-md-3">{{ emotionLinkSleepy }}</div>
-          <div class="col-md-3">{{ emotionLinkSerene }}</div>
+					<div class="col-md-3">{{ emotionLinkAfraid  }}</div>
+					<div class="col-md-3">{{ emotionLinkAngry  }}</div>
+					<div class="col-md-3">{{ emotionLinkCalm }}</div>
+          <div class="col-md-3">{{ emotionLinkDelighted }}</div>
 				</div>
 			</div>
       <div class="container-fluid">
 				<div class="row">
-					<div class="col-md-3">{{ emotionLinkSatisfied }}</div>
-					<div class="col-md-3">{{ emotionLinkSad }}</div>
-					<div class="col-md-3">{{ emotionLinkMiserable }}</div>
-          <div class="col-md-3">{{ emotionLinkHappy }}</div>
-				</div>
-			</div>
-      <div class="container-fluid">
-				<div class="row">
-					<div class="col-md-3">{{ emotionLinkGloomy }}</div>
-					<div class="col-md-3">{{ emotionLinkGlad }}</div>
+					<div class="col-md-3">{{ emotionLinkExcited  }}</div>
 					<div class="col-md-3">{{ emotionLinkFrustrated }}</div>
-          <div class="col-md-3">{{ emotionLinkExcited }}</div>
+					<div class="col-md-3">{{ emotionLinkGlad }}</div>
+          <div class="col-md-3">{{ emotionLinkGloomy }}</div>
+				</div>
+			</div>
+      <div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3">{{ emotionLinkHappy  }}</div>
+					<div class="col-md-3">{{ emotionLinkMiserable  }}</div>
+					<div class="col-md-3">{{ emotionLinkSad  }}</div>
+          <div class="col-md-3">{{ emotionLinkSatisfied }}</div>
 				</div>
 			</div>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3">{{ emotionLinkDelighted }}</div>
-          <div class="col-md-3">{{ emotionLinkCalm }}</div>
-          <div class="col-md-3">{{ emotionLinkAngry }}</div>
-          <div class="col-md-3">{{ emotionLinkAfraid }}</div>
+          <div class="col-md-3">{{ emotionLinkSerene  }}</div>
+          <div class="col-md-3">{{ emotionLinkSleepy  }}</div>
+          <div class="col-md-3">{{ emotionLinkTense }}</div>
+          <div class="col-md-3">{{ emotionLinkTired }}</div>
         </div>
       </div>
 		</div>
