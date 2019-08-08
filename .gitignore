@@ -114,5 +114,9 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node,linux,dropbox
+
+###
+# RStudio detritus
+.RData
 .Rhistory
 .Rproj.user
