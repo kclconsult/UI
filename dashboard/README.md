@@ -131,3 +131,13 @@ https://consultproject.co.uk/ui/login
 
 ## Chat login
 https://consultproject.co.uk/chat/login
+
+## Running on server
+In R:
+
+Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", CURL_CA_BUNDLE="")                                                                                             
+library(shiny)
+
+runApp(appDir="dashboard", host="0.0.0.0", port=5369)
+
+http://ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:5369

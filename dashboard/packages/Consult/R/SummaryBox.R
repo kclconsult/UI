@@ -5,7 +5,7 @@
 #' @import htmlwidgets
 #'
 #' @export
-SummaryBox <- function(title, alert="default", status, timestamp, source, width = NULL, height = NULL, elementId = NULL) {
+SummaryBox <- function(title, alert="default", status, timestamp, source, connectivity, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
