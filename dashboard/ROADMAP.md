@@ -84,6 +84,7 @@
 
 # Development Notes
 
+[] Remove Pain SummaryBox
 [] SummaryBox DefaultColor
 [] SummaryBox Icon
 [] Alert Logic for BP

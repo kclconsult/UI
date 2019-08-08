@@ -9,9 +9,11 @@ HTMLWidgets.widget({
     console.log("SummaryBox w: " + width + " h: " + height);
 
     var bg_color = {
-      "green":  "rgb(133,193,58)",
-      "orange": "rgb(227,147,69)",
-      "red":    "rgb(230,64,55)"
+      "default": "rgb(186,186,196)",
+      "dark":    "rgb(62,54,89)",
+      "green":   "rgb(133,193,58)",
+      "orange":  "rgb(227,147,69)",
+      "red":     "rgb(230,64,55)"   // #E64037
     };
 
     //  define shared variables for this instance
@@ -41,7 +43,13 @@ HTMLWidgets.widget({
                   .attr("width", width - 30)
                   .attr("height", height - 30)
                   .attr("rx", "15")
-                  .style("fill", function (d) { return bg_color[d]; });
+                  .style("fill", function (d) {
+                    if(d in bg_color) {
+                      return bg_color[d];
+                    } else {
+                      return bg_color["default"];
+                    }
+                  });
 
         // Places the Title for the Summary Box, split across new lines
         var title_text = svg.selectAll("text.summary-box-title")

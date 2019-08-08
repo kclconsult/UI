@@ -5,7 +5,7 @@
 #' @import htmlwidgets
 #'
 #' @export
-SummaryBox <- function(title, alert, status, timestamp, source, width = NULL, height = NULL, elementId = NULL) {
+SummaryBox <- function(title, alert="default", status, timestamp, source, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
@@ -13,7 +13,8 @@ SummaryBox <- function(title, alert, status, timestamp, source, width = NULL, he
     alert = alert,
     status = status,
     timestamp = timestamp,
-    source = source
+    source = source,
+    connectivity = connectivity
   )
 
   # create widget
