@@ -6,21 +6,22 @@
 - [X] Remove Pain SummaryBox
 - [X] SummaryBox DefaultColor
 - [ ] SummaryBox Icon
-- [ ] Alert Logic for BP
+- [ ] Alert Logic for BP based on code
 - [ ] Recommendations List HTML (Use Alerts with Icons or Media Listing)
-- [ ] Feedback Text-box on Feedback tab
-- [ ] ClinicalImpressions service API call
-- [ ] ClinicalImpressions list and Notes retrieval
----
-- [ ] Implement data.R module - move loadDataX and statsX into
-- [ ] BP Statistics  (latest value)
-- [ ] HR Statistics  (latest value)
-- [ ] ECG Statistics (number of samples gathered)
-- [ ] Mood Statistics (latest value)
 ---
 - [ ] Observation POST Service Call in services API
 - [ ] Input from Mood widget calls Observation POST
 - [ ] Risk People Plots Static - Selector Based on Intervention
+---
+- [ ] Feedback Text-box on Feedback tab
+- [ ] ClinicalImpressions service API call
+- [ ] ClinicalImpressions list and Notes retrieval
+---
+- [ ] Implement data.R module - move loadDataX and statsX into...
+- [ ] BP Statistics in SummaryBox (latest value)
+- [ ] HR Statistics in SummaryBox (latest value)
+- [ ] ECG Statistics in SummaryBox(number of samples gathered)
+- [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
 - [ ] PHQ2/9 Forms
@@ -35,13 +36,14 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
+- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
+- [ ] Logging service - API - logging function logs Tab selections
+
+## Nice to have
+- [ ] Logging service captures poke stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)
 - [ ] Connectivity Indicators for SummaryBox
-- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
-- [ ] Logging service - API - logging function
-
-## Nice to have
 - [ ] Random ordering of Mood images
 
 ## Done
