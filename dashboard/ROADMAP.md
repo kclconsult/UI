@@ -3,60 +3,60 @@
 # Backlog
 
 ### Essential
-[X] Remove Pain SummaryBox
-[X] SummaryBox DefaultColor
-[] SummaryBox Icon
-[] Alert Logic for BP
-[] Recommendations List HTML (Use Alerts with Icons or Media Listing)
-[] Feedback Text-box on Feedback tab
-[] ClinicalImpressions service API call
-[] ClinicalImpressions list and Notes retrieval
-
-[] Implement data.R module - move loadDataX and statsX into
-[] BP Statistics  (latest value)
-[] HR Statistics  (latest value)
-[] ECG Statistics (number of samples gathered)
-[] Mood Statistics (latest value)
-
-[] Observation POST Service Call in services API
-[] Input from Mood widget calls Observation POST
-[] Risk People Plots Static - Selector Based on Intervention
-
-[] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
-[] PHQ2/9 Forms
-[] PHQ2/9 Logic
-[] Badges for Tabs (or InfoBoxes)
-[] QuestionnaireResponses Service Call
-[] Time Logic for QuestionnaireResponses form (rm sub-nav)
-
-[] Update ECG data from API call for sample-data
-[] ECG updated to plot last 1000 lines
-[] Graph Granularity for time.
-[] Day-Night Vertical Grids on plots
-[] Bar versus Line Charts
-
-[] ClinicalImpressions Notes Appication (Scrollable Sidebar)
-[] Notification Alerts (dismissable) Overlay (icon and color)
-[] Connectivity Indicators for SummaryBox
-[] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
-[] Logging service - API - logging function
+- [X] Remove Pain SummaryBox
+- [X] SummaryBox DefaultColor
+- [] SummaryBox Icon
+- [] Alert Logic for BP
+- [] Recommendations List HTML (Use Alerts with Icons or Media Listing)
+- [] Feedback Text-box on Feedback tab
+- [] ClinicalImpressions service API call
+- [] ClinicalImpressions list and Notes retrieval
+---
+- [] Implement data.R module - move loadDataX and statsX into
+- [] BP Statistics  (latest value)
+- [] HR Statistics  (latest value)
+- [] ECG Statistics (number of samples gathered)
+- [] Mood Statistics (latest value)
+---
+- [] Observation POST Service Call in services API
+- [] Input from Mood widget calls Observation POST
+- [] Risk People Plots Static - Selector Based on Intervention
+---
+- [] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
+- [] PHQ2/9 Forms
+- [] PHQ2/9 Logic
+- [] Badges for Tabs (or InfoBoxes)
+- [] QuestionnaireResponses Service Call
+- [] Time Logic for QuestionnaireResponses form (rm sub-nav)
+---
+- [] Update ECG data from API call for sample-data
+- [] ECG updated to plot last 1000 lines
+- [] Graph Granularity for time.
+- [] Day-Night Vertical Grids on plots
+- [] Bar versus Line Charts
+---
+- [] ClinicalImpressions Notes Appication (Scrollable Sidebar)
+- [] Notification Alerts (dismissable) Overlay (icon and color)
+- [] Connectivity Indicators for SummaryBox
+- [] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
+- [] Logging service - API - logging function
 
 ## Nice to have
-[] Random ordering of Mood images
+- [] Random ordering of Mood images
 
 ## Done
-[X] Generalise Observation Service call with API
-[X] Use Obs service in vitals calls (comment out)
-[X] Stub out sample-data stubs using the Plot HTML for HR and BP
-[X] Stats generation for sample-data using existing code
-[X] Create Consult package
-[X] BP plot widgetah
-[X] HR plot widget
-[X] ECG Plot???
-[X] Base Info Box htmlwidget
-[X] Implement the 5 vitals widgets
-[X] Mood Grid Widget
-[X] CSS Colors and Font and Button Sizing
+- [X] Generalise Observation Service call with API
+- [X] Use Obs service in vitals calls (comment out)
+- [X] Stub out sample-data stubs using the Plot HTML for HR and BP
+- [X] Stats generation for sample-data using existing code
+- [X] Create Consult package
+- [X] BP plot widgetah
+- [X] HR plot widget
+- [X] ECG Plot???
+- [X] Base Info Box htmlwidget
+- [X] Implement the 5 vitals widgets
+- [X] Mood Grid Widget
+- [X] CSS Colors and Font and Button Sizing
 
 # 5-8-2019 - Further Inquiries and Support Requests
 
