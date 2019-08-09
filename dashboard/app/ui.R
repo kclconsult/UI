@@ -67,7 +67,13 @@ htmlTemplate("www/index.html",
   plotECG = ECGTimelineOutput("plotECG"),
 
   # Tab: Risk
-  plotRisk = htmlOutput("plotRisk"),
+  selectIntervention = selectInput("selectIntervention", "", 
+                                   c("Stop Smoking" = "images/interventions/stop-smoking.png", 
+                                     "Lower Blood Pressure" = "images/interventions/lower-bp.png", 
+                                     "Lower Cholesterol" = "images/interventions/lower-cholesterol.png",
+                                      "Anti-Platelet" = "images/interventions/antiplatelet.png")),
+  
+  interventionRiskPlot = imageOutput("interventionRiskPlot", width = "100%", height = "400px"),
   
   # Tab: Recommendations
   listRecommendations = htmlOutput("listRecommendations"),

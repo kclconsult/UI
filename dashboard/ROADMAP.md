@@ -3,25 +3,23 @@
 # Backlog
 
 ### Essential
-- [X] Remove Pain SummaryBox
-- [X] SummaryBox DefaultColor
-- [ ] SummaryBox Icon
-- [ ] Alert Logic for BP based on code
 - [ ] Recommendations List HTML (Use Alerts with Icons or Media Listing)
+- [ ] Risk People Plots Static - Selector Based on Intervention
+---
+- [ ] Implement data.R module - move loadDataX and statsX into...
+- [ ] Alert Logic for BP based on code
+---
+- [ ] BP Statistics in SummaryBox (latest value / mean over the latest values)
+- [ ] HR Statistics in SummaryBox (latest value / mean over the latest values)
+- [ ] ECG Statistics in SummaryBox (number of samples gathered)
+- [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] Observation POST Service Call in services API
 - [ ] Input from Mood widget calls Observation POST
-- [ ] Risk People Plots Static - Selector Based on Intervention
 ---
 - [ ] Feedback Text-box on Feedback tab
 - [ ] ClinicalImpressions service API call
 - [ ] ClinicalImpressions list and Notes retrieval
----
-- [ ] Implement data.R module - move loadDataX and statsX into...
-- [ ] BP Statistics in SummaryBox (latest value)
-- [ ] HR Statistics in SummaryBox (latest value)
-- [ ] ECG Statistics in SummaryBox(number of samples gathered)
-- [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
 - [ ] PHQ2/9 Forms
@@ -47,6 +45,9 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Remove Pain SummaryBox
+- [X] SummaryBox DefaultColor
+- [X] SummaryBox Icon
 - [X] Generalise Observation Service call with API
 - [X] Use Obs service in vitals calls (comment out)
 - [X] Stub out sample-data stubs using the Plot HTML for HR and BP

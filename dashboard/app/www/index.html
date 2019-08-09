@@ -96,8 +96,11 @@
 				</div>
 			</div>
 			<!-- DEUBG Summary Boxes -->
-			{{ debugSelectBPAlertColor }}
-			{{ debugSelectMoodImage }}
+			<div class="well">
+			  <h4>Debug Panel</h4>
+			  {{ debugSelectBPAlertColor }}
+			  {{ debugSelectMoodImage }}
+			</div>
 		</div> <!-- /Tab: Summary -->
 
 		<!-- Tab: Heart Rate -->
@@ -126,12 +129,16 @@
 
 		<!-- Tab: Risk -->
 		<div class="tab-pane" id="risk">
-			<!-- predicted-risk-of-stroke-if-you-stop-smoking.png -->
-			{{ plotRisk }}
+		  <h4>Predicted Risk of Stroke if you... </h4>
+      {{ selectIntervention }}
+      
+			<!-- Example: predicted-risk-of-stroke-if-you-stop-smoking.png -->
+			{{ interventionRiskPlot }}
 		</div> <!-- /Tab: Risk -->
 
 		<!-- Tab: Recommendations -->
 		<div class="tab-pane" id="recommendations">
+			<h4>These health tips are based on your data and the latest health research.</h4>
 			{{ listRecommendations }}
 		</div> <!-- /Tab: Recommendations -->
 
