@@ -61,6 +61,7 @@ HTMLWidgets.widget({
 
         // x is a dataset with these values:
         // x.title = title,
+        // x.image = image,
         // x.alert = alert,
         // x.status = status,
         // x.timestamp = timestamp,
@@ -81,8 +82,8 @@ HTMLWidgets.widget({
 
         // bind and update the data
         var alert_rect = svg.selectAll("rect.summary-box-alert")
-                .data([x.alert])
-                  .style("fill", alert_rect_fill);
+                            .data([x.alert])
+                            .style("fill", alert_rect_fill);
 
         // enter / create the rect
         alert_rect.enter().append("svg:rect")
@@ -95,6 +96,7 @@ HTMLWidgets.widget({
           .style("fill", alert_rect_fill); // initial fill
 
         // Places the Title for the Summary Box, split across new lines
+        // (complicated sub-selection - not updated)
         var title_text = svg.selectAll("text.summary-box-title")
             .data([x.title])
             .enter().append("text")
@@ -113,8 +115,10 @@ HTMLWidgets.widget({
 
         // Status Text
         var status_text = svg.selectAll("text.summary-box-status")
-            .data([x.status])
-            .enter().append("text")
+                             .data([x.status])
+                             .text(function(d) { return d; });
+        // enter / create
+        status_text.enter().append("text")
               .attr("class", "summary-box-status")
               .attr("x", "30")
               .attr("y", "210")
@@ -125,8 +129,10 @@ HTMLWidgets.widget({
 
         // Timestamp Text
         var timestamp_text = svg.selectAll("text.summary-box-timestamp")
-            .data([x.timestamp])
-            .enter().append("text")
+                                .data([x.timestamp])
+                                .text(function(d) { return d; });
+        // enter / create
+        timestamp_text.enter().append("text")
               .attr("class", "summary-box-timestamp")
               .attr("x", "30")
               .attr("y", "281")
@@ -136,9 +142,11 @@ HTMLWidgets.widget({
               .text(function(d) { return d; });
 
         // (Data) Source Text
-        var timestamp_text = svg.selectAll("text.summary-box-source")
-            .data([x.source])
-            .enter().append("text")
+        var source_text = svg.selectAll("text.summary-box-source")
+                             .data([x.source])
+                             .text(function(d) { return "Source: " + d; });
+        // enter / create
+        source_text.enter().append("text")
               .attr("class", "summary-box-source")
               .attr("x", "30")
               .attr("y", "310")
@@ -146,6 +154,20 @@ HTMLWidgets.widget({
               .style("font-size", "24px")
               .style("font-weight", "500")
               .text(function(d) { return "Source: " + d; });
+
+        // Summary Image
+        var summary_image = svg.selectAll("image.summary-image")
+                                .data([x.image])
+                                .attr("xlink:href", function(d) { return d; });
+        // enter / create
+        summary_image.enter().append("image")
+              .attr("class", "summary-image")
+              .attr("x", "180")
+              .attr("y", "15")
+              .attr("height", "150px")
+              .attr("width", "150px")
+              .attr("xlink:href", function(d) { return d; });
+
       },
 
       resize: function(width, height) {

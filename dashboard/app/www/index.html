@@ -87,11 +87,7 @@
       <!-- Grid of Summary Boxes -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-6 col-md-6">
-					  <!-- DEUBG Choose HR Alert -->
-			      {{ debugSelectBPAlertColor }}
-            {{ summaryBP }}
-          </div>
+					<div class="col-xs-6 col-md-6"> {{ summaryBP }} </div>
 					<div class="col-xs-6 col-md-6">{{ summaryHR }}</div>
 				</div> 
 				<div class="row">
@@ -99,6 +95,9 @@
 					<div class="col-xs-6 col-md-6">{{ summaryMood }}</div>
 				</div>
 			</div>
+			<!-- DEUBG Summary Boxes -->
+			{{ debugSelectBPAlertColor }}
+			{{ debugSelectMoodImage }}
 		</div> <!-- /Tab: Summary -->
 
 		<!-- Tab: Heart Rate -->

@@ -1,15 +1,16 @@
-#' <Add Title>
+#' SummaryBox Widget
 #'
-#' <Add Description>
+#' Displays a Box with some Titles and Status for the Summary of a Data field for a particular user
 #'
 #' @import htmlwidgets
 #'
 #' @export
-SummaryBox <- function(title, alert="default", status, timestamp, source, connectivity="connected", width = NULL, height = NULL, elementId = NULL) {
+SummaryBox <- function(title="", image="images/summary/default.png", alert="default", status="", timestamp="", source="", connectivity="connected", width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
     title = title,
+    image = image,
     alert = alert,
     status = status,
     timestamp = timestamp,

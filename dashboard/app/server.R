@@ -76,6 +76,7 @@ function(input, output) {
       print(paste("renderSummaryBox", input$debugSelectBPAlertColor))
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Blood Pressure",
+                 image = "images/summary/bloodpressure.png",
                  alert = input$debugSelectBPAlertColor,
                  status = "135/85 mmHG",
                  timestamp = "2019-7-31 12:34:56",
@@ -86,6 +87,7 @@ function(input, output) {
     output$summaryHR = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
+                 image = "images/summary/heartrate.png",
                  alert = "blue",
                  status = "135 bpm",
                  timestamp = "2019-7-31 12:34:56",
@@ -96,6 +98,7 @@ function(input, output) {
     output$summaryECG = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
+                 image = "images/summary/ecg.png",
                  alert = "blue",
                  status = "Normal",
                  timestamp = "2019-7-31 12:34:56",
@@ -106,6 +109,11 @@ function(input, output) {
     output$summaryMood = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
+                 image = input$debugSelectMoodImage,
+                 # Mood options:
+                 # image = "images/summary/mood-good.png",
+                 # image = "images/summary/mood-meh.png",
+                 # image = "images/summary/mood-bad.png",
                  alert = "blue",
                  status = "",
                  timestamp = "2019-7-31 12:34:56",
