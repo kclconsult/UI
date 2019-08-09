@@ -3,8 +3,8 @@
 # Backlog
 
 ### Essential
-- [ ] Recommendations List HTML (Use Alerts with Icons or Media Listing)
-- [ ] Risk People Plots Static - Selector Based on Intervention
+- [X] Recommendations List HTML (Use Alerts with Icons or Media Listing)
+- [X] Risk People Plots Static - Selector Based on Intervention
 ---
 - [ ] Implement data.R module - move loadDataX and statsX into...
 - [ ] Alert Logic for BP based on code

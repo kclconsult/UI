@@ -9,33 +9,51 @@
 # (See https://shiny.rstudio.com/reference/shiny/1.3.2/renderUI.html).
 #
 
-
-#
-# Tab: Risk
-#
-renderRisk <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "Risk")
-  })
-}
-
 #
 # Tab: Recommendations
 #
-renderRecommendations <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "Recommendations")
-  })
+   
+renderRecommendations <- function(r) {
+  # <div class="media">
+  #   <div class="media-left media-top">
+  #     <img class="media-object" src="images/summary-large.png">
+  #   </div>
+  #   <div class="media-body">
+  #     <h5 class="media-heading">Consider changing your painkiller; there are two options:</h5>
+  #     <p>Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider 'paracetamol'.</p>
+  #     <p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>
+  #   </div>
+  # </div>
+  #
+
+  # list of tags (per recommendation)  
+  t = list()
+  
+  # loop over the objects in the recommendations
+  for(i in 1:nrow(r)) {
+    # withTags saves having to type tags$ infront of each tag object:
+    t[[i]] <- 
+      tags$div(class="media",
+        tags$div(class="media-left media-top", 
+          tags$img(class="media-object", src=paste("images/", r$icon[i], "-large.png", sep=""))
+        ),
+        tags$div(class="media-body",
+          tags$h5(class="media-heading", r$heading[i]),
+          # complicated... basically converts a list of strings (r$body) into:
+          # <div> 
+          #   <p>string1</p>
+          #   <p>string2</p>
+          #   ...
+          # </div> 
+          do.call(tags$div, lapply(unlist(r$body[i]), tags$p))
+        )
+      )
+  }
+  
+  # render the list of tags  
+  renderUI({ t })
 }
 
-#
-# Tab: Mood
-#
-renderMood <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "Mood")
-  })
-}
 
 #
 # Tab: Feedback
