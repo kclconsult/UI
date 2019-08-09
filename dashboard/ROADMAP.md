@@ -84,8 +84,8 @@
 
 # Development Notes
 
-[] Remove Pain SummaryBox
-[] SummaryBox DefaultColor
+[X] Remove Pain SummaryBox
+[X] SummaryBox DefaultColor
 [] SummaryBox Icon
 [] Alert Logic for BP
 [] Recommendations List HTML (Use Alerts with Icons or Media Listing)

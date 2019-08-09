@@ -26,12 +26,12 @@
 	<script src="shared/strftime/strftime-min.js"></script>
 -->
 
-  <!-- Override Bootstrap Theme with a Custom one generated at:
+    <!-- Override Bootstrap Theme with a Custom one generated at:
          https://getbootstrap.com/docs/3.4/customize/
-  -->
+    -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-	<!-- Consult Style -->
+	  <!-- Consult Style -->
     <link rel = "stylesheet" type = "text/css" href = "css/consult.css" />
 
   </head>
@@ -87,15 +87,19 @@
       <!-- Grid of Summary Boxes -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-6 col-md-6">{{ summaryBP   }}</div>
-					<div class="col-xs-6 col-md-6">{{ summaryHR   }}</div>
-				</div>
+					<div class="col-xs-6 col-md-6">
+					  <!-- DEUBG Choose HR Alert -->
+			      {{ debugSelectBPAlertColor }}
+            {{ summaryBP }}
+          </div>
+					<div class="col-xs-6 col-md-6">{{ summaryHR }}</div>
+				</div> 
 				<div class="row">
-          <div class="col-xs-6 col-md-6">{{ summaryECG  }}</div>
+          <div class="col-xs-6 col-md-6">{{ summaryECG }}</div>
 					<div class="col-xs-6 col-md-6">{{ summaryMood }}</div>
 				</div>
 			</div>
-		</div>
+		</div> <!-- /Tab: Summary -->
 
 		<!-- Tab: Heart Rate -->
 		<div class="tab-pane" id="hr">
@@ -108,29 +112,29 @@
 
       <!-- Heart Rate Plot -->
 			{{ plotHR }}
-		</div>
+		</div> 	<!-- /Tab: Heart Rate -->
 
 		<!-- Tab: Blood Pressure -->
 		<div class="tab-pane" id="bp">
       <!-- Blood Pressure Widget -->
       {{ plotBP }}
-		</div>
+		</div> <!-- /Tab: Blood Pressure -->
 
 		<!-- Tab: ECG -->
 		<div class="tab-pane" id="ecg">
 			{{ plotECG }}
-		</div>
+		</div> <!-- /Tab: ECG -->
 
 		<!-- Tab: Risk -->
 		<div class="tab-pane" id="risk">
 			<!-- predicted-risk-of-stroke-if-you-stop-smoking.png -->
 			{{ plotRisk }}
-		</div>
+		</div> <!-- /Tab: Risk -->
 
 		<!-- Tab: Recommendations -->
 		<div class="tab-pane" id="recommendations">
 			{{ listRecommendations }}
-		</div>
+		</div> <!-- /Tab: Recommendations -->
 
 		<!-- Tab: Mood -->
 		<div class="tab-pane" id="mood">
@@ -169,14 +173,13 @@
           <div class="col-md-3">{{ emotionLinkTired }}</div>
         </div>
       </div>
-		</div>
+		</div> <!-- /Tab: Mood -->
 
 		<!-- Tab: Feedback -->
 		<div class="tab-pane" id="feedback">
 			<p>Feedback log for patients (what is this?)</p>
 			{{ logFeedback }}
-		</div>
-
+		</div> <!-- /Tab: Feedback -->
 	</div>
   </body>
 </html>

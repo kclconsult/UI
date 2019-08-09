@@ -68,28 +68,15 @@ function(input, output) {
     })
     
     #
-    # Tab: Summary
+    # Tab: Summary Boxes
     #
-    # Select different time-range events
-    #   (TODO change from actionButtons to tabbed selector)
-    observeEvent(input$selectLastFourHours, {
-        print("Summary: Last Four Hours")
-    })
     
-    observeEvent(input$selectLastDay, {
-        print("Summary: Last 24 Hours")
-    })
-    
-    observeEvent(input$selectLastMonth, {
-        print("Summary: Last Month")
-    })
-
-    # Summary Boxes (TODO - make reactive to selectors)
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
+      print(paste("renderSummaryBox", input$debugSelectBPAlertColor))
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Blood Pressure",
-                 alert = "green",
+                 alert = input$debugSelectBPAlertColor,
                  status = "135/85 mmHG",
                  timestamp = "2019-7-31 12:34:56",
                  source = "Home")
@@ -99,7 +86,7 @@ function(input, output) {
     output$summaryHR = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
-                 alert = "green",
+                 alert = "blue",
                  status = "135 bpm",
                  timestamp = "2019-7-31 12:34:56",
                  source = "Home")
@@ -109,7 +96,7 @@ function(input, output) {
     output$summaryECG = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
-                 alert = "green",
+                 alert = "blue",
                  status = "Normal",
                  timestamp = "2019-7-31 12:34:56",
                  source = "Clinic")
@@ -119,7 +106,7 @@ function(input, output) {
     output$summaryMood = renderSummaryBox({
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
-                 alert = "orange",
+                 alert = "blue",
                  status = "",
                  timestamp = "2019-7-31 12:34:56",
                  source = "Home")
@@ -128,6 +115,20 @@ function(input, output) {
     #
     # Tab: Heart Rate (HR)
     #
+
+    # Select different time-range events
+    observeEvent(input$selectLastFourHours, {
+      print("Summary: Last Four Hours")
+    })
+    
+    observeEvent(input$selectLastDay, {
+      print("Summary: Last 24 Hours")
+    })
+    
+    observeEvent(input$selectLastMonth, {
+      print("Summary: Last Month")
+    })
+    
     output$plotHR = renderHRTimeline({
         # from packages/Consult/HRTimeline
         HRTimeline(dataset = datasetHR)

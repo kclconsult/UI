@@ -51,6 +51,9 @@ htmlTemplate("www/index.html",
   summaryECG  = SummaryBoxOutput("summaryECG"),
   summaryMood = SummaryBoxOutput("summaryMood"),
 
+  # -- DEBUG Select BP Alert Color
+  debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("green", "orange", "red", "doublered")),
+  
   # Tab: Heart Rate (HR)
   plotHR = HRTimelineOutput("plotHR"),
   
@@ -69,22 +72,22 @@ htmlTemplate("www/index.html",
   # Tab: Mood
   selectorMood = htmlOutput("selectorMood"),
   # - Mood Selection Actions
-  emotionLinkTired = actionLink("emotionLinkTired", tags$img(src = "images/emotions/tired.jpg", width = "100%", height = "100%")),
-  emotionLinkTense = actionLink("emotionLinkTense", tags$img(src = "images/emotions/tense.jpg", width = "100%", height = "100%")),
-  emotionLinkSleepy = actionLink("emotionLinkSleepy", tags$img(src = "images/emotions/sleepy.jpg", width = "100%", height = "100%")),
-  emotionLinkSerene = actionLink("emotionLinkSerene", tags$img(src = "images/emotions/serene.jpg", width = "100%", height = "100%")),
+  emotionLinkTired = actionLink("emotionLinkTired",         tags$img(src = "images/emotions/tired.jpg", width = "100%", height = "100%")),
+  emotionLinkTense = actionLink("emotionLinkTense",         tags$img(src = "images/emotions/tense.jpg", width = "100%", height = "100%")),
+  emotionLinkSleepy = actionLink("emotionLinkSleepy",       tags$img(src = "images/emotions/sleepy.jpg", width = "100%", height = "100%")),
+  emotionLinkSerene = actionLink("emotionLinkSerene",       tags$img(src = "images/emotions/serene.jpg", width = "100%", height = "100%")),
   emotionLinkSatisfied = actionLink("emotionLinkSatisfied", tags$img(src = "images/emotions/satisfied.jpg", width = "100%", height = "100%")),
-  emotionLinkSad = actionLink("emotionLinkSad", tags$img(src = "images/emotions/sad.jpg", width = "100%", height = "100%")),
+  emotionLinkSad = actionLink("emotionLinkSad",             tags$img(src = "images/emotions/sad.jpg", width = "100%", height = "100%")),
   emotionLinkMiserable = actionLink("emotionLinkMiserable", tags$img(src = "images/emotions/miserable.jpg", width = "100%", height = "100%")),
-  emotionLinkHappy = actionLink("emotionLinkHappy", tags$img(src = "images/emotions/happy.jpg", width = "100%", height = "100%")),
-  emotionLinkGloomy = actionLink("emotionLinkGloomy", tags$img(src = "images/emotions/gloomy.jpg", width = "100%", height = "100%")),
-  emotionLinkGlad = actionLink("emotionLinkGlad", tags$img(src = "images/emotions/glad.jpg", width = "100%", height = "100%")),
+  emotionLinkHappy = actionLink("emotionLinkHappy",         tags$img(src = "images/emotions/happy.jpg", width = "100%", height = "100%")),
+  emotionLinkGloomy = actionLink("emotionLinkGloomy",         tags$img(src = "images/emotions/gloomy.jpg", width = "100%", height = "100%")),
+  emotionLinkGlad = actionLink("emotionLinkGlad",             tags$img(src = "images/emotions/glad.jpg", width = "100%", height = "100%")),
   emotionLinkFrustrated = actionLink("emotionLinkFrustrated", tags$img(src = "images/emotions/frustrated.jpg", width = "100%", height = "100%")),
-  emotionLinkExcited = actionLink("emotionLinkExcited", tags$img(src = "images/emotions/excited.jpg", width = "100%", height = "100%")),
+  emotionLinkExcited = actionLink("emotionLinkExcited",     tags$img(src = "images/emotions/excited.jpg", width = "100%", height = "100%")),
   emotionLinkDelighted = actionLink("emotionLinkDelighted", tags$img(src = "images/emotions/delighted.jpg", width = "100%", height = "100%")),
-  emotionLinkCalm = actionLink("emotionLinkCalm", tags$img(src = "images/emotions/calm.jpg", width = "100%", height = "100%")),
-  emotionLinkAngry = actionLink("emotionLinkAngry", tags$img(src = "images/emotions/angry.jpg", width = "100%", height = "100%")),
-  emotionLinkAfraid = actionLink("emotionLinkAfraid", tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
+  emotionLinkCalm = actionLink("emotionLinkCalm",           tags$img(src = "images/emotions/calm.jpg", width = "100%", height = "100%")),
+  emotionLinkAngry = actionLink("emotionLinkAngry",         tags$img(src = "images/emotions/angry.jpg", width = "100%", height = "100%")),
+  emotionLinkAfraid = actionLink("emotionLinkAfraid",       tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
   
   # Tab: Feedback
   logFeedback = htmlOutput("logFeedback")
