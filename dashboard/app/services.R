@@ -27,6 +27,7 @@ library(anytime)
 # - message passer specifics
 MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
 MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
+MP_URL = paste0(MP_PROTOCOL, MP_HOST)
 
 # - certificate authority
 CA_BUNDLE = Sys.getenv("CURL_CA_BUNDLE")
@@ -60,12 +61,14 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
 
   # TODO - validate input parameters
   
-  # Build the request URL (using paste(...sep="") b/c Env varables (i.e. MP_PROTOCOL) are wrapped with '/')
-  requestUrl <- paste(MP_PROTOCOL, MP_HOST, "/Observation/", USERNAME_PATIENT_ID, "/", 
-                      code, "/",
-                      startTimestamp, "/",
-                      endTimestamp, "",
-                      sep = "")
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "Observation", 
+                      USERNAME_PATIENT_ID, 
+                      code,
+                      startTimestamp,
+                      endTimestamp,
+                      sep = "/")
 
   print(requestUrl)
   
@@ -82,11 +85,56 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
 }
 
 #
+# QuestionnaireResponses POST
+#
+
+sendQuestionnaireResponses <- function(questionaire) {
+  # Sends the Questionnaire Response form answers.
+  #
+  # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
+
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "QuestionnaireResponse", 
+                      "add",
+                      sep = "/")
+  
+  # Fields for POST request
+  # Field 	Type 	Description
+  # id 	String 	Resource ID.
+  # subjectReference 	String 	Patient ID.
+  subjectReference = USERNAME_PATIENT_ID
+  # effectiveDateTime 	String 	(Optional) Timestamp of response
+  # LittleInterest 	String 	PHQ9 score for LittleInterest
+  # FeelingDown 	String 	PHQ9 score for FeelingDown
+  # TroubleSleeping 	String 	PHQ9 score for TroubleSleeping
+  # FeelingTired 	String 	PHQ9 score for FeelingTired
+  # BadAppetite 	String 	PHQ9 score for BadAppetite
+  # FeelingBadAboutSelf 	String 	PHQ9 score for FeelingBadAboutSelf
+  # TroubleConcentrating 	String 	PHQ9 score for TroubleConcentrating
+  # MovingSpeaking 	String 	PHQ9 score for MovingSpeaking
+  # Difficulty 	String 	PHQ9 score for Difficulty
+  # TotalScore 	String 	Total PHQ9 score
+  
+  # TODO - validate input parameters
+  
+  # DEBUG
+  print(paste("sendQuestionnaireResponses(subjectReference=", subjectReference,
+              ")"))
+}
+
+#
 # Mood Observation Data
 #
 
 sendMoodObservation <- function(recordedEmotion) {
-  # TODO - use https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
+  # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-Add
+  
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "Observation", 
+                      "add",
+                      sep = "/")
   
   # Fields for POST request
   # id 	String 	Resource ID
@@ -95,6 +143,7 @@ sendMoodObservation <- function(recordedEmotion) {
   # effectiveDateTime 	String 	(optional) Timestamp of impression
   # 285854004 	String 	Recorded emotion
   
+  # DEBUG
   print(paste("sendMoodObservation(subjectReference=", subjectReference,
               ", 285854004=", recordedEmotion,
               ")"))
@@ -105,7 +154,13 @@ sendMoodObservation <- function(recordedEmotion) {
 #
 
 sendClinicalImpression <- function(note) {
-  # TODO - use https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions
+  # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions
+  
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "ClinicalImpression", 
+                      "add",
+                      sep = "/")
   
   # Fields for POST request
   # id 	String 	Resource ID - TODO What is this?

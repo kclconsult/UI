@@ -89,6 +89,64 @@ sampleBloodPressureData <- function() {
   return(bp)
 }
 
+alertBloodPressure <- function(sbp, dbp) {
+  # Logic for Blood Pressure alert.
+  #
+  # Args:
+  #   sbp: Systolic blood pressure (c271649006)
+  #   dbp: Diastolic blood pressure (c271650006)
+  #
+  # Output:
+  #   List of flag colors:
+  #     $sbp - Systolic blood pressure flag
+  #     $dbp - Diastolic blood pressure flag
+  #     $color - Most severe flag color of either
+  #   Flag colors are:
+  #     "green"     - no alert, normal, no Flag
+  #     "orange"    - Amber Flag
+  #     "red"       - Red Flag
+  #     "doublered" - Double Red Flag
+
+  flag = list()
+  
+  # Flag levels for Systolic Blood Pressure:
+  if(sbp > 179) {
+    flag$sbp = "doublered"
+  } else if(sbp > 149) {
+    flag$sbp = "red"
+  } else if(sbp > 134) {
+    flag$sbp = "orange"
+  } else {
+    flag$sbp = "green"
+  }
+
+  # Flag levels for Diastolic Blood Pressure:
+  if(dbp > 109) {
+    flag$dbp = "doublered"
+  } else if(dbp > 94) {
+    flag$dbp = "red"
+  } else if(dbp > 84) {
+    flag$dbp = "orange"
+  } else {
+    flag$dbp = "green"
+  }
+  
+  # For calculating which bp is more severe
+  severity = list("green" = 0,
+                  "orange" = 1,
+                  "red" = 2,
+                  "doublered" = 3)
+  
+  # sbp is more severe
+  if(severity[[flag$sbp]] > severity[[flag$dbp]]) {
+      flag$color = flag$sbp
+  } else { # dbp is more severe or equal
+    flag$color = flag$dbp
+  }
+  
+  return(flag)
+}
+
 #
 # Heart Rate
 #

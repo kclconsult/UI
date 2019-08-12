@@ -6,8 +6,8 @@
 - [X] Recommendations List HTML (Use Alerts with Icons or Media Listing)
 - [X] Risk People Plots Static - Selector Based on Intervention
 ---
-- [ ] Implement data.R module - move loadDataX and statsX into...
-- [ ] Alert Logic for BP based on code
+- [X] Implement data.R module - move loadDataX and statsX into...
+- [X] Alert Logic for BP based on code
 ---
 - [ ] BP Statistics in SummaryBox (latest value / mean over the latest values)
 - [ ] HR Statistics in SummaryBox (latest value / mean over the latest values)
