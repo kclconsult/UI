@@ -9,11 +9,34 @@
 # (See https://shiny.rstudio.com/reference/shiny/1.3.2/renderUI.html).
 #
 
+# "source exist" braces 
+if(!exists('components_R')) {  
+  components_R<-T
+
 #
 # Tab: Recommendations
 #
    
 renderRecommendations <- function(r) {
+  # Render list of Recommendations 
+  
+  # Args:
+  #   r: data.table of the recommendations, each row being a recommendation.
+  #      Columns | Description
+  #      --------+-----------------------------------------------------------------
+  #      heading | String of the Recommendation 
+  #      icon    | www/ Relative path to an icon image to load
+  #      body    | Recommendation(s), either a single string or a vector of strings.
+  #
+  # Returns:
+  #   Output of a renderUI() of the tags
+  #
+  
+  # list of tags (per recommendation)  
+  t = list()
+
+  # Example of HTML per Recommendation
+  # 
   # <div class="media">
   #   <div class="media-left media-top">
   #     <img class="media-object" src="images/summary-large.png">
@@ -25,14 +48,10 @@ renderRecommendations <- function(r) {
   #   </div>
   # </div>
   #
-
-  # list of tags (per recommendation)  
-  t = list()
   
   # loop over the objects in the recommendations
   for(i in 1:nrow(r)) {
-    # withTags saves having to type tags$ infront of each tag object:
-    t[[i]] <- 
+    t[[i]] <- # append to the tag list, the following tags:
       tags$div(class="media",
         tags$div(class="media-left media-top", 
           tags$img(class="media-object", src=paste("images/", r$icon[i], "-large.png", sep=""))
@@ -125,3 +144,6 @@ renderSliderProgress <- function(progressValue) {
     })
   )
 }
+
+###
+} # components_R exists

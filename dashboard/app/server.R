@@ -13,6 +13,7 @@ library(shiny)
 # local modules
 source("components.R")
 source("services.R")
+source("data.R")
 
 # server function with input and output objects.
 # input - references to events and input from the client

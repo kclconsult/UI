@@ -13,7 +13,7 @@ library(shiny)
 library(Consult)
 
 ## ui.R ##
-
+#
 # Define the HTML template to inject all of the Shiny
 # input and output objects into.  
 #
@@ -21,7 +21,7 @@ library(Consult)
 
 htmlTemplate("www/index.html",
   # NavBar Tab Buttons (actionLinks allow for Shinky reactivity)
-  # TODO -  icon = NULL, ...)
+  # - 
   # <a href="#summary" data-toggle="tab">Summary</a>
   tabSummaryLink = actionLink("tabSummaryLink", "Summary", href = "#summary", `data-toggle` = "tab"),
   # <a href="#hr" data-toggle="tab">Heart Rate</a>
@@ -51,7 +51,7 @@ htmlTemplate("www/index.html",
   summaryECG  = SummaryBoxOutput("summaryECG"),
   summaryMood = SummaryBoxOutput("summaryMood"),
 
-  # -- DEBUG Summary Boxes
+  # --- DEBUG Summary Boxes
   debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("green", "orange", "red", "doublered")),
   debugSelectMoodImage = selectInput("debugSelectMoodImage", "Select Mood Image", c("good" = "images/summary/mood-good.png", 
                                                                                     "meh" = "images/summary/mood-meh.png", 
@@ -71,7 +71,7 @@ htmlTemplate("www/index.html",
                                    c("Stop Smoking" = "images/interventions/stop-smoking.png", 
                                      "Lower Blood Pressure" = "images/interventions/lower-bp.png", 
                                      "Lower Cholesterol" = "images/interventions/lower-cholesterol.png",
-                                      "Anti-Platelet" = "images/interventions/antiplatelet.png")),
+                                     "Anti-Platelet" = "images/interventions/antiplatelet.png")),
   
   interventionRiskPlot = imageOutput("interventionRiskPlot", width = "100%", height = "400px"),
   
