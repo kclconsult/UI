@@ -66,7 +66,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
 
   # Create timestamp string for plotting
   bp_renamed$timestamp <- paste(bp_renamed$datem, bp_renamed$time, sep=" ")
-      
+
   # Summary Statistics for Blood Pressure
   
   return(bp_renamed)
@@ -285,6 +285,50 @@ sampleECGData <- function() {
   
   return(ecg)
 }
+
+#
+# Mood Data
+#
+
+loadMoodData <- function(startTimestamp, endTimestamp) {
+  # Loads Mood Data for the patient.
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns
+  #   Recorded Mood Dataset for time-period
+  #   Columns:
+  #     mood: String of recorded emotion
+  #     datem: Date???
+  #     date.month: Month???
+  #     time: Time???
+  #     weekday (String) day of the week 
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
+  
+  # Load from Observation API
+  #   Recorded Emotion code = "285854004"
+  # mood <- getObservations(USERNAME_PATIENT_ID, "285854004", startTimestamp, endTimestamp)
+  
+  # Rename the columns for the FIHR codes to more explainable ones:
+  #
+  # New Name | Code       | Details
+  # ---------+------------+-------------------------------
+  # mood     | c285854004 | Recorded Emotion
+
+  # from plots-for-dashboard.html
+  mood_renamed <- mood %>%
+    rename(mood = "c285854004") %>%
+    arrange(desc(datem))
+  
+  # Create timestamp string for plotting
+  mood_renamed$timestamp <- paste(mood_renamed$datem, mood_renamed$time, sep=" ")
+  
+  return(mood_renamed)
+}
+
+
 
 ###
 } # data_R exists
