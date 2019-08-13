@@ -52,7 +52,7 @@ htmlTemplate("www/index.html",
   summaryMood = SummaryBoxOutput("summaryMood"),
 
   # --- DEBUG Summary Boxes
-  debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("green", "orange", "red", "doublered")),
+  debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("", "green", "orange", "red", "doublered")),
   debugSelectMoodImage = selectInput("debugSelectMoodImage", "Select Mood Image", c("good" = "images/summary/mood-good.png", 
                                                                                     "meh" = "images/summary/mood-meh.png", 
                                                                                     "bad" = "images/summary/mood-bad.png")),

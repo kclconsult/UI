@@ -9,8 +9,8 @@
 - [X] Implement data.R module - move loadDataX and statsX into...
 - [X] Alert Logic for BP based on code
 ---
-- [ ] BP Statistics in SummaryBox (latest value / mean over the latest values)
-- [ ] HR Statistics in SummaryBox (latest value / mean over the latest values)
+- [X] BP Statistics in SummaryBox (latest value / mean over the latest values)
+- [X] HR Statistics in SummaryBox (latest value / mean over the latest values)
 - [ ] ECG Statistics in SummaryBox (number of samples gathered)
 - [ ] Mood Statistics in SummaryBox (latest value)
 ---

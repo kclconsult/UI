@@ -7,8 +7,8 @@
 #
 
 # "source exist" braces 
-if(!exists('data_R')) {  
-  data_R<-T
+#if(!exists('data_R')) {  
+#  data_R<-T
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
@@ -45,10 +45,10 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
-  # bp <- getObservations(USERNAME_PATIENT_ID, "85354-9", startTimestamp, endTimestamp)
+  bp = getObservations(USERNAME_PATIENT_ID, "85354-9", startTimestamp, endTimestamp)
 
   # Load from sample-data
-  bp <- sampleBloodPressureData()
+  # bp <- sampleBloodPressureData()
 
   # Rename the columns for the FIHR codes to more explainable ones:
   #
@@ -60,15 +60,11 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   # 
 
   # from plots-for-dashboard.html
-  bp_renamed <- bp %>%
-    rename(hr = c8867h4, sbp = c271649006, dbp = c271650006) %>%
-    arrange(desc(datem))
+  bp_renamed = rename(bp, c("c8867h4" = "hr", "c271649006" = "sbp", "c271650006"="dbp"))
 
   # Create timestamp string for plotting
-  bp_renamed$timestamp <- paste(bp_renamed$datem, bp_renamed$time, sep=" ")
+  bp_renamed$timestamp = paste(bp_renamed$datem, bp_renamed$time, sep=" ")
 
-  # Summary Statistics for Blood Pressure
-  
   return(bp_renamed)
 }
 
@@ -78,10 +74,10 @@ sampleBloodPressureData <- function() {
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
   
-  bp <- read_delim("sample-data/bp.txt", delim = " ")  
+  bp = read_delim("sample-data/bp.txt", delim = " ")  
   
   # lower case the column names
-  colnames(bp) <- tolower(make.names(colnames(bp)))
+  colnames(bp) = tolower(make.names(colnames(bp)))
   
   # Column Names as loaded from bp.txt: 
   #   "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
@@ -147,6 +143,27 @@ alertBloodPressure <- function(sbp, dbp) {
   return(flag)
 }
 
+summariseBP <- function(bp) {
+  # Generate a summary for Blood Pressure. 
+  
+  # sort in descending date, time
+  bp_desc = arrange(bp, desc(datem), desc(time))
+  
+  # Summary is based on the most recent value.
+  sbp = bp_desc$sbp[1]
+  dbp = bp_desc$dbp[1]
+  
+  # alert flag
+  flag = alertBloodPressure(sbp=sbp, dbp=dbp)
+  
+  # Return summary values
+  list(
+    alert     = flag$color,
+    status    = paste(sbp, "/", dbp, " mmHG", sep=""),
+    timestamp = bp_desc$datem[1] # latest day is the timestamp
+  )
+}
+
 #
 # Heart Rate
 #
@@ -156,7 +173,7 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   #
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp.
   #
   # Returns
   #   Heart Dataset with Summary Statistics contents:
@@ -171,10 +188,10 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  # hr <- getObservations(USERNAME_PATIENT_ID, "8867-4", startTimestamp, endTimestamp)
+  hr <- getObservations(USERNAME_PATIENT_ID, "8867-4", startTimestamp, endTimestamp)
 
   # Load from sample-data
-  hr <- sampleHeartRateData()
+  # hr <- sampleHeartRateData()
 
   # Rename the columns for the FIHR codes to more explainable ones:
   #
@@ -186,21 +203,11 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   # 
 
   # from plots-for-dashboard.html
-  hr_renamed <-hr %>%
-    rename(hr = c8867h4, hr.resting = c40443h4, activity.freq = c82290h8)
+  hr_renamed = rename(hr, c("c8867h4" = "hr", "c40443h4" = "hr.resting", "c82290h8" = "activity.freq"))
 
   # Create timestamp string for plotting
-  hr_renamed$timestamp <- paste(hr_renamed$datem, hr_renamed$time, sep=" ")
+  hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time, sep=" ")
   
-  # Summary Statistics for Heart Rate
-  # from app.R:
-  # resting.c8867h4<-tail(hr$c40443h4, n=1)
-  # cat(paste("Resting Heart Rate: ", round(resting.c8867h4,1), sep=""))
-  # mean.c8867h4<-mean(hr$c8867h4)
-  # cat(paste("\nAverage Heart Rate last 24 hours: ", round(mean.c8867h4,1), sep=""))
-  # mean.c8867h4.year<-mean(head(hr$c8867h4, n=30))
-  # cat(paste("\nAverage Heart Rate last month: ", round(mean.c8867h4.year,1), sep=""))
-    
   return(hr_renamed)
 }
 
@@ -210,15 +217,32 @@ sampleHeartRateData <- function() {
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
   
-  hr <- read_delim("sample-data/hr.txt", delim = " ")  
+  hr = read_delim("sample-data/hr.txt", delim = " ")  
   
   # lower case the column names
-  colnames(hr) <- tolower(make.names(colnames(hr)))
+  colnames(hr) = tolower(make.names(colnames(hr)))
   
   # Column Names as loaded from hr.txt: 
   #   "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
 
   return(hr)
+}
+
+summariseHR <- function(hr) {
+  # Generate a summary for Heart Rate
+  
+  # sort in descending date, time
+  hr_desc = arrange(hr, desc(datem), desc(time))
+  
+  # Summary is based on the most recent value.
+  hr = hr_desc$hr[1]
+  hr.resting = hr_desc$hr.resting[1]
+  
+  # Return summary values
+  list(
+    status    = paste(hr, "bpm"),
+    timestamp = hr_desc$timestamp[1] # latest hr reading
+  )
 }
 
 #
@@ -233,43 +257,44 @@ loadECGData <- function(startTimestamp, endTimestamp) {
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #
   # Returns
-  #   ECG Dataset with Summary Statistics contents:
-  #     ecg.raw (Number) ???
-  #
+  #   ECG Dataset contents:
+  #     ecg.raw mV of the ECG data
+  #     datem: (Date) day as a date
+  #     date.month: (Date) month as defined by the first day of the month
+  #     time: (Date) time of day
+  #     weekday (String) Day of the week 
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
   # Load from Observation API
   #  ECG code = 131328 (???)
   # ecg_raw <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
 
-  # Load from sample-data
-  ecg_raw <- sampleECGData()
-
-  # Note: Sample ECG data file is so strange!
-  # No headers, long rows of what appears to be 2-tuples (unixtime, value)
-  
-  # un-roll the rows into single vector
-  ecg_vector <- c(t(ecg_raw))
-
-  # re-shape vector into 2 column matrix and then converted to table
-  ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
-
-  # name the columns
-  colnames(ecg) <- c("posixtime", "ecg.raw")
-
-  # timestamp column from "posixtime" - concatenating milliseconds
-  ecg$timestamp <- paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
-
-  # TODO - figure out what the actual ECG columns are! 
-  
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name      | Old Name | Code    | Details
   # --------------+----------+---------+-------------------------------
   # ecg.raw       | c131389  | ???      | ???
-
-  # ecg_renamed <-ecg %>%
+  # ecg <-ecg_raw %>%
   #  rename(ecg.raw = c131389)
   
+  # Load from sample-data
+  ecg_raw = sampleECGData()
+  
+  ## # Note: Sample ECG data file is so strange!
+  ## # No headers, long rows of what appears to be 2-tuples (unixtime, value)
+  ## 
+  ## # un-roll the rows into single vector
+  ecg_vector = c(t(ecg_raw))
+  ## 
+  ## # re-shape vector into 2 column matrix and then converted to table
+  ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
+  ## 
+  ## # name the columns
+  colnames(ecg) = c("posixtime", "ecg.raw")
+  ## 
+  ## # timestamp column from "posixtime" - concatenating milliseconds
+  ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
+
   return(ecg)
 }
 
@@ -279,7 +304,7 @@ sampleECGData <- function() {
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
   
-  ecg <- read.csv("sample-data/ecg.csv", header=FALSE)  
+  ecg = read.csv("sample-data/ecg.csv", header=FALSE)  
   
   # No column names in ecg.csv!
   
@@ -309,7 +334,7 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #   Recorded Emotion code = "285854004"
-  # mood <- getObservations(USERNAME_PATIENT_ID, "285854004", startTimestamp, endTimestamp)
+  mood = getObservations(USERNAME_PATIENT_ID, "285854004", startTimestamp, endTimestamp)
   
   # Rename the columns for the FIHR codes to more explainable ones:
   #
@@ -318,18 +343,15 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   # mood     | c285854004 | Recorded Emotion
 
   # from plots-for-dashboard.html
-  mood_renamed <- mood %>%
-    rename(mood = "c285854004") %>%
-    arrange(desc(datem))
+  mood_renamed = rename(mood, c("c285854004" = "mood"))
   
   # Create timestamp string for plotting
-  mood_renamed$timestamp <- paste(mood_renamed$datem, mood_renamed$time, sep=" ")
+  mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
   
   return(mood_renamed)
 }
 
 
-
 ###
-} # data_R exists
+# } # data_R exists
 

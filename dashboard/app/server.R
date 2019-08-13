@@ -8,6 +8,8 @@
 #
 
 library(Consult) # install in local directory packages/Consult
+
+library(jsonlite)
 library(shiny)
 
 # local modules
@@ -24,14 +26,24 @@ function(input, output) {
     # Load Datasets and generate statistics
     #
     # - Blood Pressure (default time period)
-    datasetBP = loadBloodPressureData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
+    datasetBP = loadBloodPressureData(startTimestamp = "2016-02-26T00:00:00Z",
+                                      endTimestamp = "2020-02-28T00:00:00Z")
+    
+    #
+    # datasetBP = loadBloodPressureData(startTimestamp = "2017-01-01T00:00:00Z",
+    #                                  endTimestamp  =  "2017-02-01T00:00:00Z")
     
     # - Heart Rate
-    datasetHR = loadHeartRateData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
+    datasetHR = loadHeartRateData(startTimestamp = "2016-02-26T00:00:00Z", 
+                                  endTimestamp = "2020-02-28T00:00:00Z")
 
     # - ECG
-    datasetECG = loadECGData(startTimestamp = "2016-02-26T00:00:00Z", endTimestamp = "2020-02-28T00:00:00Z")
+    datasetECG = loadECGData(startTimestamp = "2016-02-26T00:00:00Z", 
+                             endTimestamp = "2020-02-28T00:00:00Z")
     
+    # - Mood
+    # datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
+    #                           endTimestamp = "2020-02-28T00:00:00Z")
     
     #
     # Navbar Tab Changing Events for logging
@@ -74,24 +86,35 @@ function(input, output) {
     
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
-      print(paste("renderSummaryBox", input$debugSelectBPAlertColor))
+      # Summarise the BP dataset
+      summary = summariseBP(datasetBP)
+      
+      # Override alert color from the debug control
+      if(input$debugSelectBPAlertColor != "") {
+        print(paste("DEBUG BP Alert: ", input$debugSelectBPAlertColor))
+        summary$alert = input$debugSelectBPAlertColor
+      }
+      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Blood Pressure",
                  image = "images/summary/bloodpressure.png",
-                 alert = input$debugSelectBPAlertColor,
-                 status = "135/85 mmHG",
-                 timestamp = "2019-7-31 12:34:56",
+                 alert = summary$alert,
+                 status = summary$status,
+                 timestamp = summary$timestamp,
                  source = "Home")
     })
 
     # - Heart Rate Summary
     output$summaryHR = renderSummaryBox({
+      # Summarise the HR dataset
+      summary = summariseHR(datasetHR)
+      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
                  image = "images/summary/heartrate.png",
                  alert = "blue",
-                 status = "135 bpm",
-                 timestamp = "2019-7-31 12:34:56",
+                 status = summary$status,
+                 timestamp = summary$timestamp,
                  source = "Home")
     })
     

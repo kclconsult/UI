@@ -7,9 +7,8 @@
 #
 
 # "source exist" braces 
-if(!exists('services_R')) {  
-  services_R<-T
-  
+# if(!exists('services_R')) {  
+#  services_R<-T
 
 library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
 
@@ -22,7 +21,10 @@ library(tidyverse)
 library(anytime)
 
 # Environment Variables Specific to the services
-#  Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", CURL_CA_BUNDLE="")
+Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", 
+           MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", 
+           SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", 
+           CURL_CA_BUNDLE="")
 
 # - message passer specifics
 MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
@@ -60,7 +62,10 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
   #   Table of (raw) Observation Data from the Message Passer Service
 
   # TODO - validate input parameters
-  
+  # patientID is valid
+  # code is valie
+  # startTimestamp < endTimestamp
+
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
                       "Observation", 
@@ -69,17 +74,23 @@ getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
                       startTimestamp,
                       endTimestamp,
                       sep = "/")
-
-  print(requestUrl)
+  # DEBUG url
+  print(paste("getObservations:", requestUrl))
   
   # Validate URL with Certificate Authority
-  #if(url.exists(requestUrl, cainfo=CA_BUNDLE)) { # valid
-    # Read.table handles HTTP GET request
-    data <- read.table(requestUrl, header = TRUE)
-  #} else { # invalid
-    # TODO - exceptions in R?
-  #  print(paste("Invalid url: ", requestUrl))
-  #}
+  # if(!url.exists(requestUrl, cainfo=CA_BUNDLE)) { # invalid
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Read.table handles HTTP GET request
+  data <- read.table(requestUrl, header = TRUE)
+    
+  # Stop measuring call
+  end_time = Sys.time()
+
+  # DEBUG timing
+  print(end_time - start_time)
 
   return(data)
 }
@@ -205,7 +216,7 @@ requestData <- function() {
 }
 
 ###
-} # services_R exists
+# } # services_R exists
 
 
 

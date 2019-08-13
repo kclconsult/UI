@@ -11,5 +11,3 @@ setwd("../..")
 
 # runs app/ directory
 runApp(appDir="app", host="0.0.0.0", port=5369)
-
-
