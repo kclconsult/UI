@@ -120,3 +120,6 @@ typings/
 .RData
 .Rhistory
 .Rproj.user
+
+# Python
+.ipynb_checkpoints
