@@ -146,17 +146,34 @@ sendMoodObservation <- function(recordedEmotion) {
                       "add",
                       sep = "/")
   
-  # Fields for POST request
-  # id 	String 	Resource ID
-  # subjectReference 	String 	  Patient ID
-  subjectReference = USERNAME_PATIENT_ID
-  # effectiveDateTime 	String 	(optional) Timestamp of impression
-  # 285854004 	String 	Recorded emotion
-  
+  # Parameters for POST request
+  body = list(# "id" = "???",                           # Resource ID (unnecessary!)
+              # "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
+              "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
+              "285854004" = recordedEmotion)            # Recorded emotion)
+
   # DEBUG
-  print(paste("sendMoodObservation(subjectReference=", subjectReference,
-              ", 285854004=", recordedEmotion,
-              ")"))
+  print(paste("sendMoodObservation:", requestUrl, 
+              "subjectReference:", body$subjectReference,
+              "285854004:", body$`285854004`))
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Send the request
+  # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
+  # encode = "multipart" does not work, use "form" or "json"
+  r = POST(requestUrl, body = body, encode = "json")
+
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  # Request Error handling
+  # stop_for_status(r)
+  warn_for_status(r)
 }
 
 #
@@ -193,7 +210,7 @@ logEvent <- function(event_type, event_data) {
             "type" = event_type,
             "data" = event_data)
 
-  print(paste(e$time, e$type, e$date, sep=" | "))
+  print(paste(e$time, e$type, e$data, sep=" | "))
 }
 
 #

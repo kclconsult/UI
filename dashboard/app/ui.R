@@ -23,7 +23,7 @@ htmlTemplate("www/index.html",
   # Version String
   versionString = textOutput("versionString", inline=TRUE),
   
-  # NavBar Tab Buttons (actionLinks allow for Shinky reactivity)
+  # NavBar Tab Buttons (actionLinks allow for Shiny reactivity)
   # - 
   # <a href="#summary" data-toggle="tab">Summary</a>
   tabSummaryLink = actionLink("tabSummaryLink", "Summary", href = "#summary", `data-toggle` = "tab"),

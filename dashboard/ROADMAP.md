@@ -13,8 +13,8 @@
 - [X] HR Statistics in SummaryBox (latest value / mean over the latest values)
 - [X] ECG Statistics in SummaryBox (number of samples gathered)
 ---
-- [ ] Observation POST Service Call in services API
-- [ ] Input from Mood widget calls Observation POST
+- [X] Observation POST Service Call in services API
+- [X] Input from Mood widget calls Observation POST
 - [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] Feedback Text-box on Feedback tab
@@ -23,16 +23,22 @@
 ---
 - [ ] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
 - [ ] PHQ2/9 Forms
-- [ ] PHQ2/9 Logic
-- [ ] Badges for Tabs (or InfoBoxes)
 - [ ] QuestionnaireResponses Service Call
-- [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
+---
+- [ ] Update People Plots from Isabel
+- [ ] Update SummaryBoxes from Panos
 ---
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines
+---
+- [ ] Blood Pressure Graph from Panos Design
 - [ ] Graph Granularity for time.
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
+---
+- [ ] PHQ2/9 Logic
+- [ ] Badges for Tabs (or InfoBoxes)
+- [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
 ---
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections
