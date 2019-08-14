@@ -13,33 +13,43 @@ library(jsonlite)
 library(shiny)
 
 # local modules
+source("version.R")
 source("components.R")
-source("services.R")
 source("data.R")
+source("services.R")
 
 # server function with input and output objects.
 # input - references to events and input from the client
 # output - references to output objects to update in client
 function(input, output) {
-    
+    # Render the Version String
+    output$versionString = renderText(paste("v",DASHBOARD_VERSION,sep=""))
+  
     #
     # Load Datasets and generate statistics
     #
-    # - Blood Pressure (default time period)
-    datasetBP = loadBloodPressureData(startTimestamp = "2016-02-26T00:00:00Z",
-                                      endTimestamp = "2020-02-28T00:00:00Z")
-    
+    # - Blood Pressure
     #
-    # datasetBP = loadBloodPressureData(startTimestamp = "2017-01-01T00:00:00Z",
-    #                                  endTimestamp  =  "2017-02-01T00:00:00Z")
+    # Simulation BP only available:
+    # start: 2017-01-01 00:00:00
+    # end:   2017-06-19 00:00:00
+    datasetBP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
+                                      endTimestamp   = "2017-02-01T00:00:00Z")
     
     # - Heart Rate
-    datasetHR = loadHeartRateData(startTimestamp = "2016-02-26T00:00:00Z", 
-                                  endTimestamp = "2020-02-28T00:00:00Z")
+    #
+    # Simulation HR available:
+    # start: 2019-04-04 23:19:39
+    # end: 2019-04-09 13:56:13
+    datasetHR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
+                                  endTimestamp   = "2020-04-10T00:00:00Z")
 
     # - ECG
-    datasetECG = loadECGData(startTimestamp = "2016-02-26T00:00:00Z", 
-                             endTimestamp = "2020-02-28T00:00:00Z")
+    # 
+    # Only one date entry: 2019-08-06 17:27:25
+    #
+    datasetECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
+                             endTimestamp   = "2019-08-07T00:00:00Z", sample=TRUE)
     
     # - Mood
     # datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
@@ -48,37 +58,14 @@ function(input, output) {
     #
     # Navbar Tab Changing Events for logging
     # 
-    observeEvent(input$tabSummaryLink, {
-      print("Summary Tab Selected")
-    })
-    
-    observeEvent(input$tabHRLink, {
-      print("HR Tab Selected")
-    })
-    
-    observeEvent(input$tabBPLink, {
-      print("BP Tab Selected")
-    })
-    
-    observeEvent(input$tabECGLink, {
-      print("ECG Tab Selected")
-    })
-    
-    observeEvent(input$tabRiskLink, {
-      print("Risk Tab Selected")
-    })
-   
-    observeEvent(input$tabRecommendationsLink, {
-      print("Recommendations Tab Selected")
-    })
-    
-    observeEvent(input$tabMoodLink, {
-      print("Mood Tab Selected")
-    })
-
-    observeEvent(input$tabFeedbackLink, {
-      print("Feedback Tab Selected")
-    })
+    observeEvent(input$tabSummaryLink,         { logEvent("TabChanged", "Summary Tab Selected") })
+    observeEvent(input$tabHRLink,              { logEvent("TabChanged", "HR Tab Selected") })
+    observeEvent(input$tabBPLink,              { logEvent("TabChanged", "BP Tab Selected") })
+    observeEvent(input$tabECGLink,             { logEvent("TabChanged", "ECG Tab Selected") })
+    observeEvent(input$tabRiskLink,            { logEvent("TabChanged", "Risk Tab Selected") })
+    observeEvent(input$tabRecommendationsLink, { logEvent("TabChanged", "Recommendations Tab Selected") })
+    observeEvent(input$tabMoodLink,            { logEvent("TabChanged", "Mood Tab Selected") })
+    observeEvent(input$tabFeedbackLink,        { logEvent("TabChanged", "Feedback Tab Selected") })
     
     #
     # Tab: Summary Boxes
@@ -87,7 +74,7 @@ function(input, output) {
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
       # Summarise the BP dataset
-      summary = summariseBP(datasetBP)
+      summary = summariseBloodPressure(datasetBP)
       
       # Override alert color from the debug control
       if(input$debugSelectBPAlertColor != "") {
@@ -107,7 +94,7 @@ function(input, output) {
     # - Heart Rate Summary
     output$summaryHR = renderSummaryBox({
       # Summarise the HR dataset
-      summary = summariseHR(datasetHR)
+      summary = summariseHeartRate(datasetHR)
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",

@@ -7,8 +7,7 @@
 #
 
 # "source exist" braces 
-# if(!exists('services_R')) {  
-#  services_R<-T
+if(!exists('services_R')) { services_R <- TRUE
 
 library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
 
@@ -186,6 +185,18 @@ sendClinicalImpression <- function(note) {
 }
 
 #
+# Logging Service
+#
+
+logEvent <- function(event_type, event_data) {
+  e <- list("time" = Sys.time(),
+            "type" = event_type,
+            "data" = event_data)
+
+  print(paste(e$time, e$type, e$date, sep=" | "))
+}
+
+#
 # EXAMPLES
 #
 
@@ -216,7 +227,7 @@ requestData <- function() {
 }
 
 ###
-# } # services_R exists
+} # services_R exists
 
 
 

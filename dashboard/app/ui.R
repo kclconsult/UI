@@ -20,6 +20,9 @@ library(Consult)
 # See https://shiny.rstudio.com/articles/templates.html for more info.
 
 htmlTemplate("www/index.html",
+  # Version String
+  versionString = textOutput("versionString", inline=TRUE),
+  
   # NavBar Tab Buttons (actionLinks allow for Shinky reactivity)
   # - 
   # <a href="#summary" data-toggle="tab">Summary</a>

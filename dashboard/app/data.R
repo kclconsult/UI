@@ -7,8 +7,7 @@
 #
 
 # "source exist" braces 
-#if(!exists('data_R')) {  
-#  data_R<-T
+if(!exists('data_R')) { data_R <- TRUE
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
@@ -19,7 +18,7 @@ library(tidyverse)
 library(anytime)
 
 source("services.R")
-  
+
 #
 # Blood Pressure
 #
@@ -63,7 +62,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   bp_renamed = rename(bp, c("c8867h4" = "hr", "c271649006" = "sbp", "c271650006"="dbp"))
 
   # Create timestamp string for plotting
-  bp_renamed$timestamp = paste(bp_renamed$datem, bp_renamed$time, sep=" ")
+  bp_renamed$timestamp = paste(bp_renamed$datem, bp_renamed$time)
 
   return(bp_renamed)
 }
@@ -143,7 +142,7 @@ alertBloodPressure <- function(sbp, dbp) {
   return(flag)
 }
 
-summariseBP <- function(bp) {
+summariseBloodPressure <- function(bp) {
   # Generate a summary for Blood Pressure. 
   
   # sort in descending date, time
@@ -159,7 +158,7 @@ summariseBP <- function(bp) {
   # Return summary values
   list(
     alert     = flag$color,
-    status    = paste(sbp, "/", dbp, " mmHG", sep=""),
+    status    = paste(sbp, "/", dbp,  "mmHG"),
     timestamp = bp_desc$datem[1] # latest day is the timestamp
   )
 }
@@ -206,7 +205,7 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   hr_renamed = rename(hr, c("c8867h4" = "hr", "c40443h4" = "hr.resting", "c82290h8" = "activity.freq"))
 
   # Create timestamp string for plotting
-  hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time, sep=" ")
+  hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time)
   
   return(hr_renamed)
 }
@@ -228,7 +227,7 @@ sampleHeartRateData <- function() {
   return(hr)
 }
 
-summariseHR <- function(hr) {
+summariseHeartRate <- function(hr) {
   # Generate a summary for Heart Rate
   
   # sort in descending date, time
@@ -240,7 +239,7 @@ summariseHR <- function(hr) {
   
   # Return summary values
   list(
-    status    = paste(hr, "bpm"),
+    status    = paste(hr, " bpm"),
     timestamp = hr_desc$timestamp[1] # latest hr reading
   )
 }
@@ -249,7 +248,7 @@ summariseHR <- function(hr) {
 # ECG 
 #
 
-loadECGData <- function(startTimestamp, endTimestamp) {
+loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads ECG Data for the patient.
   #
   # Args:
@@ -265,36 +264,40 @@ loadECGData <- function(startTimestamp, endTimestamp) {
   #     weekday (String) Day of the week 
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
-  # Load from Observation API
-  #  ECG code = 131328 (???)
-  # ecg_raw <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
-
-  # Rename the columns for the FIHR codes to more explainable ones:
-  #
-  # New Name      | Old Name | Code    | Details
-  # --------------+----------+---------+-------------------------------
-  # ecg.raw       | c131389  | ???      | ???
-  # ecg <-ecg_raw %>%
-  #  rename(ecg.raw = c131389)
   
-  # Load from sample-data
-  ecg_raw = sampleECGData()
-  
-  ## # Note: Sample ECG data file is so strange!
-  ## # No headers, long rows of what appears to be 2-tuples (unixtime, value)
-  ## 
-  ## # un-roll the rows into single vector
-  ecg_vector = c(t(ecg_raw))
-  ## 
-  ## # re-shape vector into 2 column matrix and then converted to table
-  ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
-  ## 
-  ## # name the columns
-  colnames(ecg) = c("posixtime", "ecg.raw")
-  ## 
-  ## # timestamp column from "posixtime" - concatenating milliseconds
-  ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
+  if(sample) { # Load from sample-data
+    ecg_raw = sampleECGData()
 
+    # Note: Sample ECG data file is so strange!
+    # No headers, long rows of what appears to be 2-tuples (unixtime, value)
+    
+    # un-roll the rows into single vector
+    ecg_vector = c(t(ecg_raw))
+
+    # re-shape vector into 2 column matrix and then converted to table
+    ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
+
+    # name the columns
+    colnames(ecg) = c("posixtime", "ecg.raw")
+    
+    # timestamp column from "posixtime" - concatenating milliseconds
+    ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
+  
+  } else {   # Load from Observation API
+    #  ECG code = 131328 (???)
+    ecg_raw <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
+
+    # Rename the columns for the FIHR codes to more explainable ones:
+    #
+    # New Name      | Old Name | Code    | Details
+    # --------------+----------+---------+-------------------------------
+    # ecg.raw       | c131389  | ???      | ???
+    ecg = rename(ecg_raw, c("c131389" = "ecg.raw"))
+
+    # Create timestamp string for plotting
+    ecg$timestamp = paste(ecg$datem, ecg$time)
+  }
+  
   return(ecg)
 }
 
@@ -309,6 +312,22 @@ sampleECGData <- function() {
   # No column names in ecg.csv!
   
   return(ecg)
+}
+
+summariseECG <- function(hr) {
+  # Generate a summary for ECG (number of samples)
+  
+  # sort in descending date, time
+  ecg_desc = arrange(ecg, desc(datem), desc(time))
+  
+  # Summary is based on the most recent value.
+  ecg_raw = hr_desc$hr[1]
+
+  # Return summary values
+  list(
+    status    = paste(hr, "bpm"),
+    timestamp = hr_desc$timestamp[1] # latest hr reading
+  )
 }
 
 #
@@ -353,5 +372,5 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
 
 
 ###
-# } # data_R exists
+} # data_R exists
 

@@ -12,10 +12,10 @@
 - [X] BP Statistics in SummaryBox (latest value / mean over the latest values)
 - [X] HR Statistics in SummaryBox (latest value / mean over the latest values)
 - [ ] ECG Statistics in SummaryBox (number of samples gathered)
-- [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] Observation POST Service Call in services API
 - [ ] Input from Mood widget calls Observation POST
+- [ ] Mood Statistics in SummaryBox (latest value)
 ---
 - [ ] Feedback Text-box on Feedback tab
 - [ ] ClinicalImpressions service API call

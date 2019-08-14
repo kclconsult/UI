@@ -1,16 +1,15 @@
-/* Mods for Timeline */
-.c3-line-A {
-  stroke-width: 3px;
-}
-
-.c3-line-B {
-  stroke-width: 5px;
-}
-
-/* Mast Logos */
+/* Mast Logos and Stuffs */
 #consult-logo {
   margin-top: 50px;
 	height: 110px;
+}
+
+#versionString {
+  position: relative;
+  top: 114px;
+  left: 10px;
+  color: #ed6d41;
+  font-weight: 500;
 }
 
 #kcl-logo {
