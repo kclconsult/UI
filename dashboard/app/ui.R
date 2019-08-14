@@ -57,8 +57,8 @@ htmlTemplate("www/index.html",
   # --- DEBUG Summary Boxes
   debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("", "green", "orange", "red", "doublered")),
   debugSelectMoodImage = selectInput("debugSelectMoodImage", "Select Mood Image", c("good" = "images/summary/mood-good.png", 
-                                                                                    "meh" = "images/summary/mood-meh.png", 
-                                                                                    "bad" = "images/summary/mood-bad.png")),
+                                                                                    "meh"  = "images/summary/mood-meh.png", 
+                                                                                    "bad"  = "images/summary/mood-bad.png")),
   
   # Tab: Heart Rate (HR)
   plotHR = HRTimelineOutput("plotHR"),
