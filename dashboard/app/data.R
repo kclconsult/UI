@@ -7,7 +7,7 @@
 #
 
 # "source exist" braces 
-if(!exists('data_R')) { data_R <- TRUE
+# if(!exists('data_R')) { data_R <- TRUE
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
@@ -16,8 +16,6 @@ library(tidyverse)
 # install.packages("anytime")
 # converts POSIX times to strings
 library(anytime)
-
-source("services.R")
 
 #
 # Blood Pressure
@@ -277,6 +275,9 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     # re-shape vector into 2 column matrix and then converted to table
     ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
 
+    # remove any NA rows from the data
+    ecg <- ecg[complete.cases(ecg),]
+    
     # name the columns
     colnames(ecg) = c("posixtime", "ecg.raw")
     
@@ -314,19 +315,19 @@ sampleECGData <- function() {
   return(ecg)
 }
 
-summariseECG <- function(hr) {
+summariseECG <- function(ecg) {
   # Generate a summary for ECG (number of samples)
   
   # sort in descending date, time
-  ecg_desc = arrange(ecg, desc(datem), desc(time))
+  ecg_desc = arrange(ecg, desc(timestamp))
   
-  # Summary is based on the most recent value.
-  ecg_raw = hr_desc$hr[1]
-
+  # Summary is based number of samples
+  n = length(ecg$ecg.raw)
+  
   # Return summary values
   list(
-    status    = paste(hr, "bpm"),
-    timestamp = hr_desc$timestamp[1] # latest hr reading
+    status    = paste(n, "samples"),
+    timestamp = ecg_desc$timestamp[1] # latest ecg reading
   )
 }
 
@@ -372,5 +373,5 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
 
 
 ###
-} # data_R exists
+# } # data_R exists
 

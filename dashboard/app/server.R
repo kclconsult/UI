@@ -15,15 +15,15 @@ library(shiny)
 # local modules
 source("version.R")
 source("components.R")
-source("data.R")
 source("services.R")
+source("data.R")
 
 # server function with input and output objects.
 # input - references to events and input from the client
 # output - references to output objects to update in client
 function(input, output) {
     # Render the Version String
-    output$versionString = renderText(paste("v",DASHBOARD_VERSION,sep=""))
+    output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
     #
     # Load Datasets and generate statistics
@@ -107,12 +107,15 @@ function(input, output) {
     
     # - ECG Summary
     output$summaryECG = renderSummaryBox({
+      # Summarise the ECG dataset
+      summary = summariseECG(datasetECG)
+      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
                  image = "images/summary/ecg.png",
                  alert = "blue",
-                 status = "Normal",
-                 timestamp = "2019-7-31 12:34:56",
+                 status = summary$status,
+                 timestamp = summary$timestamp,
                  source = "Clinic")
     })
     
