@@ -15,11 +15,10 @@
 ---
 - [X] Observation POST Service Call in services API
 - [X] Input from Mood widget calls Observation POST
-- [ ] Mood Statistics in SummaryBox (latest value)
+- [X] Mood Statistics in SummaryBox (latest value)
 ---
-- [ ] Feedback Text-box on Feedback tab
-- [ ] ClinicalImpressions service API call
-- [ ] ClinicalImpressions list and Notes retrieval
+- [X] Feedback Text-box on Feedback tab
+- [X] ClinicalImpressions service API call
 ---
 - [ ] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
 - [ ] PHQ2/9 Forms
@@ -40,10 +39,12 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 - [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
 ---
+- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections
 
 ## Nice to have
+- [ ] ClinicalImpressions List and Notes retrieval
 - [ ] Logging service captures poke stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)

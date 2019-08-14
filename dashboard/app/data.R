@@ -336,7 +336,7 @@ summariseECG <- function(ecg) {
 #
 
 loadMoodData <- function(startTimestamp, endTimestamp) {
-  # Loads Mood Data for the patient.
+  # Loads Mood Finding Data (code: "106131003") for the patient.
   #
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
@@ -345,32 +345,49 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   # Returns
   #   Recorded Mood Dataset for time-period
   #   Columns:
-  #     mood: String of recorded emotion
-  #     datem: Date???
-  #     date.month: Month???
-  #     time: Time???
-  #     weekday (String) day of the week 
+  #     recordedEmotion: String of recorded emotion
+  #     datem: Day of observation, format: "%Y-%m-%d" 
+  #     date.month: First day of the month of the observation, format: "%Y-%m-%d"
+  #     time: Time of observation, format: "%H:%M:%S"
+  #     weekday (String) day of the week, i.e. "Monday"
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
   # Load from Observation API
-  #   Recorded Emotion code = "285854004"
-  mood = getObservations("285854004", startTimestamp, endTimestamp)
+  # 
+  # "Mood Finding" code is = "285854004"
+  mood = getObservations("106131003", startTimestamp, endTimestamp)
   
   # Rename the columns for the FIHR codes to more explainable ones:
   #
-  # New Name | Code       | Details
-  # ---------+------------+-------------------------------
-  # mood     | c285854004 | Recorded Emotion
+  # New Name         | Code       | Details
+  # -----------------+------------+-------------------------------
+  # recordedEmotion | c285854004 | Recorded Emotion
 
   # from plots-for-dashboard.html
-  mood_renamed = rename(mood, c("c285854004" = "mood"))
+  mood_renamed = rename(mood, c("c285854004" = "recordedEmotion"))
   
-  # Create timestamp string for plotting
+  # Create timestamp string column
   mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
   
   return(mood_renamed)
 }
 
+summariseMood <- function(mood) {
+  # Generate a summary for Mood (i.e. the most recent mood)
+  
+  # sort in descending date, time
+  mood_desc = arrange(mood, desc(datem), desc(time))
+  
+  # Summary is based on the most recent value.
+  recordedEmotion = as.character(mood_desc$recordedEmotion[1])
+  timestamp = mood_desc$timestamp[1] # latest mood reading
+
+  # Return summary values
+  list(
+    status    = tools::toTitleCase(recordedEmotion), # capitalises the Emotion
+    timestamp = timestamp
+  )
+}
 
 ###
 # } # data_R exists

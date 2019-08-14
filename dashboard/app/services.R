@@ -137,10 +137,13 @@ sendQuestionnaireResponses <- function(questionaire) {
 #
 
 sendMoodObservation <- function(recordedEmotion) {
-  # Add new Patient Mood Observation resource.
+  # Add new Patient Mood Finding (code "106131003") Observation resource.
   # 
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-Add
   #
+  # Note: The Observation-Add API is currently hard-coded *only* to submit these Observations.
+  # There is no code parameter and "106131003" is assumed.
+  # 
   # Args:
   #   recordedEmotion: (String) Recorded emotion 
   #   TODO effectiveDateTime: (Optional) Timestamp of (mood) observation, as full timestamp (e.g. 2019-02-26T00:00:00Z).
@@ -158,7 +161,7 @@ sendMoodObservation <- function(recordedEmotion) {
   body = list(# "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
               "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
               "285854004" = recordedEmotion)            # Recorded emotion)
-
+  
   # DEBUG url
   print(paste("sendMoodObservation:", requestUrl, 
               "subjectReference:",    body$subjectReference,

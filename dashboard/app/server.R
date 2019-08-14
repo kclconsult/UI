@@ -53,8 +53,11 @@ function(input, output, session) {
                              endTimestamp   = "2019-08-07T00:00:00Z", sample=TRUE)
     
     # - Mood
-    # datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
-    #                           endTimestamp = "2020-02-28T00:00:00Z")
+    #
+    # Live Moods
+    #
+    datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
+                               endTimestamp   = "2020-02-28T00:00:00Z")
     
     #
     # Navbar Tab Changing Events for logging
@@ -122,6 +125,9 @@ function(input, output, session) {
     
     # - Mood Summary
     output$summaryMood = renderSummaryBox({
+      # Summarise the Mood dataset
+      summary = summariseMood(datasetMood)
+      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
                  image = input$debugSelectMoodImage,
@@ -130,8 +136,8 @@ function(input, output, session) {
                  # image = "images/summary/mood-meh.png",
                  # image = "images/summary/mood-bad.png",
                  alert = "blue",
-                 status = "",
-                 timestamp = "2019-7-31 12:34:56",
+                 status = summary$status,
+                 timestamp = summary$timestamp,
                  source = "Home")
     })
     
@@ -186,7 +192,6 @@ function(input, output, session) {
     #
     # Tab: Recommendations
     #
-    
     output$listRecommendations = renderRecommendations({
       # List of Recommendations are based on a Array of objects representation from JSON:
       recommendationsJSON <- 
@@ -206,7 +211,7 @@ function(input, output, session) {
           ]
         }]'
       
-      # Converted to object
+      # Converted to named-list object from JSON
       fromJSON(recommendationsJSON)
     })
     
@@ -248,15 +253,3 @@ function(input, output, session) {
       }
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
