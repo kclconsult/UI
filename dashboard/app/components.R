@@ -73,16 +73,6 @@ renderRecommendations <- function(r) {
   renderUI({ t })
 }
 
-
-#
-# Tab: Feedback
-#
-renderFeedback <- function() {
-  renderUI({
-    tags$div(class="alert alert-success", role="alert", "Feedback")
-  })
-}
-
 #
 # EXAMPLES
 #

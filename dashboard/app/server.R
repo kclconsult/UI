@@ -21,7 +21,8 @@ source("data.R")
 # server function with input and output objects.
 # input - references to events and input from the client
 # output - references to output objects to update in client
-function(input, output) {
+# session - live session object for updating input controls
+function(input, output, session) {
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
@@ -232,8 +233,20 @@ function(input, output) {
     #
     # Tab: Feedback
     #
-    output$logFeedback = renderFeedback()
- 
+    observeEvent(input$feedbackTextarea, { 
+      logEvent("Feedback", paste("Editing, feedback size: ", nchar(input$feedbackTextarea), "characters")) 
+    })
+    
+    observeEvent(input$feedbackButton,   { 
+      if(nchar(input$feedbackTextarea) > 0) { # only submit Feedback if there is something written
+        logEvent("Feedback", paste("Submitting, final feedback size: ", nchar(input$feedbackTextarea), "characters"))
+        if(sendClinicalImpression(input$feedbackTextarea)) { # successful submission of feedback
+          updateTextAreaInput(session, "feedbackTextarea", value = "") # clear the feedbackTextArea
+        }
+      } else {
+        logEvent("Feedback", "Pressed Submit with empty textarea.")
+      }
+    })
 }
 
 

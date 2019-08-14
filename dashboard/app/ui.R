@@ -117,6 +117,13 @@ htmlTemplate("www/index.html",
   emotionLinkAfraid = actionLink("emotionLinkAfraid",       
     tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
   
-  # Tab: Feedback
-  logFeedback = htmlOutput("logFeedback")
+  # Tab: Feedback (Clinical Impressions)
+  # - textAreaInput: https://shiny.rstudio.com/reference/shiny/1.3.2/textAreaInput.html
+  feedbackTextarea = textAreaInput("feedbackTextarea", 
+                                   "Your Feedback",  # NULL - no label
+                                   width = "1000px",
+                                   height = "400px"),
+
+  # - actionButton: https://shiny.rstudio.com/reference/shiny/1.3.2/actionButton.html
+  feedbackButton = actionButton("feedbackButton", "Submit Your Feedback")
 )

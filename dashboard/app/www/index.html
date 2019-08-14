@@ -88,7 +88,7 @@
       <!-- Grid of Summary Boxes -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-6 col-md-6"> {{ summaryBP }} </div>
+					<div class="col-xs-6 col-md-6">{{ summaryBP }} </div>
 					<div class="col-xs-6 col-md-6">{{ summaryHR }}</div>
 				</div> 
 				<div class="row">
@@ -182,10 +182,11 @@
       </div>
 		</div> <!-- /Tab: Mood -->
 
-		<!-- Tab: Feedback -->
+		<!-- Tab: Feedback (ClinicalImpressions) -->
 		<div class="tab-pane" id="feedback">
-			<p>Feedback log for patients (what is this?)</p>
-			{{ logFeedback }}
+			<h4>You can log feedback here at anytime!</h4>
+			{{ feedbackTextarea }}
+			{{ feedbackButton }}
 		</div> <!-- /Tab: Feedback -->
 	</div>
   </body>

@@ -46,13 +46,12 @@ USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
 # Observation Data
 #
 
-getObservations <- function(patientID, code, startTimestamp, endTimestamp) {
+getObservations <- function(code, startTimestamp, endTimestamp) {
   # Gets Observations for a patient based on codes (i.e. Blood pressure: 85354-9)
   # 
   # GET Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-GetObservations)
   #
   # Args:
-  #   patientID: Users unique ID.
   #   code: The code of the observation being requested (e.g. Blood pressure: 85354-9).
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2020-02-28T00:00:00Z).
@@ -138,8 +137,17 @@ sendQuestionnaireResponses <- function(questionaire) {
 #
 
 sendMoodObservation <- function(recordedEmotion) {
+  # Add new Patient Mood Observation resource.
+  # 
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-Add
-  
+  #
+  # Args:
+  #   recordedEmotion: (String) Recorded emotion 
+  #   TODO effectiveDateTime: (Optional) Timestamp of (mood) observation, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns:
+  #   TRUE upon sucess (FALSE otherwise)
+
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
                       "Observation", 
@@ -147,15 +155,14 @@ sendMoodObservation <- function(recordedEmotion) {
                       sep = "/")
   
   # Parameters for POST request
-  body = list(# "id" = "???",                           # Resource ID (unnecessary!)
-              # "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
+  body = list(# "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
               "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
               "285854004" = recordedEmotion)            # Recorded emotion)
 
-  # DEBUG
+  # DEBUG url
   print(paste("sendMoodObservation:", requestUrl, 
-              "subjectReference:", body$subjectReference,
-              "285854004:", body$`285854004`))
+              "subjectReference:",    body$subjectReference,
+              "285854004:",           body$`285854004`))
   
   # Start measuring call
   start_time = Sys.time() 
@@ -163,7 +170,7 @@ sendMoodObservation <- function(recordedEmotion) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  r = POST(requestUrl, body = body, encode = "json")
+  resp = POST(requestUrl, body = body, encode = "json")
 
   # Stop measuring call
   end_time = Sys.time()
@@ -172,8 +179,11 @@ sendMoodObservation <- function(recordedEmotion) {
   print(end_time - start_time)
   
   # Request Error handling
-  # stop_for_status(r)
-  warn_for_status(r)
+  # stop_for_status(resp)
+  warn_for_status(resp)
+  
+  # TRUE if sucessful status code (FALSE otherwise)
+  status_code(resp) == 200
 }
 
 #
@@ -181,24 +191,54 @@ sendMoodObservation <- function(recordedEmotion) {
 #
 
 sendClinicalImpression <- function(note) {
-  # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions
+  # Add new ClinicalImpression (e.g. GP notes).
+  # 
+  # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions-Add
+  #
+  # Args:
+  #   note: (String) Impression details.
+  #   TODO effectiveDateTime: (Optional) Timestamp of (mood) observation, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #
+  # Returns:
+  #   TRUE upon sucess (FALSE otherwise)
   
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
                       "ClinicalImpression", 
                       "add",
                       sep = "/")
+
+  # Parameters for POST request
+  body = list(
+    # "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
+    "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
+    note = note)                              # Impression details
   
-  # Fields for POST request
-  # id 	String 	Resource ID - TODO What is this?
-  # note 	String 	 Impression details
-  # subjectReference 	String 	  Patient ID
-  subjectReference = USERNAME_PATIENT_ID
-  # effectiveDateTime 	String 	(optional) TODO Timestamp of impression
+  # DEBUG url
+  print(paste("sendClinicalImpression:", requestUrl, 
+              "subjectReference:",       body$subjectReference,
+              "note:",                   body$note))
   
-  print(paste("sendClinicalImpression(subjectReference=", subjectReference,
-              ", note=", note,
-              ")"))
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Send the request
+  # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
+  # encode = "multipart" does not work, use "form" or "json"
+  resp = POST(requestUrl, body = body, encode = "json")
+  
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  # Request Error handling
+  # stop_for_status(resp)
+  warn_for_status(resp)
+  
+  # TRUE if sucessful status code (FALSE otherwise)
+  status_code(resp) == 200
 }
 
 #
@@ -211,6 +251,8 @@ logEvent <- function(event_type, event_data) {
             "data" = event_data)
 
   print(paste(e$time, e$type, e$data, sep=" | "))
+  
+  TRUE # sucess
 }
 
 #

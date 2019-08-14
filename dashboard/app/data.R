@@ -42,7 +42,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
-  bp = getObservations(USERNAME_PATIENT_ID, "85354-9", startTimestamp, endTimestamp)
+  bp = getObservations("85354-9", startTimestamp, endTimestamp)
 
   # Load from sample-data
   # bp <- sampleBloodPressureData()
@@ -185,7 +185,7 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  hr <- getObservations(USERNAME_PATIENT_ID, "8867-4", startTimestamp, endTimestamp)
+  hr <- getObservations("8867-4", startTimestamp, endTimestamp)
 
   # Load from sample-data
   # hr <- sampleHeartRateData()
@@ -286,7 +286,7 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   
   } else {   # Load from Observation API
     #  ECG code = 131328 (???)
-    ecg_raw <- getObservations(USERNAME_PATIENT_ID, "131328", startTimestamp, endTimestamp)
+    ecg_raw <- getObservations("131328", startTimestamp, endTimestamp)
 
     # Rename the columns for the FIHR codes to more explainable ones:
     #
@@ -354,7 +354,7 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   #   Recorded Emotion code = "285854004"
-  mood = getObservations(USERNAME_PATIENT_ID, "285854004", startTimestamp, endTimestamp)
+  mood = getObservations("285854004", startTimestamp, endTimestamp)
   
   # Rename the columns for the FIHR codes to more explainable ones:
   #
