@@ -244,11 +244,15 @@ function(input, output, session) {
     })
     
     observeEvent(input$phq2SubmitButton, { 
-      logEvent("PHQ2", "Submitted Form")
+      logEvent("PHQ2", paste("Submitted Form Q1:", input$phq2Q1YesNo, "Q2:", input$phq2Q2YesNo))
       
       # show PHQ9 form if both Qestion Answers are Yes
       if(input$phq2Q1YesNo == "y" & input$phq2Q2YesNo == "y") { 
-        logEvent("PHQ2", "Show PHQ9 Form")
+        # Shows PHQ9 Tab
+        runjs("$('#mood-tabs a[href=\"#phq9\"]').tab('show');")
+      } else { 
+        # Shows (default) Mood Grid
+        runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
       }
       
       # Clear PHQ2 Inputs

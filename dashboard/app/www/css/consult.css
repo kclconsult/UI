@@ -41,3 +41,8 @@
   border-right-width: 5px;
   border-right-color: #fff;
 }
+
+/* give the Debug Panel some space */
+.debug.well {
+  margin-top: 25px;
+}
