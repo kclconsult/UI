@@ -239,18 +239,30 @@ function(input, output, session) {
     
     # -- PHQ2 Screening Form
     observe({ # enable Submit button only when both questions are answered
-      logEvent("PHQ2", paste("Changed Answer to Question"))
-      
-      toggleState(id = "phq2SubmitButton", condition = is.character(input$phq2Q1YesNo) & is.character(input$phq2Q2YesNo))
+      toggleState(id = "phq2SubmitButton", 
+                  condition = is.character(input$phq2Q1YesNo) & is.character(input$phq2Q2YesNo))
     })
     
     observeEvent(input$phq2SubmitButton, { 
-      logEvent("PHQ2", paste("Submitted Form"))
+      logEvent("PHQ2", "Submitted Form")
       
       # show PHQ9 form if both Qestion Answers are Yes
       if(input$phq2Q1YesNo == "y" & input$phq2Q2YesNo == "y") { 
-        logEvent("PHQ2", paste("Show PHQ9 Form"))
+        logEvent("PHQ2", "Show PHQ9 Form")
       }
+      
+      # Clear PHQ2 Inputs
+      #
+      # These *should* clear the radioButtons for the questions, but 
+      # bug in JS client does not update values.
+      # updateRadioButtons(session, "phq2Q1YesNo", selected = character(0))
+      # updateRadioButtons(session, "phq2Q2YesNo", selected = character(0))
+
+      # *FIX* Run JS
+      runjs("$('input[name=phq2Q1YesNo]').prop('checked', false);") # clears the radio input visually
+      runjs("Shiny.onInputChange('phq2Q1YesNo', null);") # clears the Shiny input$ reactiveVal
+      runjs("$('input[name=phq2Q2YesNo]').prop('checked', false);")
+      runjs("Shiny.onInputChange('phq2Q2YesNo', null);")
     })
   
     #

@@ -8,8 +8,16 @@
 #
 
 library(shiny)
-library(shinyjs)
+library(shinyjs) # JS add-ons
 
+# Shiny Options
+# See: https://rdrr.io/cran/shiny/man/shiny-options.html
+options(
+  shiny.launch.browser = TRUE,
+  shiny.trace = TRUE,
+  shiny.minified = FALSE # use un-minified shiny.js
+)
+        
 # local htmlwidgets
 library(Consult)
 

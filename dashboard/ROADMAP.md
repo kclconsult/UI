@@ -3,26 +3,9 @@
 # Backlog
 
 ### Essential
-- [X] Recommendations List HTML (Use Alerts with Icons or Media Listing)
-- [X] Risk People Plots Static - Selector Based on Intervention
----
-- [X] Implement data.R module - move loadDataX and statsX into...
-- [X] Alert Logic for BP based on code
----
-- [X] BP Statistics in SummaryBox (latest value / mean over the latest values)
-- [X] HR Statistics in SummaryBox (latest value / mean over the latest values)
-- [X] ECG Statistics in SummaryBox (number of samples gathered)
----
-- [X] Observation POST Service Call in services API
-- [X] Input from Mood widget calls Observation POST
-- [X] Mood Statistics in SummaryBox (latest value)
----
-- [X] Feedback Text-box on Feedback tab
-- [X] ClinicalImpressions service API call
----
-- [X] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
-- [ ] PHQ2/9 Forms
-- [ ] QuestionnaireResponses Service Call
+- [ ] PHQ9 Form
+- [ ] QuestionnaireResponses API Service Call
+- [ ] PHQ2/9 Logic with Debug Trigger
 ---
 - [ ] Update People Plots from Isabel
 - [ ] Update SummaryBoxes from Panos
@@ -35,7 +18,6 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] PHQ2/9 Logic
 - [ ] Badges for Tabs (or InfoBoxes)
 - [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
 ---
@@ -44,7 +26,9 @@
 - [ ] Logging service - API - logging function logs Tab selections
 
 ## Nice to have
-- [ ] ClinicalImpressions List and Notes retrieval
+- [ ] Caching ClinicalImpressions (Notes) for local view
+- [ ] Notes (ClinicalImpressions) App
+- [ ] ClinicalImpressions List Retrieval from MP API
 - [ ] Logging service captures poke stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)
@@ -52,6 +36,20 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Recommendations List HTML (Use Alerts with Icons or Media Listing)
+- [X] Risk People Plots Static - Selector Based on Intervention
+- [X] Implement data.R module - move loadDataX and statsX into...
+- [X] Alert Logic for BP based on code
+- [X] BP Statistics in SummaryBox (latest value / mean over the latest values)
+- [X] HR Statistics in SummaryBox (latest value / mean over the latest values)
+- [X] ECG Statistics in SummaryBox (number of samples gathered)
+- [X] Observation POST Service Call in services API
+- [X] Input from Mood widget calls Observation POST
+- [X] Mood Statistics in SummaryBox (latest value)
+- [X] Feedback Text-box on Feedback tab
+- [X] ClinicalImpressions service API call
+- [X] QuestionnaireResponses HTML form in Mood tab (put a sub-nav for now)
+- [X] PHQ2 Form
 - [X] Remove Pain SummaryBox
 - [X] SummaryBox DefaultColor
 - [X] SummaryBox Icon
