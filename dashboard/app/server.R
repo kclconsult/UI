@@ -218,6 +218,8 @@ function(input, output, session) {
     #
     # Tab: Mood
     #
+    
+    # -- Mood Grid Events
     observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
     observeEvent(input$emotionLinkTense,      { sendMoodObservation("tense") })
     observeEvent(input$emotionLinkSleepy,     { sendMoodObservation("sleepy") })
@@ -235,6 +237,22 @@ function(input, output, session) {
     observeEvent(input$emotionLinkAngry,      { sendMoodObservation("angry") })
     observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
     
+    # -- PHQ2 Screening Form
+    observe({ # enable Submit button only when both questions are answered
+      logEvent("PHQ2", paste("Changed Answer to Question"))
+      
+      toggleState(id = "phq2SubmitButton", condition = is.character(input$phq2Q1YesNo) & is.character(input$phq2Q2YesNo))
+    })
+    
+    observeEvent(input$phq2SubmitButton, { 
+      logEvent("PHQ2", paste("Submitted Form"))
+      
+      # show PHQ9 form if both Qestion Answers are Yes
+      if(input$phq2Q1YesNo == "y" & input$phq2Q2YesNo == "y") { 
+        logEvent("PHQ2", paste("Show PHQ9 Form"))
+      }
+    })
+  
     #
     # Tab: Feedback
     #

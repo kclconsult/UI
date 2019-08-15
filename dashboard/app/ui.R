@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(shinyjs)
 
 # local htmlwidgets
 library(Consult)
@@ -82,8 +83,8 @@ htmlTemplate("www/index.html",
   listRecommendations = htmlOutput("listRecommendations"),
 
   # Tab: Mood
-  selectorMood = htmlOutput("selectorMood"),
-  # - Mood Selection Actions
+
+  # - Mood Grid Selection Actions
   emotionLinkTired = actionLink("emotionLinkTired",
     tags$img(src = "images/emotions/tired.jpg", width = "100%", height = "100%")),
   emotionLinkTense = actionLink("emotionLinkTense",         
@@ -116,6 +117,15 @@ htmlTemplate("www/index.html",
     tags$img(src = "images/emotions/angry.jpg", width = "100%", height = "100%")),
   emotionLinkAfraid = actionLink("emotionLinkAfraid",       
     tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
+  
+  # - PHQ2 Form Controls
+  phq2Q1YesNo = radioButtons("phq2Q1YesNo", NULL, # no label
+                             selected = character(0), # initially nothing selected
+                             choices = c("Yes" = "y", "No" = "n")),
+  phq2Q2YesNo = radioButtons("phq2Q2YesNo", NULL, # no label
+                             selected = character(0), # initially nothing selected
+                             choices = c("Yes" = "y", "No" = "n")),
+  phq2SubmitButton = actionButton("phq2SubmitButton", "Submit"),
   
   # Tab: Feedback (Clinical Impressions)
   # - textAreaInput: https://shiny.rstudio.com/reference/shiny/1.3.2/textAreaInput.html
