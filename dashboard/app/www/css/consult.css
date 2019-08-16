@@ -46,3 +46,16 @@
 .debug.well {
   margin-top: 25px;
 }
+
+/* Fatter radio Buttons */
+div.radio {
+  margin-bottom: 22px;
+  margin-left: 26px;
+}
+div.radio span {
+  margin-left: 10px;
+}
+input[type="radio"] {
+  transform: scale(2.0);
+  margin-top: 10px;
+}

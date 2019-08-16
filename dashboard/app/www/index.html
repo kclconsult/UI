@@ -173,8 +173,44 @@
   		  </div>
   
         <!-- PHQ9 Form -->
+  		  <!-- Based on assets/PHQ - Questions.pdf -->
   		  <div class="tab-pane" id="phq9">
-  		    <h4>PHQ9 Form</h4>
+  		    <h4>Patient Health Questionnaire (PHQ-9)</h4>
+  		    <h5>Over the last 2 <em>weeks</em>, how ofter have you been bothered by any of the following problems?</h5>
+
+  		    <p><strong>1.</strong> Little interest or pleasure in doing things</p>
+  		    {{ phq9Q1Score }}
+  		    <hr />
+  		    <p><strong>2.</strong> Feeling down, depressed, or hopeless</p>
+  		    {{ phq9Q2Score }}
+  		    <hr />
+  		    <p><strong>3.</strong> Trouble falling or staying aleep, or sleeping too much</p>
+  		    {{ phq9Q3Score }}
+  		    <hr />
+  		    <p><strong>4.</strong> Feeling tired or having little energy</p>
+  		    {{ phq9Q4Score }}
+  		    <hr />
+  		    <p><strong>5.</strong> Poor appetite or overeating</p>
+  		    {{ phq9Q5Score }}
+  		    <hr />
+  		    <p><strong>6.</strong> Feeling bad about yourself - or that you are a failure or have let yourself or your family down</p>
+  		    {{ phq9Q6Score }}
+  		    <hr />
+  		    <p><strong>7.</strong> Trouble concentrating on things, such as reading the newspaper or watching television</p>
+  		    {{ phq9Q7Score }}
+  		    <hr />
+  		    <p><strong>8.</strong> Moving or speaking so slowly that other peope could have noticed.  Or the opposite - being so figety or restless that you have been moving around a lot more than usual</p>
+  		    {{ phq9Q8Score }}
+  		    <hr />
+  		    <p><strong>9.</strong> Thoughts that you would be better off dead, or of hurting yourself</p>
+  		    {{ phq9Q9Score }}
+
+  		    <hr />
+  		    <p><strong>10.</strong> If you checked off <em>any problems</em>, how <em>difficult</em> have these problems made it for you to do your work, take care of things at home, or get along with other people?</p>
+  		    {{ phq9Q10Score }}
+
+  		    <hr />
+    		  {{ phq9SubmitButton }}
   		  </div>
   
         <!-- Default Mood Grid Panel -->

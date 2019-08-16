@@ -28,6 +28,12 @@ library(Consult)
 #
 # See https://shiny.rstudio.com/articles/templates.html for more info.
 
+# re-usable choices vectors for PHQ9 form
+freqChoices = c("Not at all" = "0", 
+                "Several days" = "1",
+                "More than half the days" = "2",
+                "Nearly every day" = "3")
+
 htmlTemplate("www/index.html",
   # Version String
   versionString = textOutput("versionString", inline=TRUE),
@@ -127,6 +133,7 @@ htmlTemplate("www/index.html",
     tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
   
   # - PHQ2 Form Controls
+  # -- radioButtons: https://shiny.rstudio.com/reference/shiny/1.3.2/radioButtons.html
   phq2Q1YesNo = radioButtons("phq2Q1YesNo", NULL, # no label
                              selected = character(0), # initially nothing selected
                              choices = c("Yes" = "y", "No" = "n")),
@@ -134,6 +141,27 @@ htmlTemplate("www/index.html",
                              selected = character(0), # initially nothing selected
                              choices = c("Yes" = "y", "No" = "n")),
   phq2SubmitButton = actionButton("phq2SubmitButton", "Submit"),
+  
+  # - PHQ9 Form Controls
+  # -- radioButtons: https://shiny.rstudio.com/reference/shiny/1.3.2/radioButtons.html
+  # Q9 - Scores
+  phq9Q1Score = radioButtons("phq9Q1Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q2Score = radioButtons("phq9Q2Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q3Score = radioButtons("phq9Q3Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q4Score = radioButtons("phq9Q4Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q5Score = radioButtons("phq9Q5Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q6Score = radioButtons("phq9Q6Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q7Score = radioButtons("phq9Q7Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q8Score = radioButtons("phq9Q8Score", NULL, selected = character(0), choices = freqChoices),
+  phq9Q9Score = radioButtons("phq9Q9Score", NULL, selected = character(0), choices = freqChoices),
+  
+  # Q10 - Difficulty
+  phq9Q10Score = radioButtons("phq9Q10Score", NULL, selected = character(0), 
+                              choices = c("Not difficult at all" = "NotDifficult",
+                                          "Somewhat difficult"   = "SomewhatDifficult",
+                                          "Very difficult"       = "VeryDifficult",
+                                          "Extremely difficult"  = "ExtremelyDifficult")),
+  phq9SubmitButton = actionButton("phq9SubmitButton", "Submit"),
   
   # Tab: Feedback (Clinical Impressions)
   # - textAreaInput: https://shiny.rstudio.com/reference/shiny/1.3.2/textAreaInput.html

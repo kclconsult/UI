@@ -6,9 +6,6 @@
 # This is a module for abstracting out other CONSULT services.
 #
 
-# "source exist" braces 
-if(!exists('services_R')) { services_R <- TRUE
-
 library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
 
 # install.packages("tidyverse")
@@ -97,7 +94,7 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
 # QuestionnaireResponses POST
 #
 
-sendQuestionnaireResponses <- function(questionaire) {
+sendQuestionnaireResponses <- function(scores, difficulty) {
   # Sends the Questionnaire Response form answers.
   #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
@@ -108,28 +105,89 @@ sendQuestionnaireResponses <- function(questionaire) {
                       "add",
                       sep = "/")
   
-  # Fields for POST request
-  # Field 	Type 	Description
-  # id 	String 	Resource ID.
-  # subjectReference 	String 	Patient ID.
-  subjectReference = USERNAME_PATIENT_ID
-  # effectiveDateTime 	String 	(Optional) Timestamp of response
-  # LittleInterest 	String 	PHQ9 score for LittleInterest
-  # FeelingDown 	String 	PHQ9 score for FeelingDown
-  # TroubleSleeping 	String 	PHQ9 score for TroubleSleeping
-  # FeelingTired 	String 	PHQ9 score for FeelingTired
-  # BadAppetite 	String 	PHQ9 score for BadAppetite
-  # FeelingBadAboutSelf 	String 	PHQ9 score for FeelingBadAboutSelf
-  # TroubleConcentrating 	String 	PHQ9 score for TroubleConcentrating
-  # MovingSpeaking 	String 	PHQ9 score for MovingSpeaking
-  # Difficulty 	String 	PHQ9 score for Difficulty
-  # TotalScore 	String 	Total PHQ9 score
+  # Validate Question Scores
+  questionScores = c(
+    "LittleInterest",       # PHQ9 score for LittleInterest (Q1)
+    "FeelingDown",          # PHQ9 score for FeelingDown (Q2)
+    "TroubleSleeping",      # PHQ9 score for TroubleSleeping (Q3)
+    "FeelingTired",         # PHQ9 score for FeelingTired (Q4)
+    "BadAppetite",          # PHQ9 score for BadAppetite (Q5)
+    "FeelingBadAboutSelf",  # PHQ9 score for FeelingBadAboutSelf (Q6)
+    "TroubleConcentrating", # PHQ9 score for TroubleConcentrating (Q7)
+    "MovingSpeaking", 	    # PHQ9 score for MovingSpeaking (Q8)
+    "ThoughtsHurting"       # PHQ9 score for ThoughtsHurting (Q9)
+  )
   
-  # TODO - validate input parameters
+  # set of matching question score parameters
+  matching = intersect(questionScores, names(scores))
   
-  # DEBUG
-  print(paste("sendQuestionnaireResponses(subjectReference=", subjectReference,
-              ")"))
+  # check if all of the questionScores are present
+  if(!setequal(questionScores, matching)) {
+    warning(paste("sendQuestionnaireResponses -- questionScores missing:", setdiff(questionScores, matching)))
+    return(FALSE)
+  }
+  
+  # validate values for questionScores and accumulate TotalScore
+  totalScore = 0
+  for(p in questionScores) {
+    # Question scores are in range
+    if(scores[[p]] %in% c("0", "1", "2", "3")) {
+      totalScore = totalScore + as.integer(scores[[p]])
+    } else {
+      warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
+      return(FALSE)
+    }
+  }
+  
+  # Parameters for POST request
+  body = append(list(), scores) # clone the scores
+  body[["TotalScore"]] = as.character(totalScore)  # sum of all scores for Q1-9
+  body[["subjectReference"]] = USERNAME_PATIENT_ID # Patient id
+  # body[["effectiveDateTime" ]] =                 # (optional) Timestamp of impression
+  
+  # For Q10, if totalScore > 0, set "Difficulty"
+  if(totalScore > 0) {
+    body[["Difficulty"]] = difficulty
+  } else { # Difficulty answer is n/a
+    body[["Difficulty"]] = "n/a"
+  }
+  
+  # DEBUG url
+  print(paste("sendQuestionnaireResponses:", requestUrl, 
+              "subjectReference:",           body$subjectReference,
+              "LittleInterest",              body$LittleInterest,
+              "FeelingDown",                 body$FeelingDown,
+              "TroubleSleeping",             body$TroubleSleeping,
+              "FeelingTired",                body$FeelingTired,
+              "BadAppetite",                 body$BadAppetite,
+              "FeelingBadAboutSelf",         body$FeelingBadAboutSelf,
+              "TroubleConcentrating",        body$TroubleConcentrating,
+              "MovingSpeaking",              body$MovingSpeaking,
+              "ThoughtsHurting",             body$ThoughtsHurting,
+              "Difficulty",                  body$Difficulty,
+              "TotalScore",                  body$TotalScore
+        ))
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Send the request
+  # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
+  # encode = "multipart" does not work, use "form" or "json"
+  resp = POST(requestUrl, body = body, encode = "json")
+  
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  # Request Error handling
+  # stop_for_status(resp)
+  warn_for_status(resp)
+  
+  # TRUE if sucessful status code (FALSE otherwise)
+  status_code(resp) == 200
 }
 
 #
@@ -287,9 +345,3 @@ requestData <- function() {
   # return the data
   data
 }
-
-###
-} # services_R exists
-
-
-

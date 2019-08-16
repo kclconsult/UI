@@ -12,7 +12,7 @@ library(Consult) # install in local directory packages/Consult
 library(jsonlite)
 library(shiny)
 
-# local modules
+# local modules - move into Consult package
 source("version.R")
 source("components.R")
 source("services.R")
@@ -268,7 +268,25 @@ function(input, output, session) {
       runjs("$('input[name=phq2Q2YesNo]').prop('checked', false);")
       runjs("Shiny.onInputChange('phq2Q2YesNo', null);")
     })
-  
+
+    # -- PHQ9 Questionaire Response
+    observeEvent(input$phq9SubmitButton,   { 
+      logEvent("PHQ9", paste("Submitted Form"))
+      sendQuestionnaireResponses(
+        scores = list(
+          "LittleInterest"       = input$phq9Q1Score, # PHQ9 score for LittleInterest (Q1)
+          "FeelingDown"          = input$phq9Q2Score, # PHQ9 score for FeelingDown (Q2)
+          "TroubleSleeping"      = input$phq9Q3Score, # PHQ9 score for TroubleSleeping (Q3)
+          "FeelingTired"         = input$phq9Q4Score, # PHQ9 score for FeelingTired (Q4)
+          "BadAppetite"          = input$phq9Q5Score, # PHQ9 score for BadAppetite (Q5)
+          "FeelingBadAboutSelf"  = input$phq9Q6Score, # PHQ9 score for FeelingBadAboutSelf (Q6)
+          "TroubleConcentrating" = input$phq9Q7Score, # PHQ9 score for TroubleConcentrating (Q7)
+          "MovingSpeaking"       = input$phq9Q8Score, # PHQ9 score for MovingSpeaking (Q8)
+          "ThoughtsHurting"      = input$phq9Q9Score  # PHQ9 score for ThoughtsHurting (Q9)        
+        ), 
+        difficulty = input$phq9Q10Score)
+    })
+    
     #
     # Tab: Feedback
     #

@@ -6,8 +6,6 @@
 # This is a module for processing CONSULT data client-side.  It depends on the services.R module.
 #
 
-# "source exist" braces 
-# if(!exists('data_R')) { data_R <- TRUE
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
@@ -388,7 +386,3 @@ summariseMood <- function(mood) {
     timestamp = timestamp
   )
 }
-
-###
-# } # data_R exists
-

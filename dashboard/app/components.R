@@ -9,10 +9,6 @@
 # (See https://shiny.rstudio.com/reference/shiny/1.3.2/renderUI.html).
 #
 
-# "source exist" braces 
-if(!exists('components_R')) {  
-  components_R<-T
-
 #
 # Tab: Recommendations
 #
@@ -134,6 +130,3 @@ renderSliderProgress <- function(progressValue) {
     })
   )
 }
-
-###
-} # components_R exists
