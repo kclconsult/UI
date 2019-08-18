@@ -3,11 +3,20 @@
 # Backlog
 
 ### Essential
-- [ ] PHQ9 Form
-- [ ] QuestionnaireResponses API Service Call
-- [ ] PHQ2/9 Logic with Debug Trigger
+- [ ] - Test on Tablet, Sizing and Interface with the Chat
+---
+- [X] PHQ9 Form
+- [X] QuestionnaireResponses API Service Call
+- [X] PHQ2/9 Logic with Debug Trigger
+- [X] PHQ9 Q10 logic
+- [X] PHQ9 submit button logic
+- [X] Clear PHQ9 form upon submit
+---
+- [ ] Notes (ClinicalImpressions) App
+- [ ] ClinicalImpressions List Retrieval from MP API
 ---
 - [ ] Update People Plots from Isabel
+- [ ] Risk Pull-down menu convert to Buttons
 - [ ] Update SummaryBoxes from Panos
 ---
 - [ ] Update ECG data from API call for sample-data
@@ -18,21 +27,20 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] Badges for Tabs (or InfoBoxes)
 - [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
 ---
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections
-
+---
+- [ ] Mood Grid - feedback when selecting the Mood
+- [ ] Thumbnails for Moods to be displayed in the Summary Box
 ## Nice to have
-- [ ] Caching ClinicalImpressions (Notes) for local view
-- [ ] Notes (ClinicalImpressions) App
-- [ ] ClinicalImpressions List Retrieval from MP API
 - [ ] Logging service captures poke stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)
 - [ ] Connectivity Indicators for SummaryBox
+- [ ] Badges for Tabs (or InfoBoxes)
 - [ ] Random ordering of Mood images
 
 ## Done

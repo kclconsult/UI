@@ -1,0 +1,5 @@
+"c285854004" "datem" "date.month" "time" "weekday"
+"angry" 2019-04-04 2019-04-01 23:19:39 "Thursday"
+"frustrated" 2019-04-05 2019-04-01 10:19:09 "Friday"
+"glad" 2019-04-06 2019-04-01 14:57:46 "Saturday"
+"happy 2019-04-06 2019-04-01 14:57:50 "Saturday"

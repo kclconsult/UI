@@ -35,7 +35,7 @@ function(input, output, session) {
     # start: 2017-01-01 00:00:00
     # end:   2017-06-19 00:00:00
     datasetBP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
-                                      endTimestamp   = "2017-02-01T00:00:00Z")
+                                      endTimestamp   = "2017-02-01T00:00:00Z", sample=TRUE)
     
     # - Heart Rate
     #
@@ -43,7 +43,7 @@ function(input, output, session) {
     # start: 2019-04-04 23:19:39
     # end: 2019-04-09 13:56:13
     datasetHR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
-                                  endTimestamp   = "2020-04-10T00:00:00Z")
+                                  endTimestamp   = "2020-04-10T00:00:00Z", sample=TRUE)
 
     # - ECG
     # 
@@ -57,7 +57,7 @@ function(input, output, session) {
     # Live Moods
     #
     datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
-                               endTimestamp   = "2020-02-28T00:00:00Z")
+                               endTimestamp   = "2020-02-28T00:00:00Z", sample=TRUE)
     
     #
     # Navbar Tab Changing Events for logging
@@ -238,11 +238,12 @@ function(input, output, session) {
     observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
     
     # -- PHQ2 Screening Form
-    observe({ # enable Submit button only when both questions are answered
+    observe({ # Enable Submit button only when both questions are answered
       toggleState(id = "phq2SubmitButton", 
                   condition = is.character(input$phq2Q1YesNo) & is.character(input$phq2Q2YesNo))
     })
     
+    # Submit PHQ2 Form
     observeEvent(input$phq2SubmitButton, { 
       logEvent("PHQ2", paste("Submitted Form Q1:", input$phq2Q1YesNo, "Q2:", input$phq2Q2YesNo))
       
@@ -270,6 +271,61 @@ function(input, output, session) {
     })
 
     # -- PHQ9 Questionaire Response
+    # Enable Submit button only when either:
+    # a. Q1-9 are selected, and if totalScore is 0, Q10 is answered
+    # b. Q1-9 are selected and if totalScore > 0
+    observe({
+      enableQ10 = FALSE
+      enableSubmit = FALSE
+      q1to9Scores = c(input$phq9Q1Score, 
+                      input$phq9Q2Score,
+                      input$phq9Q3Score,
+                      input$phq9Q4Score,
+                      input$phq9Q5Score,
+                      input$phq9Q6Score,
+                      input$phq9Q7Score,
+                      input$phq9Q8Score,
+                      input$phq9Q9Score)
+      
+      # check if Q1-9 have been submitted
+      # lapply does not work on NULL values:
+      #    q1to9Selected = lapply(q1to9Scores, is.character)
+      # instead, write it out:
+      q1to9Selected = is.character(input$phq9Q1Score) & 
+                      is.character(input$phq9Q2Score) &
+                      is.character(input$phq9Q3Score) &
+                      is.character(input$phq9Q4Score) &
+                      is.character(input$phq9Q5Score) &
+                      is.character(input$phq9Q6Score) &
+                      is.character(input$phq9Q7Score) &
+                      is.character(input$phq9Q8Score) &
+                      is.character(input$phq9Q9Score)
+
+      # using set equality to see if Q1-9 has been selected
+      if(q1to9Selected) { # all Q1-9 have been selected
+        # sum the scores using Map-Reduce
+        totalScore = Reduce("+", Map(as.integer, q1to9Scores))
+
+        # decide whether to show Q10
+        if(totalScore == 0) { # hide Q10, enabled Submit 
+          enableQ10 = FALSE
+          enableSubmit = TRUE
+        } else { # problems, show Q10
+          enableQ10 = TRUE
+          # enable Submit once Q10 is answered
+          enableSubmit = is.character(input$phq9Q10Score)
+        }
+      }
+      
+      # update the UI:
+      # - enable/disable Q10
+      toggleElement(id="phq9Q10", anim=TRUE, animType="fade", time=0.5, condition = enableQ10)
+      
+      # - enable/disable submit Button
+      toggleState(id = "phq9SubmitButton", condition = enableSubmit)
+    })
+    
+    # Submit PHQ9 Form
     observeEvent(input$phq9SubmitButton,   { 
       logEvent("PHQ9", paste("Submitted Form"))
       sendQuestionnaireResponses(
@@ -282,9 +338,34 @@ function(input, output, session) {
           "FeelingBadAboutSelf"  = input$phq9Q6Score, # PHQ9 score for FeelingBadAboutSelf (Q6)
           "TroubleConcentrating" = input$phq9Q7Score, # PHQ9 score for TroubleConcentrating (Q7)
           "MovingSpeaking"       = input$phq9Q8Score, # PHQ9 score for MovingSpeaking (Q8)
-          "ThoughtsHurting"      = input$phq9Q9Score  # PHQ9 score for ThoughtsHurting (Q9)        
-        ), 
+          "ThoughtsHurting"      = input$phq9Q9Score  # PHQ9 score for ThoughtsHurting (Q9)
+        ),
         difficulty = input$phq9Q10Score)
+      
+      # Shows Mood Grid after submitting
+      runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+      
+      # Clear PHQ9 Inputs
+      phq9Radios = c("phq9Q1Score", 
+                     "phq9Q2Score",
+                     "phq9Q3Score",
+                     "phq9Q4Score",
+                     "phq9Q5Score",
+                     "phq9Q6Score",
+                     "phq9Q7Score",
+                     "phq9Q8Score",
+                     "phq9Q9Score",
+                     "phq9Q10Score")
+      
+      for(id in phq9Radios) {
+        # These *should* clear the radioButtons for the questions, but 
+        # bug in JS client does not update values.
+        # updateRadioButtons(session, id, selected = character(0))
+
+        # *FIX* Run JS
+        runjs(paste("$('input[name=",id,"]').prop('checked', false);", sep='')) # clears the radio input visually
+        runjs(paste("Shiny.onInputChange('",id,"', null);", sep='')) # clears the Shiny input$ reactiveVal
+      }
     })
     
     #

@@ -19,12 +19,13 @@ library(anytime)
 # Blood Pressure
 #
 
-loadBloodPressureData <- function(startTimestamp, endTimestamp) {
+loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Blood Pressure Data for the patient.
   #
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   sample: use sample-data
   #
   # Returns
   #   Blood Presure Data set with Summary Statistics
@@ -38,13 +39,14 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp) {
   #     weekday (String) day of the week 
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
-  # Load from Observation API
-  #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
-  bp = getObservations("85354-9", startTimestamp, endTimestamp)
 
-  # Load from sample-data
-  # bp <- sampleBloodPressureData()
-
+  if(sample) { # Load from sample-data
+    bp <- sampleBloodPressureData()
+  } else {   # Load from Observation API
+    #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
+    bp = getObservations("85354-9", startTimestamp, endTimestamp)
+  }
+  
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name | Old Name   | Code      | Details
@@ -163,12 +165,13 @@ summariseBloodPressure <- function(bp) {
 # Heart Rate
 #
 
-loadHeartRateData <- function(startTimestamp, endTimestamp) {
+loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Heart Rate Data for the patient.
   #
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp.
+  #   sample: use sample-data
   #
   # Returns
   #   Heart Dataset with Summary Statistics contents:
@@ -181,13 +184,13 @@ loadHeartRateData <- function(startTimestamp, endTimestamp) {
   #     weekday (String) Day of the week 
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
   
-  # Load from Observation API
-  #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  hr <- getObservations("8867-4", startTimestamp, endTimestamp)
-
-  # Load from sample-data
-  # hr <- sampleHeartRateData()
-
+  if(sample) { # Load from sample-data
+    hr <- sampleHeartRateData()
+  } else {   # Load from Observation API
+    #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
+    hr <- getObservations("8867-4", startTimestamp, endTimestamp)
+  }
+  
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name      | Old Name | Code    | Details
@@ -250,6 +253,7 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   sample: Use sample-data
   #
   # Returns
   #   ECG Dataset contents:
@@ -262,26 +266,7 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   
   
   if(sample) { # Load from sample-data
-    ecg_raw = sampleECGData()
-
-    # Note: Sample ECG data file is so strange!
-    # No headers, long rows of what appears to be 2-tuples (unixtime, value)
-    
-    # un-roll the rows into single vector
-    ecg_vector = c(t(ecg_raw))
-
-    # re-shape vector into 2 column matrix and then converted to table
-    ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
-
-    # remove any NA rows from the data
-    ecg <- ecg[complete.cases(ecg),]
-    
-    # name the columns
-    colnames(ecg) = c("posixtime", "ecg.raw")
-    
-    # timestamp column from "posixtime" - concatenating milliseconds
-    ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
-  
+    ecg = sampleECGData()
   } else {   # Load from Observation API
     #  ECG code = 131328 (???)
     ecg_raw <- getObservations("131328", startTimestamp, endTimestamp)
@@ -306,9 +291,26 @@ sampleECGData <- function() {
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
   
-  ecg = read.csv("sample-data/ecg.csv", header=FALSE)  
+  ecg_raw = read.csv("sample-data/ecg.csv", header=FALSE)  
   
   # No column names in ecg.csv!
+  # Note: Sample ECG data file is so strange!
+  # No headers, long rows of what appears to be 2-tuples (unixtime, value)
+  
+  # un-roll the rows into single vector
+  ecg_vector = c(t(ecg_raw))
+  
+  # re-shape vector into 2 column matrix and then converted to table
+  ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
+  
+  # remove any NA rows from the data
+  ecg <- ecg[complete.cases(ecg),]
+  
+  # name the columns
+  colnames(ecg) = c("posixtime", "ecg.raw")
+  
+  # timestamp column from "posixtime" - concatenating milliseconds
+  ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
   
   return(ecg)
 }
@@ -333,12 +335,13 @@ summariseECG <- function(ecg) {
 # Mood Data
 #
 
-loadMoodData <- function(startTimestamp, endTimestamp) {
+loadMoodData <- function(startTimestamp, endTimestamp, sample) {
   # Loads Mood Finding Data (code: "106131003") for the patient.
   #
   # Args:
   #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   sample: use sample-data
   #
   # Returns
   #   Recorded Mood Dataset for time-period
@@ -352,13 +355,17 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   
   # Load from Observation API
   # 
-  # "Mood Finding" code is = "285854004"
-  mood = getObservations("106131003", startTimestamp, endTimestamp)
+  if(sample) { # fake sample-data
+    mood = sampleMoodData()
+  } else {
+    # "Mood Finding" code is = "106131003"
+    mood = getObservations("106131003", startTimestamp, endTimestamp)
+  }
   
   # Rename the columns for the FIHR codes to more explainable ones:
   #
-  # New Name         | Code       | Details
-  # -----------------+------------+-------------------------------
+  # New Name        | Code       | Details
+  # ----------------+------------+-------------------------------
   # recordedEmotion | c285854004 | Recorded Emotion
 
   # from plots-for-dashboard.html
@@ -368,6 +375,23 @@ loadMoodData <- function(startTimestamp, endTimestamp) {
   mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
   
   return(mood_renamed)
+}
+
+sampleMoodData <- function() {
+  # Loads Mood Data from a txt file located in sample-data/
+  # 
+  # Returns:
+  #   Compatible Data Table with what is returned from Observation API
+  
+  mood = read_delim("sample-data/mood.txt", delim = " ")  
+  
+  # lower case the column names
+  colnames(mood) = tolower(make.names(colnames(mood)))
+  
+  # Column Names as loaded from mood.txt: 
+  #   "c285854004" "datem" "date.month" "time" "weekday"
+  
+  return(mood)
 }
 
 summariseMood <- function(mood) {

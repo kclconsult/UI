@@ -204,10 +204,12 @@
   		    <hr />
   		    <p><strong>9.</strong> Thoughts that you would be better off dead, or of hurting yourself</p>
   		    {{ phq9Q9Score }}
-
-  		    <hr />
-  		    <p><strong>10.</strong> If you checked off <em>any problems</em>, how <em>difficult</em> have these problems made it for you to do your work, take care of things at home, or get along with other people?</p>
-  		    {{ phq9Q10Score }}
+          
+          <div id="phq9Q10"> <!-- Q10 is conditional -->
+  		      <hr />
+  		      <p><strong>10.</strong> If you checked off <em>any problems</em>, how <em>difficult</em> have these problems made it for you to do your work, take care of things at home, or get along with other people?</p>
+  		      {{ phq9Q10Score }}
+          </div>
 
   		    <hr />
     		  {{ phq9SubmitButton }}
