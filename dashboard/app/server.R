@@ -35,30 +35,31 @@ function(input, output, session) {
     # start: 2017-01-01 00:00:00
     # end:   2017-06-19 00:00:00
     datasetBP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
-                                      endTimestamp   = "2017-02-01T00:00:00Z", sample=TRUE)
-    
+                                      endTimestamp   = "2017-02-01T00:00:00Z", 
+                                      sample = FALSE)
     # - Heart Rate
     #
     # Simulation HR available:
     # start: 2019-04-04 23:19:39
     # end: 2019-04-09 13:56:13
     datasetHR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
-                                  endTimestamp   = "2020-04-10T00:00:00Z", sample=TRUE)
-
+                                  endTimestamp   = "2020-04-10T00:00:00Z", 
+                                  sample = FALSE)
     # - ECG
     # 
     # Only one date entry: 2019-08-06 17:27:25
     #
     datasetECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
-                             endTimestamp   = "2019-08-07T00:00:00Z", sample=TRUE)
-    
+                             endTimestamp   = "2019-08-07T00:00:00Z", 
+                             sample = TRUE)
     # - Mood
     #
     # Live Moods
     #
     datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
-                               endTimestamp   = "2020-02-28T00:00:00Z", sample=TRUE)
-    
+                               endTimestamp   = "2020-02-28T00:00:00Z", 
+                               sample = FALSE)
+
     #
     # Navbar Tab Changing Events for logging
     # 
