@@ -57,7 +57,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # 
 
   # from plots-for-dashboard.html
-  bp_renamed = rename(bp, c("c8867h4" = "hr", "c271649006" = "sbp", "c271650006"="dbp"))
+  bp_renamed = plyr::rename(bp, c("c8867h4" = "hr", "c271649006" = "sbp", "c271650006"="dbp"))
 
   # Create timestamp string for plotting
   bp_renamed$timestamp = paste(bp_renamed$datem, bp_renamed$time)
@@ -201,7 +201,7 @@ loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # 
 
   # from plots-for-dashboard.html
-  hr_renamed = rename(hr, c("c8867h4" = "hr", "c40443h4" = "hr.resting", "c82290h8" = "activity.freq"))
+  hr_renamed = plyr::rename(hr, c("c8867h4" = "hr", "c40443h4" = "hr.resting", "c82290h8" = "activity.freq"))
 
   # Create timestamp string for plotting
   hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time)
@@ -276,7 +276,7 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     # New Name      | Old Name | Code    | Details
     # --------------+----------+---------+-------------------------------
     # ecg.raw       | c131389  | ???      | ???
-    ecg = rename(ecg_raw, c("c131389" = "ecg.raw"))
+    ecg = plyr::rename(ecg_raw, c("c131389" = "ecg.raw"))
 
     # Create timestamp string for plotting
     ecg$timestamp = paste(ecg$datem, ecg$time)
@@ -369,7 +369,7 @@ loadMoodData <- function(startTimestamp, endTimestamp, sample) {
   # recordedEmotion | c285854004 | Recorded Emotion
 
   # from plots-for-dashboard.html
-  mood_renamed = rename(mood, c("c285854004" = "recordedEmotion"))
+  mood_renamed = plyr::rename(mood, c("c285854004" = "recordedEmotion"))
   
   # Create timestamp string column
   mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")

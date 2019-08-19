@@ -5,13 +5,6 @@
 ### Essential
 - [ ] - Test on Tablet, Sizing and Interface with the Chat
 ---
-- [X] PHQ9 Form
-- [X] QuestionnaireResponses API Service Call
-- [X] PHQ2/9 Logic with Debug Trigger
-- [X] PHQ9 Q10 logic
-- [X] PHQ9 submit button logic
-- [X] Clear PHQ9 form upon submit
----
 - [ ] Notes (ClinicalImpressions) App
 - [ ] ClinicalImpressions List Retrieval from MP API
 ---
@@ -44,6 +37,12 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] PHQ9 Form
+- [X] QuestionnaireResponses API Service Call
+- [X] PHQ2/9 Logic with Debug Trigger
+- [X] PHQ9 Q10 logic
+- [X] PHQ9 submit button logic
+- [X] Clear PHQ9 form upon submit
 - [X] Recommendations List HTML (Use Alerts with Icons or Media Listing)
 - [X] Risk People Plots Static - Selector Based on Intervention
 - [X] Implement data.R module - move loadDataX and statsX into...
