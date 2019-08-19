@@ -1,22 +1,35 @@
+/*
+ * CONSULT
+ *
+ * A note on sizing - the tablet's browser size is:
+ * - 2/3 screenwidth: 841 px by 696 px
+ */
+
+
 /* Mast Logos and Stuffs */
 #consult-logo {
-  margin-top: 50px;
-	height: 110px;
+  margin-top: 10px;
+	height: 50px;
 }
 
 #versionString {
   position: relative;
-  top: 114px;
-  left: 10px;
+  top: 25px;
+  left: 5px;
   color: #ed6d41;
   font-weight: 500;
 }
 
 #kcl-logo {
-  margin-top: 20px;
-	margin-bottom: 20px;
-	margin-right: 15px;
-	height: 120px;
+  margin-top: 0px;
+	margin-bottom: 3px;
+	margin-right: -14px;
+	height: 56px;
+}
+
+/* Less of a marging between navbar and content */
+.navbar {
+  margin-bottom: 14px;
 }
 
 /* Navbar Cusomisations */

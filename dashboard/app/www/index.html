@@ -43,7 +43,6 @@
   <body>
     <!-- Page Header Mast -->
 	  <nav class="navbar navbar-default navbar-static-top">
-
   		<!-- Mast -->
   		 <div class="container-fluid">
     			<img id="consult-logo" src="images/consult-logo.png"  class="img-responsive navbar-left" alt="Consult Project">
@@ -81,7 +80,7 @@
   					<li>{{ tabFeedbackLink }}</li>
         	</ul>
       	</div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+    </div><!-- /.container -->
 	</nav>
 
   <!-- Page Content Container  -->
@@ -91,16 +90,16 @@
   <div class="row tab-content">
 
 		<!-- Tab: Summary -->
-    <div class="col-md-12 tab-pane active" id="summary">
+    <div class="col-sm-12 tab-pane active" id="summary">
 
       <!-- Grid of Summary Boxes -->
 			<div class="row">
-			  <div class="col-xs-6 col-md-6">{{ summaryBP }} </div>
-				<div class="col-xs-6 col-md-6">{{ summaryHR }}</div>
+			  <div class="col-sm-6">{{ summaryBP }} </div>
+				<div class="col-sm-6">{{ summaryHR }}</div>
 			</div> 
 			<div class="row">
-        <div class="col-xs-6 col-md-6">{{ summaryECG }}</div>
-				<div class="col-xs-6 col-md-6">{{ summaryMood }}</div>
+        <div class="col-sm-6">{{ summaryECG }}</div>
+				<div class="col-sm-6">{{ summaryMood }}</div>
 			</div>
 			<!-- DEUBG Summary Boxes -->
 			<div class="debug well">
@@ -111,7 +110,7 @@
 		</div> <!-- /Tab: Summary -->
 
 		<!-- Tab: Heart Rate -->
-		<div class="col-md-12 tab-pane" id="hr">
+		<div class="col-sm-12 tab-pane" id="hr">
       <!-- Select Different Time Periods -->
       <ul class="nav nav-pills">
         <li class="active">{{ selectLastFourHours }}</li>
@@ -124,18 +123,18 @@
 		</div> 	<!-- /Tab: Heart Rate -->
 
 		<!-- Tab: Blood Pressure -->
-		<div class="col-md-12 tab-pane" id="bp">
+		<div class="col-sm-12 tab-pane" id="bp">
       <!-- Blood Pressure Widget -->
       {{ plotBP }}
 		</div> <!-- /Tab: Blood Pressure -->
 
 		<!-- Tab: ECG -->
-		<div class="col-md-12 tab-pane" id="ecg">
+		<div class="col-sm-12 tab-pane" id="ecg">
 			{{ plotECG }}
 		</div> <!-- /Tab: ECG -->
 
 		<!-- Tab: Risk -->
-		<div class="col-md-12 tab-pane" id="risk">
+		<div class="col-sm-12 tab-pane" id="risk">
 		  <h4>Predicted Risk of Stroke if you... </h4>
       {{ selectIntervention }}
       
@@ -144,13 +143,13 @@
 		</div> <!-- /Tab: Risk -->
 
 		<!-- Tab: Recommendations -->
-		<div class="col-md-12 tab-pane" id="recommendations">
+		<div class="col-sm-12 tab-pane" id="recommendations">
 			<h4>These health tips are based on your data and the latest health research.</h4>
       {{ listRecommendations }}
 		</div> <!-- /Tab: Recommendations -->
 
 		<!-- Tab: Mood -->
-		<div class="col-md-12 tab-pane" id="mood">
+		<div class="col-sm-12 tab-pane" id="mood">
 
       <!-- Tab panes -->
       <div class="tab-content">
@@ -220,37 +219,29 @@
     			<h4>Which of the below best represents your current MOOD?</h4>
     
           <!-- Grid of Emotion Links -->
-    			<div class="container-fluid">
-    				<div class="row">
-    					<div class="col-md-3">{{ emotionLinkAfraid  }}</div>
-    					<div class="col-md-3">{{ emotionLinkAngry  }}</div>
-    					<div class="col-md-3">{{ emotionLinkCalm }}</div>
-              <div class="col-md-3">{{ emotionLinkDelighted }}</div>
-    				</div>
-    			</div>
-          <div class="container-fluid">
-    				<div class="row">
-    					<div class="col-md-3">{{ emotionLinkExcited  }}</div>
-    					<div class="col-md-3">{{ emotionLinkFrustrated }}</div>
-    					<div class="col-md-3">{{ emotionLinkGlad }}</div>
-              <div class="col-md-3">{{ emotionLinkGloomy }}</div>
-    				</div>
-    			</div>
-          <div class="container-fluid">
-    				<div class="row">
-    					<div class="col-md-3">{{ emotionLinkHappy  }}</div>
-    					<div class="col-md-3">{{ emotionLinkMiserable  }}</div>
-    					<div class="col-md-3">{{ emotionLinkSad  }}</div>
-              <div class="col-md-3">{{ emotionLinkSatisfied }}</div>
-    				</div>
-    			</div>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-3">{{ emotionLinkSerene  }}</div>
-              <div class="col-md-3">{{ emotionLinkSleepy  }}</div>
-              <div class="col-md-3">{{ emotionLinkTense }}</div>
-              <div class="col-md-3">{{ emotionLinkTired }}</div>
-            </div>
+  				<div class="row">
+  					<div class="col-sm-3">{{ emotionLinkAfraid  }}</div>
+  					<div class="col-sm-3">{{ emotionLinkAngry  }}</div>
+  					<div class="col-sm-3">{{ emotionLinkCalm }}</div>
+            <div class="col-sm-3">{{ emotionLinkDelighted }}</div>
+  				</div>
+  				<div class="row">
+  					<div class="col-sm-3">{{ emotionLinkExcited  }}</div>
+  					<div class="col-sm-3">{{ emotionLinkFrustrated }}</div>
+  					<div class="col-sm-3">{{ emotionLinkGlad }}</div>
+            <div class="col-sm-3">{{ emotionLinkGloomy }}</div>
+  				</div>
+  				<div class="row">
+  					<div class="col-sm-3">{{ emotionLinkHappy  }}</div>
+  					<div class="col-sm-3">{{ emotionLinkMiserable  }}</div>
+  					<div class="col-sm-3">{{ emotionLinkSad  }}</div>
+            <div class="col-sm-3">{{ emotionLinkSatisfied }}</div>
+  				</div>
+          <div class="row">
+            <div class="col-sm-3">{{ emotionLinkSerene  }}</div>
+            <div class="col-sm-3">{{ emotionLinkSleepy  }}</div>
+            <div class="col-sm-3">{{ emotionLinkTense }}</div>
+            <div class="col-sm-3">{{ emotionLinkTired }}</div>
           </div>
         </div> <!-- /Mood Grid -->
       </div> <!-- /Sub-Tab Content -->
@@ -267,7 +258,7 @@
 		</div> <!-- /Tab: Mood -->
 
 		<!-- Tab: Feedback (ClinicalImpressions) -->
-		<div class="col-md-12 tab-pane" id="feedback">
+		<div class="col-sm-12 tab-pane" id="feedback">
 			<h4>You can log feedback here at anytime!</h4>
 			{{ feedbackTextarea }}
 			{{ feedbackButton }}

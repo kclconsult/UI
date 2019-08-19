@@ -3,7 +3,16 @@
 # Backlog
 
 ### Essential
-- [ ] - Test on Tablet, Sizing and Interface with the Chat
+- [X] - Test on Tablet, Sizing and Interface with the Chat (2/3 sizing)
+- [ ] Tablet: Summary Boxes Viewing without Scrolling
+- [ ] Tablet: Shrink MAST
+- [ ] Tablet: Show who is signed in on Mast
+- [ ] Tablet: One Row of tabs, use "My Data" to show and mv HR, BP, and ECG into sub-tabs
+- [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tought
+- [ ] Tablet: Mood Form - Select-and-Submit (maybe in modal)
+- [ ] Tablet: Feedback, textarea smaller with visible SUBMIT button
+- [ ] Tablet: Feedback, side-bar for previous feedback
+- [ ] Tablet: Fatter 
 ---
 - [ ] Notes (ClinicalImpressions) App
 - [ ] ClinicalImpressions List Retrieval from MP API

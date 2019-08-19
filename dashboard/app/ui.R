@@ -34,6 +34,10 @@ freqChoices = c("Not at all" = "0",
                 "More than half the days" = "2",
                 "Nearly every day" = "3")
 
+# NOTE on Browser Size:
+# 2/3 width: 841 px width, 696 px height
+# 1/2 width: 642 px width
+
 htmlTemplate("www/index.html",
   # Version String
   versionString = textOutput("versionString", inline=TRUE),
@@ -167,8 +171,8 @@ htmlTemplate("www/index.html",
   # - textAreaInput: https://shiny.rstudio.com/reference/shiny/1.3.2/textAreaInput.html
   feedbackTextarea = textAreaInput("feedbackTextarea", 
                                    "Your Feedback",  # NULL - no label
-                                   width = "1000px",
-                                   height = "400px"),
+                                   width = "800px",
+                                   height = "300px"),
 
   # - actionButton: https://shiny.rstudio.com/reference/shiny/1.3.2/actionButton.html
   feedbackButton = actionButton("feedbackButton", "Submit Your Feedback")
