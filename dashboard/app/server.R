@@ -205,7 +205,19 @@ function(input, output, session) {
             "Given your medical history and that codeine helps with back pain then codeine is recommended."
           ]
         },{
-          "icon":"recommendation", 
+         "icon":"blood-pressure", 
+         "heading": "Another recommendation.",
+         "body": [
+            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
+          ]
+        },{
+         "icon":"mood", 
+         "heading": "Another recommendation.",
+         "body": [
+            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
+          ]
+        },{
+         "icon":"summary", 
          "heading": "Another recommendation.",
          "body": [
             "Some more details about the recommendation.  It is recommended that you follow this recommendation."

@@ -50,7 +50,7 @@ renderRecommendations <- function(r) {
     t[[i]] <- # append to the tag list, the following tags:
       tags$div(class="media",
         tags$div(class="media-left media-top", 
-          tags$img(class="media-object", src=paste("images/", r$icon[i], "-large.png", sep=""))
+          tags$img(class="media-object", src=paste("images/recommendations/", r$icon[i], ".png", sep=""))
         ),
         tags$div(class="media-body",
           tags$h5(class="media-heading", r$heading[i]),

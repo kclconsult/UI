@@ -47,15 +47,15 @@ htmlTemplate("www/index.html",
   # <a href="#summary" data-toggle="tab">Summary</a>
   tabSummaryLink = actionLink("tabSummaryLink", "Summary", href = "#summary", `data-toggle` = "tab"),
   # <a href="#hr" data-toggle="tab">Heart Rate</a>
-  tabHRLink = actionLink("tabHRLink", "Heart Rate", href = "#hr", `data-toggle` = "tab"),
+  tabHRLink = actionLink("tabHRLink", tags$div(tags$img(src="images/icons/heart-rate-icon.png"), tags$span("HR")), href = "#hr", `data-toggle` = "tab"),
   # <a href="#bp" data-toggle="tab">Blood Pressure</a>
-  tabBPLink = actionLink("tabBPLink", "Blood Pressure", href = "#bp", `data-toggle` = "tab"),
+  tabBPLink = actionLink("tabBPLink", tags$div(tags$img(src="images/icons/blood-pressure-icon.png"), tags$span("BP")), href = "#bp", `data-toggle` = "tab"),
   # <a href="#ecg" data-toggle="tab">ECG</a>
-  tabECGLink = actionLink("tabECGLink", "ECG", href = "#ecg", `data-toggle` = "tab"),
+  tabECGLink = actionLink("tabECGLink", tags$div(tags$img(src="images/icons/ecg-icon.png"), tags$span("ECG")), href = "#ecg", `data-toggle` = "tab"),
   # <a href="#risk" data-toggle="tab">Risk</a>
   tabRiskLink = actionLink("tabRiskLink", "Risk", href = "#risk", `data-toggle` = "tab"),
   # <a href="#recommendations" data-toggle="tab">Recommendations</a>
-  tabRecommendationsLink = actionLink("tabRecommendationsLink", "Recommendations", href = "#recommendations", `data-toggle` = "tab"),
+  tabRecommendationsLink = actionLink("tabRecommendationsLink", "Tips", href = "#recommendations", `data-toggle` = "tab"),
   # <a href="#mood" data-toggle="tab">Mood</a>
   tabMoodLink = actionLink("tabMoodLink", "Mood", href = "#mood", `data-toggle` = "tab"),
   # <a href="#feedback" data-toggle="tab">Feedback</a>
