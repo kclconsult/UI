@@ -3,10 +3,11 @@
 # Backlog
 
 ### Essential
-- [ ] Remove "Summary" -> Summary, Home Icon.
-- [ ] Tabs all same widths, or Use the entire length of the top Bar
+- [X] Remove "Summary" -> Summary, Home Icon.
+- [X] Tabs all same widths, or Use the entire length of the top Bar
 - [ ] Summary boxes sized to fit within the screen.
 - [ ] Summary Boxes are Buttons to the Data Screens as well.
+- [ ] EPSRC Logo
 ---
 - [ ] Tablet: Feedback, side-bar for previous feedback
 - [ ] Notes (ClinicalImpressions) App

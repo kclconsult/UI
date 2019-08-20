@@ -28,10 +28,20 @@
   font-weight: 500;
 }
 
+#epsrc-logo {
+  margin-top: 0px;
+	margin-bottom: 3px;
+	margin-right: 7px;
+	height: 56px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: white;
+}
+
 #kcl-logo {
   margin-top: 0px;
 	margin-bottom: 3px;
-	margin-right: -14px;
+	margin-right: 8px;
 	height: 56px;
 }
 
@@ -72,7 +82,7 @@
   border-right-style: solid;
   border-right-width: 5px;
   border-right-color: #f8f8f8;
-  min-width: 88px;
+  min-width: 92px;
 }
 
 /* give the Debug Panel some space */
