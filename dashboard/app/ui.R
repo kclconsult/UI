@@ -171,8 +171,8 @@ htmlTemplate("www/index.html",
   # - textAreaInput: https://shiny.rstudio.com/reference/shiny/1.3.2/textAreaInput.html
   feedbackTextarea = textAreaInput("feedbackTextarea", 
                                    "Your Feedback",  # NULL - no label
-                                   width = "800px",
-                                   height = "300px"),
+                                   width = "450px",
+                                   height = "450px"),
 
   # - actionButton: https://shiny.rstudio.com/reference/shiny/1.3.2/actionButton.html
   feedbackButton = actionButton("feedbackButton", "Submit Your Feedback")

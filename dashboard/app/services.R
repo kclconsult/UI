@@ -251,6 +251,50 @@ sendMoodObservation <- function(recordedEmotion) {
 # Clinical Impression Data
 #
 
+getClinicalImpression <- function(startTimestamp, endTimestamp) {
+  # Gets Clinical Impressions for a patient
+  # 
+  # GET Request:  getClinicalImpression(startTimestamp="2019-08-13T16:26:26Z", endTimestamp="2019-08-15T16:26:26Z")
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2020-02-28T00:00:00Z).
+  #
+  # Returns:
+  #   Table of Clinical Impression Data from the Message Passer Service
+  
+  # TODO - validate input parameters
+  # patientID is valid
+  # startTimestamp < endTimestamp
+  
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "ClinicalImpression", 
+                      USERNAME_PATIENT_ID, 
+                      startTimestamp,
+                      endTimestamp,
+                      sep = "/")
+  # DEBUG url
+  print(paste("getClinicalImpression:", requestUrl))
+  
+  # Validate URL with Certificate Authority
+  # if(!url.exists(requestUrl, cainfo=CA_BUNDLE)) { # invalid
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Read.table handles HTTP GET request
+  data <- read.table(requestUrl, header = TRUE)
+  
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  return(data)
+}
+
 sendClinicalImpression <- function(note) {
   # Add new ClinicalImpression (e.g. GP notes).
   # 

@@ -259,9 +259,15 @@
 
 		<!-- Tab: Feedback (ClinicalImpressions) -->
 		<div class="col-sm-12 tab-pane" id="feedback">
-			<h4>You can log feedback here at anytime!</h4>
-			{{ feedbackTextarea }}
-			{{ feedbackButton }}
+		  <div class="row">
+        <div class="col-sm-5">
+          {{ feedbackSidebar  }}
+        </div>
+        <div class="col-sm-7">
+      	  {{ feedbackTextarea }}
+      		{{ feedbackButton }}
+        </div>
+		  </div>	
 		</div> <!-- /Tab: Feedback -->
 	</div> <!-- /Tab panes -->
 	</div> <!-- /Page Content Container  -->

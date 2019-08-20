@@ -3,13 +3,15 @@
 # Backlog
 
 ### Essential
+- [ ] Remove "Summary" -> Summary, Home Icon.
+- [ ] Tabs all same widths, or Use the entire length of the top Bar
+- [ ] Summary boxes sized to fit within the screen.
+- [ ] Summary Boxes are Buttons to the Data Screens as well.
+---
 - [X] - Test on Tablet, Sizing and Interface with the Chat (2/3 sizing)
 - [X] Tablet: Summary Boxes Viewing without Scrolling
 - [X] Tablet: Shrink MAST
-- [ ] Tablet: Show who is signed in on Mast
 - [X] Tablet: One Row of tabs
-- [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
-- [ ] Tablet: Mood Form - Select-and-Submit (maybe in modal)
 - [X] Tablet: Feedback, textarea smaller with visible SUBMIT button
 ---
 - [ ] Tablet: Feedback, side-bar for previous feedback
@@ -34,9 +36,11 @@
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections
 ---
-- [ ] Mood Grid - feedback when selecting the Mood
+- [ ] Tablet: Mood Form - Select-and-Submit (maybe in modal)
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
 ## Nice to have
+- [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
+- [ ] Tablet: Show who is signed in on Mast
 - [ ] Logging service captures poke stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)
