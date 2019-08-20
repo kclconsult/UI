@@ -97,6 +97,8 @@ renderFeedbackPanel <- function(txt, timestamp) {
   #             <a href="#" class="list-group-item">Vestibulum at eros</a>
   #               </div>
   
+  # render the list of tags  
+  renderUI({ })
 }
 
 renderFeedbackSidebar <- function(feedback) {
@@ -121,5 +123,7 @@ renderFeedbackSidebar <- function(feedback) {
   #           <a href="#" class="list-group-item">Porta ac consectetur ac</a>
   #             <a href="#" class="list-group-item">Vestibulum at eros</a>
   #               </div>
-              
+
+  # render the list of tags  
+  renderUI({ })
 }

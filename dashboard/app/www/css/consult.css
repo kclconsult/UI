@@ -41,9 +41,13 @@
 }
 
 /* Navbar Cusomisations */
-#consult-main-navbar { /* id targets only the navbar buttons and not the masthead */
+/* id targets only the navbar buttons and not the masthead */
+/*
+#consult-main-navbar {
   background-color: #ed6d41;
 }
+*/
+
 
 /* Active Navbar Link */
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
@@ -54,13 +58,21 @@
 /* White Navbar Text Color */
 .navbar-default .navbar-nav > li > a {
   color: #fff;
+  background-color: #ed6d41;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  background-color: #ed6d41;
 }
 
 /* Individual Navbar Buttons Spacing */
+/* Size Navbar to some-what equal elements */
 .nav > li {
   border-right-style: solid;
   border-right-width: 5px;
-  border-right-color: #fff;
+  border-right-color: #f8f8f8;
+  min-width: 88px;
 }
 
 /* give the Debug Panel some space */

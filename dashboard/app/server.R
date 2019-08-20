@@ -384,6 +384,15 @@ function(input, output, session) {
     #
     # Tab: Feedback
     #
+
+    # - list the existing feedback as a Sidebar
+    output$feedbackSidebar = renderFeedbackSidebar({
+      # get a list of Clinical Impressions (notes)
+      #feedbacks = getClinicalImpression(startTimestamp="2019-08-13T16:26:26Z", 
+      #                                  endTimestamp="2019-08-15T16:26:26Z")
+      TRUE
+    })
+    
     observeEvent(input$feedbackTextarea, { 
       logEvent("Feedback", paste("Editing, feedback size: ", nchar(input$feedbackTextarea), "characters")) 
     })
@@ -398,4 +407,10 @@ function(input, output, session) {
         logEvent("Feedback", "Pressed Submit with empty textarea.")
       }
     })
+    
+    ####
+    # observeEvent(input$feedbackTextarea, { 
+    #   output$renderFeedbackPanel = renderFeedbackPanel({})
+    # })
+    
 }

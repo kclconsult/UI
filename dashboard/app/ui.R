@@ -45,7 +45,9 @@ htmlTemplate("www/index.html",
   # NavBar Tab Buttons (actionLinks allow for Shiny reactivity)
   # - 
   # <a href="#summary" data-toggle="tab">Summary</a>
-  tabSummaryLink = actionLink("tabSummaryLink", "Summary", href = "#summary", `data-toggle` = "tab"),
+  # Replace Summary with a Home Icon
+  # tabSummaryLink = actionLink("tabSummaryLink", "Summary", href = "#summary", `data-toggle` = "tab"),
+  tabSummaryLink = actionLink("tabSummaryLink", tags$img(src="images/icons/home-icon.png"), href = "#summary", `data-toggle` = "tab"),
   # <a href="#hr" data-toggle="tab">Heart Rate</a>
   tabHRLink = actionLink("tabHRLink", tags$div(tags$img(src="images/icons/heart-rate-icon.png"), tags$span("HR")), href = "#hr", `data-toggle` = "tab"),
   # <a href="#bp" data-toggle="tab">Blood Pressure</a>
@@ -175,5 +177,9 @@ htmlTemplate("www/index.html",
                                    height = "450px"),
 
   # - actionButton: https://shiny.rstudio.com/reference/shiny/1.3.2/actionButton.html
-  feedbackButton = actionButton("feedbackButton", "Submit Your Feedback")
+  feedbackButton = actionButton("feedbackButton", "Submit Your Feedback"),
+  
+  # for rendering the list of notes and the existing feedbackPanel
+  feedbackSidebar = htmlOutput("feedbackSidebar"),
+  feedbackPanel = htmlOutput("feedbackPanel")
 )

@@ -8,12 +8,6 @@
 - [ ] Summary boxes sized to fit within the screen.
 - [ ] Summary Boxes are Buttons to the Data Screens as well.
 ---
-- [X] - Test on Tablet, Sizing and Interface with the Chat (2/3 sizing)
-- [X] Tablet: Summary Boxes Viewing without Scrolling
-- [X] Tablet: Shrink MAST
-- [X] Tablet: One Row of tabs
-- [X] Tablet: Feedback, textarea smaller with visible SUBMIT button
----
 - [ ] Tablet: Feedback, side-bar for previous feedback
 - [ ] Notes (ClinicalImpressions) App
 - [ ] ClinicalImpressions List Retrieval from MP API
@@ -38,6 +32,8 @@
 ---
 - [ ] Tablet: Mood Form - Select-and-Submit (maybe in modal)
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
+---
+- [ ] Error Handling and Notification when Message Passer is un-reachable
 ## Nice to have
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
@@ -49,6 +45,11 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Test on Tablet, Sizing and Interface with the Chat (2/3 sizing)
+- [X] Tablet: Summary Boxes Viewing without Scrolling
+- [X] Tablet: Shrink MAST
+- [X] Tablet: One Row of tabs
+- [X] Tablet: Feedback, textarea smaller with visible SUBMIT button
 - [X] PHQ9 Form
 - [X] QuestionnaireResponses API Service Call
 - [X] PHQ2/9 Logic with Debug Trigger
