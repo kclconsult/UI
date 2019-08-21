@@ -342,6 +342,10 @@ function(input, output, session) {
     observeEvent(input$phq9SubmitButton,   { 
       logEvent("PHQ9", paste("Submitted Form"))
       sendQuestionnaireResponses(
+        screening = list(
+          "yesNoLittleInterest" = "Yes", # PHQ2 Yes/No Screening Q1
+          "yesNoFeelingDown" = "Yes"     # PHQ2 Yes/No Screening Q1
+        ),
         scores = list(
           "LittleInterest"       = input$phq9Q1Score, # PHQ9 score for LittleInterest (Q1)
           "FeelingDown"          = input$phq9Q2Score, # PHQ9 score for FeelingDown (Q2)

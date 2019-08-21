@@ -94,7 +94,7 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
 # QuestionnaireResponses POST
 #
 
-sendQuestionnaireResponses <- function(scores, difficulty) {
+sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) {
   # Sends the Questionnaire Response form answers.
   #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
@@ -104,6 +104,15 @@ sendQuestionnaireResponses <- function(scores, difficulty) {
                       "QuestionnaireResponse", 
                       "add",
                       sep = "/")
+
+  ######
+  # TODO - switch depending on whether scores=NULL and difficulty = NULL
+  
+  # Add the Screening Responses
+  
+  # (Optional) Add the scores
+  
+  # (Optional) Add the difficulty 
   
   # Validate Question Scores
   questionScores = c(

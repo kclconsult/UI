@@ -42,14 +42,16 @@ HTMLWidgets.widget({
       .attr("height", "25%")
       .attr("fill", alert_color.red);
     // .. foreground is doublered
-    var a = 4.04; //4.419417382415922;
+    // var a = 4.04; // square-pattern (400x400)
+    var a = 3.31; // rect (400x286)
     drp.selectAll("rect.doublered")
       .data([-5*a, -a, 3*a])
       .enter().append("rect")
         .attr("class", "doublered")
         .attr("x", function(d) { return d + "%"; })
         .attr("y", "0")
-        .attr("transform", "rotate(-45)")
+        // .attr("transform", "rotate(-45)") // square
+        .attr("transform", "rotate(-55)") // rect -54.435232006991
         .attr("width", (2*a)+"%")
         .attr("height", "50%")
         .attr("fill", alert_color.doublered);
@@ -102,9 +104,9 @@ HTMLWidgets.widget({
             .enter().append("text")
               .attr("class", "summary-box-title")
               .attr("x", "30")
-              .attr("y", "40")
+              .attr("y", "30")
               .style("fill", "rgb(255,255,255)")
-              .style("font-size", "40px")
+              .style("font-size", "36px")
               .style("font-weight", "600")
               .selectAll("tspan")
                 .data(function(title) { return title.split(" "); })
@@ -121,9 +123,9 @@ HTMLWidgets.widget({
         status_text.enter().append("text")
               .attr("class", "summary-box-status")
               .attr("x", "30")
-              .attr("y", "210")
+              .attr("y", "159")
               .style("fill", "rgb(255,255,255)")
-              .style("font-size", "40px")
+              .style("font-size", "30px")
               .style("font-weight", "500")
               .text(function(d) { return d; });
 
@@ -135,9 +137,9 @@ HTMLWidgets.widget({
         timestamp_text.enter().append("text")
               .attr("class", "summary-box-timestamp")
               .attr("x", "30")
-              .attr("y", "256")
+              .attr("y", "230")
               .style("fill", "rgb(255,255,255)")
-              .style("font-size", "24px")
+              .style("font-size", "20px")
               .style("font-weight", "500")
               .text(function(d) { return d; });
 
@@ -149,9 +151,9 @@ HTMLWidgets.widget({
         source_text.enter().append("text")
               .attr("class", "summary-box-source")
               .attr("x", "30")
-              .attr("y", "285")
+              .attr("y", "255")
               .style("fill", "rgb(255,255,255)")
-              .style("font-size", "24px")
+              .style("font-size", "20px")
               .style("font-weight", "500")
               .text(function(d) { return "Source: " + d; });
 
@@ -162,10 +164,10 @@ HTMLWidgets.widget({
         // enter / create
         summary_image.enter().append("image")
               .attr("class", "summary-image")
-              .attr("x", "220")
+              .attr("x", "255")
               .attr("y", "15")
-              .attr("height", "150px")
-              .attr("width", "150px")
+              .attr("height", "125px")
+              .attr("width", "125px")
               .attr("xlink:href", function(d) { return d; });
 
       },

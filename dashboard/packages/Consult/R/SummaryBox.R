@@ -46,9 +46,7 @@ SummaryBox <- function(title="", image="images/summary/default.png", alert="defa
 #' @name SummaryBox-shiny
 #'
 #' @export
-SummaryBoxOutput <- function(outputId,
-                             #width = '344px', height = '344px'){
-                             width = '400px', height = '320px') {
+SummaryBoxOutput <- function(outputId, width = '400px', height = '286px') {
   htmlwidgets::shinyWidgetOutput(outputId, 'SummaryBox', width, height, package = 'Consult')
 }
 

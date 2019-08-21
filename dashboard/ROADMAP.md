@@ -4,10 +4,10 @@
 
 ### Essential
 - [X] Remove "Summary" -> Summary, Home Icon.
-- [X] Tabs all same widths, or Use the entire length of the top Bar
-- [ ] Summary boxes sized to fit within the screen.
+- [X] Tabs all same widths, or Use the entire length of the top Bar.
+- [X] Summary boxes sized to fit within the screen height.
 - [ ] Summary Boxes are Buttons to the Data Screens as well.
-- [ ] EPSRC Logo
+- [X] EPSRC Logo
 ---
 - [ ] Tablet: Feedback, side-bar for previous feedback
 - [ ] Notes (ClinicalImpressions) App
@@ -25,7 +25,7 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] Time Logic for QuestionnaireResponses form (rm sub-nav)
+- [B] Time Logic for QuestionnaireResponses form (rm sub-nav)
 ---
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
