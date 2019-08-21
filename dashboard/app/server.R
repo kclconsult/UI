@@ -101,7 +101,13 @@ function(input, output, session) {
                  timestamp = summary$timestamp,
                  source = "Home")
     })
-
+    
+    observeEvent(input$summaryBP, {
+      logEvent("SummaryBoxClicked", "Blood Pressure")
+      # change Tab
+      runjs("$('#tabBPLink').tab('show');")
+    })
+    
     # - Heart Rate Summary
     output$summaryHR = renderSummaryBox({
       # Summarise the HR dataset
@@ -116,6 +122,12 @@ function(input, output, session) {
                  source = "Home")
     })
     
+    observeEvent(input$summaryHR, {
+      logEvent("SummaryBoxClicked", "Heart Rate")
+      # change Tab
+      runjs("$('#tabHRLink').tab('show');")
+    })
+    
     # - ECG Summary
     output$summaryECG = renderSummaryBox({
       # Summarise the ECG dataset
@@ -128,6 +140,12 @@ function(input, output, session) {
                  status = summary$status,
                  timestamp = summary$timestamp,
                  source = "Clinic")
+    })
+
+    observeEvent(input$summaryECG, {
+      logEvent("SummaryBoxClicked", "ECG")
+      # change Tab
+      runjs("$('#tabECGLink').tab('show');")
     })
     
     # - Mood Summary
@@ -146,6 +164,12 @@ function(input, output, session) {
                  status = summary$status,
                  timestamp = summary$timestamp,
                  source = "Home")
+    })
+    
+    observeEvent(input$summaryMood, {
+      logEvent("SummaryBoxClicked", "Mood")
+      # change Tab
+      runjs("$('#tabMoodLink').tab('show');")
     })
     
     #

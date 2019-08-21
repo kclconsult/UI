@@ -2,12 +2,8 @@
 
 # Backlog
 
-### Essential
-- [X] Remove "Summary" -> Summary, Home Icon.
-- [X] Tabs all same widths, or Use the entire length of the top Bar.
-- [X] Summary boxes sized to fit within the screen height.
-- [ ] Summary Boxes are Buttons to the Data Screens as well.
-- [X] EPSRC Logo
+## Essential
+- [X] Summary Boxes are Buttons to the Data Screens as well.
 ---
 - [ ] Tablet: Feedback, side-bar for previous feedback
 - [ ] Notes (ClinicalImpressions) App
@@ -15,7 +11,6 @@
 ---
 - [ ] Update People Plots from Isabel
 - [ ] Risk Pull-down menu convert to Buttons
-- [ ] Update SummaryBoxes from Panos
 ---
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines
@@ -25,7 +20,8 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [B] Time Logic for QuestionnaireResponses form (rm sub-nav)
+- [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
+- [ ] PHQ Screening Service Request and Logic
 ---
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
@@ -35,6 +31,7 @@
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable
+
 ## Nice to have
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
@@ -46,6 +43,11 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Update SummaryBoxes from Panos
+- [X] EPSRC Logo
+- [X] Remove "Summary" -> Summary, Home Icon.
+- [X] Tabs all same widths, or Use the entire length of the top Bar.
+- [X] Summary boxes sized to fit within the screen height.
 - [X] Test on Tablet, Sizing and Interface with the Chat (2/3 sizing)
 - [X] Tablet: Summary Boxes Viewing without Scrolling
 - [X] Tablet: Shrink MAST

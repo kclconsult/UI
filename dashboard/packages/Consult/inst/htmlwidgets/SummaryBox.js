@@ -56,6 +56,13 @@ HTMLWidgets.widget({
         .attr("height", "50%")
         .attr("fill", alert_color.doublered);
 
+    // click handler to emit an event for "input${el.id}"
+    // https://shiny.rstudio.com/articles/communicating-with-js.html
+    $(el).click(function() {
+      console.log("SummaryBox " + el.id + " clicked");
+      Shiny.setInputValue(el.id, "1", {priority: "event"});
+    });
+
     return {
 
       renderValue: function(x) {
