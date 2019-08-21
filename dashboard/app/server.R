@@ -86,11 +86,17 @@ function(input, output, session) {
         print(paste("DEBUG BP Alert: ", input$debugSelectBPAlertColor))
         summary$alert = input$debugSelectBPAlertColor
       }
+      # Override alert text
+      if(input$debugSelectBPAlertText != "") {
+        print(paste("DEBUG BP Alert Text: ", input$debugSelectBPAlertText))
+        summary$alert_text = input$debugSelectBPAlertText
+      }
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Blood Pressure",
                  image = "images/summary/bloodpressure.png",
                  alert = summary$alert,
+                 alert_text = summary$alert_text,
                  status = summary$status,
                  timestamp = summary$timestamp,
                  source = "Home")

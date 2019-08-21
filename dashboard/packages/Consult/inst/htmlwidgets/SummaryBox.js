@@ -65,6 +65,7 @@ HTMLWidgets.widget({
         // x.title = title,
         // x.image = image,
         // x.alert = alert,
+        // x.alert_text = alert_text,
         // x.status = status,
         // x.timestamp = timestamp,
         // x.source = source
@@ -104,7 +105,7 @@ HTMLWidgets.widget({
             .enter().append("text")
               .attr("class", "summary-box-title")
               .attr("x", "30")
-              .attr("y", "30")
+              .attr("y", "40")
               .style("fill", "rgb(255,255,255)")
               .style("font-size", "36px")
               .style("font-weight", "600")
@@ -123,10 +124,26 @@ HTMLWidgets.widget({
         status_text.enter().append("text")
               .attr("class", "summary-box-status")
               .attr("x", "30")
-              .attr("y", "159")
+              .attr("y", "189")
               .style("fill", "rgb(255,255,255)")
               .style("font-size", "30px")
               .style("font-weight", "500")
+              .text(function(d) { return d; });
+
+       // Alert Text
+        var alert_text = svg.selectAll("text.summary-box-alert-text")
+                             .data([x.alert_text])
+                             .text(function(d) { return d; });
+        // enter / create
+        alert_text.enter().append("text")
+              .attr("class", "summary-box-alert-text")
+              .attr("x", "370")
+              .attr("y", "40")
+              .attr("text-anchor", "end")
+              .style("fill", "rgb(255,255,255)")
+              .style("font-size", "24px")
+              .style("font-weight", "300")
+              .style("font-style", "italic")
               .text(function(d) { return d; });
 
         // Timestamp Text
@@ -164,8 +181,8 @@ HTMLWidgets.widget({
         // enter / create
         summary_image.enter().append("image")
               .attr("class", "summary-image")
-              .attr("x", "255")
-              .attr("y", "15")
+              .attr("x", "240")
+              .attr("y", "45")
               .attr("height", "125px")
               .attr("width", "125px")
               .attr("xlink:href", function(d) { return d; });

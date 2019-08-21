@@ -77,6 +77,7 @@ htmlTemplate("www/index.html",
 
   # --- DEBUG Summary Boxes
   debugSelectBPAlertColor = selectInput("debugSelectBPAlertColor", "Select BP Alert", c("", "green", "orange", "red", "doublered")),
+  debugSelectBPAlertText = selectInput("debugSelectBPAlertText", "Select BP Text", c("", "Normal", "Slightly high", "A bit higher than normal")),
   debugSelectMoodImage = selectInput("debugSelectMoodImage", "Select Mood Image", c("good" = "images/summary/mood-good.png", 
                                                                                     "meh"  = "images/summary/mood-meh.png", 
                                                                                     "bad"  = "images/summary/mood-bad.png")),

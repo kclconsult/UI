@@ -153,11 +153,23 @@ summariseBloodPressure <- function(bp) {
   # alert flag
   flag = alertBloodPressure(sbp=sbp, dbp=dbp)
   
+  # alert text based on flag
+  alert_text = ""
+  if(flag$color == "green") {
+    alert_text = "Normal"
+  } else if(flag$color == "orange") {
+    alert_text = "Slightly high"
+  } else if((flag$color == "red") |
+            (flag$color == "doublered")) {
+    alert_text = "A bit higher than normal"
+  }
+  
   # Return summary values
   list(
-    alert     = flag$color,
-    status    = paste(sbp, "/", dbp,  "mmHG"),
-    timestamp = bp_desc$datem[1] # latest day is the timestamp
+    alert      = flag$color,
+    alert_text = alert_text, 
+    status     = paste(sbp, "/", dbp,  "mmHG"),
+    timestamp  = bp_desc$datem[1] # latest day is the timestamp
   )
 }
 
