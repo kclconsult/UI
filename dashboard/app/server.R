@@ -28,7 +28,7 @@ function(input, output, session) {
   
     # Flag whether to load datasets from /sample-data 
     # (otherwise load from API)
-    SAMPLE_DATA = FALSE
+    SAMPLE_DATA = TRUE
     
     # Store app data in a reactiveValue for reactive refreshing
     data = reactiveValues()
@@ -236,11 +236,11 @@ function(input, output, session) {
     
     output$plotECG = renderECGTimeline({
         # from packages/Consult/ECGTimeline
-        # NOTE: limiting to last 1000 data-points b/c of the high-resolution
-        ECGTimeline(dataset = tail(data$ECG, 1000))
+        # NOTE: limiting to last 125 data-points b/c of the high-resolution
+        ECGTimeline(dataset = tail(data$ECG, 125))
     })
 
-    #
+#####
     # Tab: Risk
     #
     

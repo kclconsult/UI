@@ -50,14 +50,6 @@
   margin-bottom: 14px;
 }
 
-/* Navbar Cusomisations */
-/* id targets only the navbar buttons and not the masthead */
-/*
-#consult-main-navbar {
-  background-color: #ed6d41;
-}
-*/
-
 
 /* Active Navbar Link */
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
@@ -85,12 +77,12 @@
   min-width: 92px;
 }
 
-/* give the Debug Panel some space */
+/* Give the Debug Panel some space */
 .debug.well {
   margin-top: 25px;
 }
 
-/* Fatter radio Buttons */
+/* PHQ2/9 Forms Fatter radio Buttons */
 div.radio {
   margin-bottom: 22px;
   margin-left: 26px;
@@ -101,4 +93,38 @@ div.radio span {
 input[type="radio"] {
   transform: scale(2.0);
   margin-top: 10px;
+}
+
+/* Style Plots */
+
+/* Global Font Size */
+.c3 text {
+  font-size: 15px;
+}
+
+/* Blood Pressure */
+#plotBP .c3-line-sbp {
+  stroke-width: 3px;
+}
+
+#plotBP .c3-line-dbp {
+  stroke-width: 3px;
+}
+
+/* Heart Rate */
+#plotHR .c3-line-hr {
+  stroke-width: 3px;
+}
+
+#plotHR .c3-line-resting {
+  stroke-width: 3px;
+}
+
+#plotHR .c3-line-activity {
+  stroke-width: 3px;
+}
+
+/* ECG */
+#plotECG .c3-line-ecg {
+  stroke-width: 3px;
 }

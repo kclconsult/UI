@@ -32,7 +32,7 @@ HTMLWidgets.widget({
                           x: "timestamp",
 
                           // use the remaining data for y-values
-                          value: ["ecg.raw"]
+                          value: ["ecg"]
                     },
 
                     // timestamp format %L microseconds
@@ -41,13 +41,15 @@ HTMLWidgets.widget({
 
                     // remap names
                     names: {
-                      "ecg.raw": "Raw ECG"
+                      "ecg": "Raw ECG"
                     },
 
                     // do not plot posixtime
                     hide: ["posixtime"]
                 },
-
+                point: { // hide points
+                      show: false
+                },
                 axis: {
                     x: {
                       //  x axis as timeseries

@@ -47,7 +47,9 @@ HTMLWidgets.widget({
                     hide: ["hr"]
 
                 },
-
+                point: { // hide points
+                      show: false
+                },
                 axis: {
                     x: {
                       //  x axis as timeseries

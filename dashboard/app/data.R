@@ -57,7 +57,9 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # 
 
   # from plots-for-dashboard.html
-  bp_renamed = plyr::rename(bp, c("c8867h4" = "hr", "c271649006" = "sbp", "c271650006"="dbp"))
+  bp_renamed = plyr::rename(bp, c("c8867h4" = "hr", 
+                                  "c271649006" = "sbp", 
+                                  "c271650006"="dbp"))
 
   # Create timestamp string for plotting
   bp_renamed$timestamp = paste(bp_renamed$datem, bp_renamed$time)
@@ -208,12 +210,14 @@ loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # New Name      | Old Name | Code    | Details
   # --------------+----------+---------+-------------------------------
   # hr            | c8867h4  | 8867-4  | Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  # hr.resting    | c40443h4 | ???     | ??? 
-  # activity.freq | c82290h8 | 82290-8 | Activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
+  # resting       | c40443h4 | ???     | ??? 
+  # activity      | c82290h8 | 82290-8 | Activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
   # 
 
   # from plots-for-dashboard.html
-  hr_renamed = plyr::rename(hr, c("c8867h4" = "hr", "c40443h4" = "hr.resting", "c82290h8" = "activity.freq"))
+  hr_renamed = plyr::rename(hr, c("c8867h4" = "hr", 
+                                  "c40443h4" = "resting", 
+                                  "c82290h8" = "activity"))
 
   # Create timestamp string for plotting
   hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time)
@@ -246,8 +250,7 @@ summariseHeartRate <- function(hr) {
   
   # Summary is based on the most recent value.
   hr = hr_desc$hr[1]
-  hr.resting = hr_desc$hr.resting[1]
-  
+
   # Return summary values
   list(
     status    = paste(hr, " bpm"),
@@ -287,8 +290,8 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     #
     # New Name      | Old Name | Code    | Details
     # --------------+----------+---------+-------------------------------
-    # ecg.raw       | c131389  | ???      | ???
-    ecg = plyr::rename(ecg_raw, c("c131389" = "ecg.raw"))
+    # ecg           | c131389  | ???      | ???
+    ecg = plyr::rename(ecg_raw, c("c131389" = "ecg"))
 
     # Create timestamp string for plotting
     ecg$timestamp = paste(ecg$datem, ecg$time)
@@ -319,7 +322,7 @@ sampleECGData <- function() {
   ecg <- ecg[complete.cases(ecg),]
   
   # name the columns
-  colnames(ecg) = c("posixtime", "ecg.raw")
+  colnames(ecg) = c("posixtime", "ecg")
   
   # timestamp column from "posixtime" - concatenating milliseconds
   ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
@@ -334,7 +337,7 @@ summariseECG <- function(ecg) {
   ecg_desc = arrange(ecg, desc(timestamp))
   
   # Summary is based number of samples
-  n = length(ecg$ecg.raw)
+  n = length(ecg$ecg)
   
   # Return summary values
   list(

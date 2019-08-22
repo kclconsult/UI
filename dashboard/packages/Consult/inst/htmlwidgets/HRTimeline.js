@@ -32,7 +32,7 @@ HTMLWidgets.widget({
                           x: "timestamp",
 
                           // use the remaining data for y-values
-                          value: ["hr", "hr.resting"]
+                          value: ["hr", "resting"]
                     },
 
                     xFormat: "%Y-%m-%d %H:%M:%S", // timestamp format
@@ -40,11 +40,13 @@ HTMLWidgets.widget({
                     // remap names
                     names: {
                       "hr": "Heart Rate",
-                      "hr.resting": "Heart Rate (Resting)",
-                      "activity.freq": "Activity Frequency"
+                      "resting": "Heart Rate (Resting)",
+                      "activity": "Activity Frequency"
                     }
                 },
-
+                point: { // hide points
+                      show: false
+                },
                 axis: {
                     x: {
                       //  x axis as timeseries
