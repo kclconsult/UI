@@ -75,21 +75,15 @@ function(input, output, session) {
                                                  endTimestamp="2020-02-28T00:00:00Z",
                                                  sample = SAMPLE_DATA)
     
-    #
-    # Navbar Tab Changing Events for logging
-    # 
-    observeEvent(input$tabSummaryLink,         { logEvent("TabChanged", "Summary Tab Selected") })
-    observeEvent(input$tabHRLink,              { logEvent("TabChanged", "HR Tab Selected") })
-    observeEvent(input$tabBPLink,              { logEvent("TabChanged", "BP Tab Selected") })
-    observeEvent(input$tabECGLink,             { logEvent("TabChanged", "ECG Tab Selected") })
-    observeEvent(input$tabRiskLink,            { logEvent("TabChanged", "Risk Tab Selected") })
-    observeEvent(input$tabRecommendationsLink, { logEvent("TabChanged", "Recommendations Tab Selected") })
-    observeEvent(input$tabMoodLink,            { logEvent("TabChanged", "Mood Tab Selected") })
-    observeEvent(input$tabFeedbackLink,        { logEvent("TabChanged", "Feedback Tab Selected") })
-    
+#####  
     #
     # Tab: Summary Boxes
     #
+    
+    # Event: when Summary Tab is selected
+    observeEvent(input$tabSummaryLink, { 
+      logEvent("TabChanged", "Summary Tab Selected") 
+    })
     
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
@@ -187,10 +181,16 @@ function(input, output, session) {
       runjs("$('#tabMoodLink').tab('show');")
     })
     
+#####  
     #
     # Tab: Heart Rate (HR)
     #
 
+    # Event: when HR Tab is selected
+    observeEvent(input$tabHRLink, { 
+      logEvent("TabChanged", "HR Tab Selected") 
+    })
+    
     # Select different time-range events
     observeEvent(input$selectLastFourHours, {
       print("Summary: Last Four Hours")
@@ -209,17 +209,31 @@ function(input, output, session) {
         HRTimeline(dataset = data$HR)
     })
     
+#####
     #
     # Tab: Blood Pressure (BP)
     #
+  
+    # Event: when BP Tab is selected
+    observeEvent(input$tabBPLink, { 
+      logEvent("TabChanged", "BP Tab Selected") 
+    })
+  
     output$plotBP = renderBPTimeline({
         # from packages/Consult/BPTimeline
         BPTimeline(dataset = data$BP)
     })
-
+    
+#####
     #
     # Tab: ECG
     #
+    
+    # Event: when ECG tab is selected
+    observeEvent(input$tabECGLink, { 
+      logEvent("TabChanged", "ECG Tab Selected") 
+    })
+    
     output$plotECG = renderECGTimeline({
         # from packages/Consult/ECGTimeline
         # NOTE: limiting to last 1000 data-points b/c of the high-resolution
@@ -229,15 +243,28 @@ function(input, output, session) {
     #
     # Tab: Risk
     #
+    
+    # Event: when Risk tab is selected
+    observeEvent(input$tabRiskLink, { 
+      logEvent("TabChanged", "Risk Tab Selected") 
+    })
+    
     output$interventionRiskPlot = renderImage({
       print(paste("interventionRiskPlot =",  input$selectIntervention))
       # image path is from the selection drop-down
       list(src = normalizePath(paste0("./www/", input$selectIntervention)))
     }, deleteFile = FALSE)
   
+#####
     #
-    # Tab: Recommendations
+    # Tab: Tips (Recommendations)
     #
+    
+    # Event: when Recommendations Tab is selected
+    observeEvent(input$tabRecommendationsLink, { 
+      logEvent("TabChanged", "Recommendations Tab Selected") 
+    })
+    
     output$listRecommendations = renderRecommendations({
       # List of Recommendations are based on a Array of objects representation from JSON:
       recommendationsJSON <- 
@@ -273,9 +300,15 @@ function(input, output, session) {
       fromJSON(recommendationsJSON)
     })
     
+#####  
     #
     # Tab: Mood
     #
+    
+    # Event: when Mood Tab is selected
+    observeEvent(input$tabMoodLink, { 
+      logEvent("TabChanged", "Mood Tab Selected") 
+    })
     
     # -- Mood Grid Events
     observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
@@ -429,10 +462,16 @@ function(input, output, session) {
         runjs(paste("Shiny.onInputChange('",id,"', null);", sep='')) # clears the Shiny input$ reactiveVal
       }
     })
-    
+  
+#####
     #
     # Tab: Feedback (Clinical Impression)
     #
+    
+    # Event: when Feedback Tab is selected
+    observeEvent(input$tabFeedbackLink, { 
+      logEvent("TabChanged", "Feedback Tab Selected") 
+    })
 
     # Initialize Feedback Tab to be showing the "New Feedback" textarea:
     hideElement(id = "previousFeedback")
