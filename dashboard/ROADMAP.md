@@ -3,10 +3,7 @@
 # Backlog
 
 ## Essential
-- [X] Tablet: Feedback, side-bar for previous feedback
-- [X] Notes (ClinicalImpressions) App
-- [X] ClinicalImpressions List Retrieval from MP API
-- [ ] Fix ClinicalImpressions Refreshing upon submit
+- [X] Fix ClinicalImpressions Refreshing upon submit
 ---
 - [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
 - [ ] PHQ Screening Service Request and Logic
@@ -42,6 +39,9 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Tablet: Feedback, side-bar for previous feedback
+- [X] Notes (ClinicalImpressions) App
+- [X] ClinicalImpressions List Retrieval from MP API
 - [X] Summary Boxes are Buttons to the Data Screens as well.
 - [X] Update SummaryBoxes from Panos
 - [X] EPSRC Logo

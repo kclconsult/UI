@@ -26,7 +26,12 @@ function(input, output, session) {
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
+    # Flag whether to load datasets from /sample-data 
+    # (otherwise load from API)
     SAMPLE_DATA = FALSE
+    
+    # Store app data in a reactiveValue for reactive refreshing
+    data = reactiveValues()
     
     #
     # Load Datasets and generate statistics
@@ -36,7 +41,7 @@ function(input, output, session) {
     # Simulation BP only available:
     # start: 2017-01-01 00:00:00
     # end:   2017-06-19 00:00:00
-    datasetBP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
+    data$BP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
                                       endTimestamp   = "2017-02-01T00:00:00Z", 
                                       sample = SAMPLE_DATA)
     # - Heart Rate
@@ -44,21 +49,21 @@ function(input, output, session) {
     # Simulation HR available:
     # start: 2019-04-04 23:19:39
     # end: 2019-04-09 13:56:13
-    datasetHR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
+    data$HR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
                                   endTimestamp   = "2020-04-10T00:00:00Z", 
                                   sample = SAMPLE_DATA)
     # - ECG
     # 
     # Only one date entry: 2019-08-06 17:27:25
     #
-    datasetECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
+    data$ECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
                              endTimestamp   = "2019-08-07T00:00:00Z", 
                              sample = TRUE) # Note: until smaller resolution data, sample for now
     # - Mood
     #
     # Live Moods
     #
-    datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
+    data$Mood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
                                endTimestamp   = "2020-02-28T00:00:00Z", 
                                sample = SAMPLE_DATA)
 
@@ -66,7 +71,7 @@ function(input, output, session) {
     #
     # Should be all Clinical Impressions
     #
-    datasetFeedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
+    data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
                                                  endTimestamp="2020-02-28T00:00:00Z",
                                                  sample = SAMPLE_DATA)
     
@@ -89,7 +94,7 @@ function(input, output, session) {
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
       # Summarise the BP dataset
-      summary = summariseBloodPressure(datasetBP)
+      summary = summariseBloodPressure(data$BP)
       
       # Override alert color from the debug control
       if(input$debugSelectBPAlertColor != "") {
@@ -121,7 +126,7 @@ function(input, output, session) {
     # - Heart Rate Summary
     output$summaryHR = renderSummaryBox({
       # Summarise the HR dataset
-      summary = summariseHeartRate(datasetHR)
+      summary = summariseHeartRate(data$HR)
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
@@ -141,7 +146,7 @@ function(input, output, session) {
     # - ECG Summary
     output$summaryECG = renderSummaryBox({
       # Summarise the ECG dataset
-      summary = summariseECG(datasetECG)
+      summary = summariseECG(data$ECG)
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
@@ -161,7 +166,7 @@ function(input, output, session) {
     # - Mood Summary
     output$summaryMood = renderSummaryBox({
       # Summarise the Mood dataset
-      summary = summariseMood(datasetMood)
+      summary = summariseMood(data$Mood)
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
@@ -201,7 +206,7 @@ function(input, output, session) {
     
     output$plotHR = renderHRTimeline({
         # from packages/Consult/HRTimeline
-        HRTimeline(dataset = datasetHR)
+        HRTimeline(dataset = data$HR)
     })
     
     #
@@ -209,7 +214,7 @@ function(input, output, session) {
     #
     output$plotBP = renderBPTimeline({
         # from packages/Consult/BPTimeline
-        BPTimeline(dataset = datasetBP)
+        BPTimeline(dataset = data$BP)
     })
 
     #
@@ -218,7 +223,7 @@ function(input, output, session) {
     output$plotECG = renderECGTimeline({
         # from packages/Consult/ECGTimeline
         # NOTE: limiting to last 1000 data-points b/c of the high-resolution
-        ECGTimeline(dataset = tail(datasetECG, 1000))
+        ECGTimeline(dataset = tail(data$ECG, 1000))
     })
 
     #
@@ -434,14 +439,14 @@ function(input, output, session) {
     showElement(id = "newFeedback")
     
     observeEvent(input$previousFeedback, {
-      # Value of the "previousFeedback" input is the `timestamp` of the datasetFeedback
-      i = which(datasetFeedback$timestamp == input$previousFeedback) 
+      # Value of the "previousFeedback" input is the `timestamp` of the data$Feedback
+      i = which(data$Feedback$timestamp == input$previousFeedback) 
 
-      logEvent("Feedback", paste("Load Previous Feedback, datasetFeedback index:", i))
+      logEvent("Feedback", paste("Load Previous Feedback, data$Feedback index:", i))
 
       # Re-render the feedbackPanel
-      output$feedbackPanel = renderFeedbackPanel(datasetFeedback$note[i], 
-                                                 datasetFeedback$timestamp[i])
+      output$feedbackPanel = renderFeedbackPanel(data$Feedback$note[i], 
+                                                 data$Feedback$timestamp[i])
       
       # Make sure the Feedback Panel is showing
       showElement(id = "previousFeedback")
@@ -449,7 +454,9 @@ function(input, output, session) {
     })
     
     # Render the list of Previous Feedback as a Sidebar
-    output$previousFeedbackList = renderPreviousFeedbackList({ datasetFeedback })
+    observe({
+      output$previousFeedbackList = renderPreviousFeedbackList( data$Feedback )
+    })
 
     # Event: Patient wants to start to edit new Feedback
     observeEvent(input$newFeedbackButton,   { 
@@ -470,13 +477,10 @@ function(input, output, session) {
         logEvent("Feedback", paste("Submitting, final feedback size: ", nchar(input$feedbackTextarea), "characters"))
         if(sendClinicalImpression(input$feedbackTextarea)) { # successful submission of feedback
           updateTextAreaInput(session, "feedbackTextarea", value = "") # clear the feedbackTextArea
-          # Update the datasetFeedback
-          datasetFeedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
+          # Update the data$Feedback
+          data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
                                                        endTimestamp="2020-02-28T00:00:00Z",
                                                        sample = SAMPLE_DATA)
-          # ... and re-Render the list of Previous Feedback as a Sidebar 
-          # (TODO - use a reactiveValue on datasetFeedback)
-          output$previousFeedbackList = renderPreviousFeedbackList({ datasetFeedback })
         }
       } else {
         logEvent("Feedback", "Pressed Submit with empty textarea.")
