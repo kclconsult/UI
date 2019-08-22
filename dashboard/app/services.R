@@ -40,7 +40,7 @@ USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
 #
 
 #
-# Observation Data
+# Observation Data (GET)
 #
 
 getObservations <- function(code, startTimestamp, endTimestamp) {
@@ -91,6 +91,54 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
 }
 
 #
+# QuestionnaireResponses Data (GET)
+#
+
+getQuestionnaireResponses <- function( startTimestamp, endTimestamp ) {
+  # Gets QuestionnaireResponses for a patient for a particular time period
+  #
+  # GET Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-GetQuestionnaireResponses)
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of responses to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of responses to look for, as full timestamp (e.g. 2020-02-28T00:00:00Z).
+  #
+  # Returns:
+  #   Table of (raw) QuestionnaireReponses Data from the Message Passer Service
+
+  # TODO - validate input parameters
+  # patientID is valid
+  # startTimestamp < endTimestamp
+
+  # Build the Message Passer request URL
+  requestUrl <- paste( MP_URL,
+                       "QuestionnaireResponse",
+                       USERNAME_PATIENT_ID,
+                       startTimestamp,
+                       endTimestamp,
+                       sep = "/" )
+  # DEBUG url
+  print( paste( "getQuestionnaireResponses:", requestUrl ))
+
+  # Validate URL with Certificate Authority
+  # if ( ! url.exists( requestUrl, cainfo=CA_BUNDLE )) { # invalid
+
+  # Start measuring call
+  start_time = Sys.time()
+
+  # Read.table handles HTTP GET request
+  data <- read.table( requestUrl, header=TRUE )
+
+  # Stop measuring call
+  end_time = Sys.time()
+
+  # DEBUG timing
+  print( end_time - start_time )
+
+  return( data )
+}
+
+#
 # QuestionnaireResponses POST
 #
 
@@ -98,6 +146,13 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # Sends the Questionnaire Response form answers.
   #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
+  #
+  # sklar/21-aug-2019: modified to include PHQ2 scores (yes=1,no=0)
+  # added two fields: yesNoFeelingDown and yesNoLittleInterest
+  # note that when sending data here, we have to populate every field,
+  #  which is what the database on the backend expects. So use "-" for
+  #  scores in PHQ9 if they are not used.
+  #
 
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
@@ -116,15 +171,17 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   
   # Validate Question Scores
   questionScores = c(
-    "LittleInterest",       # PHQ9 score for LittleInterest (Q1)
-    "FeelingDown",          # PHQ9 score for FeelingDown (Q2)
-    "TroubleSleeping",      # PHQ9 score for TroubleSleeping (Q3)
-    "FeelingTired",         # PHQ9 score for FeelingTired (Q4)
-    "BadAppetite",          # PHQ9 score for BadAppetite (Q5)
-    "FeelingBadAboutSelf",  # PHQ9 score for FeelingBadAboutSelf (Q6)
-    "TroubleConcentrating", # PHQ9 score for TroubleConcentrating (Q7)
-    "MovingSpeaking", 	    # PHQ9 score for MovingSpeaking (Q8)
-    "ThoughtsHurting"       # PHQ9 score for ThoughtsHurting (Q9)
+    "yesNoFeelingDown",     # PHQ2 score for FeelingDown (PHQ2.Q1)
+    "yesNoLittleInterest",  # PHQ2 score for LittleInterest (PHQ2.Q2)
+    "LittleInterest",       # PHQ9 score for LittleInterest (PHQ9.Q1)
+    "FeelingDown",          # PHQ9 score for FeelingDown (PHQ9.Q2)
+    "TroubleSleeping",      # PHQ9 score for TroubleSleeping (PHQ9.Q3)
+    "FeelingTired",         # PHQ9 score for FeelingTired (PHQ9.Q4)
+    "BadAppetite",          # PHQ9 score for BadAppetite (PHQ9.Q5)
+    "FeelingBadAboutSelf",  # PHQ9 score for FeelingBadAboutSelf (PHQ9.Q6)
+    "TroubleConcentrating", # PHQ9 score for TroubleConcentrating (PHQ9.Q7)
+    "MovingSpeaking", 	    # PHQ9 score for MovingSpeaking (PHQ9.Q8)
+    "ThoughtsHurting"       # PHQ9 score for ThoughtsHurting (PHQ9.Q9)
   )
   
   # set of matching question score parameters
@@ -142,7 +199,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
     # Question scores are in range
     if(scores[[p]] %in% c("0", "1", "2", "3")) {
       totalScore = totalScore + as.integer(scores[[p]])
-    } else {
+    } else if(scores[[p]] != "-") {
       warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
       return(FALSE)
     }
@@ -164,6 +221,8 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # DEBUG url
   print(paste("sendQuestionnaireResponses:", requestUrl, 
               "subjectReference:",           body$subjectReference,
+              "yesNoFeelingDown",            body$yesNoFeelingDown,
+              "yesNoLittleInterest",         body$yesNoLittleInterest,
               "LittleInterest",              body$LittleInterest,
               "FeelingDown",                 body$FeelingDown,
               "TroubleSleeping",             body$TroubleSleeping,

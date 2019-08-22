@@ -2,8 +2,8 @@
 <html>
   <head>
 
-	 {{ headContent() }}
-<!--
+    {{ headContent() }}
+    <!--
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   	<script type="application/shiny-singletons"></script>
   	<script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];shiny[1.3.2];bootstrap[3.3.7];ionrangeslider[2.1.6];strftime[0.9.2];htmlwidgets[1.3];d3[3.5.16];c3[0.4.10];C3Gauge-binding[0.0.0.9000];underscore[1.9.1];C3Timeline-binding[0.0.0.9000]</script>
@@ -12,10 +12,10 @@
 	<link href="shared/shiny.css" rel="stylesheet" />
 	<script src="shared/shiny.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
--->
+	-->
 
-	{{ bootstrapLib() }}
-<!--
+    {{ bootstrapLib() }}
+    <!--
 	<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<script src="shared/bootstrap/js/bootstrap.min.js"></script>
 	<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
@@ -26,16 +26,14 @@
 	<script src="shared/strftime/strftime-min.js"></script>
 -->
 
-  {{ useShinyjs(debug = TRUE) }}
-  <!--
-  -->
+    {{ useShinyjs(debug = TRUE) }}
 
     <!-- Override Bootstrap Theme with a Custom one generated at:
          https://getbootstrap.com/docs/3.4/customize/
-    -->
+      -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-	  <!-- Consult Style -->
+    <!-- Consult Style -->
     <link rel = "stylesheet" type = "text/css" href = "css/consult.css" />
 
   </head>
@@ -61,39 +59,39 @@
           <!-- The 3-bar collapsed button -->
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#consult-navbar-collapse" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
-          	<span class="icon-bar"></span>
-          	<span class="icon-bar"></span>
-          	<span class="icon-bar"></span>
-        	</button>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <!-- Redundant
-        	  <a class="navbar-brand" href="#">Consult</a>
-          -->
+               <a class="navbar-brand" href="#">Consult</a>
+               -->
       	</div>
-
+      	
       	<!-- Collect the nav links, forms, and other content for toggling -->
       	<div class="collapse navbar-collapse" id="consult-navbar-collapse">
           <ul id="consult-tabs" class="nav navbar-nav">
             <li class="active">{{ tabSummaryLink }}</li>
-  					<li>{{ tabBPLink }}</li>
-          	<li>{{ tabHRLink }}</li>
-  					<li>{{ tabECGLink }}</li>
-  					<li>{{ tabMoodLink }}</li>
-  					<li>{{ tabRiskLink }}</li>
-  					<li>{{ tabRecommendationsLink }}</li>
-  					<li>{{ tabFeedbackLink }}</li>
-        	</ul>
+  	    <li>{{ tabBPLink }}</li>
+            <li>{{ tabHRLink }}</li>
+  	    <li>{{ tabECGLink }}</li>
+  	    <li>{{ tabMoodLink }}</li>
+  	    <li>{{ tabRiskLink }}</li>
+  	    <li>{{ tabRecommendationsLink }}</li>
+  	    <li>{{ tabFeedbackLink }}</li>
+          </ul>
       	</div><!-- /.navbar-collapse -->
-    </div><!-- /.container -->
-	</nav>
+      </div><!-- /.container -->
+    </nav>
 
-  <!-- Page Content Container  -->
-	<div class="container-fluid">
+    <!-- Page Content Container  -->
+    <div class="container-fluid">
 
-	<!-- Tab panes -->
-  <div class="row tab-content">
+      <!-- Tab panes -->
+      <div class="row tab-content">
 
-		<!-- Tab: Summary -->
-    <div class="col-sm-12 tab-pane active" id="summary">
+	<!-- Tab: Summary -->
+	<div class="col-sm-12 tab-pane active" id="summary">
 
       <!-- Grid of Summary Boxes -->
 			<div class="row">
@@ -113,18 +111,19 @@
 			</div>
 		</div> <!-- /Tab: Summary -->
 
-		<!-- Tab: Heart Rate -->
-		<div class="col-sm-12 tab-pane" id="hr">
-      <!-- Select Different Time Periods -->
-      <ul class="nav nav-pills">
-        <li class="active">{{ selectLastFourHours }}</li>
-        <li>{{ selectLastDay }}</li>
-        <li>{{ selectLastMonth }}</li>
-      </ul>
 
-      <!-- Heart Rate Plot -->
-			{{ plotHR }}
-		</div> 	<!-- /Tab: Heart Rate -->
+	<!-- Tab: Heart Rate -->
+	<div class="col-sm-12 tab-pane" id="hr">
+	  <!-- Select Different Time Periods -->
+	  <ul class="nav nav-pills">
+            <li class="active">{{ selectLastFourHours }}</li>
+            <li>{{ selectLastDay }}</li>
+            <li>{{ selectLastMonth }}</li>
+	  </ul>
+
+	  <!-- Heart Rate Plot -->
+	  {{ plotHR }}
+	</div> 	<!-- /Tab: Heart Rate -->
 
 		<!-- Tab: Blood Pressure -->
 		<div class="col-sm-12 tab-pane" id="bp">
@@ -133,11 +132,11 @@
       <!-- Blood Pressure Widget -->
       {{ plotBP }}
 		</div> <!-- /Tab: Blood Pressure -->
-
-		<!-- Tab: ECG -->
-		<div class="col-sm-12 tab-pane" id="ecg">
-			{{ plotECG }}
-		</div> <!-- /Tab: ECG -->
+		
+	<!-- Tab: ECG -->
+	<div class="col-sm-12 tab-pane" id="ecg">
+	  {{ plotECG }}
+	</div> <!-- /Tab: ECG -->
 
 		<!-- Tab: Risk -->
 		<div class="col-sm-12 tab-pane" id="risk">
@@ -147,32 +146,31 @@
 			<!-- Example: predicted-risk-of-stroke-if-you-stop-smoking.png -->
 			{{ interventionRiskPlot }}
 		</div> <!-- /Tab: Risk -->
+	<!-- Tab: Recommendations -->
+	<div class="col-sm-12 tab-pane" id="recommendations">
+	  <h4>These health tips are based on your data and the latest health research.</h4>
+	  {{ listRecommendations }}
+	</div> <!-- /Tab: Recommendations -->
 
-		<!-- Tab: Recommendations -->
-		<div class="col-sm-12 tab-pane" id="recommendations">
-			<h4>These health tips are based on your data and the latest health research.</h4>
-      {{ listRecommendations }}
-		</div> <!-- /Tab: Recommendations -->
+	<!-- Tab: Mood -->
+	<div class="col-sm-12 tab-pane" id="mood">
 
-		<!-- Tab: Mood -->
-		<div class="col-sm-12 tab-pane" id="mood">
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+            <!-- PHQ2 Pre-Selection -->
+  	    <!-- Initial 2 Questions are from NICE guideline CG90 (Step 1)
+  		 https://www.nice.org.uk/guidance/CG90/chapter/1-Guidance#step-1-recognition-assessment-and-initial-management
+  	      -->
+  	    <div class="tab-pane" id="phq2">
+  	      <h4>PHQ2 Form</h4>
+              <h5>Question 1</h5>
+              <p>During the last month, have you often been bothered by feeling down, depressed or hopeless?</p>
+              {{ phq2Q1YesNo }}
 
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- PHQ2 Pre-Selection -->
-  		  <!-- Initial 2 Questions are from NICE guideline CG90 (Step 1)
-  		        https://www.nice.org.uk/guidance/CG90/chapter/1-Guidance#step-1-recognition-assessment-and-initial-management
-  		  -->
-  		  <div class="tab-pane" id="phq2">
-  		    <h4>PHQ2 Form</h4>
-            <h5>Question 1</h5>
-            <p>During the last month, have you often been bothered by feeling down, depressed or hopeless?</p>
-            {{ phq2Q1YesNo }}
-
-            <h5>Question 2</h5>
-            <p>During the last month, have you often been bothered by having little interest or pleasure in doing things?</p>
-            {{ phq2Q2YesNo }}
-
+              <h5>Question 2</h5>
+              <p>During the last month, have you often been bothered by having little interest or pleasure in doing things?</p>
+              {{ phq2Q2YesNo }}
+              
             <hr />
             {{ phq2SubmitButton }}
   		  </div>
@@ -251,17 +249,17 @@
           </div>
         </div> <!-- /Mood Grid -->
       </div> <!-- /Sub-Tab Content -->
-
-      <!-- DEBUG ONLY - choose Mood Form -->
-      <div class="debug well">
-        <h4>Debug Panel</h4>
-        <ul id="mood-tabs" class="nav nav-pills">
-          <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
-          <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
-          <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
-        </ul>
-      </div>
-		</div> <!-- /Tab: Mood -->
+      
+	  <!-- DEBUG ONLY - choose Mood Form -->
+	  <div class="debug well">
+            <h4>Debug Panel</h4>
+            <ul id="mood-tabs" class="nav nav-pills">
+              <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
+              <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
+              <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
+            </ul>
+	  </div>
+	</div> <!-- /Tab: Mood -->
 
 		<!-- Tab: Feedback (ClinicalImpressions) -->
 		<div class="col-sm-12 tab-pane" id="feedback">

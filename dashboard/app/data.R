@@ -426,6 +426,47 @@ summariseMood <- function(mood) {
   )
 }
 
+#
+# Questionnaire Response (PHQ) Data
+#
+
+loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
+  # Loads PHQ Data for the patient.
+  #   sample: use sample-data
+  #
+  # Returns
+  #   Recorded PHQ Dataset for time-period
+  #   Columns:
+  #     recordedPHQ: String of recorded PHQ questionnaire response data
+  
+  # Load from QuestionnaireResponse API
+  # 
+  #if(sample) { # fake sample-data
+  #  phq = samplePHQData()
+  #} else {
+  phq = getQuestionnaireResponses( startTimestamp, endTimestamp )
+  phq$timestamp = paste(phq$datem, phq$time, sep=" ")
+  #}
+  # The fields returned in the recordedPHQ data column:
+  #... call names(phq) to get the field names...
+  # ---------------------------------------------------
+  # LittleInterest
+  # FeelingDown
+  # TroubleSleeping
+  # FeelingTired
+  # BadAppetite
+  # FeelingBadAboutSelf
+  # TroubleConcentrating
+  # MovingSpeaking
+  # ThoughtsHurting
+  # Difficulty
+  # TotalScore
+  # datem
+  # date.month
+  # time
+  # weekday
+  return( phq )
+}
 
 #
 # Feedback (Clinical Impressions) Data
@@ -483,5 +524,4 @@ sampleClinicalImpressionData <- function() {
   
   return(fb)
 }
-
 

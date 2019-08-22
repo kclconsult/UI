@@ -8,10 +8,18 @@ R packages you will have to install.  On the R console, run:
 
 Then you will have to install any packages written for this app.
 
-Install the C3 package:
-
+(C3 package: https://cran.r-project.org/web/packages/c3/index.html)
+Then in R:
     > setwd("packages/C3")
     > install()
+
+OR
+
+    > install.packages("c3")
+
+ALSO NEED:
+    > install.packages("shinyjs")
+
 
 # File Manifest
 
