@@ -180,7 +180,12 @@ htmlTemplate("www/index.html",
   # - actionButton: https://shiny.rstudio.com/reference/shiny/1.3.2/actionButton.html
   feedbackButton = actionButton("feedbackButton", "Submit Your Feedback"),
   
+  # <a class="list-group-item active"><span class="glyphicon glyphicon-exclamation-plus"></span>New Feedback</a>
+  newFeedbackButton = actionLink("newFeedbackButton", "New Feedback", class="list-group-item", href = "#newFeedback"),
+  
+  # renders the rest of the <a /> tags from the previous Feeback
+  previousFeedbackList = htmlOutput("previousFeedbackList"),
+    
   # for rendering the list of notes and the existing feedbackPanel
-  feedbackSidebar = htmlOutput("feedbackSidebar"),
   feedbackPanel = htmlOutput("feedbackPanel")
 )

@@ -1,0 +1,7 @@
+"note" "datem" "date.month" "time" "weekday"
+"I'm having an Impression. Here it is!" 2019-08-14 2019-08-01 16:08:49 "Wednesday"
+"Hello there!" 2019-08-14 2019-08-01 16:57:17 "Wednesday"
+"Hello there! " 2019-08-14 2019-08-01 16:58:44 "Wednesday"
+"Hello there!" 2019-08-14 2019-08-01 16:59:18 "Wednesday"
+"Hello there!" 2019-08-14 2019-08-01 17:02:01 "Wednesday"
+"Hello Feedback" 2019-08-14 2019-08-01 17:09:26 "Wednesday"

@@ -265,13 +265,19 @@
 		<div class="col-sm-12 tab-pane" id="feedback">
 		  <div class="row">
         <div class="col-sm-5">
-          {{ feedbackSidebar  }}
+          <div class="list-group">
+            {{ newFeedbackButton }}
+            {{ previousFeedbackList }}
+          </div>
         </div>
         <div class="col-sm-7">
-          {{ feedbackPanel }}
-          <!-- switch between then -->
-      	  {{ feedbackTextarea }}
-      		{{ feedbackButton }}
+          <div id="previousFeedback">
+            {{ feedbackPanel }}
+          </div>
+          <div id="newFeedback">
+      	    {{ feedbackTextarea }}
+      		  {{ feedbackButton }}
+      		</div>
         </div>
 		  </div>
 		</div> <!-- /Tab: Feedback -->

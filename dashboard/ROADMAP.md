@@ -3,25 +3,21 @@
 # Backlog
 
 ## Essential
-- [X] Summary Boxes are Buttons to the Data Screens as well.
+- [X] Tablet: Feedback, side-bar for previous feedback
+- [X] Notes (ClinicalImpressions) App
+- [X] ClinicalImpressions List Retrieval from MP API
+- [ ] Fix ClinicalImpressions Refreshing upon submit
 ---
-- [ ] Tablet: Feedback, side-bar for previous feedback
-- [ ] Notes (ClinicalImpressions) App
-- [ ] ClinicalImpressions List Retrieval from MP API
----
-- [ ] Update People Plots from Isabel
-- [ ] Risk Pull-down menu convert to Buttons
----
-- [ ] Update ECG data from API call for sample-data
-- [ ] ECG updated to plot last 1000 lines
+- [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
+- [ ] PHQ Screening Service Request and Logic
 ---
 - [ ] Blood Pressure Graph from Panos Design
 - [ ] Graph Granularity for time.
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
-- [ ] PHQ Screening Service Request and Logic
+- [ ] Update People Plots from Isabel
+- [ ] Risk Pull-down menu convert to Buttons
 ---
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
@@ -31,6 +27,9 @@
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable
+---
+- [ ] Update ECG data from API call for sample-data
+- [ ] ECG updated to plot last 1000 lines
 
 ## Nice to have
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
@@ -43,6 +42,7 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Summary Boxes are Buttons to the Data Screens as well.
 - [X] Update SummaryBoxes from Panos
 - [X] EPSRC Logo
 - [X] Remove "Summary" -> Summary, Home Icon.

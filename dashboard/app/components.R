@@ -71,11 +71,11 @@ renderRecommendations <- function(r) {
 
 
 #
-# Tab: Feedback
+# Tab: Feedback (Clinical Impressions)
 #
 
-renderFeedbackPanel <- function(txt, timestamp) {
-  # Render feedback
+renderFeedbackPanel <- function(text, timestamp) {
+  # Render previous feedback (clinical impressions)
   #
   # Args:
   #   r: data.table of the recommendations, each row being a previous feedback
@@ -98,14 +98,17 @@ renderFeedbackPanel <- function(txt, timestamp) {
   #               </div>
   
   # render the list of tags  
-  renderUI({ })
+  renderUI(tagList(
+    tags$h4(timestamp),
+    tags$p(text)
+  ))
 }
 
-renderFeedbackSidebar <- function(feedback) {
-  # Render feedback
+renderPreviousFeedbackList <- function(f, previousFeedback) {
+  # Render a listing of previous feedback for a sideback
   #
   # Args:
-  #   r: data.table of the recommendations, each row being a previous feedback
+  #   f: data.table of the feedback, each row being a previous feedback
   #      Columns | Description
   #      --------+-----------------------------------------------------------------
   #
@@ -113,17 +116,27 @@ renderFeedbackSidebar <- function(feedback) {
   #   Output of a renderUI() of the tags
   #
   
-  # <div class="list-group">
-  #   <a href="#" class="list-group-item active"><span class="glyphicon glyphicon-exclamation-plus"></span>New Feedback</a>
-  #     <a href="#" class="list-group-item active">
-  #       Cras justo odio
-  #     </a>
-  #       <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-  #         <a href="#" class="list-group-item">Morbi leo risus</a>
-  #           <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-  #             <a href="#" class="list-group-item">Vestibulum at eros</a>
-  #               </div>
+  # Example of each feedback item
+  # <a href="#" class="list-group-item">Time Stamp...</a>
 
+  # list of tags (per feedback)  
+  t = list()
+  
+  # Prepend the New Feedback option
+  # - loop over feedback objects
+  for(i in 1:nrow(f)) {
+    # Generates an actionLink with a unique id ("previousFeedback-i"), but not possible to observerEvent("previousFeedback-*")...
+    # id = paste("previousFeedback", i, sep="-")
+    # t[[i]] <- # append to the tag list, the following tags:
+    # actionLink(id, paste(f$datem[i], f$time[i]), class="list-group-item", href = paste("#", id, sep='') )
+    
+    # ... instead, generate a js to send the timestamp of the feedback as the event:
+    onclickjs = paste("Shiny.setInputValue('previousFeedback', '", f$timestamp[i], "', {priority: 'event'});", sep='')
+    # And attach that js to an <a> tag:
+    t[[i]] <- # append to the tag list, the following tags:
+      tags$a(class="list-group-item", paste(f$datem[i], f$time[i]), onclick = onclickjs)
+  }
+  
   # render the list of tags  
-  renderUI({ })
+  renderUI({ t })
 }

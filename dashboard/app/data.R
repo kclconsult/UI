@@ -347,7 +347,7 @@ summariseECG <- function(ecg) {
 # Mood Data
 #
 
-loadMoodData <- function(startTimestamp, endTimestamp, sample) {
+loadMoodData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Mood Finding Data (code: "106131003") for the patient.
   #
   # Args:
@@ -422,3 +422,63 @@ summariseMood <- function(mood) {
     timestamp = timestamp
   )
 }
+
+
+#
+# Feedback (Clinical Impressions) Data
+#
+
+loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALSE) {
+  # Loads patient clinical impressions (feedback)
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   sample: use sample-data (not implemented yet)
+  #
+  # Returns
+  #   Recorded Clinical Feedback Dataset for time-period
+  #   Columns:
+  #     note: String of feedback
+  #     datem: Day of observation, format: "%Y-%m-%d" 
+  #     date.month: First day of the month of the observation, format: "%Y-%m-%d"
+  #     time: Time of observation, format: "%H:%M:%S"
+  #     weekday (String) day of the week, i.e. "Monday"
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
+  
+  # Load from Clinical Impression API
+  # 
+
+  if(sample) { # fake sample-data
+    fb = sampleClinicalImpressionData()
+  } else {
+    fb = getClinicalImpression(startTimestamp, endTimestamp)
+  }
+  
+  # Create timestamp string column
+  fb$timestamp = paste(fb$datem, fb$time, sep=" ")
+  
+  # sort in descending date, time
+  fb_desc = arrange(fb, desc(datem), desc(time))
+  
+  return(fb_desc)
+}
+
+sampleClinicalImpressionData <- function() {
+  # Loads ClinicalImpression (Feedback) from a txt file located in sample-data/
+  # 
+  # Returns:
+  #   Compatible Data Table with what is returned from Clinical Impression API
+  
+  fb = read_delim("sample-data/feedback.txt", delim = " ")  
+  
+  # lower case the column names
+  colnames(fb) = tolower(make.names(colnames(fb)))
+  
+  # Column Names as loaded from mood.txt: 
+  #   "note" "datem" "date.month" "time" "weekday"
+  
+  return(fb)
+}
+
+

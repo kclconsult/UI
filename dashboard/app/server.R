@@ -26,6 +26,8 @@ function(input, output, session) {
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
+    SAMPLE_DATA = FALSE
+    
     #
     # Load Datasets and generate statistics
     #
@@ -36,7 +38,7 @@ function(input, output, session) {
     # end:   2017-06-19 00:00:00
     datasetBP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
                                       endTimestamp   = "2017-02-01T00:00:00Z", 
-                                      sample = FALSE)
+                                      sample = SAMPLE_DATA)
     # - Heart Rate
     #
     # Simulation HR available:
@@ -44,22 +46,30 @@ function(input, output, session) {
     # end: 2019-04-09 13:56:13
     datasetHR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
                                   endTimestamp   = "2020-04-10T00:00:00Z", 
-                                  sample = FALSE)
+                                  sample = SAMPLE_DATA)
     # - ECG
     # 
     # Only one date entry: 2019-08-06 17:27:25
     #
     datasetECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
                              endTimestamp   = "2019-08-07T00:00:00Z", 
-                             sample = TRUE)
+                             sample = TRUE) # Note: until smaller resolution data, sample for now
     # - Mood
     #
     # Live Moods
     #
     datasetMood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
                                endTimestamp   = "2020-02-28T00:00:00Z", 
-                               sample = FALSE)
+                               sample = SAMPLE_DATA)
 
+    # - Feedback (Clinical Impression)
+    #
+    # Should be all Clinical Impressions
+    #
+    datasetFeedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
+                                                 endTimestamp="2020-02-28T00:00:00Z",
+                                                 sample = SAMPLE_DATA)
+    
     #
     # Navbar Tab Changing Events for logging
     # 
@@ -416,35 +426,60 @@ function(input, output, session) {
     })
     
     #
-    # Tab: Feedback
+    # Tab: Feedback (Clinical Impression)
     #
 
-    # - list the existing feedback as a Sidebar
-    output$feedbackSidebar = renderFeedbackSidebar({
-      # get a list of Clinical Impressions (notes)
-      #feedbacks = getClinicalImpression(startTimestamp="2019-08-13T16:26:26Z", 
-      #                                  endTimestamp="2019-08-15T16:26:26Z")
-      TRUE
+    # Initialize Feedback Tab to be showing the "New Feedback" textarea:
+    hideElement(id = "previousFeedback")
+    showElement(id = "newFeedback")
+    
+    observeEvent(input$previousFeedback, {
+      # Value of the "previousFeedback" input is the `timestamp` of the datasetFeedback
+      i = which(datasetFeedback$timestamp == input$previousFeedback) 
+
+      logEvent("Feedback", paste("Load Previous Feedback, datasetFeedback index:", i))
+
+      # Re-render the feedbackPanel
+      output$feedbackPanel = renderFeedbackPanel(datasetFeedback$note[i], 
+                                                 datasetFeedback$timestamp[i])
+      
+      # Make sure the Feedback Panel is showing
+      showElement(id = "previousFeedback")
+      hideElement(id = "newFeedback")
     })
     
+    # Render the list of Previous Feedback as a Sidebar
+    output$previousFeedbackList = renderPreviousFeedbackList({ datasetFeedback })
+
+    # Event: Patient wants to start to edit new Feedback
+    observeEvent(input$newFeedbackButton,   { 
+      logEvent("Feedback", "New Feedback") 
+      # show the Feedback Text and Button Area
+      hideElement(id = "previousFeedback")
+      showElement(id = "newFeedback")
+    })
+    
+    # Event: when patient edits in the Feedback Text Area
     observeEvent(input$feedbackTextarea, { 
       logEvent("Feedback", paste("Editing, feedback size: ", nchar(input$feedbackTextarea), "characters")) 
     })
     
+    # Event: Patients submits the Feedback
     observeEvent(input$feedbackButton,   { 
       if(nchar(input$feedbackTextarea) > 0) { # only submit Feedback if there is something written
         logEvent("Feedback", paste("Submitting, final feedback size: ", nchar(input$feedbackTextarea), "characters"))
         if(sendClinicalImpression(input$feedbackTextarea)) { # successful submission of feedback
           updateTextAreaInput(session, "feedbackTextarea", value = "") # clear the feedbackTextArea
+          # Update the datasetFeedback
+          datasetFeedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
+                                                       endTimestamp="2020-02-28T00:00:00Z",
+                                                       sample = SAMPLE_DATA)
+          # ... and re-Render the list of Previous Feedback as a Sidebar 
+          # (TODO - use a reactiveValue on datasetFeedback)
+          output$previousFeedbackList = renderPreviousFeedbackList({ datasetFeedback })
         }
       } else {
         logEvent("Feedback", "Pressed Submit with empty textarea.")
       }
     })
-    
-    ####
-    # observeEvent(input$feedbackTextarea, { 
-    #   output$renderFeedbackPanel = renderFeedbackPanel({})
-    # })
-    
 }
