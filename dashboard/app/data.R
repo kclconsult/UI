@@ -410,3 +410,50 @@ summariseMood <- function(mood) {
     timestamp = timestamp
   )
 }
+
+loadPHQData <- function(startTimestamp, endTimestamp, sample) {
+  # Loads PHQ Data for the patient.
+  #
+  # Args:
+  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   sample: use sample-data
+  #
+  # Returns
+  #   Recorded PHQ Dataset for time-period
+  #   Columns:
+  #     recordedPHQ: String of recorded PHQ questionnaire response data
+  #     datem: Day of observation, format: "%Y-%m-%d" 
+  #     date.month: First day of the month of the observation, format: "%Y-%m-%d"
+  #     time: Time of observation, format: "%H:%M:%S"
+  #     weekday (String) day of the week, i.e. "Monday"
+  #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
+  
+  # Load from QuestionnaireResponse API
+  # 
+  #if(sample) { # fake sample-data
+  #  phq = samplePHQData()
+  #} else {
+  phq = getQuestionnaireResponses( startTimestamp, endTimestamp )
+  phq$timestamp = paste( phq$datem, phq$time, sep=" " )
+  #}
+  # The fields returned in the recordedPHQ data column:
+  #... call names(phq) to get the field names...
+  # ---------------------------------------------------
+  # LittleInterest
+  # FeelingDown
+  # TroubleSleeping
+  # FeelingTired
+  # BadAppetite
+  # FeelingBadAboutSelf
+  # TroubleConcentrating
+  # MovingSpeaking
+  # ThoughtsHurting
+  # Difficulty
+  # TotalScore
+  # datem
+  # date.month
+  # time
+  # weekday
+  return( phq )
+}

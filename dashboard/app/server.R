@@ -69,7 +69,6 @@ function(input, output, session) {
     observeEvent(input$tabECGLink,             { logEvent("TabChanged", "ECG Tab Selected") })
     observeEvent(input$tabRiskLink,            { logEvent("TabChanged", "Risk Tab Selected") })
     observeEvent(input$tabRecommendationsLink, { logEvent("TabChanged", "Recommendations Tab Selected") })
-    observeEvent(input$tabMoodLink,            { logEvent("TabChanged", "Mood Tab Selected") })
     observeEvent(input$tabFeedbackLink,        { logEvent("TabChanged", "Feedback Tab Selected") })
     
     #
@@ -231,6 +230,24 @@ function(input, output, session) {
     #
     # Tab: Mood
     #
+    observeEvent( input$tabMoodLink, { 
+      logEvent( "TabChanged", "Mood Tab Selected!" )
+      logEvent( "DEBUG", "DO YOU LIKE MY HAT?" )
+      myMood = loadMoodData( startTimestamp = "2016-02-26T00:00:00Z", 
+                             endTimestamp   = "2020-02-28T00:00:00Z", 
+                             sample = FALSE )
+      moodTime = strptime( myMood$timestamp[1], "%Y-%m-%d %H:%M:%S" )
+      print( paste( "DEBUG", moodTime, myMood$recordedEmotion[1] ))
+      myPHQ = loadPHQData( startTimestamp = "2016-02-26T00:00:00Z", 
+                           endTimestamp   = "2020-02-28T00:00:00Z", 
+                           sample = FALSE )
+      phqTime = strptime( myPHQ$timestamp[1], "%Y-%m-%d %H:%M:%S" )
+      print( paste( "DEBUG", phqTime, names( myPHQ ) ))
+      moodTimeSince = Sys.time() - moodTime
+      phqTimeSince = Sys.time() - phqTime
+      print( paste( "DEBUG", "time since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
+      logEvent( "DEBUG", "I LIKE YOUR PARTY HAT" )
+    })
     
     # -- Mood Grid Events
     observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
