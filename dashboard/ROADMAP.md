@@ -6,7 +6,8 @@
 - [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
 - [ ] PHQ Screening Service Request and Logic
 ---
-- [ ] Blood Pressure Graph from Panos Design
+- [ ] Blood Pressure Alerts from Dialog Manager
+- [ ] Active Time Periods for start and end time
 - [ ] Graph Granularity for time.
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
