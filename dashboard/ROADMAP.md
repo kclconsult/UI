@@ -3,8 +3,6 @@
 # Backlog
 
 ## Essential
-- [X] Fix ClinicalImpressions Refreshing upon submit
----
 - [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
 - [ ] PHQ Screening Service Request and Logic
 ---
@@ -39,6 +37,7 @@
 - [ ] Random ordering of Mood images
 
 ## Done
+- [X] Fix ClinicalImpressions Refreshing upon submit
 - [X] Tablet: Feedback, side-bar for previous feedback
 - [X] Notes (ClinicalImpressions) App
 - [X] ClinicalImpressions List Retrieval from MP API
