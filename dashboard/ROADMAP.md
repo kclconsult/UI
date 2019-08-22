@@ -26,6 +26,9 @@
 ---
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines
+---
+- [ ] Update run.R with pre-flight checks
+- [ ] Documentation in README.md
 
 ## Nice to have
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough

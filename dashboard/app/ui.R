@@ -86,6 +86,7 @@ htmlTemplate("www/index.html",
   plotHR = HRTimelineOutput("plotHR"),
   
   # Tab: Blood Pressure (BP)
+  alertBP =  htmlOutput("alertBP"),
   plotBP = BPTimelineOutput("plotBP"),
   
   # Tab: ECG
