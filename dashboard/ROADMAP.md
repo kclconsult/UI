@@ -1,14 +1,11 @@
 # Consult Frontend Development
 
-# SendQResponse
-- Note accepting dashes '-' on the Scores
-
 # Backlog
 
 ## Essential
-- [X] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
-- [X] PHQ Screening Service Request and Logic
----
+- [ ] Partial params submission for PHQ2 only
+- [ ] OR for PHQ2->PHQ9
+--
 - [ ] Blood Pressure Alerts from Dialog Manager
 - [ ] Active Time Periods for start and end time
 - [ ] Graph Granularity for time.
@@ -23,7 +20,8 @@
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections
 ---
-- [ ] Tablet: Mood Form - Select-and-Submit (maybe in modal)
+- [ ] Tablet: Mood Form - Select-and-Submit: Modal or Selected
+- [ ] All 16 images on the same screen.
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable
