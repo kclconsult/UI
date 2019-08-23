@@ -317,9 +317,16 @@ function(input, output, session) {
                            sample = FALSE )
       phqTime = strptime( myPHQ$timestamp[1], "%Y-%m-%d %H:%M:%S" )
       print( paste( "DEBUG", phqTime, names( myPHQ ) ))
-      moodTimeSince = Sys.time() - moodTime
-      phqTimeSince = Sys.time() - phqTime
-      print( paste( "DEBUG", "time since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
+
+      # Units will vary depending on the time difference:
+      #moodTimeSince = Sys.time() - moodTime
+      #phqTimeSince = Sys.time() - phqTime
+      
+      # Specify "days":
+      moodTimeSince = difftime(Sys.time(), moodTime, units="days")
+      phqTimeSince = difftime(Sys.time(), phqTime, units="days")
+      
+      print( paste( "DEBUG", "time (hours) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
       logEvent( "DEBUG", "I LIKE YOUR PARTY HAT" )
     })
     
