@@ -466,42 +466,55 @@ sendClinicalImpression <- function(note) {
 # Logging Service
 #
 
-logEvent <- function(event_type, event_data) {
-  e <- list("time" = Sys.time(),
-            "type" = event_type,
-            "data" = event_data)
+logEvent <- function(eventType, eventData) {
+  # Logs a Dashboard event on the server.
+  # 
+  # POST Request: 
+  #
+  # Args:
+  #   timestamp - (Optional) timestamp provided by tablet
+  #   eventType - (String) a string for the eventType
+  #   eventData - (String) a string for data to log for the event-type
+  #
+  # Returns:
+  #   TRUE upon sucess (FALSE otherwise)
 
-  print(paste(e$time, e$type, e$data, sep=" | "))
+  # DEBUG
+  print(paste(body$time, body$eventType, body$eventData, sep=" | "))
   
-  TRUE # sucess
+  return(TRUE) 
+  ######################################################################
+  
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                      "LogEvent", 
+                      "add",
+                      sep = "/")
+  # POST data  
+  body <- list("effectiveTimestamp" = Sys.time(),
+               "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
+               "eventType" = event_type,
+               "eventData" = event_data)
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Send the request
+  # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
+  # encode = "multipart" does not work, use "form" or "json"
+  resp = POST(requestUrl, body = body, encode = "json")
+  
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  # Request Error handling
+  # stop_for_status(resp)
+  warn_for_status(resp)
+  
+  # TRUE if sucessful status code (FALSE otherwise)
+  status_code(resp) == 200
 }
 
-#
-# EXAMPLES
-#
-
-# Example uf using httr to load data from HTTP Service
-requestData <- function() {
-  # query are any attributes as part of the request
-  r <- GET("http://httpbin.org/get",
-           query = list(key1 = "value1", key2 = "value2"))
-
-  # stop and throw an error if not getting a 200 status request
-  stop_for_status(r)
- 
-  # parse the content of the request
-  data <- content(r, "parsed") 
-  
-  # content will introspect an attempt to "parse" based on the MIME-type:
-  #   text/html: xml2::read_html()
-  #   text/xml: xml2::read_xml()
-  #   text/csv: readr::read_csv()
-  #   text/tab-separated-values: readr::read_tsv()
-  #   application/json: jsonlite::fromJSON()
-  #   application/x-www-form-urlencoded: parse_query
-  #   image/jpeg: jpeg::readJPEG()
-  #   image/png: png::readPNG()
-  
-  # return the data
-  data
-}

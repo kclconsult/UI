@@ -3,11 +3,16 @@
 # Backlog
 
 ## Essential
+- [ ] Synchronise Tablet vs. Server Time
+- [ ] Activate Live (i.e. latest time) time for EndTimestamp
+- [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
+---
+- [ ] <hr /> btw Tips/Recommendations
+---
 - [ ] Partial params submission for PHQ2 only
 - [ ] OR for PHQ2->PHQ9
---
+---
 - [ ] Blood Pressure Alerts from Dialog Manager
-- [ ] Active Time Periods for start and end time
 - [ ] Graph Granularity for time.
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
@@ -21,8 +26,9 @@
 - [ ] Logging service - API - logging function logs Tab selections
 ---
 - [ ] Tablet: Mood Form - Select-and-Submit: Modal or Selected
-- [ ] All 16 images on the same screen.
+- [ ] Mood Grid: All 16 images on the same screen.
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
+- [ ] Remove the Mood Text in the Summary Box
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable
 ---
