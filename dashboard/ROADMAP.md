@@ -1,5 +1,8 @@
 # Consult Frontend Development
 
+# SendQResponse
+- 'y', 'yes', 'Yes'
+
 # Backlog
 
 ## Essential

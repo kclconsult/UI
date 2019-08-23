@@ -360,7 +360,14 @@ function(input, output, session) {
       if(input$phq2Q1YesNo == "y" & input$phq2Q2YesNo == "y") { 
         # Shows PHQ9 Tab
         runjs("$('#mood-tabs a[href=\"#phq9\"]').tab('show');")
-      } else { 
+      } else {
+        # Send the PHQ2 reponses only
+        sendQuestionnaireResponses(
+          screening = list( # NOTE: ordering of these questions are switched in PHQ9!
+            "FeelingDownInitial" = input$phq2Q1YesNo,     # PHQ2 Yes/No Screening Q1
+            "LittleInterestInitial" = input$phq2Q2YesNo   # PHQ2 Yes/No Screening Q2
+          )
+        )
         # Shows (default) Mood Grid
         runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
       }
@@ -439,8 +446,8 @@ function(input, output, session) {
       logEvent("PHQ9", paste("Submitted Form"))
       sendQuestionnaireResponses(
         screening = list(
-          "yesNoLittleInterest" = "Yes", # PHQ2 Yes/No Screening Q1
-          "yesNoFeelingDown" = "Yes"     # PHQ2 Yes/No Screening Q1
+          "LittleInterestInitial" = "Yes", # PHQ2 Yes/No Screening Q1
+          "FeelingDownInitial" = "Yes"     # PHQ2 Yes/No Screening Q1
         ),
         scores = list(
           "LittleInterest"       = input$phq9Q1Score, # PHQ9 score for LittleInterest (Q1)

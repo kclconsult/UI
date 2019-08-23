@@ -138,21 +138,54 @@ getQuestionnaireResponses <- function( startTimestamp, endTimestamp ) {
   return( data )
 }
 
+
+
 #
 # QuestionnaireResponses POST
 #
+
+
+validateKeysInList <- function(k, l, context="") {
+  # Validates that keys k are present in list l
+  #
+  # Side-effect, prints warning statement with context string.
+  #
+  # Returns:
+  #    TRUE - if all keys are present, FALSE otherwise
+  
+  # set of matching question score parameters
+  matching = intersect(k, names(l))
+  
+  # check if all of the questionScores are present
+  if(!setequal(k, matching)) {
+    warning(paste(context, "-- missing keys:", setdiff(k, matching)))
+    return(FALSE)
+  }
+  return(TRUE)
+}
 
 sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) {
   # Sends the Questionnaire Response form answers.
   #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-QuestionnaireResponses-Add
   #
+  # Args:
+  #   screening: PHQ2 screening responses for Q1 and Q2
+  #   scores: (optional) PHQ9 scores for Q1-9
+  #   difficulty: (optional) String of PHQ9 Q10 answer
+  #
+  # Returns:
+  #   TRUE if sucessful status code (FALSE otherwise)
+  #
   # sklar/21-aug-2019: modified to include PHQ2 scores (yes=1,no=0)
-  # added two fields: yesNoFeelingDown and yesNoLittleInterest
+  # added two fields: FeelingDownInitial and LittleInterestInitial
   # note that when sending data here, we have to populate every field,
   #  which is what the database on the backend expects. So use "-" for
   #  scores in PHQ9 if they are not used.
   #
+  # chipp/22-aug-2019: PHQ2 ordering of Q1 and Q2 parameters were switched
+  # from what is presenting in message passer API documentation.
+  # "FeelingDownInitial" question is *before* LittleInterestInitial question
 
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
@@ -160,69 +193,84 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
                       "add",
                       sep = "/")
 
-  ######
-  # TODO - switch depending on whether scores=NULL and difficulty = NULL
-  
-  # Add the Screening Responses
-  
-  # (Optional) Add the scores
-  
-  # (Optional) Add the difficulty 
-  
-  # Validate Question Scores
-  questionScores = c(
-    "yesNoFeelingDown",     # PHQ2 score for FeelingDown (PHQ2.Q1)
-    "yesNoLittleInterest",  # PHQ2 score for LittleInterest (PHQ2.Q2)
-    "LittleInterest",       # PHQ9 score for LittleInterest (PHQ9.Q1)
-    "FeelingDown",          # PHQ9 score for FeelingDown (PHQ9.Q2)
-    "TroubleSleeping",      # PHQ9 score for TroubleSleeping (PHQ9.Q3)
-    "FeelingTired",         # PHQ9 score for FeelingTired (PHQ9.Q4)
-    "BadAppetite",          # PHQ9 score for BadAppetite (PHQ9.Q5)
-    "FeelingBadAboutSelf",  # PHQ9 score for FeelingBadAboutSelf (PHQ9.Q6)
-    "TroubleConcentrating", # PHQ9 score for TroubleConcentrating (PHQ9.Q7)
-    "MovingSpeaking", 	    # PHQ9 score for MovingSpeaking (PHQ9.Q8)
-    "ThoughtsHurting"       # PHQ9 score for ThoughtsHurting (PHQ9.Q9)
+  # POST parameters data structure with default values:
+  body = list(
+    "subjectReference" = USERNAME_PATIENT_ID  #, Patient id
+    # "effectiveDateTime" =                   # (optional) Client-side Timestamp of impression
+  )
+
+  # PHQ2 Q1-2 Screening Responses
+  screeningResponses = c(
+    "FeelingDownInitial",     # PHQ2 yes/no for FeelingDown(PHQ2.Q1)
+    "LittleInterestInitial"   # PHQ2 yes/no for LittleInterest(PHQ2.Q2)
   )
   
-  # set of matching question score parameters
-  matching = intersect(questionScores, names(scores))
+  # PHQ9 Q1-9 Scores parameter names
+  questionScores = c(
+    "LittleInterest",        # PHQ9 score for LittleInterest (PHQ9.Q1)
+    "FeelingDown",           # PHQ9 score for FeelingDown (PHQ9.Q2)
+    "TroubleSleeping",       # PHQ9 score for TroubleSleeping (PHQ9.Q3)
+    "FeelingTired",          # PHQ9 score for FeelingTired (PHQ9.Q4)
+    "BadAppetite",           # PHQ9 score for BadAppetite (PHQ9.Q5)
+    "FeelingBadAboutSelf",   # PHQ9 score for FeelingBadAboutSelf (PHQ9.Q6)
+    "TroubleConcentrating",  # PHQ9 score for TroubleConcentrating (PHQ9.Q7)
+    "MovingSpeaking", 	     # PHQ9 score for MovingSpeaking (PHQ9.Q8)
+    "ThoughtsHurting"        # PHQ9 score for ThoughtsHurting (PHQ9.Q9)
+  )
   
-  # check if all of the questionScores are present
-  if(!setequal(questionScores, matching)) {
-    warning(paste("sendQuestionnaireResponses -- questionScores missing:", setdiff(questionScores, matching)))
+  # Check the Screening Responses are present
+  if(!validateKeysInList(screeningResponses, screening, context="sendQuestionnaireResponses")) {
     return(FALSE)
   }
+
+  # POST for screening (PHQ2) questions
+  body = append(body, screening) # append screening 
   
-  # validate values for questionScores and accumulate TotalScore
-  totalScore = 0
-  for(p in questionScores) {
-    # Question scores are in range
-    if(scores[[p]] %in% c("0", "1", "2", "3")) {
-      totalScore = totalScore + as.integer(scores[[p]])
-    } else if(scores[[p]] != "-") {
-      warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
+    # Validate and send PHQ9 Form if both screening questions are both "y"
+  if((screening$LittleInterestInitial == "y") &
+     (screening$FeelingDownInitial == "y")) {
+  
+    # check if all of the questionScores are present
+    if(!validateKeysInList(questionScores, scores, context="sendQuestionnaireResponses")) {
       return(FALSE)
     }
+    
+    # validate values for questionScores and accumulate TotalScore
+    totalScore = 0
+    for(p in questionScores) {
+      # Question scores are in range
+      if(scores[[p]] %in% c("0", "1", "2", "3")) {
+        totalScore = totalScore + as.integer(scores[[p]])
+      } else if(scores[[p]] != "-") {
+        warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
+        return(FALSE)
+      }
+    }
+    
+    # Parameters for POST request:
+    body = append(body, scores) # append scores 
+    body[["TotalScore"]] = as.character(totalScore)  # sum of all scores for Q1-9
+
+    # For Q10, if totalScore > 0, set "Difficulty"
+    if(totalScore > 0) {
+      body[["Difficulty"]] = difficulty
+    } else { # Difficulty not answered "-"
+      body[["Difficulty"]] = "-"
+    }
+    
+  } else { # Only send the PHQ2 values (and '-' stub values)
+    for(p in questionScores) {
+      body[[p]] = "-"
+    }
+    body[["TotalScore"]] = "-"
+    body[["Difficulty"]] = "-"
   }
   
-  # Parameters for POST request
-  body = append(list(), scores) # clone the scores
-  body[["TotalScore"]] = as.character(totalScore)  # sum of all scores for Q1-9
-  body[["subjectReference"]] = USERNAME_PATIENT_ID # Patient id
-  # body[["effectiveDateTime" ]] =                 # (optional) Timestamp of impression
-  
-  # For Q10, if totalScore > 0, set "Difficulty"
-  if(totalScore > 0) {
-    body[["Difficulty"]] = difficulty
-  } else { # Difficulty answer is n/a
-    body[["Difficulty"]] = "n/a"
-  }
-  
-  # DEBUG url
+  # DEBUG url - in order of Question Responses on PHQ2/9 forms
   print(paste("sendQuestionnaireResponses:", requestUrl, 
               "subjectReference:",           body$subjectReference,
-              "yesNoFeelingDown",            body$yesNoFeelingDown,
-              "yesNoLittleInterest",         body$yesNoLittleInterest,
+              "FeelingDownInitial",          body$FeelingDownInitial,
+              "LittleInterestInitial",       body$LittleInterestInitial,
               "LittleInterest",              body$LittleInterest,
               "FeelingDown",                 body$FeelingDown,
               "TroubleSleeping",             body$TroubleSleeping,
