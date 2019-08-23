@@ -42,6 +42,7 @@ renderRecommendations <- function(r) {
   #     <p>Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider 'paracetamol'.</p>
   #     <p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>
   #   </div>
+  #   <hr />
   # </div>
   #
   
@@ -61,7 +62,9 @@ renderRecommendations <- function(r) {
           #   ...
           # </div> 
           do.call(tags$div, lapply(unlist(r$body[i]), tags$p))
-        )
+        ),
+        # horizontal line between recommendations
+        tags$hr()
       )
   }
   
@@ -85,18 +88,7 @@ renderFeedbackPanel <- function(text, timestamp) {
   # Returns:
   #   Output of a renderUI() of the tags
   #
-  
-  # <div class="list-group">
-  #   <a href="#" class="list-group-item active"><span class="glyphicon glyphicon-exclamation-plus"></span>New Feedback</a>
-  #     <a href="#" class="list-group-item active">
-  #       Cras justo odio
-  #     </a>
-  #       <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-  #         <a href="#" class="list-group-item">Morbi leo risus</a>
-  #           <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-  #             <a href="#" class="list-group-item">Vestibulum at eros</a>
-  #               </div>
-  
+
   # render the list of tags  
   renderUI(tagList(
     tags$h4(timestamp),

@@ -6,14 +6,13 @@
 - [X] Send effectiveTime on POSTs to Server
 ---
 - [ ] Randomise Tip ordering
-- [ ] <hr /> btw Tips/Recommendations
+- [X] <hr /> btw Tips/Recommendations
 ---
 - [ ] Partial params submission for PHQ2 only
 - [ ] OR for PHQ2->PHQ9
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time.
-- [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
 - [X] Risk Pull-down menu convert to Buttons
@@ -46,6 +45,7 @@
 - [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
 
 ## Nice to have
+- [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
 - [ ] Logging service captures poke stream of user
