@@ -4,26 +4,23 @@
 
 ## Essential
 - [X] Send effectiveTime on POSTs to Server
-- [ ] Activate Live (i.e. latest time) time for EndTimestamp
-- [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 ---
+- [ ] Randomise Tips
 - [ ] <hr /> btw Tips/Recommendations
 ---
 - [ ] Partial params submission for PHQ2 only
 - [ ] OR for PHQ2->PHQ9
 ---
-- [ ] Blood Pressure Alerts from Dialog Manager
+- [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time.
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] Update People Plots from Isabel
+- [ ] Update People Plots from Isabel - figure out the People Plot sizing
 - [ ] Risk Pull-down menu convert to Buttons
 ---
+- [ ] Random ordering of Mood images
 - [ ] move Mood Tab getting data into data$ reactiveValues
-- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
-- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
-- [ ] Logging service - API - logging function logs Tab selections
 ---
 - [ ] Tablet: Mood Form - Select-and-Submit: Modal or Selected
 - [ ] Mood Grid: All 16 images on the same screen.
@@ -35,6 +32,13 @@
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines
 ---
+- [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
+- [ ] Activate Live (i.e. latest time) time for EndTimestamp
+- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
+- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
+---
+- [ ] Synchronise sample-data
+- [ ] USE_SAMPLE_DATA environment option
 - [ ] Update run.R with pre-flight checks
 - [ ] Documentation in README.md
 
@@ -46,9 +50,9 @@
 - [ ] Notification Alerts (dismissable) Overlay (icon and color)
 - [ ] Connectivity Indicators for SummaryBox
 - [ ] Badges for Tabs (or InfoBoxes)
-- [ ] Random ordering of Mood images
 
 ## Done
+- [X] Logging service - API - logging function logs Tab selections
 - [X] Fix ClinicalImpressions Refreshing upon submit
 - [X] Tablet: Feedback, side-bar for previous feedback
 - [X] Notes (ClinicalImpressions) App
