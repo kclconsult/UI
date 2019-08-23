@@ -170,7 +170,8 @@ function(input, output, session) {
                  # image = "images/summary/mood-meh.png",
                  # image = "images/summary/mood-bad.png",
                  alert = "blue",
-                 status = summary$status,
+                 status = "", # don't show the Mood text
+                 # status = summary$status,
                  timestamp = summary$timestamp,
                  source = "Home")
     })

@@ -24,7 +24,7 @@
 - [ ] Tablet: Mood Form - Select-and-Submit: Modal or Selected
 - [ ] Mood Grid: All 16 images on the same screen.
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
-- [ ] Remove the Mood Text in the Summary Box
+- [X] Remove the Mood Text in the Summary Box
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable
 ---
