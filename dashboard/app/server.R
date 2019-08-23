@@ -28,7 +28,7 @@ function(input, output, session) {
   
     # Flag whether to load datasets from /sample-data 
     # (otherwise load from API)
-    SAMPLE_DATA = TRUE
+    SAMPLE_DATA = FALSE
     
     # Store app data in a reactiveValue for reactive refreshing
     data = reactiveValues()

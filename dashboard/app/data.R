@@ -389,7 +389,10 @@ loadMoodData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Create timestamp string column
   mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
   
-  return(mood_renamed)
+  # sort in descending date, time
+  mood_desc = arrange(mood_renamed, desc(datem), desc(time))
+  
+  return(mood_desc)
 }
 
 sampleMoodData <- function() {
@@ -465,6 +468,10 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   # date.month
   # time
   # weekday
+  
+  # sort in descending date, time
+  phq_desc = arrange(phq, desc(datem), desc(time))
+  
   return( phq )
 }
 
