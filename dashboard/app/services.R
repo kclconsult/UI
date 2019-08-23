@@ -105,7 +105,7 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
 # QuestionnaireResponses Data (GET)
 #
 
-getQuestionnaireResponses <- function( startTimestamp, endTimestamp ) {
+getQuestionnaireResponses <- function(startTimestamp, endTimestamp) {
   # Gets QuestionnaireResponses for a patient for a particular time period
   #
   # GET Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-GetQuestionnaireResponses)
@@ -204,6 +204,9 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
                       "add",
                       sep = "/")
 
+  # DEBUG url
+  print(paste("sendQuestionnaireResponses:", requestUrl))
+  
   # POST parameters data structure with default values:
   body = list(
     "subjectReference" = USERNAME_PATIENT_ID, # Patient id
@@ -251,7 +254,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
       # Question scores are in range
       if(scores[[p]] %in% c("0", "1", "2", "3")) {
         totalScore = totalScore + as.integer(scores[[p]])
-      } else if(scores[[p]] != "-") {
+      } else { # if(scores[[p]] != "-") {
         warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
         return(FALSE)
       }
@@ -268,39 +271,22 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
       body[["Difficulty"]] = "-"
     }
     
-  } else { # Only send the PHQ2 values (and '-' stub values)
-    for(p in questionScores) {
-      body[[p]] = "-"
-    }
-    body[["TotalScore"]] = "-"
-    body[["Difficulty"]] = "-"
-  }
+  } # else { # Only send the PHQ2 values (and '-' stub values)
+    # for(p in questionScores) {
+    #   body[[p]] = "-"
+    # }
+    # body[["TotalScore"]] = "-"
+    # body[["Difficulty"]] = "-"
+    # }
   
-  # DEBUG url - in order of Question Responses on PHQ2/9 forms
-  print(paste("sendQuestionnaireResponses:", requestUrl, 
-              "subjectReference:",           body$subjectReference,
-              "FeelingDownInitial",          body$FeelingDownInitial,
-              "LittleInterestInitial",       body$LittleInterestInitial,
-              "LittleInterest",              body$LittleInterest,
-              "FeelingDown",                 body$FeelingDown,
-              "TroubleSleeping",             body$TroubleSleeping,
-              "FeelingTired",                body$FeelingTired,
-              "BadAppetite",                 body$BadAppetite,
-              "FeelingBadAboutSelf",         body$FeelingBadAboutSelf,
-              "TroubleConcentrating",        body$TroubleConcentrating,
-              "MovingSpeaking",              body$MovingSpeaking,
-              "ThoughtsHurting",             body$ThoughtsHurting,
-              "Difficulty",                  body$Difficulty,
-              "TotalScore",                  body$TotalScore
-        ))
-  
+
   # Start measuring call
   start_time = Sys.time() 
   
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json")
+  resp = POST(requestUrl, body = body, encode = "json", verbose())
   
   # Stop measuring call
   end_time = Sys.time()
@@ -340,16 +326,13 @@ sendMoodObservation <- function(recordedEmotion) {
                       "Observation", 
                       "add",
                       sep = "/")
+  # DEBUG url
+  print(paste("sendMoodObservation:", requestUrl))
   
   # Parameters for POST request
   body = list("effectiveDateTime" = effectiveDateTime(), # String 	(optional) Timestamp of impression
               "subjectReference" = USERNAME_PATIENT_ID,  # Patient IDs
               "285854004" = recordedEmotion)             # Recorded emotion
-  
-  # DEBUG url
-  print(paste("sendMoodObservation:", requestUrl, 
-              "subjectReference:",    body$subjectReference,
-              "285854004:",           body$`285854004`))
   
   # Start measuring call
   start_time = Sys.time() 
@@ -357,7 +340,7 @@ sendMoodObservation <- function(recordedEmotion) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json")
+  resp = POST(requestUrl, body = body, encode = "json", verbose())
 
   # Stop measuring call
   end_time = Sys.time()
@@ -438,17 +421,14 @@ sendClinicalImpression <- function(note) {
                       "ClinicalImpression", 
                       "add",
                       sep = "/")
-
+  # DEBUG url
+  print(paste("sendClinicalImpression:", requestUrl))
+  
   # Parameters for POST request
   body = list(
     effectiveDateTime = effectiveDateTime(), 	# String 	(optional) Timestamp of impression
     subjectReference = USERNAME_PATIENT_ID,   # Patient IDs
     note = note)                              # Impression details
-  
-  # DEBUG url
-  print(paste("sendClinicalImpression:", requestUrl, 
-              "subjectReference:",       body$subjectReference,
-              "note:",                   body$note))
   
   # Start measuring call
   start_time = Sys.time() 
@@ -456,7 +436,7 @@ sendClinicalImpression <- function(note) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json")
+  resp = POST(requestUrl, body = body, encode = "json", verbose())
   
   # Stop measuring call
   end_time = Sys.time()
@@ -512,7 +492,7 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json")
+  resp = POST(requestUrl, body = body, encode = "json", verbose())
   
   # Stop measuring call
   end_time = Sys.time()
