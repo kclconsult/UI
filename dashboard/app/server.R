@@ -401,7 +401,7 @@ function(input, output, session) {
       logEvent("PHQ2", paste("Submitted Form Q1:", input$phq2Q1YesNo, "Q2:", input$phq2Q2YesNo))
       
       # show PHQ9 form if both Qestion Answers are Yes
-      if(input$phq2Q1YesNo == "y" & input$phq2Q2YesNo == "y") { 
+      if(input$phq2Q1YesNo == "y" | input$phq2Q2YesNo == "y") { 
         # Shows PHQ9 Tab
         runjs("$('#mood-tabs a[href=\"#phq9\"]').tab('show');")
       } else {

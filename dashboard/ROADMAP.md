@@ -9,7 +9,7 @@
 - [X] <hr /> btw Tips/Recommendations
 ---
 - [ ] Partial params submission for PHQ2 only
-- [ ] OR for PHQ2->PHQ9
+- [X] OR for PHQ2->PHQ9
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time.

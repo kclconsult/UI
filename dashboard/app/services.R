@@ -237,9 +237,8 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # POST for screening (PHQ2) questions
   body = append(body, screening) # append screening 
   
-    # Validate and send PHQ9 Form if both screening questions are both "y"
-  if((screening$LittleInterestInitial == "y") &
-     (screening$FeelingDownInitial == "y")) {
+    # Validate and send PHQ9 Form if either screening questions are "y"
+  if((screening$LittleInterestInitial == "y") | (screening$FeelingDownInitial == "y")) {
   
     # check if all of the questionScores are present
     if(!validateKeysInList(questionScores, scores, context="sendQuestionnaireResponses")) {
