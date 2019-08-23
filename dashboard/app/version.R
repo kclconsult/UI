@@ -1,2 +1,2 @@
 # Version of the Dashboard App to be displayed in the UI
-DASHBOARD_VERSION = "0.0.24"
+DASHBOARD_VERSION = "0.0.25"
