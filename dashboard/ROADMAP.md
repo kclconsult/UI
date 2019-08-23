@@ -5,7 +5,7 @@
 ## Essential
 - [X] Send effectiveTime on POSTs to Server
 ---
-- [ ] Randomise Tips
+- [ ] Randomise Tip ordering
 - [ ] <hr /> btw Tips/Recommendations
 ---
 - [ ] Partial params submission for PHQ2 only
@@ -16,8 +16,8 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] Bar versus Line Charts
 ---
-- [ ] Update People Plots from Isabel - figure out the People Plot sizing
-- [ ] Risk Pull-down menu convert to Buttons
+- [X] Risk Pull-down menu convert to Buttons
+- [X] Update People Plots from Isabel - figure out the People Plot sizing
 ---
 - [ ] Random ordering of Mood images
 - [ ] move Mood Tab getting data into data$ reactiveValues
@@ -41,6 +41,9 @@
 - [ ] USE_SAMPLE_DATA environment option
 - [ ] Update run.R with pre-flight checks
 - [ ] Documentation in README.md
+---
+- [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
+- [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
 
 ## Nice to have
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough

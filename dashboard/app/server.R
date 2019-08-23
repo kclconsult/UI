@@ -249,12 +249,42 @@ function(input, output, session) {
       logEvent("TabChanged", "Risk Tab Selected") 
     })
     
-    output$interventionRiskPlot = renderImage({
-      print(paste("interventionRiskPlot =",  input$selectIntervention))
-      # image path is from the selection drop-down
-      list(src = normalizePath(paste0("./www/", input$selectIntervention)))
-    }, deleteFile = FALSE)
-  
+    # Event: when Stop Smoking is selected
+    observeEvent(input$stopSmokingIntervention, { 
+      logEvent("InterventionSelected", "Stop Smoking")
+      
+      output$interventionRiskPlot = renderImage({
+        list(src = normalizePath("./www/images/interventions/stop-smoking.png"))
+      }, deleteFile = FALSE)
+    })
+    
+    # Event: when Lower Blood Pressure is selected
+    observeEvent(input$lowerBPIntervention, { 
+      logEvent("InterventionSelected", "Lower Blood Pressure") 
+      
+      output$interventionRiskPlot = renderImage({
+        list(src = normalizePath("./www/images/interventions/lower-bp.png"))
+      }, deleteFile = FALSE)
+    })
+    
+    # Event: when Lower Cholesterol is selected
+    observeEvent(input$lowerCholesterolIntervention, { 
+      logEvent("InterventionSelected", "Lower Cholesterol")
+      
+      output$interventionRiskPlot = renderImage({
+        list(src = normalizePath("./www/images/interventions/lower-cholesterol.png"))
+      }, deleteFile = FALSE)
+    })
+
+    # Event: when Anti-Platelet is selected
+    observeEvent(input$antiPlateletIntervention, { 
+      logEvent("InterventionSelected", "Anti-Platelet")
+      
+      output$interventionRiskPlot = renderImage({
+        list(src = normalizePath("./www/images/interventions/antiplatelet.png"))
+      }, deleteFile = FALSE)
+    })
+
 #####
     #
     # Tab: Tips (Recommendations)

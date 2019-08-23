@@ -67,7 +67,7 @@
                <a class="navbar-brand" href="#">Consult</a>
                -->
       	</div>
-      	
+
       	<!-- Collect the nav links, forms, and other content for toggling -->
       	<div class="collapse navbar-collapse" id="consult-navbar-collapse">
           <ul id="consult-tabs" class="nav navbar-nav">
@@ -125,14 +125,14 @@
 	  {{ plotHR }}
 	</div> 	<!-- /Tab: Heart Rate -->
 
-		<!-- Tab: Blood Pressure -->
-		<div class="col-sm-12 tab-pane" id="bp">
+  <!-- Tab: Blood Pressure -->
+	<div class="col-sm-12 tab-pane" id="bp">
       <!-- Blood Pressure Alert -->
       {{ alertBP }}
       <!-- Blood Pressure Widget -->
       {{ plotBP }}
-		</div> <!-- /Tab: Blood Pressure -->
-		
+	</div> <!-- /Tab: Blood Pressure -->
+
 	<!-- Tab: ECG -->
 	<div class="col-sm-12 tab-pane" id="ecg">
 	  {{ plotECG }}
@@ -141,11 +141,17 @@
 		<!-- Tab: Risk -->
 		<div class="col-sm-12 tab-pane" id="risk">
 		  <h4>Predicted Risk of Stroke if you... </h4>
-      {{ selectIntervention }}
 
-			<!-- Example: predicted-risk-of-stroke-if-you-stop-smoking.png -->
+      <ul id="intervention-options" class="nav nav-pills">
+        <li> {{ stopSmokingIntervention }}</li>
+        <li> {{ lowerBPIntervention }} </li>
+        <li> {{ lowerCholesterolIntervention }} </li>
+        <li> {{ antiPlateletIntervention }} </li>
+      </ul>
+
 			{{ interventionRiskPlot }}
 		</div> <!-- /Tab: Risk -->
+
 	<!-- Tab: Recommendations -->
 	<div class="col-sm-12 tab-pane" id="recommendations">
 	  <h4>These health tips are based on your data and the latest health research.</h4>
@@ -170,7 +176,7 @@
               <h5>Question 2</h5>
               <p>During the last month, have you often been bothered by having little interest or pleasure in doing things?</p>
               {{ phq2Q2YesNo }}
-              
+
             <hr />
             {{ phq2SubmitButton }}
   		  </div>
@@ -249,10 +255,12 @@
           </div>
         </div> <!-- /Mood Grid -->
       </div> <!-- /Sub-Tab Content -->
-      
-	  <!-- DEBUG ONLY - choose Mood Form -->
+
 	  <div class="debug well">
             <h4>Debug Panel</h4>
+            <!--
+              Important to KEEP the "mood-tabs" b/c they are used to switch tabs
+              but they may be hidden from user when DEBUG is on -->
             <ul id="mood-tabs" class="nav nav-pills">
               <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
               <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
