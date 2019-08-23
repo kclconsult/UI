@@ -39,6 +39,17 @@ USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
 # https://github.kcl.ac.uk/pages/consult/message-passer/
 #
 
+effectiveDateTime <- function(t = Sys.time()) {
+  # String representation of timestamp for Message Passer API
+  #
+  # Args:
+  #   t - (double) R timestamp, defaults to current time
+  #
+  # Returns:
+  #   String repr of timestamp
+  strftime(t, "%Y-%m-%dT%H:%M:%SZ")
+}
+
 #
 # Observation Data (GET)
 #
@@ -195,8 +206,8 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
 
   # POST parameters data structure with default values:
   body = list(
-    "subjectReference" = USERNAME_PATIENT_ID  #, Patient id
-    # "effectiveDateTime" =                   # (optional) Client-side Timestamp of impression
+    "subjectReference" = USERNAME_PATIENT_ID, # Patient id
+    "effectiveDateTime" = effectiveDateTime() # (optional) Client-side Timestamp of impression
   )
 
   # PHQ2 Q1-2 Screening Responses
@@ -332,9 +343,9 @@ sendMoodObservation <- function(recordedEmotion) {
                       sep = "/")
   
   # Parameters for POST request
-  body = list(# "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
-              "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
-              "285854004" = recordedEmotion)            # Recorded emotion)
+  body = list("effectiveDateTime" = effectiveDateTime(), # String 	(optional) Timestamp of impression
+              "subjectReference" = USERNAME_PATIENT_ID,  # Patient IDs
+              "285854004" = recordedEmotion)             # Recorded emotion
   
   # DEBUG url
   print(paste("sendMoodObservation:", requestUrl, 
@@ -431,8 +442,8 @@ sendClinicalImpression <- function(note) {
 
   # Parameters for POST request
   body = list(
-    # "effectiveDateTime" = "", 	            # String 	(optional) Timestamp of impression
-    "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
+    effectiveDateTime = effectiveDateTime(), 	# String 	(optional) Timestamp of impression
+    subjectReference = USERNAME_PATIENT_ID,   # Patient IDs
     note = note)                              # Impression details
   
   # DEBUG url
@@ -491,7 +502,7 @@ logEvent <- function(eventType, eventData) {
                       "add",
                       sep = "/")
   # POST data  
-  body <- list("effectiveTimestamp" = Sys.time(),
+  body <- list("effectiveTimestamp" = effectiveDateTime(),
                "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
                "eventType" = event_type,
                "eventData" = event_data)

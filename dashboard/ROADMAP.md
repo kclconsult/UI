@@ -3,7 +3,7 @@
 # Backlog
 
 ## Essential
-- [ ] Synchronise Tablet vs. Server Time
+- [X] Send effectiveTime on POSTs to Server
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 ---
