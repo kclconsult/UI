@@ -6,7 +6,7 @@
 # Backlog
 
 ## Essential
-- [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
+- [X] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
 - [X] PHQ Screening Service Request and Logic
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager
@@ -18,6 +18,7 @@
 - [ ] Update People Plots from Isabel
 - [ ] Risk Pull-down menu convert to Buttons
 ---
+- [ ] move Mood Tab getting data into data$ reactiveValues
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Logging service - API - logging function logs Tab selections

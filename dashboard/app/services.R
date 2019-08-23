@@ -27,7 +27,7 @@ MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
 MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
 MP_URL = paste0(MP_PROTOCOL, MP_HOST)
 
-# - certificate authority
+# - certificate authoritys
 CA_BUNDLE = Sys.getenv("CURL_CA_BUNDLE")
 
 # - username (also patient ID) provided by SHINYPROXY

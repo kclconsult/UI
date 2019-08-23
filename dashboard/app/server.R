@@ -305,7 +305,7 @@ function(input, output, session) {
     # Tab: Mood
     #
     observeEvent( input$tabMoodLink, { 
-      logEvent( "TabChanged", "Mood Tab Selected!" )
+      logEvent( "TabChanged", "Mood Tab Selected" )
       logEvent( "DEBUG", "DO YOU LIKE MY HAT?" )
       myMood = loadMoodData( startTimestamp = "2016-02-26T00:00:00Z", 
                              endTimestamp   = "2020-02-28T00:00:00Z", 
@@ -328,11 +328,18 @@ function(input, output, session) {
       
       print( paste( "DEBUG", "time (hours) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
       logEvent( "DEBUG", "I LIKE YOUR PARTY HAT" )
-    })
-    
-    # Event: when Mood Tab is selected
-    observeEvent(input$tabMoodLink, { 
-      logEvent("TabChanged", "Mood Tab Selected") 
+
+      # TODO - move this into the run.R CONSULT set-up
+      Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
+
+      # Check if past-due next PHQ Time
+      if(phqTimeSince > as.double(Sys.getenv("CONSULT_PHQ_DAYS_FREQ"))) {
+        # Shows PHQ2 Tab
+        runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
+      } else {
+        # Shows Mood Tab
+        runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+      }
     })
     
     # -- Mood Grid Events
