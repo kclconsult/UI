@@ -1,13 +1,13 @@
 # Consult Frontend Development
 
 # SendQResponse
-- 'y', 'yes', 'Yes'
+- Note accepting dashes '-' on the Scores
 
 # Backlog
 
 ## Essential
 - [ ] Integrate Time Logic for QuestionnaireResponses form (rm sub-nav)
-- [ ] PHQ Screening Service Request and Logic
+- [X] PHQ Screening Service Request and Logic
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager
 - [ ] Active Time Periods for start and end time
