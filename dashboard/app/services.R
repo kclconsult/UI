@@ -477,21 +477,21 @@ sendClinicalImpression <- function(note) {
 # Logging Service
 #
 
-logEvent <- function(eventType, eventData) {
+logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # Logs a Dashboard event on the server.
   # 
   # POST Request: 
   #
   # Args:
-  #   timestamp - (Optional) timestamp provided by tablet
   #   eventType - (String) a string for the eventType
   #   eventData - (String) a string for data to log for the event-type
+  #   eventTime - (double) R Sys.time(), defaults to current time
   #
   # Returns:
   #   TRUE upon sucess (FALSE otherwise)
 
   # DEBUG
-  print(paste(body$time, body$eventType, body$eventData, sep=" | "))
+  print(paste(eventTime, eventType, eventData, sep=" | "))
   
   return(TRUE) 
   ######################################################################
@@ -502,10 +502,10 @@ logEvent <- function(eventType, eventData) {
                       "add",
                       sep = "/")
   # POST data  
-  body <- list("effectiveTimestamp" = effectiveDateTime(),
+  body <- list("effectiveTimestamp" = effectiveDateTime(eventTime),
                "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
-               "eventType" = event_type,
-               "eventData" = event_data)
+               "eventType" = eventType,
+               "eventData" = eventData)
   
   # Start measuring call
   start_time = Sys.time() 
