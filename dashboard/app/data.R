@@ -159,19 +159,25 @@ summariseBloodPressure <- function(bp) {
   alert_text = ""
   if(flag$color == "green") {
     alert_text = "Normal"
+    alert_long_text = ""
   } else if(flag$color == "orange") {
     alert_text = "Slightly high"
-  } else if((flag$color == "red") |
-            (flag$color == "doublered")) {
+    alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
+  } else if(flag$color == "red") {
     alert_text = "A bit higher than normal"
+    alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
+  } else if(flag$color == "doublered") {
+    alert_text = "A bit higher than normal"
+    alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
   }
-  
+
   # Return summary values
   list(
-    alert      = flag$color,
-    alert_text = alert_text, 
-    status     = paste(sbp, "/", dbp,  "mmHG"),
-    timestamp  = bp_desc$datem[1] # latest day is the timestamp
+    alert           = flag$color,
+    alert_text      = alert_text, 
+    alert_long_text = alert_long_text,
+    status          = paste(sbp, "/", dbp,  "mmHG"),
+    timestamp       = bp_desc$datem[1] # latest day is the timestamp
   )
 }
 
