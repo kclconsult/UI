@@ -3,6 +3,16 @@
 # Backlog
 
 ## Essential
+- [ ] Mood Grid - user feedback, confirm the selection
+- [ ] Mood Grid: All 16 images on the same screen (size them the same - landscape)
+- [ ] Thumbnails for Moods to be displayed in the Summary Box
+- [X] Remove the Mood Text in the Summary Box
+- [ ] Keep Mood Timing in
+---
+- [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
+- [ ] Title the list "View Previous Feedback"
+- [ ] Document how the title the Sidebar items
+---
 - [X] Send effectiveTime on POSTs to Server
 ---
 - [ ] Randomise Tip ordering
@@ -12,24 +22,14 @@
 - [X] OR for PHQ2->PHQ9
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
-- [ ] Graph Granularity for time.
-- [ ] Bar versus Line Charts
+- [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week
 ---
 - [X] Risk Pull-down menu convert to Buttons
 - [X] Update People Plots from Isabel - figure out the People Plot sizing
 ---
-- [ ] Random ordering of Mood images
-- [ ] move Mood Tab getting data into data$ reactiveValues
+- [ ] Move Mood Tab getting data into data$ reactiveValues
 ---
-- [ ] Tablet: Mood Form - Select-and-Submit: Modal or Selected
-- [ ] Mood Grid: All 16 images on the same screen.
-- [ ] Thumbnails for Moods to be displayed in the Summary Box
-- [X] Remove the Mood Text in the Summary Box
----
-- [ ] Error Handling and Notification when Message Passer is un-reachable
----
-- [ ] Update ECG data from API call for sample-data
-- [ ] ECG updated to plot last 1000 lines
+- [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp
@@ -43,8 +43,13 @@
 ---
 - [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
 - [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
+---
+- [ ] Update ECG data from API call for sample-data
+- [ ] ECG updated to plot last 1000 lines
 
 ## Nice to have
+- [ ] Random ordering of Mood images
+- [ ] Bar versus Line Charts
 - [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
