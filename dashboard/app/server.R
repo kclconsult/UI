@@ -164,11 +164,15 @@ function(input, output, session) {
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
-                 image = input$debugSelectMoodImage,
                  # Mood options:
+                 # image = input$debugSelectMoodImage,
                  # image = "images/summary/mood-good.png",
                  # image = "images/summary/mood-meh.png",
                  # image = "images/summary/mood-bad.png",
+                 
+                 # Mood text dictates the summary image:
+                 # example: "images/emotions/summary/tired.jpg"
+                 image = paste("images/emotions/summary/", tolower(summary$status), ".jpg", sep=""),
                  alert = "blue",
                  status = "", # don't show the Mood text
                  # status = summary$status,
