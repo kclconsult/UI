@@ -7,7 +7,7 @@
 - [ ] Mood Grid: All 16 images on the same screen (size them the same - landscape)
 - [ ] Thumbnails for Moods to be displayed in the Summary Box
 - [X] Remove the Mood Text in the Summary Box
-- [ ] Keep Mood Timing in
+- [ ] Clean-up Mood Timing
 ---
 - [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [ ] Title the list "View Previous Feedback"
