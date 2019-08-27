@@ -44,6 +44,22 @@ Here is the example USERNAME used during development of a simulated patient:
 
     SHINYPROXY_USERNAME = "3e2dab80-b847-11e9-8e30-f5388ac63e8b"
 
+### CONSULT_STARTDATE
+
+The date that the Patient that the patient starts using the Consult Dashboard.
+This is inclusive of the Trial Period.
+
+### CONSULT_TRIAL_PERIOD_DAYS
+
+Length of the trial period in days.  These are always at the beginning of the
+study for the patient.
+
+### CONSULT_CHATBOT_ACTIVE
+
+"1" - Chatbot is always Active
+"0" - Chatbot is not Active
+"STARTDATE-ENDDATE" - Period when the Chatbot is active
+
 ## Message Passer Connectivity
 
 ### MESSAGE_PASSER_PROTOCOL
