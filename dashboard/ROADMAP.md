@@ -5,7 +5,7 @@
 ## Essential
 - [ ] Mood Grid - user feedback, confirm the selection
 - [ ] Mood Grid: All 16 images on the same screen (size them the same - landscape)
-- [ ] Thumbnails for Moods to be displayed in the Summary Box
+- [X] Thumbnails for Moods to be displayed in the Summary Box
 - [X] Remove the Mood Text in the Summary Box
 - [ ] Clean-up Mood Timing
 ---
