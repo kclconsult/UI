@@ -4,6 +4,8 @@ Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://",
            SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", 
            CURL_CA_BUNDLE="")
 
+Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
+
 library('shiny')
 
 # install packages

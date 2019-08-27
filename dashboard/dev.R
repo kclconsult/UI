@@ -8,6 +8,9 @@ Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://",
            MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", 
            CURL_CA_BUNDLE="")
 
+Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
+
+
 # Load Shiny to run app
 library('shiny')
 

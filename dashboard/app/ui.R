@@ -1,14 +1,27 @@
-# CONSULT Demonstration Shiny Application
+# CONSULT Dashboard Shiny Application
 #
 # Author: chipp.jansen@kcl.ac.uk
 # Date: July 2019
 #
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above (if you are working with this in RStudio)
+# This is the user-interface definition of a Shiny web application. 
+#
+# The Dashboard is run via either dashboard/run.R or dashboard/dev.R.
+# If you are in RStudio, source the dev.R file to run the app:
+# 
+#   > source("dashaboard/dev.R")
+#
+# Using the "Run App" button in RStudio will make the Dashboard run,
+# but none of the System Environment Variables will be confiured.
+#
+# Shiny evaluates ui.R *before* server.R.  All supporting code modules
+# are sourced from ui.R.
 #
 
 library(shiny)
 library(shinyjs) # JS add-ons
+
+library(jsonlite)
+
 
 # Shiny Options
 # See: https://rdrr.io/cran/shiny/man/shiny-options.html
@@ -18,8 +31,14 @@ library(shinyjs) # JS add-ons
 #   shiny.minified = FALSE # use un-minified shiny.js
 # )
 
-# local htmlwidgets
+# local package which provides htmlwidgets.
 library(Consult)
+
+# local modules
+source("version.R")
+source("components.R")
+source("services.R")
+source("data.R")
 
 ## ui.R ##
 #
@@ -174,4 +193,4 @@ htmlTemplate("www/index.html",
     
   # for rendering the list of notes and the existing feedbackPanel
   feedbackPanel = htmlOutput("feedbackPanel")
-)
+) # ui function

@@ -1,28 +1,18 @@
-# CONSULT Demonstration Shiny Application
+# CONSULT UI Dashboard Shiny Application
 #
 # Author: chipp.jansen@kcl.ac.uk
 # Date: July 2019
 #
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
+# This is the server logic of a Shiny web application.
 #
-
-library(Consult) # install in local directory packages/Consult
-
-library(jsonlite)
-library(shiny)
-
-# local modules - move into Consult package
-source("version.R")
-source("components.R")
-source("services.R")
-source("data.R")
 
 # server function with input and output objects.
 # input - references to events and input from the client
 # output - references to output objects to update in client
 # session - live session object for updating input controls
 function(input, output, session) {
+    print("server function")
+  
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
@@ -355,9 +345,6 @@ function(input, output, session) {
       
       print( paste( "DEBUG", "time (hours) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
   
-      # TODO - move this into the run.R CONSULT set-up
-      Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
-
       # Check if past-due next PHQ Time
       if(phqTimeSince > as.double(Sys.getenv("CONSULT_PHQ_DAYS_FREQ"))) {
         # Shows PHQ2 Tab
@@ -636,4 +623,4 @@ function(input, output, session) {
         logEvent("Feedback", "Pressed Submit with empty textarea.")
       }
     })
-}
+} # server function
