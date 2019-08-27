@@ -435,6 +435,49 @@ summariseMood <- function(mood) {
   )
 }
 
+# Ordering of the moods in the images/pam-resources/
+mood_order = list("afraid" = "1",
+                  "tense" = "2",
+                  "excited" = "3", 
+                  "delighted" = "4",
+                  "frustrated" = "5",
+                  "angry" = "6",
+                  "happy" = "7",
+                  "glad" = "8",
+                  "miserable" = "9",
+                  "sad" = "10",
+                  "calm" = "11",
+                  "satisfied" = "12",
+                  "gloomy" = "13",
+                  "tired" = "14",
+                  "sleepy" = "15",
+                  "serene" = "16")
+
+mood_img_src <- function(mood, thumbnail=FALSE, randomise=FALSE) {
+  # Returns the image source for a mood, uses the pam-resources.
+  
+  # Originals: 
+  #  "images/mood/tired.jpg"
+  # If thumbnail:
+  #  "images/mood/summary/tired.jpg
+
+  # get the order the mood is in the grid:
+  o = mood_order[[mood]]
+
+  # which of the three mood image options to use (defaults to 1):
+  which = "1"
+  
+  # Using images/mood/pam-resources/images/[o]_[mood]/[o]_[which].jpg
+  paste("images",
+        "mood",
+        "pam-resources",
+        "images",
+        paste(o, mood, sep="_"),
+        paste(o, "_", which, ".jpg", sep=""),
+        sep="/")
+}
+
+
 #
 # Questionnaire Response (PHQ) Data
 #

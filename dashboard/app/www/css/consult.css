@@ -82,6 +82,12 @@
   margin-top: 25px;
 }
 
+/* Mood Grid Image Sizes */
+#mood-grid img {
+    width: 125px;
+    height: 125px;
+}
+
 /* PHQ2/9 Forms Fatter radio Buttons */
 div.radio {
   margin-bottom: 22px;

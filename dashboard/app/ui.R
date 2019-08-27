@@ -21,6 +21,9 @@ options(
 # local htmlwidgets
 library(Consult)
 
+# local modules
+source("data.R")
+
 ## ui.R ##
 #
 # Define the HTML template to inject all of the Shiny
@@ -106,38 +109,23 @@ htmlTemplate("www/index.html",
   # Tab: Mood
 
   # - Mood Grid Selection Actions
-  emotionLinkTired = actionLink("emotionLinkTired",
-    tags$img(src = "images/emotions/tired.jpg", width = "100%", height = "100%")),
-  emotionLinkTense = actionLink("emotionLinkTense",         
-    tags$img(src = "images/emotions/tense.jpg", width = "100%", height = "100%")),
-  emotionLinkSleepy = actionLink("emotionLinkSleepy",       
-    tags$img(src = "images/emotions/sleepy.jpg", width = "100%", height = "100%")),
-  emotionLinkSerene = actionLink("emotionLinkSerene",       
-    tags$img(src = "images/emotions/serene.jpg", width = "100%", height = "100%")),
-  emotionLinkSatisfied = actionLink("emotionLinkSatisfied", 
-    tags$img(src = "images/emotions/satisfied.jpg", width = "100%", height = "100%")),
-  emotionLinkSad = actionLink("emotionLinkSad",             
-    tags$img(src = "images/emotions/sad.jpg", width = "100%", height = "100%")),
-  emotionLinkMiserable = actionLink("emotionLinkMiserable", 
-    tags$img(src = "images/emotions/miserable.jpg", width = "100%", height = "100%")),
-  emotionLinkHappy = actionLink("emotionLinkHappy",         
-    tags$img(src = "images/emotions/happy.jpg", width = "100%", height = "100%")),
-  emotionLinkGloomy = actionLink("emotionLinkGloomy",         
-    tags$img(src = "images/emotions/gloomy.jpg", width = "100%", height = "100%")),
-  emotionLinkGlad = actionLink("emotionLinkGlad",             
-    tags$img(src = "images/emotions/glad.jpg", width = "100%", height = "100%")),
-  emotionLinkFrustrated = actionLink("emotionLinkFrustrated", 
-    tags$img(src = "images/emotions/frustrated.jpg", width = "100%", height = "100%")),
-  emotionLinkExcited = actionLink("emotionLinkExcited",       
-    tags$img(src = "images/emotions/excited.jpg", width = "100%", height = "100%")),
-  emotionLinkDelighted = actionLink("emotionLinkDelighted",   
-    tags$img(src = "images/emotions/delighted.jpg", width = "100%", height = "100%")),
-  emotionLinkCalm = actionLink("emotionLinkCalm",             
-    tags$img(src = "images/emotions/calm.jpg", width = "100%", height = "100%")),
-  emotionLinkAngry = actionLink("emotionLinkAngry",           
-    tags$img(src = "images/emotions/angry.jpg", width = "100%", height = "100%")),
-  emotionLinkAfraid = actionLink("emotionLinkAfraid",       
-    tags$img(src = "images/emotions/afraid.jpg", width = "100%", height = "100%")),
+  # Note: uses mood_img_src() (from data.R) to resolve image paths 
+  emotionLinkAfraid = actionLink("emotionLinkAfraid", tags$img(src = mood_img_src("afraid"))),
+  emotionLinkTense = actionLink("emotionLinkTense",   tags$img(src = mood_img_src("tense"))),
+  emotionLinkExcited = actionLink("emotionLinkExcited",       tags$img(src = mood_img_src("excited"))),
+  emotionLinkDelighted = actionLink("emotionLinkDelighted",   tags$img(src = mood_img_src("delighted"))),
+  emotionLinkFrustrated = actionLink("emotionLinkFrustrated", tags$img(src = mood_img_src("frustrated"))),
+  emotionLinkAngry = actionLink("emotionLinkAngry",   tags$img(src = mood_img_src("angry"))),
+  emotionLinkHappy = actionLink("emotionLinkHappy",   tags$img(src = mood_img_src("happy"))),
+  emotionLinkGlad = actionLink("emotionLinkGlad",     tags$img(src = mood_img_src("glad"))),
+  emotionLinkMiserable = actionLink("emotionLinkMiserable", tags$img(src = mood_img_src("miserable"))),
+  emotionLinkSad = actionLink("emotionLinkSad",       tags$img(src = mood_img_src("sad"))),
+  emotionLinkCalm = actionLink("emotionLinkCalm",     tags$img(src = mood_img_src("calm"))),
+  emotionLinkSatisfied = actionLink("emotionLinkSatisfied", tags$img(src = mood_img_src("satisfied"))),
+  emotionLinkGloomy = actionLink("emotionLinkGloomy", tags$img(src = mood_img_src("gloomy"))),
+  emotionLinkTired = actionLink("emotionLinkTired",   tags$img(src = mood_img_src("tired"))),
+  emotionLinkSleepy = actionLink("emotionLinkSleepy", tags$img(src = mood_img_src("sleepy"))),
+  emotionLinkSerene = actionLink("emotionLinkSerene", tags$img(src = mood_img_src("serene"))),
   
   # - PHQ2 Form Controls
   # -- radioButtons: https://shiny.rstudio.com/reference/shiny/1.3.2/radioButtons.html
