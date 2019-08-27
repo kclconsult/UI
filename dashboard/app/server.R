@@ -165,7 +165,7 @@ function(input, output, session) {
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
                  # Mood text dictates the summary image:
-                 image = mood_img_src(summary$mood, which_image = summary$which_image),
+                 image = mood_img_src(summary$status),
                  alert = "blue",
                  status = "", # don't show the Mood text
                  # status = summary$status,
@@ -371,23 +371,6 @@ function(input, output, session) {
     })
     
     # -- Mood Grid Events
-    # observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
-    # observeEvent(input$emotionLinkTense,      { sendMoodObservation("tense") })
-    # observeEvent(input$emotionLinkSleepy,     { sendMoodObservation("sleepy") })
-    # observeEvent(input$emotionLinkSerene,     { sendMoodObservation("serene") })
-    # observeEvent(input$emotionLinkSatisfied,  { sendMoodObservation("satisfied") })
-    # observeEvent(input$emotionLinkSad,        { sendMoodObservation("sad") })
-    # observeEvent(input$emotionLinkMiserable,  { sendMoodObservation("miserable") })
-    # observeEvent(input$emotionLinkHappy,      { sendMoodObservation("happy") })
-    # observeEvent(input$emotionLinkGloomy,     { sendMoodObservation("gloomy") })
-    # observeEvent(input$emotionLinkGlad,       { sendMoodObservation("glad") })
-    # observeEvent(input$emotionLinkFrustrated, { sendMoodObservation("frustrated") })
-    # observeEvent(input$emotionLinkExcited,    { sendMoodObservation("excited") })
-    # observeEvent(input$emotionLinkDelighted,  { sendMoodObservation("delighted") })
-    # observeEvent(input$emotionLinkCalm,       { sendMoodObservation("calm") })
-    # observeEvent(input$emotionLinkAngry,      { sendMoodObservation("angry") })
-    # observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
-    
     output$emotionLinkTired = renderMoodLink("tired")
     output$emotionLinkTense = renderMoodLink("tense")
     output$emotionLinkSleepy = renderMoodLink("sleepy")
@@ -405,9 +388,50 @@ function(input, output, session) {
     output$emotionLinkAngry = renderMoodLink("angry")
     output$emotionLinkAfraid = renderMoodLink("afraid")
     
+    # Event: moodObservation is send by the Mood Links
     observeEvent(input$moodObservation, {
       logEvent("MoodGrid", paste("Mood Selected", input$moodObservation))
+    
+      # Set the contents of the Selected Mood Image
+      output$selectedMoodImage = renderImage({
+        img_src = mood_img_src(input$moodObservation, medium_size=TRUE)
+        print(img_src)
+        filename = normalizePath(file.path('./www', img_src))
+        print(filename)
+        list(src =  filename)
+      }, deleteFile = FALSE)
+
+      # Show the Selected Mood Tab
+      runjs("$('#mood-tabs a[href=\"#mood-selected\"]').tab('show');")
+    })
+
+    # Event: Patient accepts the selected Mood Image
+    observeEvent(input$selectedMoodImageYesButton, {
+      logEvent("MoodGrid", "Accepts Selected Mood Image")
+      
+      # Sends the current moodObservation
       sendMoodObservation(input$moodObservation)
+      
+      # Clear the selected Mood Image
+      output$selectedMoodImage = renderImage({
+        list(src =  normalizePath(file.path('./www/images/blank.png', img_src)))
+      }, deleteFile = FALSE)
+      
+      # Return to the Mood Grid
+      runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+    })
+    
+    # Event: Patient rejects selected Mood Image
+    observeEvent(input$selectedMoodImageNoButton, {
+      logEvent("MoodGrid", "Rejects Selected Mood Image")
+
+      # Clear the selected Mood Image
+      output$selectedMoodImage = renderImage({
+        list(src =  normalizePath(file.path('./www/images/blank.png')))
+      }, deleteFile = FALSE)
+      
+      # Return to the Mood Grid
+      runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
     })
     
     # -- PHQ2 Screening Form

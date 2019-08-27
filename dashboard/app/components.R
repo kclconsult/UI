@@ -15,14 +15,14 @@
 
 renderMoodLink <- function(mood) {
   # Renders a Mood Link with a particular mood image
-  # TODO - specifiy a ENV for Ranomising Mood Images
+  # TODO - specifiy a ENV for Randomising Mood Images
   img_src = mood_img_src(mood, randomise = TRUE)
   
   # retrieves which_mood is being displayed
-  which_mood = mood_from_img_src(img_src)
+  mood_with_image = mood_from_img_src(img_src)
 
   # Generate a js to send the mood (and specific mood choice) under a single input$ variable:
-  onclickjs = paste("Shiny.setInputValue('moodObservation', '", which_mood, "', {priority: 'event'});", sep='')
+  onclickjs = paste("Shiny.setInputValue('moodObservation', '", mood_with_image, "', {priority: 'event'});", sep='')
   
   # And attach that js to an <a> tag with an image as it's content.
   t = tags$a(tags$img(src = img_src), onclick = onclickjs)

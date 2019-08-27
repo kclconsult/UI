@@ -17,6 +17,8 @@ library(tidyverse)
 library(anytime)
 
 # Environment Variables Specific to the services
+
+# TODO - remove these
 Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", 
            MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", 
            SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", 
@@ -25,7 +27,7 @@ Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://",
 # - message passer specifics
 MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
 MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
-MP_URL = paste0(MP_PROTOCOL, MP_HOST)
+MP_URL = paste(MP_PROTOCOL, MP_HOST, sep = "")
 
 # - certificate authoritys
 CA_BUNDLE = Sys.getenv("CURL_CA_BUNDLE")

@@ -428,19 +428,11 @@ summariseMood <- function(mood) {
   # NOTE: using as.character because R defaults to interpresting
   # the recordedEmotion as a "factor"
   recordedEmotion = as.character(mood_desc$recordedEmotion[1])
-  
-  # recordedEmotion will take the form "[mood]_[which_image]":
-  r_split = strsplit(recordedEmotion, "_")
-  mood = r_split[[1]][1]
-  which_image = r_split[[1]][2]
-  
   timestamp = mood_desc$timestamp[1] # latest mood reading
 
   # Return summary values
   list(
-    status = mood,
-    mood = mood,
-    which_image = which_image,
+    status = recordedEmotion,
     timestamp = timestamp
   )
 }
@@ -481,8 +473,13 @@ mood_default = list("afraid" = "2",
                     "sleepy" = "3",
                     "serene" = "2")
 
-mood_img_src <- function(mood, which_image = NA, randomise = FALSE, medium_size = FALSE) {
+mood_img_src <- function(mood, randomise = FALSE, medium_size = FALSE) {
   # Returns the image source for a mood, uses the pam-resources.
+
+  # mood *may* take the form "[mood]_[which_image]":
+  mood_split = strsplit(mood, "_")
+  mood = mood_split[[1]][1]
+  which_image = mood_split[[1]][2]
   
   # get the order the mood is in the grid:
   o = mood_order[[mood]]

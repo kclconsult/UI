@@ -220,7 +220,7 @@
     		  {{ phq9SubmitButton }}
   		  </div>
 
-        <!-- Default Mood Grid Panel -->
+        <!-- Mood Grid Panel -->
   		  <div class="tab-pane active" id="mood-grid">
     			<h4>Which image best represents your current MOOD?</h4>
 
@@ -250,18 +250,35 @@
             <div id="mood-16-serene" class="col-sm-3">{{ emotionLinkSerene }}</div>
           </div>
         </div> <!-- /Mood Grid -->
+
+        <!-- Mood Grid Panel -->
+  		  <div class="tab-pane" id="mood-selected">
+    			<h4>Is this the image that best represents your current MOOD?</h4>
+          <div class="row">
+              <div class="col-sm-2">
+                {{ selectedMoodImageYesButton }}
+              </div>
+              <div class="col-sm-2">
+                {{ selectedMoodImageNoButton }}
+              </div>
+              <div class="col-sm-8">
+                {{ selectedMoodImage }}
+              </div>
+          </div>
+        </div> <!-- /Mood Selected -->
+
       </div> <!-- /Sub-Tab Content -->
 
 	  <div class="debug well">
-            <h4>Debug Panel</h4>
-            <!--
-              Important to KEEP the "mood-tabs" b/c they are used to switch tabs
-              but they may be hidden from user when DEBUG is on -->
-            <ul id="mood-tabs" class="nav nav-pills">
-              <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
-              <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
-              <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
-            </ul>
+      <h4>Debug Panel</h4>
+      <!-- Important to KEEP the "mood-tabs" b/c they are used to switch tabs
+           but they may be hidden from user when DEBUG is on -->
+      <ul id="mood-tabs" class="nav nav-pills">
+        <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
+        <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
+        <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
+        <li><a href="#mood-selected" data-toggle="pill">Mood Selected</a></li>
+      </ul>
 	  </div>
 	</div> <!-- /Tab: Mood -->
 

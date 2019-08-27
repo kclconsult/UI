@@ -3,33 +3,18 @@
 # Backlog
 
 ## Essential
-- [ ] Mood Grid - user feedback, confirm the selection
-- [ ] Mood Grid: All 16 images on the same screen (size them the same - landscape)
-- [X] Thumbnails for Moods to be displayed in the Summary Box
-- [X] Remove the Mood Text in the Summary Box
+- [X] Mood Grid - user feedback, confirm the selection
 - [ ] Clean-up Mood Timing
+- [ ] Move Mood Tab getting data into data$ reactiveValues
 ---
 - [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [ ] Title the list "View Previous Feedback"
-- [ ] Document how the title the Sidebar items
----
-- [X] Send effectiveTime on POSTs to Server
+- [ ] Document how to change the title of the Sidebar items
 ---
 - [ ] Randomise Tip ordering
-- [X] <hr /> btw Tips/Recommendations
----
-- [X] Partial params submission for PHQ2 only
-- [X] OR for PHQ2->PHQ9
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week
----
-- [X] Risk Pull-down menu convert to Buttons
-- [X] Update People Plots from Isabel - figure out the People Plot sizing
----
-- [ ] Move Mood Tab getting data into data$ reactiveValues
----
-- [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp
@@ -46,9 +31,10 @@
 ---
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines
+---
+- [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 
 ## Nice to have
-- [ ] Random ordering of Mood images
 - [ ] Bar versus Line Charts
 - [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
@@ -60,6 +46,15 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] <hr /> btw Tips/Recommendations
+- [X] Risk Pull-down menu convert to Buttons
+- [X] Update People Plots from Isabel - figure out the People Plot sizing
+- [X] Partial params submission for PHQ2 only
+- [X] OR for PHQ2->PHQ9
+- [X] Mood Grid: All 16 images on the same screen (size them the same - landscape)
+- [X] Thumbnails for Moods to be displayed in the Summary Box
+- [X] Remove the Mood Text in the Summary Box
+- [X] Send client-side effectiveTime on POSTs to Server
 - [X] Logging service - API - logging function logs Tab selections
 - [X] Fix ClinicalImpressions Refreshing upon submit
 - [X] Tablet: Feedback, side-bar for previous feedback
