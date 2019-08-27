@@ -44,7 +44,7 @@ Here is the example USERNAME used during development of a simulated patient:
 
     SHINYPROXY_USERNAME = "3e2dab80-b847-11e9-8e30-f5388ac63e8b"
 
-### CONSULT_STARTDATE
+### CONSULT_START_TIMESTAMP
 
 The date that the Patient that the patient starts using the Consult Dashboard.
 This is inclusive of the Trial Period.
@@ -106,6 +106,10 @@ mood | Mood Grid and PHQ2/9 forms
 risk | Risk Graphics  
 tips | Tips (Recommendations)
 feedback | Feedback Tab
+
+### CONSULT_SAMPLE_DATA
+
+Specify whether to load from the sample-data/ directory to demonstrate the app.
 
 ## PHQ 2/9 Form Logic
 

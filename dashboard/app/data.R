@@ -345,10 +345,14 @@ summariseECG <- function(ecg) {
   # Summary is based number of samples
   n = length(ecg$ecg)
   
+  # "We have a ECG trace data for x% of the time""
+  # "There is no ECG or little ECG data collected. Here is a list of what you can we do to collect more readings: reposition patch, connect more often."
+  
   # Return summary values
   list(
     status    = paste(n, "samples"),
-    timestamp = ecg_desc$timestamp[1] # latest ecg reading
+    timestamp = ecg_desc$timestamp[1], # latest ecg reading
+    n = n
   )
 }
 
@@ -474,14 +478,15 @@ mood_default = list("afraid" = "2",
                     "serene" = "2")
 
 mood_img_src <- function(mood, randomise = FALSE, medium_size = FALSE) {
-  # Returns the image source for a mood, uses the pam-resources.
+  # Returns the image source for a mood, uses the "images/pam-resources".
 
-  # mood *may* take the form "[mood]_[which_image]":
+  # mood *may* take the form "[mood]_[which_image]" (e.g. "angry_3")
+  # or just [mood] (e.g. "angry")
   mood_split = strsplit(mood, "_")
   mood = mood_split[[1]][1]
-  which_image = mood_split[[1]][2]
+  which_image = mood_split[[1]][2] # will be NA if not specified
   
-  # get the order the mood is in the grid:
+  # Get the order the mood is in the grid:
   o = mood_order[[mood]]
 
   # which of the three mood image options to use:
@@ -540,12 +545,14 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   #if(sample) { # fake sample-data
   #  phq = samplePHQData()
   #} else {
-  phq = getQuestionnaireResponses( startTimestamp, endTimestamp )
+  phq = getQuestionnaireResponses(startTimestamp, endTimestamp)
   phq$timestamp = paste(phq$datem, phq$time, sep=" ")
   #}
   # The fields returned in the recordedPHQ data column:
   #... call names(phq) to get the field names...
   # ---------------------------------------------------
+  # FeelingDownInitial
+  # LittleInterestInitial
   # LittleInterest
   # FeelingDown
   # TroubleSleeping
@@ -565,7 +572,25 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   # sort in descending date, time
   phq_desc = arrange(phq, desc(datem), desc(time))
   
-  return( phq )
+  return(phq)
+}
+
+summarisePHQ <- function(phq) {
+  # Generate a summary for Mood (i.e. the most recent mood)
+  
+  # sort in descending date, time
+  phq_desc = arrange(phq, desc(datem), desc(time))
+  
+  # Summary is based on the most recent value.
+  n = nrow(phq)
+  timestamp = phq_desc$timestamp[1] # latest mood reading
+  
+  # Return summary values
+  list(
+    status = paste(n, "PHQ forms submitted"),
+    timestamp = timestamp,
+    n = n
+  )
 }
 
 #

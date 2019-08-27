@@ -148,10 +148,10 @@ htmlTemplate("www/index.html",
   # -- radioButtons: https://shiny.rstudio.com/reference/shiny/1.3.2/radioButtons.html
   phq2Q1YesNo = radioButtons("phq2Q1YesNo", NULL, # no label
                              selected = character(0), # initially nothing selected
-                             choices = c("Yes" = "y", "No" = "n")),
+                             choices = c("Yes" = "1", "No" = "0")),
   phq2Q2YesNo = radioButtons("phq2Q2YesNo", NULL, # no label
                              selected = character(0), # initially nothing selected
-                             choices = c("Yes" = "y", "No" = "n")),
+                             choices = c("Yes" = "1", "No" = "0")),
   phq2SubmitButton = actionButton("phq2SubmitButton", "Submit"),
   
   # - PHQ9 Form Controls

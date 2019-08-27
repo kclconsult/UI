@@ -193,7 +193,10 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # chipp/22-aug-2019: PHQ2 ordering of Q1 and Q2 parameters were switched
   # from what is presenting in message passer API documentation.
   # "FeelingDownInitial" question is *before* LittleInterestInitial question
-
+  #
+  # chipp/27-aug-2019: PHQ2 answers are strings: Yes = "1" / No = "0". Sending "-1"
+  # answers for when PHQ9 is not answered.
+  
   # Build the Message Passer request URL 
   requestUrl <- paste(MP_URL, 
                       "QuestionnaireResponse", 
@@ -236,8 +239,8 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # POST for screening (PHQ2) questions
   body = append(body, screening) # append screening 
   
-    # Validate and send PHQ9 Form if either screening questions are "y"
-  if((screening$LittleInterestInitial == "y") | (screening$FeelingDownInitial == "y")) {
+    # Validate and send PHQ9 Form if either screening questions are Yes ("1")
+  if((screening$LittleInterestInitial == "1") | (screening$FeelingDownInitial == "1")) {
   
     # check if all of the questionScores are present
     if(!validateKeysInList(questionScores, scores, context="sendQuestionnaireResponses")) {
@@ -250,7 +253,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
       # Question scores are in range
       if(scores[[p]] %in% c("0", "1", "2", "3")) {
         totalScore = totalScore + as.integer(scores[[p]])
-      } else { # if(scores[[p]] != "-") {
+      } else {
         warning(paste("sendQuestionnaireResponses -- invalid value range for ", p, "=", scores[[p]]))
         return(FALSE)
       }
@@ -266,15 +269,14 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
     } else { # Difficulty not answered "-"
       body[["Difficulty"]] = "-"
     }
-    
-  } # else { # Only send the PHQ2 values (and '-' stub values)
-    # for(p in questionScores) {
-    #   body[[p]] = "-"
-    # }
-    # body[["TotalScore"]] = "-"
-    # body[["Difficulty"]] = "-"
-    # }
   
+  } else { # Only send the PHQ2 values and '-1' stub values for the PHQ9 values
+    for(p in questionScores) {
+      body[[p]] = "-1"
+    }
+    body[["TotalScore"]] = "-1"
+    body[["Difficulty"]] = "-"
+  }
 
   # Start measuring call
   start_time = Sys.time() 

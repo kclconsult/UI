@@ -11,8 +11,6 @@
 # output - references to output objects to update in client
 # session - live session object for updating input controls
 function(input, output, session) {
-    print("server function")
-  
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
@@ -61,10 +59,42 @@ function(input, output, session) {
     #
     # Should be all Clinical Impressions
     #
-    data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
+    data$Feedback = loadClinicalImpressionData(startTimestamp="2018-08-13T16:26:26Z", 
                                                  endTimestamp="2020-02-28T00:00:00Z",
                                                  sample = SAMPLE_DATA)
 
+    # - PHQ (Questionnaire Responses)
+    #
+    # Should be all Questionnaire Responses
+    #
+    data$PHQ = loadPHQData(startTimestamp = "2019-08-22T16:26:26Z", 
+                           endTimestamp   = "2020-02-28T00:00:00Z", 
+                           sample = FALSE)
+
+    ### Summaries
+    # Store Summary data in reactiveValues
+    summary = reactiveValues()
+    
+    observe({ # Summarise the BP dataset
+      summary$BP = summariseBloodPressure(data$BP) 
+    })
+     
+    observe({ # Summarise the HR dataset
+      summary$HR = summariseHeartRate(data$HR)
+    })
+    
+    observe({ # Summarise the ECG dataset
+      summary$ECG = summariseECG(data$ECG)
+    })
+    
+    observe({ # Summarise the Mood dataset
+      summary$Mood = summariseMood(data$Mood)
+    })
+    
+    observe({ # Summarise the PHQ dataset
+      summary$PHQ = summarisePHQ(data$PHQ)
+    })
+    
 #####  
     #
     # Tab: Summary Boxes
@@ -77,14 +107,12 @@ function(input, output, session) {
     
     # - Blood Pressure Summary
     output$summaryBP = renderSummaryBox({
-      # Summarise the BP dataset
-      summary = summariseBloodPressure(data$BP)
-      
       # Override alert color from the debug control
       if(input$debugSelectBPAlertColor != "") {
         print(paste("DEBUG BP Alert: ", input$debugSelectBPAlertColor))
         summary$alert = input$debugSelectBPAlertColor
       }
+      
       # Override alert text
       if(input$debugSelectBPAlertText != "") {
         print(paste("DEBUG BP Alert Text: ", input$debugSelectBPAlertText))
@@ -94,13 +122,14 @@ function(input, output, session) {
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Blood Pressure",
                  image = "images/summary/bloodpressure.png",
-                 alert = summary$alert,
-                 alert_text = summary$alert_text,
-                 status = summary$status,
-                 timestamp = summary$timestamp,
+                 alert = summary$BP$alert,
+                 alert_text = summary$BP$alert_text,
+                 status = summary$BP$status,
+                 timestamp = summary$BP$timestamp,
                  source = "Home")
     })
     
+    # Event: Clicking on the Blood Pressure Summary Box
     observeEvent(input$summaryBP, {
       logEvent("SummaryBoxClicked", "Blood Pressure")
       # change Tab
@@ -109,18 +138,16 @@ function(input, output, session) {
     
     # - Heart Rate Summary
     output$summaryHR = renderSummaryBox({
-      # Summarise the HR dataset
-      summary = summariseHeartRate(data$HR)
-      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
                  image = "images/summary/heartrate.png",
                  alert = "blue",
-                 status = summary$status,
-                 timestamp = summary$timestamp,
+                 status = summary$HR$status,
+                 timestamp = summary$HR$timestamp,
                  source = "Home")
     })
     
+    # Event: Clicking on the HR Summary Box
     observeEvent(input$summaryHR, {
       logEvent("SummaryBoxClicked", "Heart Rate")
       # change Tab
@@ -129,18 +156,16 @@ function(input, output, session) {
     
     # - ECG Summary
     output$summaryECG = renderSummaryBox({
-      # Summarise the ECG dataset
-      summary = summariseECG(data$ECG)
-      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
                  image = "images/summary/ecg.png",
                  alert = "blue",
-                 status = summary$status,
-                 timestamp = summary$timestamp,
+                 status = summary$ECG$status,
+                 timestamp = summary$ECG$timestamp,
                  source = "Clinic")
     })
 
+    # Event: Summary Box for ECG is clicked
     observeEvent(input$summaryECG, {
       logEvent("SummaryBoxClicked", "ECG")
       # change Tab
@@ -149,20 +174,18 @@ function(input, output, session) {
     
     # - Mood Summary
     output$summaryMood = renderSummaryBox({
-      # Summarise the Mood dataset
-      summary = summariseMood(data$Mood)
-      
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
                  # Mood text dictates the summary image:
-                 image = mood_img_src(summary$status),
+                 image = mood_img_src(summary$Mood$status),
                  alert = "blue",
                  status = "", # don't show the Mood text
-                 # status = summary$status,
-                 timestamp = summary$timestamp,
+                 # status = summary$Mood$status,
+                 timestamp = summary$Mood$timestamp,
                  source = "Home")
     })
     
+    # Event: Summary Box for Mood is clicked
     observeEvent(input$summaryMood, {
       logEvent("SummaryBoxClicked", "Mood")
       # change Tab
@@ -324,26 +347,12 @@ function(input, output, session) {
     #
     observeEvent( input$tabMoodLink, { 
       logEvent( "TabChanged", "Mood Tab Selected" )
-      myMood = loadMoodData( startTimestamp = "2016-02-26T00:00:00Z", 
-                             endTimestamp   = "2020-02-28T00:00:00Z", 
-                             sample = FALSE )
-      moodTime = strptime( myMood$timestamp[1], "%Y-%m-%d %H:%M:%S" )
 
-      print( paste( "DEBUG", moodTime, myMood$recordedEmotion[1] ))
-      myPHQ = loadPHQData( startTimestamp = "2016-02-26T00:00:00Z", 
-                           endTimestamp   = "2020-02-28T00:00:00Z", 
-                           sample = FALSE )
-      phqTime = strptime( myPHQ$timestamp[1], "%Y-%m-%d %H:%M:%S" )
-      print( paste( "DEBUG", phqTime, names( myPHQ ) ))
-
-      #moodTimeSince = Sys.time() - moodTime
-      #phqTimeSince = Sys.time() - phqTime
-      
       # Time difference unites units will vary depending on the time difference: Specify "days":
-      moodTimeSince = difftime(Sys.time(), moodTime, units="days")
-      phqTimeSince = difftime(Sys.time(), phqTime, units="days")
+      moodTimeSince = difftime(Sys.time(), summary$Mood$timestamp, units="days")
+      phqTimeSince = difftime(Sys.time(), summary$PHQ$timestamp, units="days")
       
-      print( paste( "DEBUG", "time (hours) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
+      print( paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
   
       # Check if past-due next PHQ Time
       if(phqTimeSince > as.double(Sys.getenv("CONSULT_PHQ_DAYS_FREQ"))) {
@@ -356,22 +365,22 @@ function(input, output, session) {
     })
     
     # -- Mood Grid Events
-    output$emotionLinkTired = renderMoodLink("tired")
-    output$emotionLinkTense = renderMoodLink("tense")
-    output$emotionLinkSleepy = renderMoodLink("sleepy")
-    output$emotionLinkSerene = renderMoodLink("serene")
-    output$emotionLinkSatisfied = renderMoodLink("satisfied")
-    output$emotionLinkSad = renderMoodLink("sad")
-    output$emotionLinkMiserable = renderMoodLink("miserable")
-    output$emotionLinkHappy = renderMoodLink("happy")
-    output$emotionLinkGloomy = renderMoodLink("gloomy")
-    output$emotionLinkGlad = renderMoodLink("glad")
-    output$emotionLinkFrustrated= renderMoodLink("frustrated")
-    output$emotionLinkExcited = renderMoodLink("excited")
-    output$emotionLinkDelighted = renderMoodLink("delighted")
-    output$emotionLinkCalm = renderMoodLink("calm")
-    output$emotionLinkAngry = renderMoodLink("angry")
-    output$emotionLinkAfraid = renderMoodLink("afraid")
+    output$emotionLinkTired      = renderMoodLink("tired")
+    output$emotionLinkTense      = renderMoodLink("tense")
+    output$emotionLinkSleepy     = renderMoodLink("sleepy")
+    output$emotionLinkSerene     = renderMoodLink("serene")
+    output$emotionLinkSatisfied  = renderMoodLink("satisfied")
+    output$emotionLinkSad        = renderMoodLink("sad")
+    output$emotionLinkMiserable  = renderMoodLink("miserable")
+    output$emotionLinkHappy      = renderMoodLink("happy")
+    output$emotionLinkGloomy     = renderMoodLink("gloomy")
+    output$emotionLinkGlad       = renderMoodLink("glad")
+    output$emotionLinkFrustrated = renderMoodLink("frustrated")
+    output$emotionLinkExcited    = renderMoodLink("excited")
+    output$emotionLinkDelighted  = renderMoodLink("delighted")
+    output$emotionLinkCalm       = renderMoodLink("calm")
+    output$emotionLinkAngry      = renderMoodLink("angry")
+    output$emotionLinkAfraid     = renderMoodLink("afraid")
     
     # Event: moodObservation is send by the Mood Links
     observeEvent(input$moodObservation, {
@@ -410,7 +419,7 @@ function(input, output, session) {
     observeEvent(input$selectedMoodImageNoButton, {
       logEvent("MoodGrid", "Rejects Selected Mood Image")
 
-      # Clear the selected Mood Image
+      # Clear the selected mood image by displaying a blank image
       output$selectedMoodImage = renderImage({
         list(src =  normalizePath(file.path('./www/images/blank.png')))
       }, deleteFile = FALSE)
@@ -429,8 +438,8 @@ function(input, output, session) {
     observeEvent(input$phq2SubmitButton, { 
       logEvent("PHQ2", paste("Submitted Form Q1:", input$phq2Q1YesNo, "Q2:", input$phq2Q2YesNo))
       
-      # show PHQ9 form if both Qestion Answers are Yes
-      if(input$phq2Q1YesNo == "y" | input$phq2Q2YesNo == "y") { 
+      # show PHQ9 form if either Question Answers are Yes
+      if(input$phq2Q1YesNo == "1" | input$phq2Q2YesNo == "1") { 
         # Shows PHQ9 Tab
         runjs("$('#mood-tabs a[href=\"#phq9\"]').tab('show');")
       } else {
@@ -441,22 +450,24 @@ function(input, output, session) {
             "LittleInterestInitial" = input$phq2Q2YesNo   # PHQ2 Yes/No Screening Q2
           )
         )
+        
         # Shows (default) Mood Grid
         runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+        
+        # Clean-up PHQ2 Form
+        phqRadios = c("phq2Q1YesNo",
+                      "phq2Q2YesNo")
+        
+        for(id in phqRadios) {
+          # These *should* clear the radioButtons for the questions, but 
+          # bug in JS client does not update values.
+          # updateRadioButtons(session, id, selected = character(0))
+          
+          # *FIX* Run JS
+          runjs(paste("$('input[name=",id,"]').prop('checked', false);", sep='')) # clears the radio input visually
+          runjs(paste("Shiny.onInputChange('",id,"', null);", sep='')) # clears the Shiny input$ reactiveVal
+        }
       }
-      
-      # Clear PHQ2 Inputs
-      #
-      # These *should* clear the radioButtons for the questions, but 
-      # bug in JS client does not update values.
-      # updateRadioButtons(session, "phq2Q1YesNo", selected = character(0))
-      # updateRadioButtons(session, "phq2Q2YesNo", selected = character(0))
-
-      # *FIX* Run JS
-      runjs("$('input[name=phq2Q1YesNo]').prop('checked', false);") # clears the radio input visually
-      runjs("Shiny.onInputChange('phq2Q1YesNo', null);") # clears the Shiny input$ reactiveVal
-      runjs("$('input[name=phq2Q2YesNo]').prop('checked', false);")
-      runjs("Shiny.onInputChange('phq2Q2YesNo', null);")
     })
 
     # -- PHQ9 Questionaire Response
@@ -519,8 +530,8 @@ function(input, output, session) {
       logEvent("PHQ9", paste("Submitted Form"))
       sendQuestionnaireResponses(
         screening = list(
-          "LittleInterestInitial" = "Yes", # PHQ2 Yes/No Screening Q1
-          "FeelingDownInitial" = "Yes"     # PHQ2 Yes/No Screening Q1
+          "FeelingDownInitial"    = input$phq2Q1YesNo, # PHQ2 Yes/No Screening Q1
+          "LittleInterestInitial" = input$phq2Q2YesNo  # PHQ2 Yes/No Screening Q2
         ),
         scores = list(
           "LittleInterest"       = input$phq9Q1Score, # PHQ9 score for LittleInterest (Q1)
@@ -538,19 +549,23 @@ function(input, output, session) {
       # Shows Mood Grid after submitting
       runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
       
-      # Clear PHQ9 Inputs
-      phq9Radios = c("phq9Q1Score", 
-                     "phq9Q2Score",
-                     "phq9Q3Score",
-                     "phq9Q4Score",
-                     "phq9Q5Score",
-                     "phq9Q6Score",
-                     "phq9Q7Score",
-                     "phq9Q8Score",
-                     "phq9Q9Score",
-                     "phq9Q10Score")
+      #
+      # Clean-up PHQ 2 and 9 RadioButtons
+      # 
+      phqRadios = c("phq2Q1YesNo",
+                    "phq2Q2YesNo",
+                    "phq9Q1Score", 
+                    "phq9Q2Score",
+                    "phq9Q3Score",
+                    "phq9Q4Score",
+                    "phq9Q5Score",
+                    "phq9Q6Score",
+                    "phq9Q7Score",
+                    "phq9Q8Score",
+                    "phq9Q9Score",
+                    "phq9Q10Score")
       
-      for(id in phq9Radios) {
+      for(id in phqRadios) {
         # These *should* clear the radioButtons for the questions, but 
         # bug in JS client does not update values.
         # updateRadioButtons(session, id, selected = character(0))
@@ -616,8 +631,8 @@ function(input, output, session) {
           updateTextAreaInput(session, "feedbackTextarea", value = "") # clear the feedbackTextArea
           # Update the data$Feedback
           data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
-                                                       endTimestamp="2020-02-28T00:00:00Z",
-                                                       sample = SAMPLE_DATA)
+                                                     endTimestamp="2020-02-28T00:00:00Z",
+                                                     sample = SAMPLE_DATA)
         }
       } else {
         logEvent("Feedback", "Pressed Submit with empty textarea.")
