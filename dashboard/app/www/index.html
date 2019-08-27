@@ -72,45 +72,42 @@
       	<div class="collapse navbar-collapse" id="consult-navbar-collapse">
           <ul id="consult-tabs" class="nav navbar-nav">
             <li class="active">{{ tabSummaryLink }}</li>
-  	    <li>{{ tabBPLink }}</li>
+  	        <li>{{ tabBPLink }}</li>
             <li>{{ tabHRLink }}</li>
-  	    <li>{{ tabECGLink }}</li>
-  	    <li>{{ tabMoodLink }}</li>
-  	    <li>{{ tabRiskLink }}</li>
-  	    <li>{{ tabRecommendationsLink }}</li>
-  	    <li>{{ tabFeedbackLink }}</li>
+  	        <li>{{ tabECGLink }}</li>
+  	        <li>{{ tabMoodLink }}</li>
+  	        <li>{{ tabRiskLink }}</li>
+  	        <li>{{ tabRecommendationsLink }}</li>
+  	        <li>{{ tabFeedbackLink }}</li>
           </ul>
       	</div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
     </nav>
 
-    <!-- Page Content Container  -->
-    <div class="container-fluid">
+  <!-- Page Content Container  -->
+  <div class="container-fluid">
 
-      <!-- Tab panes -->
-      <div class="row tab-content">
+  <!-- Tab panes -->
+  <div class="row tab-content">
 
 	<!-- Tab: Summary -->
 	<div class="col-sm-12 tab-pane active" id="summary">
-
-      <!-- Grid of Summary Boxes -->
-			<div class="row">
-			  <div class="col-sm-6">{{ summaryBP }} </div>
-				<div class="col-sm-6">{{ summaryHR }}</div>
-			</div>
-			<div class="row">
-        <div class="col-sm-6">{{ summaryECG }}</div>
-				<div class="col-sm-6">{{ summaryMood }}</div>
-			</div>
-			<!-- DEUBG Summary Boxes -->
-			<div class="debug well">
-			  <h4>Debug Panel</h4>
-			  {{ debugSelectBPAlertColor }}
-        {{ debugSelectBPAlertText }}
-			  {{ debugSelectMoodImage }}
-			</div>
-		</div> <!-- /Tab: Summary -->
-
+    <!-- Grid of Summary Boxes -->
+  	<div class="row">
+  	   <div class="col-sm-6">{{ summaryBP }} </div>
+  		 <div class="col-sm-6">{{ summaryHR }}</div>
+  	</div>
+  	<div class="row">
+      <div class="col-sm-6">{{ summaryECG }}</div>
+      <div class="col-sm-6">{{ summaryMood }}</div>
+    </div>
+  	<!-- DEUBG Summary Boxes -->
+  	<div class="debug well">
+  	   <h4>Debug Panel</h4>
+  		   {{ debugSelectBPAlertColor }}
+         {{ debugSelectBPAlertText }}
+    </div>
+    </div> <!-- /Tab: Summary -->
 
 	<!-- Tab: Heart Rate -->
 	<div class="col-sm-12 tab-pane" id="hr">
@@ -120,7 +117,6 @@
             <li>{{ selectLastDay }}</li>
             <li>{{ selectLastMonth }}</li>
 	  </ul>
-
 	  <!-- Heart Rate Plot -->
 	  {{ plotHR }}
 	</div> 	<!-- /Tab: Heart Rate -->
@@ -138,19 +134,19 @@
 	  {{ plotECG }}
 	</div> <!-- /Tab: ECG -->
 
-		<!-- Tab: Risk -->
-		<div class="col-sm-12 tab-pane" id="risk">
-		  <h4>Predicted Risk of Stroke if you... </h4>
+	<!-- Tab: Risk -->
+	<div class="col-sm-12 tab-pane" id="risk">
+	   <h4>Predicted Risk of Stroke if you... </h4>
 
-      <ul id="intervention-options" class="nav nav-pills">
-        <li> {{ stopSmokingIntervention }}</li>
-        <li> {{ lowerBPIntervention }} </li>
-        <li> {{ lowerCholesterolIntervention }} </li>
-        <li> {{ antiPlateletIntervention }} </li>
-      </ul>
-
-			{{ interventionRiskPlot }}
-		</div> <!-- /Tab: Risk -->
+     <ul id="intervention-options" class="nav nav-pills">
+       <li> {{ stopSmokingIntervention }}</li>
+       <li> {{ lowerBPIntervention }} </li>
+       <li> {{ lowerCholesterolIntervention }} </li>
+       <li> {{ antiPlateletIntervention }} </li>
+     </ul>
+     <!-- Display the intervention image -->
+     {{ interventionRiskPlot }}
+	</div> <!-- /Tab: Risk -->
 
 	<!-- Tab: Recommendations -->
 	<div class="col-sm-12 tab-pane" id="recommendations">

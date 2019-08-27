@@ -428,11 +428,19 @@ summariseMood <- function(mood) {
   # NOTE: using as.character because R defaults to interpresting
   # the recordedEmotion as a "factor"
   recordedEmotion = as.character(mood_desc$recordedEmotion[1])
+  
+  # recordedEmotion will take the form "[mood]_[which_image]":
+  r_split = strsplit(recordedEmotion, "_")
+  mood = r_split[[1]][1]
+  which_image = r_split[[1]][2]
+  
   timestamp = mood_desc$timestamp[1] # latest mood reading
 
   # Return summary values
   list(
-    status    = recordedEmotion,
+    status = mood,
+    mood = mood,
+    which_image = which_image,
     timestamp = timestamp
   )
 }
@@ -473,30 +481,49 @@ mood_default = list("afraid" = "2",
                     "sleepy" = "3",
                     "serene" = "2")
 
-mood_img_src <- function(mood, randomise=FALSE) {
+mood_img_src <- function(mood, which_image = NA, randomise = FALSE, medium_size = FALSE) {
   # Returns the image source for a mood, uses the pam-resources.
   
-  # Originals: 
-  #  "images/mood/tired.jpg"
-  # If thumbnail:
-  #  "images/mood/summary/tired.jpg
-
   # get the order the mood is in the grid:
   o = mood_order[[mood]]
 
-  # which of the three mood image options to use (defaults to 1):
-  which = mood_default[[mood]]
+  # which of the three mood image options to use:
+  if(is.na(which_image)) {
+    if(randomise) { 
+      # randomly choose: "1", "2", or "3"
+      which_image = as.character(sample(1:3, 1))
+    } else { 
+      # lookup the default image for a particular mood
+      which_image = mood_default[[mood]]
+    }
+  }
   
   # Using images/mood/pam-resources/images/[o]_[mood]/[o]_[which].jpg
   paste("images",
         "mood",
         "pam-resources",
-        "images",
+        `if`(medium_size, "images-medium", "images"), # `if` is ternary operator in R
         paste(o, mood, sep="_"),
-        paste(o, "_", which, ".jpg", sep=""),
+        paste(o, "_", which_image, ".jpg", sep=""),
         sep="/")
 }
 
+mood_from_img_src <- function(image_src) {
+  # Returns a mood string from an image src.
+  # 
+  # For example: 
+  #   images/mood/pam-resources/images/1_afriad/1_3.jpg
+  # is mapped to:
+  #   afraid_3
+  # Which specifies the third mood from "afraid" 
+  s = strsplit(image_src, "/")
+  # s -> "1_afraid" -> "afraid
+  mood = strsplit(s[[1]][5], "_")[[1]][2]
+  # s -> "1_3.jpg" -> "3.jpg" -> 3
+  which_image = substring(strsplit(s[[1]][6], "_")[[1]][2], 1, 1)
+  # "afraid_3"
+  paste(mood, which_image, sep = "_")
+}
 
 #
 # Questionnaire Response (PHQ) Data

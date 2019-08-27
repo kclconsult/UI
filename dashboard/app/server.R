@@ -164,16 +164,8 @@ function(input, output, session) {
       
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Mood",
-                 # Mood options:
-                 # image = input$debugSelectMoodImage,
-                 # image = "images/summary/mood-good.png",
-                 # image = "images/summary/mood-meh.png",
-                 # image = "images/summary/mood-bad.png",
-                 
                  # Mood text dictates the summary image:
-                 # example: "images/emotions/summary/tired.jpg"
-                 # image = paste("images/emotions/summary/", tolower(), ".jpg", sep=""),
-                 image = mood_img_src(summary$status),
+                 image = mood_img_src(summary$mood, which_image = summary$which_image),
                  alert = "blue",
                  status = "", # don't show the Mood text
                  # status = summary$status,
@@ -379,22 +371,44 @@ function(input, output, session) {
     })
     
     # -- Mood Grid Events
-    observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
-    observeEvent(input$emotionLinkTense,      { sendMoodObservation("tense") })
-    observeEvent(input$emotionLinkSleepy,     { sendMoodObservation("sleepy") })
-    observeEvent(input$emotionLinkSerene,     { sendMoodObservation("serene") })
-    observeEvent(input$emotionLinkSatisfied,  { sendMoodObservation("satisfied") })
-    observeEvent(input$emotionLinkSad,        { sendMoodObservation("sad") })
-    observeEvent(input$emotionLinkMiserable,  { sendMoodObservation("miserable") })
-    observeEvent(input$emotionLinkHappy,      { sendMoodObservation("happy") })
-    observeEvent(input$emotionLinkGloomy,     { sendMoodObservation("gloomy") })
-    observeEvent(input$emotionLinkGlad,       { sendMoodObservation("glad") })
-    observeEvent(input$emotionLinkFrustrated, { sendMoodObservation("frustrated") })
-    observeEvent(input$emotionLinkExcited,    { sendMoodObservation("excited") })
-    observeEvent(input$emotionLinkDelighted,  { sendMoodObservation("delighted") })
-    observeEvent(input$emotionLinkCalm,       { sendMoodObservation("calm") })
-    observeEvent(input$emotionLinkAngry,      { sendMoodObservation("angry") })
-    observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
+    # observeEvent(input$emotionLinkTired,      { sendMoodObservation("tired") })
+    # observeEvent(input$emotionLinkTense,      { sendMoodObservation("tense") })
+    # observeEvent(input$emotionLinkSleepy,     { sendMoodObservation("sleepy") })
+    # observeEvent(input$emotionLinkSerene,     { sendMoodObservation("serene") })
+    # observeEvent(input$emotionLinkSatisfied,  { sendMoodObservation("satisfied") })
+    # observeEvent(input$emotionLinkSad,        { sendMoodObservation("sad") })
+    # observeEvent(input$emotionLinkMiserable,  { sendMoodObservation("miserable") })
+    # observeEvent(input$emotionLinkHappy,      { sendMoodObservation("happy") })
+    # observeEvent(input$emotionLinkGloomy,     { sendMoodObservation("gloomy") })
+    # observeEvent(input$emotionLinkGlad,       { sendMoodObservation("glad") })
+    # observeEvent(input$emotionLinkFrustrated, { sendMoodObservation("frustrated") })
+    # observeEvent(input$emotionLinkExcited,    { sendMoodObservation("excited") })
+    # observeEvent(input$emotionLinkDelighted,  { sendMoodObservation("delighted") })
+    # observeEvent(input$emotionLinkCalm,       { sendMoodObservation("calm") })
+    # observeEvent(input$emotionLinkAngry,      { sendMoodObservation("angry") })
+    # observeEvent(input$emotionLinkAfraid,     { sendMoodObservation("afraid") })
+    
+    output$emotionLinkTired = renderMoodLink("tired")
+    output$emotionLinkTense = renderMoodLink("tense")
+    output$emotionLinkSleepy = renderMoodLink("sleepy")
+    output$emotionLinkSerene = renderMoodLink("serene")
+    output$emotionLinkSatisfied = renderMoodLink("satisfied")
+    output$emotionLinkSad = renderMoodLink("sad")
+    output$emotionLinkMiserable = renderMoodLink("miserable")
+    output$emotionLinkHappy = renderMoodLink("happy")
+    output$emotionLinkGloomy = renderMoodLink("gloomy")
+    output$emotionLinkGlad = renderMoodLink("glad")
+    output$emotionLinkFrustrated= renderMoodLink("frustrated")
+    output$emotionLinkExcited = renderMoodLink("excited")
+    output$emotionLinkDelighted = renderMoodLink("delighted")
+    output$emotionLinkCalm = renderMoodLink("calm")
+    output$emotionLinkAngry = renderMoodLink("angry")
+    output$emotionLinkAfraid = renderMoodLink("afraid")
+    
+    observeEvent(input$moodObservation, {
+      logEvent("MoodGrid", paste("Mood Selected", input$moodObservation))
+      sendMoodObservation(input$moodObservation)
+    })
     
     # -- PHQ2 Screening Form
     observe({ # Enable Submit button only when both questions are answered
