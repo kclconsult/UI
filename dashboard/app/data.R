@@ -425,12 +425,14 @@ summariseMood <- function(mood) {
   mood_desc = arrange(mood, desc(datem), desc(time))
   
   # Summary is based on the most recent value.
+  # NOTE: using as.character because R defaults to interpresting
+  # the recordedEmotion as a "factor"
   recordedEmotion = as.character(mood_desc$recordedEmotion[1])
   timestamp = mood_desc$timestamp[1] # latest mood reading
 
   # Return summary values
   list(
-    status    = tools::toTitleCase(recordedEmotion), # capitalises the Emotion
+    status    = recordedEmotion,
     timestamp = timestamp
   )
 }
@@ -453,7 +455,25 @@ mood_order = list("afraid" = "1",
                   "sleepy" = "15",
                   "serene" = "16")
 
-mood_img_src <- function(mood, thumbnail=FALSE, randomise=FALSE) {
+# which of the 3 images for a mood is shown when not randomised
+mood_default = list("afraid" = "2",
+                    "tense" = "1",
+                    "excited" = "3", 
+                    "delighted" = "2",
+                    "frustrated" = "2",
+                    "angry" = "2",
+                    "happy" = "1",
+                    "glad" = "1",
+                    "miserable" = "3",
+                    "sad" = "3",
+                    "calm" = "3",
+                    "satisfied" = "2",
+                    "gloomy" = "1",
+                    "tired" = "3",
+                    "sleepy" = "3",
+                    "serene" = "2")
+
+mood_img_src <- function(mood, randomise=FALSE) {
   # Returns the image source for a mood, uses the pam-resources.
   
   # Originals: 
@@ -465,7 +485,7 @@ mood_img_src <- function(mood, thumbnail=FALSE, randomise=FALSE) {
   o = mood_order[[mood]]
 
   # which of the three mood image options to use (defaults to 1):
-  which = "1"
+  which = mood_default[[mood]]
   
   # Using images/mood/pam-resources/images/[o]_[mood]/[o]_[which].jpg
   paste("images",

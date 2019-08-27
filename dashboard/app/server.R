@@ -172,7 +172,8 @@ function(input, output, session) {
                  
                  # Mood text dictates the summary image:
                  # example: "images/emotions/summary/tired.jpg"
-                 image = paste("images/emotions/summary/", tolower(summary$status), ".jpg", sep=""),
+                 # image = paste("images/emotions/summary/", tolower(), ".jpg", sep=""),
+                 image = mood_img_src(summary$status),
                  alert = "blue",
                  status = "", # don't show the Mood text
                  # status = summary$status,
