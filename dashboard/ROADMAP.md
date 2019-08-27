@@ -4,7 +4,7 @@
 
 ## Essential
 - [X] Mood Grid - user feedback, confirm the selection
-- [ ] Clean-up Mood Timing
+- [ ] Clean-up Mood Timing Logic
 - [ ] Move Mood Tab getting data into data$ reactiveValues
 ---
 - [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback

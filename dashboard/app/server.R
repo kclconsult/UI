@@ -64,7 +64,7 @@ function(input, output, session) {
     # Live Moods
     #
     data$Mood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
-                               endTimestamp   = "2020-02-28T00:00:00Z", 
+                               endTimestamp = "2020-02-28T00:00:00Z", 
                                sample = SAMPLE_DATA)
 
     # - Feedback (Clinical Impression)
@@ -334,11 +334,11 @@ function(input, output, session) {
     #
     observeEvent( input$tabMoodLink, { 
       logEvent( "TabChanged", "Mood Tab Selected" )
-      logEvent( "DEBUG", "DO YOU LIKE MY HAT?" )
       myMood = loadMoodData( startTimestamp = "2016-02-26T00:00:00Z", 
                              endTimestamp   = "2020-02-28T00:00:00Z", 
                              sample = FALSE )
       moodTime = strptime( myMood$timestamp[1], "%Y-%m-%d %H:%M:%S" )
+
       print( paste( "DEBUG", moodTime, myMood$recordedEmotion[1] ))
       myPHQ = loadPHQData( startTimestamp = "2016-02-26T00:00:00Z", 
                            endTimestamp   = "2020-02-28T00:00:00Z", 
@@ -346,17 +346,15 @@ function(input, output, session) {
       phqTime = strptime( myPHQ$timestamp[1], "%Y-%m-%d %H:%M:%S" )
       print( paste( "DEBUG", phqTime, names( myPHQ ) ))
 
-      # Units will vary depending on the time difference:
       #moodTimeSince = Sys.time() - moodTime
       #phqTimeSince = Sys.time() - phqTime
       
-      # Specify "days":
+      # Time difference unites units will vary depending on the time difference: Specify "days":
       moodTimeSince = difftime(Sys.time(), moodTime, units="days")
       phqTimeSince = difftime(Sys.time(), phqTime, units="days")
       
       print( paste( "DEBUG", "time (hours) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
-      logEvent( "DEBUG", "I LIKE YOUR PARTY HAT" )
-
+  
       # TODO - move this into the run.R CONSULT set-up
       Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
 

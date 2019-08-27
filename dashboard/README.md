@@ -13,23 +13,90 @@ ALSO NEED:
 
 # Running the Consult Shiny UI Dashboard
 
-$ Rscript dashboard/run.R
+When putting the UI Dashboard into production, edit the Environment variables
+in the dashboard/run.R script, and then from the command-line, run:
+
+  $ Rscript dashboard/run.R
+
+In order to develop the UI Dashboard, then edit the dashboard/dev.R script.
+You can either run the script from the command-line:
+
+  $ Rscript dashboard/dev.R
+
+Or (more handly) source the dev.R script from the R console in RStudio:
+(you need to be in the dashboard directory):
+
+  > source("dev.R")
 
 # Configuration
 
 The Consult Dashboard is configured with these Environment Variables.  They
-can be edited in the run.R script.
+can be edited in the run.R/dev.R script.  
 
-Environment Variables:
+## (Consult) Patient Set-up
 
-MESSAGE_PASSER_PROTOCOL="http://",
-MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005",
-CURL_CA_BUNDLE=""
-SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b",
+### SHINYPROXY_USERNAME
 
-CONSULT_DEBUG
-CONSULT_ACTIVE_TABS
-CONSULT_PHQ_DAYS_FREQ
+This it is the Patient ID that is a key used throughout the system to identify
+the patient.
+
+Here is the example USERNAME used during development of a simulated patient:
+
+    SHINYPROXY_USERNAME = "3e2dab80-b847-11e9-8e30-f5388ac63e8b"
+
+## Message Passer Connectivity
+
+### MESSAGE_PASSER_PROTOCOL
+
+The URL protocol for the Message Passer.  
+
+    MESSAGE_PASSER_PROTOCOL = "http://"
+
+### MESSAGE_PASSER_URL
+
+The hostname/url (minus the protocol) to be used to contact the Message Passer.
+
+    MESSAGE_PASSER_URL = "ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005"
+
+### CURL_CA_BUNDLE
+
+Used to verify that a URL exists using https://www.rdocumentation.org/packages/RCurl/versions/1.95-4.12/topics/url.exists.  At the moment not implemented.
+
+## UI Configuration
+
+### CONSULT_DEBUG
+
+Show the Debug Panels at the bottom of the Dashboard's Tabs.
+
+  CONSULT_DEBUG = "1"
+
+Hide the Debug Panel by specifying a value of "0" or not defining the
+environment variable.
+
+### CONSULT_ACTIVE_TABS
+
+Specify the main Tabs that are enabled in the interfaced.  Enabled tabs are shown,
+disabled tabs are not shown.
+
+To enable a tab, include it in a comma-separated list.  
+
+Tab Value | What is it
+--------- | ----------
+summary | Summary (Home) Tab
+bp | Blood Pressure plot
+hr | Heart Rate plot
+ecg | ECG plot
+mood | Mood Grid and PHQ2/9 forms
+risk | Risk Graphics  
+tips | Tips (Recommendations)
+feedback | Feedback Tab
+
+## PHQ 2/9 Form Logic
+
+### CONSULT_PHQ_DAYS_FREQ
+
+Days since the previous PHQ form submission that need to elapse before the
+next PHQ form is shown on the Mood tab.
 
 # File Manifest (TODO - NEEDS Updating)
 
