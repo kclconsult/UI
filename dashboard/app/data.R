@@ -630,28 +630,19 @@ sampleRecommendations <- function() {
         {
          "icon":"recommendation", 
          "heading": "Consider changing your painkiller; there are two options:",
-         "body": [
-            "Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider paracetamol.",
-            "Given your medical history and that codeine helps with back pain then codeine is recommended."
-          ]
+         "body": "<p>Given your medical history and that paracetamol helps with back pain then paracetamol is <i>recommended</i>. It is recommended that you consider paracetamol.</p><p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>"
         },{
          "icon":"blood-pressure", 
          "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
+         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
          "icon":"mood", 
          "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
+         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
          "icon":"summary", 
          "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
+         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         }]'
   
   # Converted to named-list object from JSON

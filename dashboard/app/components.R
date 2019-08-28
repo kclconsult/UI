@@ -45,7 +45,7 @@ renderRecommendations <- function(r) {
   #      --------+-----------------------------------------------------------------
   #      heading | String of the Recommendation 
   #      icon    | www/ Relative path to an icon image to load
-  #      body    | Recommendation(s), either a single string or a vector of strings.
+  #      body    | Recommendation(s) as an HTML string to be flat out rendered
   #
   # Returns:
   #   Output of a renderUI() of the tags
@@ -78,13 +78,17 @@ renderRecommendations <- function(r) {
         ),
         tags$div(class="media-body",
           tags$h5(class="media-heading", r$heading[i]),
-          # complicated... basically converts a list of strings (r$body) into:
+          # r$body is rendered as HTML as is:
+          HTML(r$body[i])
+          #######################################################################
+          # Previous Implmentation converted a list of strings (r$body[i]) into:
           # <div> 
           #   <p>string1</p>
           #   <p>string2</p>
           #   ...
           # </div> 
-          do.call(tags$div, lapply(unlist(r$body[i]), tags$p))
+          # do.call(tags$div, lapply(unlist(r$body[i]), tags$p))
+          ######################################################################
         ),
         # horizontal line between recommendations
         tags$hr()
