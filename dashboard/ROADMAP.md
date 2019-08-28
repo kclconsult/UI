@@ -4,7 +4,7 @@
 
 ## Essential
 - [X] getRecommendations() -> server-side stub
-- [ ] Randomise Tip ordering (option - client-side)
+- [X] Randomise Tip ordering (option - client-side)
 - [ ] HTML body for Recommendations
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
@@ -33,6 +33,7 @@
 - [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 
 ## Nice to have
+- [ ] Randomise N Tips
 - [ ] Bar versus Line Charts
 - [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough

@@ -314,8 +314,12 @@ function(input, output, session) {
       output$listRecommendations = renderRecommendations({
         # pass a fresh set of Recommendations data along to render
         tips = loadRecommendations()
-        # TODO - if randomize
-        tips
+        if(Sys.getenv("RANDOMIZE_RECOMMENDATIONS", unset="0") == "1") { # if randomize
+          # use dlpyr::sample_frac for randomizing rows in a table
+          sample_frac(tips)
+        } else {
+          tips
+        }
       })
     })
 

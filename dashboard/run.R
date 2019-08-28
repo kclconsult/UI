@@ -1,11 +1,27 @@
 # Development environment variables
-Sys.setenv(MESSAGE_PASSER_PROTOCOL="http://", 
-           MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", 
-           SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", 
-           CURL_CA_BUNDLE="")
 
-Sys.setenv(CONSULT_PHQ_DAYS_FREQ="1")  # everyday
+Sys.setenv(
+  # REQUIRED: 
+  SHINYPROXY_USERNAME="3e2dab80-b847-11e9-8e30-f5388ac63e8b", 
+  MESSAGE_PASSER_PROTOCOL="http://", 
+  MESSAGE_PASSER_URL="ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005", 
+  # Not Implemented:
+  CURL_CA_BUNDLE="",
+  # Study Parameters
+  # STUDY_START_TIMESTAMP = "",
+  # STUDY_END_TIMESTAMP = "",
+  # STUDY_TRIAL_PERIOD_DAYS = "",
+  # STUDY_CHATBOT_ACTIVE = "0",
+  #   
+  PHQ_DAYS_FREQ = "1", # everyday
+  RANDOMIZE_RECOMMENDATIONS = "0",
+  USE_SAMPLE_DATA = "0",
+  # UI
+  # ACTIVE_TABS
+  DEBUG_PANEL="1"
+)
 
+# Load Shiny to run app
 library('shiny')
 
 # install packages

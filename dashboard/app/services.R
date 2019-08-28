@@ -42,7 +42,7 @@ effectiveDateTime <- function(t = Sys.time()) {
   #   t - (double) R timestamp, defaults to current time
   #
   # Returns:
-  #   String repr of timestamp
+  #   String repr of timestamp compatible for message passer
   strftime(t, "%Y-%m-%dT%H:%M:%SZ")
 }
 

@@ -34,6 +34,32 @@ Or (more handly) source the dev.R script from the R console in RStudio:
 The Consult Dashboard is configured with these Environment Variables.  They
 can be edited in the run.R/dev.R script.  
 
+## Message Passer Connectivity
+
+### MESSAGE_PASSER_PROTOCOL
+
+The URL protocol for the Message Passer.  
+
+    MESSAGE_PASSER_PROTOCOL = "http://"
+
+*REQUIRED* Part of the URL and to avoid defaulting to clear http.  App exits if
+not set.
+
+### MESSAGE_PASSER_URL
+
+The hostname/url (minus the protocol) to be used to contact the Message Passer.
+
+    MESSAGE_PASSER_URL = "ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005"
+
+*REQUIRED* Part of the URL and to avoid defaulting to clear http. App exits if
+not set.
+
+### CURL_CA_BUNDLE
+
+Used to verify that a URL exists using https://www.rdocumentation.org/packages/RCurl/versions/1.95-4.12/topics/url.exists.  At the moment not implemented.
+
+Unset value: N/A, unimplemented.
+
 ## (Consult) Study Patient Set-up
 
 ### SHINYPROXY_USERNAME
@@ -45,20 +71,29 @@ Here is the example USERNAME used during development of a simulated patient:
 
     SHINYPROXY_USERNAME = "3e2dab80-b847-11e9-8e30-f5388ac63e8b"
 
+*REQUIRED* Value, if unset, then dashboard does not start.
+
 ### STUDY_START_TIMESTAMP
 
 The date that the Patient that the patient starts using the Consult Dashboard.
 This is inclusive of the Trial Period.
+
+Unset value: Will default to the start-time of the Dashboard App.
 
 ### STUDY_END_TIMESTAMP
 
 The date that the Patient that the patient starts using the Consult Dashboard.
 This is inclusive of the Trial Period.
 
+Unset value: {STUDY_START_TIMESTAMP + 17 Days} Will default to 17 Days from the
+start-time of the Dashboard App.
+
 ### STUDY_TRIAL_PERIOD_DAYS
 
 Length of the trial period in days.  These are always at the beginning of the
 study for the patient.
+
+Unset value: "3" Will default to 3 Days.
 
 ### STUDY_CHATBOT_ACTIVE
 
@@ -66,41 +101,28 @@ study for the patient.
 "0" - Chatbot is not Active
 "STARTDATE-ENDDATE" - Period when the Chatbot is active
 
-## Message Passer Connectivity
-
-### MESSAGE_PASSER_PROTOCOL
-
-The URL protocol for the Message Passer.  
-
-    MESSAGE_PASSER_PROTOCOL = "http://"
-
-### MESSAGE_PASSER_URL
-
-The hostname/url (minus the protocol) to be used to contact the Message Passer.
-
-    MESSAGE_PASSER_URL = "ec2-3-9-227-22.eu-west-2.compute.amazonaws.com:3005"
-
-### CURL_CA_BUNDLE
-
-Used to verify that a URL exists using https://www.rdocumentation.org/packages/RCurl/versions/1.95-4.12/topics/url.exists.  At the moment not implemented.
+Unset value: "0"
 
 ## UI Configuration
 
-### DASHBOARD_DEBUG
+### DEBUG_PANEL
 
 Show the Debug Panels at the bottom of the Dashboard's Tabs.
 
-  DASHBOARD_DEBUG = "1"
+  DEBUG_PANEL = "1"
 
 Hide the Debug Panel by specifying a value of "0" or not defining the
 environment variable.
 
-### DASHBOARD_ACTIVE_TABS
+Unset value: "1"
+
+### ACTIVE_TABS
 
 Specify the main Tabs that are enabled in the interfaced.  Enabled tabs are shown,
 disabled tabs are not shown.
 
-To enable a tab, include it in a comma-separated list.  
+To enable a tab, include it in a comma-separated list.  Note that the order of
+the tabs does not matter.
 
 Tab Value | What is it
 --------- | ----------
@@ -113,9 +135,20 @@ risk | Risk Graphics
 tips | Tips (Recommendations)
 feedback | Feedback Tab
 
+Unset value: "summary,bp,hr,ecg,mood,risk,tips,feedback"
+
+### RANDOMIZE_RECOMMENDATIONS
+
+If value is "1" , then randomize the order of recommendations.
+
+Unset value: "0"
+
 ### USE_SAMPLE_DATA
 
-Specify whether to load from the sample-data/ directory to demonstrate the app.
+If value is "1", then load static sample data from the sample-data/ directory
+to demonstrate the app.
+
+Unset value: "1"
 
 ## PHQ 2/9 Form Logic
 
@@ -123,6 +156,8 @@ Specify whether to load from the sample-data/ directory to demonstrate the app.
 
 Days since the previous PHQ form submission that need to elapse before the
 next PHQ form is shown on the Mood tab.
+
+Unset value: "21" The form is shown 21 days since the last PHQ form.
 
 # File Manifest (TODO - NEEDS Updating)
 
