@@ -3,6 +3,8 @@
 # Backlog
 
 ## Essential
+- [X] Update cates/intervention plots
+---
 - [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [ ] Title the list "View Previous Feedback"
 - [ ] mv Feedback into data$

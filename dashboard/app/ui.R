@@ -112,8 +112,9 @@ htmlTemplate("www/index.html",
   stopSmokingIntervention = actionLink("stopSmokingIntervention", "Stop Smoking", href = "#stop-smoking", `data-toggle` = "pill"),
   lowerBPIntervention = actionLink("lowerBPIntervention", "Lower Blood Pressure", href = "#lower-bp", `data-toggle` = "pill"),
   lowerCholesterolIntervention = actionLink("lowerCholesterolIntervention", "Lower Cholesterol", href = "#lower-cholesterol", `data-toggle` = "pill"),
-  antiPlateletIntervention = actionLink("antiPlateletIntervention", "Anti-Platelet" , href = "#antiplatelet", `data-toggle` = "pill"),
-  
+  antiPlateletIntervention = actionLink("antiPlateletIntervention", "Used Antiplatelet" , href = "#antiplatelet", `data-toggle` = "pill"),
+  # - baseline/risk plots
+  baselineRiskPlot = imageOutput("baselineRiskPlot", width = "100%", height = "400px"),
   interventionRiskPlot = imageOutput("interventionRiskPlot", width = "100%", height = "400px"),
   
   # Tab: Recommendations

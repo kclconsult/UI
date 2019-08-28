@@ -75,23 +75,23 @@ function(input, output, session) {
     # Store Summary data in reactiveValues
     summary = reactiveValues()
     
-    observe({ # Summarise the BP dataset
+    observe({ # summarise the BP dataset
       summary$BP = summariseBloodPressure(data$BP) 
     })
      
-    observe({ # Summarise the HR dataset
+    observe({ # summarise the HR dataset
       summary$HR = summariseHeartRate(data$HR)
     })
     
-    observe({ # Summarise the ECG dataset
+    observe({ # summarise the ECG dataset
       summary$ECG = summariseECG(data$ECG)
     })
     
-    observe({ # Summarise the Mood dataset
+    observe({ # summarise the Mood dataset
       summary$Mood = summariseMood(data$Mood)
     })
     
-    observe({ # Summarise the PHQ dataset
+    observe({ # summarise the PHQ dataset
       summary$PHQ = summarisePHQ(data$PHQ)
     })
     
@@ -260,10 +260,14 @@ function(input, output, session) {
       logEvent("TabChanged", "Risk Tab Selected") 
     })
     
+    # Always render the baseline.png
+    output$baselineRiskPlot = renderImage({
+      list(src = normalizePath("./www/images/interventions/baseline.png"))
+    }, deleteFile = FALSE)
+    
     # Event: when Stop Smoking is selected
     observeEvent(input$stopSmokingIntervention, { 
       logEvent("InterventionSelected", "Stop Smoking")
-      
       output$interventionRiskPlot = renderImage({
         list(src = normalizePath("./www/images/interventions/stop-smoking.png"))
       }, deleteFile = FALSE)
@@ -272,7 +276,6 @@ function(input, output, session) {
     # Event: when Lower Blood Pressure is selected
     observeEvent(input$lowerBPIntervention, { 
       logEvent("InterventionSelected", "Lower Blood Pressure") 
-      
       output$interventionRiskPlot = renderImage({
         list(src = normalizePath("./www/images/interventions/lower-bp.png"))
       }, deleteFile = FALSE)
@@ -281,7 +284,6 @@ function(input, output, session) {
     # Event: when Lower Cholesterol is selected
     observeEvent(input$lowerCholesterolIntervention, { 
       logEvent("InterventionSelected", "Lower Cholesterol")
-      
       output$interventionRiskPlot = renderImage({
         list(src = normalizePath("./www/images/interventions/lower-cholesterol.png"))
       }, deleteFile = FALSE)
@@ -290,7 +292,6 @@ function(input, output, session) {
     # Event: when Anti-Platelet is selected
     observeEvent(input$antiPlateletIntervention, { 
       logEvent("InterventionSelected", "Anti-Platelet")
-      
       output$interventionRiskPlot = renderImage({
         list(src = normalizePath("./www/images/interventions/antiplatelet.png"))
       }, deleteFile = FALSE)

@@ -144,8 +144,15 @@
        <li> {{ lowerCholesterolIntervention }} </li>
        <li> {{ antiPlateletIntervention }} </li>
      </ul>
-     <!-- Display the intervention image -->
-     {{ interventionRiskPlot }}
+     <!-- Display the intervention/risk as images -->
+     <div class="row">
+       <div class="col-sm-6">
+         {{ baselineRiskPlot }}
+       </div>
+       <div class="col-sm-6">
+         {{ interventionRiskPlot }}
+      </div>
+    </div>
 	</div> <!-- /Tab: Risk -->
 
 	<!-- Tab: Recommendations -->
@@ -274,10 +281,10 @@
       <!-- Important to KEEP the "mood-tabs" b/c they are used to switch tabs
            but they may be hidden from user when DEBUG is on -->
       <ul id="mood-tabs" class="nav nav-pills">
-        <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
-        <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
         <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
         <li><a href="#mood-selected" data-toggle="pill">Mood Selected</a></li>
+        <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
+        <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
       </ul>
 	  </div>
 	</div> <!-- /Tab: Mood -->

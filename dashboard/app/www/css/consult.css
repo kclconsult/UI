@@ -88,6 +88,15 @@
     height: 125px;
 }
 
+/* Intervention */
+#intervention-options a {
+  font-size: 18px; /* Smaller to fit in 800px */
+}
+
+#intervention-options li.active a {
+  background-color: rgb(237, 109, 65);
+}
+
 /* PHQ2/9 Forms Fatter radio Buttons */
 div.radio {
   margin-bottom: 22px;
