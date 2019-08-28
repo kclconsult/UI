@@ -12,7 +12,52 @@
 library(humanize)
 
 #
-# Tab: Recommendations (Tips)
+# Tab: Blood Pressure
+#
+
+renderAlertBP <- function(alert_text, alert="") {
+  # Renders a dismissable bloodpressure alert
+  #
+  # Args:
+  #   alert_text - String to display in alert.
+  #   alert - BP flag color, no color defaults to info blue
+  # 
+  # Returns: renderUI object
+  
+  # map flag color to alert class
+  if(alert == "green") {
+    class = "alert-success"
+  } else if(alert == "orange") {
+    class = "alert-warning"
+  } else if(alert == "red") {
+    class = "alert-danger"
+  } else if(alert == "doublered") {
+    class = "alert-danger"
+  } else {
+    class = "alert-info"
+  }
+
+  # Using Bootstrap Alert:
+  #    https://getbootstrap.com/docs/3.3/components/#alerts
+  # 
+  # Example:
+  # <div class="alert alert-warning alert-dismissible" role="alert">
+  # <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  #    Better check yourself, you're not looking too good.
+  # </div>
+  t <- tags$div(class=paste("alert",class,"alert-dismissible"), 
+                role="alert", 
+                tags$button(type="button", 
+                            class="close", 
+                            `data-dismiss`="alert",
+                            icon("close")),
+                alert_text)
+  
+  renderUI({ t })
+}
+
+#
+# Tab: Mood Grid
 #
 
 renderMoodLink <- function(mood) {

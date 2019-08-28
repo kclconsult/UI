@@ -123,14 +123,32 @@
 
   <!-- Tab: Blood Pressure -->
 	<div class="col-sm-12 tab-pane" id="bp">
+    <div class="row">
       <!-- Blood Pressure Alert -->
       {{ alertBP }}
+    </div>
+    <div class="row">
+      <!-- Select Different Time Periods -->
+  	  <ul class="nav nav-pills">
+              <li class="active">{{ selectLastFourHours }}</li>
+              <li>{{ selectLastDay }}</li>
+              <li>{{ selectLastMonth }}</li>
+  	  </ul>
+    </div>
+    <div class="row">
       <!-- Blood Pressure Widget -->
       {{ plotBP }}
+    </div>
 	</div> <!-- /Tab: Blood Pressure -->
 
 	<!-- Tab: ECG -->
 	<div class="col-sm-12 tab-pane" id="ecg">
+    <!-- Select Different Time Periods -->
+	  <ul class="nav nav-pills">
+            <li class="active">{{ selectLastFourHours }}</li>
+            <li>{{ selectLastDay }}</li>
+            <li>{{ selectLastMonth }}</li>
+	  </ul>
 	  {{ plotECG }}
 	</div> <!-- /Tab: ECG -->
 

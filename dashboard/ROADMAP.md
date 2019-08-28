@@ -3,11 +3,8 @@
 # Backlog
 
 ## Essential
-- [X] getRecommendations() -> server-side stub
-- [X] Randomise Tip ordering (option - client-side)
-- [X] HTML body for Recommendations
+- [X] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 ---
-- [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
@@ -33,6 +30,7 @@
 - [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 
 ## Nice to have
+- [ ] Support icon() in Recommendations
 - [ ] Randomise N Tips
 - [ ] Bar versus Line Charts
 - [ ] Day-Night Vertical Grids on plots
@@ -45,6 +43,9 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] getRecommendations() -> server-side stub
+- [X] Randomise Tip ordering (option - client-side)
+- [X] HTML body for Recommendations
 - [X] Update cates/intervention plots
 - [X] Initialize active Stop Smoking first intervention
 - [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback

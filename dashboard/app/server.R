@@ -228,6 +228,15 @@ function(input, output, session) {
     # Event: when BP Tab is selected
     observeEvent(input$tabBPLink, { 
       logEvent("TabChanged", "BP Tab Selected") 
+
+      # only render alert when *not* green      
+      if(summary$BP$alert != "green") {
+        # Re-renders the Alert Box
+        output$alertBP = renderAlertBP(
+          alert = summary$BP$alert,
+          alert_text = summary$BP$alert_long_text
+        )
+      }
     })
   
     output$plotBP = renderBPTimeline({
@@ -316,9 +325,9 @@ function(input, output, session) {
         tips = loadRecommendations()
         if(Sys.getenv("RANDOMIZE_RECOMMENDATIONS", unset="0") == "1") { # if randomize
           # use dlpyr::sample_frac for randomizing rows in a table
-          sample_frac(tips)
+          sample_frac(tips) # returns randomised sample
         } else {
-          tips
+          tips # returns 
         }
       })
     })
