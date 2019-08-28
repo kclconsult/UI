@@ -3,15 +3,6 @@
 # Backlog
 
 ## Essential
-- [X] Update cates/intervention plots
-- [X] Initialize active Stop Smoking first intervention
----
-- [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
-- [X] Title the list "View Previous Feedback"
-- [X] mv Feedback into data$
-- [X] make the Feedback listing reactive
-- [X] Feedback Sideback data-toggle to highlight
----
 - [ ] getRecommendations() -> server-side stub
 - [ ] Randomise Tip ordering (option - client-side)
 ---
@@ -52,6 +43,13 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Update cates/intervention plots
+- [X] Initialize active Stop Smoking first intervention
+- [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
+- [X] Title the list "View Previous Feedback"
+- [X] mv Feedback into data$
+- [X] make the Feedback listing reactive
+- [X] Feedback Sideback data-toggle to highlight
 - [X] Clean-up Mood Timing Logic
 - [X] Move Mood Tab getting data into data$ reactiveValues
 - [X] Mood Grid - user feedback, confirm the selection
