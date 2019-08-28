@@ -4,6 +4,7 @@
 
 ## Essential
 - [X] Update cates/intervention plots
+- [X] Initialize active Stop Smoking first intervention
 ---
 - [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [X] Title the list "View Previous Feedback"

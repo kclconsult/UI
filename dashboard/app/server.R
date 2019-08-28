@@ -271,7 +271,11 @@ function(input, output, session) {
       output$interventionRiskPlot = renderImage({
         list(src = normalizePath("./www/images/interventions/stop-smoking.png"))
       }, deleteFile = FALSE)
-    })
+    }, 
+    # Initialize the interventionRiskPlot with "Stop Smoking"
+    # This makes it runs when the event is initialized (even when the button is not pressed)
+    # see -> https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html
+    ignoreNULL = FALSE, ignoreInit = FALSE)
     
     # Event: when Lower Blood Pressure is selected
     observeEvent(input$lowerBPIntervention, { 
