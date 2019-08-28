@@ -5,8 +5,8 @@
 ## Essential
 - [X] Update cates/intervention plots
 ---
-- [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
-- [ ] Title the list "View Previous Feedback"
+- [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
+- [X] Title the list "View Previous Feedback"
 - [ ] mv Feedback into data$
 - [ ] make the Feedback listing observe
 - [ ] updateFeedback data to refresh the Feedback listing
