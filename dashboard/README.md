@@ -33,7 +33,7 @@ Or (more handly) source the dev.R script from the R console in RStudio:
 The Consult Dashboard is configured with these Environment Variables.  They
 can be edited in the run.R/dev.R script.  
 
-## (Consult) Patient Set-up
+## (Consult) Study Patient Set-up
 
 ### SHINYPROXY_USERNAME
 
@@ -44,17 +44,22 @@ Here is the example USERNAME used during development of a simulated patient:
 
     SHINYPROXY_USERNAME = "3e2dab80-b847-11e9-8e30-f5388ac63e8b"
 
-### CONSULT_START_TIMESTAMP
+### STUDY_START_TIMESTAMP
 
 The date that the Patient that the patient starts using the Consult Dashboard.
 This is inclusive of the Trial Period.
 
-### CONSULT_TRIAL_PERIOD_DAYS
+### STUDY_END_TIMESTAMP
+
+The date that the Patient that the patient starts using the Consult Dashboard.
+This is inclusive of the Trial Period.
+
+### STUDY_TRIAL_PERIOD_DAYS
 
 Length of the trial period in days.  These are always at the beginning of the
 study for the patient.
 
-### CONSULT_CHATBOT_ACTIVE
+### STUDY_CHATBOT_ACTIVE
 
 "1" - Chatbot is always Active
 "0" - Chatbot is not Active
@@ -80,16 +85,16 @@ Used to verify that a URL exists using https://www.rdocumentation.org/packages/R
 
 ## UI Configuration
 
-### CONSULT_DEBUG
+### DASHBOARD_DEBUG
 
 Show the Debug Panels at the bottom of the Dashboard's Tabs.
 
-  CONSULT_DEBUG = "1"
+  DASHBOARD_DEBUG = "1"
 
 Hide the Debug Panel by specifying a value of "0" or not defining the
 environment variable.
 
-### CONSULT_ACTIVE_TABS
+### DASHBOARD_ACTIVE_TABS
 
 Specify the main Tabs that are enabled in the interfaced.  Enabled tabs are shown,
 disabled tabs are not shown.
@@ -107,13 +112,13 @@ risk | Risk Graphics
 tips | Tips (Recommendations)
 feedback | Feedback Tab
 
-### CONSULT_SAMPLE_DATA
+### USE_SAMPLE_DATA
 
 Specify whether to load from the sample-data/ directory to demonstrate the app.
 
 ## PHQ 2/9 Form Logic
 
-### CONSULT_PHQ_DAYS_FREQ
+### PHQ_DAYS_FREQ
 
 Days since the previous PHQ form submission that need to elapse before the
 next PHQ form is shown on the Mood tab.

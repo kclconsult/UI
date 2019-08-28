@@ -3,28 +3,31 @@
 # Backlog
 
 ## Essential
-- [X] Mood Grid - user feedback, confirm the selection
-- [ ] Clean-up Mood Timing Logic
-- [ ] Move Mood Tab getting data into data$ reactiveValues
----
 - [ ] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [ ] Title the list "View Previous Feedback"
+- [ ] mv Feedback into data$
+- [ ] make the Feedback listing observe
+- [ ] updateFeedback data to refresh the Feedback listing
 - [ ] Document how to change the title of the Sidebar items
 ---
-- [ ] Randomise Tip ordering
+- [ ] getRecommendations() -> server-side stub
+- [ ] Randomise Tip ordering (option - client-side)
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
-- [ ] Activate Live (i.e. latest time) time for EndTimestamp
+- [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
+- [ ] Live Data app life-cycle - how will the data update itself?
+---
+- [ ] Synchronise sample-data/
+- [ ] USE_SAMPLE_DATA environment option
+- [ ] Sample-Data debug options
+---
+- [ ] Update run.R with pre-flight checks
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
----
-- [ ] Synchronise sample-data
-- [ ] USE_SAMPLE_DATA environment option
-- [ ] Update run.R with pre-flight checks
-- [ ] Documentation in README.md
+- [ ] Documentation in README.md for Environment Variables
 ---
 - [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
 - [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
@@ -46,6 +49,9 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Clean-up Mood Timing Logic
+- [X] Move Mood Tab getting data into data$ reactiveValues
+- [X] Mood Grid - user feedback, confirm the selection
 - [X] <hr /> btw Tips/Recommendations
 - [X] Risk Pull-down menu convert to Buttons
 - [X] Update People Plots from Isabel - figure out the People Plot sizing

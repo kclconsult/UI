@@ -348,11 +348,11 @@ function(input, output, session) {
     observeEvent( input$tabMoodLink, { 
       logEvent( "TabChanged", "Mood Tab Selected" )
 
-      # Time difference unites units will vary depending on the time difference: Specify "days":
+      # Time difference units will vary depending on the time difference: Specify "days":
       moodTimeSince = difftime(Sys.time(), summary$Mood$timestamp, units="days")
       phqTimeSince = difftime(Sys.time(), summary$PHQ$timestamp, units="days")
       
-      print( paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince ))
+      print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
   
       # Check if past-due next PHQ Time
       if(phqTimeSince > as.double(Sys.getenv("CONSULT_PHQ_DAYS_FREQ"))) {
