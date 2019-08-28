@@ -450,6 +450,43 @@ sendClinicalImpression <- function(note) {
 }
 
 #
+# Recommendation (Tips) Data
+#
+
+getRecommendations <- function() {
+  # Gets Recommendations (Tips) for a patient
+  # 
+  # GET Request:
+  #
+  # Args:
+  #
+  # Returns:
+  #   Table of Recommendations (Tips) from the Message Passer Service
+  
+  # Build the Message Passer request URL 
+  requestUrl <- paste(MP_URL, 
+                    "Recommendations", 
+                    USERNAME_PATIENT_ID,
+                    sep = "/")
+  # DEBUG url
+  print(paste("getRecommendations:", requestUrl))
+  
+  # Start measuring call
+  start_time = Sys.time() 
+  
+  # Read.table handles HTTP GET request
+  data <- read.table(requestUrl, header = TRUE)
+  
+  # Stop measuring call
+  end_time = Sys.time()
+  
+  # DEBUG timing
+  print(end_time - start_time)
+  
+  return(data)
+}
+
+#
 # Logging Service
 #
 
@@ -466,41 +503,42 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # Returns:
   #   TRUE upon sucess (FALSE otherwise)
 
-  # DEBUG
+  # DEBUG logEvent
   print(paste(eventTime, eventType, eventData, sep=" | "))
+
+  return(TRUE) # *REMOVE* once fully implemented
   
-  return(TRUE) 
   ######################################################################
-  
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "LogEvent", 
+
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "LogEvent",
                       "add",
                       sep = "/")
-  # POST data  
+  # POST data
   body <- list("effectiveTimestamp" = effectiveDateTime(eventTime),
                "subjectReference" = USERNAME_PATIENT_ID, # Patient IDs
                "eventType" = eventType,
                "eventData" = eventData)
-  
+
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
   resp = POST(requestUrl, body = body, encode = "json", verbose())
-  
+
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   # Request Error handling
   # stop_for_status(resp)
   warn_for_status(resp)
-  
+
   # TRUE if sucessful status code (FALSE otherwise)
   status_code(resp) == 200
 }

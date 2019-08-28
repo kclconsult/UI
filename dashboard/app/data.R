@@ -594,6 +594,71 @@ summarisePHQ <- function(phq) {
 }
 
 #
+# Recommendation (Tips) Data
+#
+
+loadRecommendations <- function(sample=FALSE) {
+  # Loads Recommendation (Tips) Data for the patient.
+  #   sample: use sample-data
+  #
+  # Returns
+  #   Columns:
+  #     icon: String of recorded PHQ questionnaire response data
+  #     heading: String of recorded PHQ questionnaire response data
+  #     body: String of recorded PHQ questionnaire response data
+  
+  # 
+  # ALWAYS RETURN SAMPLE DATA UNTIL Tips API is implemented
+  #
+  # if(sample) { # fake sample-data
+    tips = sampleRecommendations()
+  # } else {
+  #  tips = getRecommendations()
+  #}
+  
+  # Any post-processing of Recommendations / Tips
+  
+  return(tips)
+}
+
+sampleRecommendations <- function() {
+  # List of Recommendations are based on a Array of objects representation from JSON
+  # This *may* change depending on what the API service ends up being.
+  
+  recommendationsJSON <- 
+    '[
+        {
+         "icon":"recommendation", 
+         "heading": "Consider changing your painkiller; there are two options:",
+         "body": [
+            "Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider paracetamol.",
+            "Given your medical history and that codeine helps with back pain then codeine is recommended."
+          ]
+        },{
+         "icon":"blood-pressure", 
+         "heading": "Another recommendation.",
+         "body": [
+            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
+          ]
+        },{
+         "icon":"mood", 
+         "heading": "Another recommendation.",
+         "body": [
+            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
+          ]
+        },{
+         "icon":"summary", 
+         "heading": "Another recommendation.",
+         "body": [
+            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
+          ]
+        }]'
+  
+  # Converted to named-list object from JSON
+  fromJSON(recommendationsJSON)
+}
+
+#
 # Feedback (Clinical Impressions) Data
 #
 

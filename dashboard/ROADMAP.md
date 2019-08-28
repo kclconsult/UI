@@ -3,8 +3,9 @@
 # Backlog
 
 ## Essential
-- [ ] getRecommendations() -> server-side stub
+- [X] getRecommendations() -> server-side stub
 - [ ] Randomise Tip ordering (option - client-side)
+- [ ] HTML body for Recommendations
 ---
 - [ ] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week

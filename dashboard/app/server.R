@@ -309,43 +309,16 @@ function(input, output, session) {
     # Event: when Recommendations Tab is selected
     observeEvent(input$tabRecommendationsLink, { 
       logEvent("TabChanged", "Recommendations Tab Selected") 
-    })
-    
-    output$listRecommendations = renderRecommendations({
-      # List of Recommendations are based on a Array of objects representation from JSON:
-      recommendationsJSON <- 
-      '[
-        {
-         "icon":"recommendation", 
-         "heading": "Consider changing your painkiller; there are two options:",
-         "body": [
-            "Given your medical history and that paracetamol helps with back pain then paracetamol is recommended. It is recommended that you consider paracetamol.",
-            "Given your medical history and that codeine helps with back pain then codeine is recommended."
-          ]
-        },{
-         "icon":"blood-pressure", 
-         "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
-        },{
-         "icon":"mood", 
-         "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
-        },{
-         "icon":"summary", 
-         "heading": "Another recommendation.",
-         "body": [
-            "Some more details about the recommendation.  It is recommended that you follow this recommendation."
-          ]
-        }]'
       
-      # Converted to named-list object from JSON
-      fromJSON(recommendationsJSON)
+      # Refresh the list of Tips everytime the Recommendations Tab is loaded.
+      output$listRecommendations = renderRecommendations({
+        # pass a fresh set of Recommendations data along to render
+        tips = loadRecommendations()
+        # TODO - if randomize
+        tips
+      })
     })
-    
+
 #####  
     #
     # Tab: Mood
