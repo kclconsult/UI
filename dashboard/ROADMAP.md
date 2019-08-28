@@ -8,10 +8,9 @@
 ---
 - [X] Separate the button New Feedback ("Create New Feedback") from the list of Previous feedback
 - [X] Title the list "View Previous Feedback"
-- [ ] mv Feedback into data$
-- [ ] make the Feedback listing observe
-- [ ] updateFeedback data to refresh the Feedback listing
-- [ ] Document how to change the title of the Sidebar items
+- [X] mv Feedback into data$
+- [X] make the Feedback listing reactive
+- [X] Feedback Sideback data-toggle to highlight
 ---
 - [ ] getRecommendations() -> server-side stub
 - [ ] Randomise Tip ordering (option - client-side)
@@ -22,6 +21,7 @@
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
 - [ ] Live Data app life-cycle - how will the data update itself?
+- [ ] updateFeedback data to refresh the Feedback listing
 ---
 - [ ] Synchronise sample-data/
 - [ ] USE_SAMPLE_DATA environment option

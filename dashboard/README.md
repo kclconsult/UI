@@ -5,6 +5,7 @@ R packages you will have to install.  On the R console, run:
     > install.packages("jsonlite")
     > install.packages("htmlwidgets")
     > install.packages("httr")
+    > install.packages("humanize")
 
 Then you will have to install any packages written for this app.
 

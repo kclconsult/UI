@@ -612,12 +612,12 @@ function(input, output, session) {
     
     # Render the list of Previous Feedback as a Sidebar
     observe({
-      output$previousFeedbackList = renderPreviousFeedbackList( data$Feedback )
+      output$previousFeedbackList = renderPreviousFeedbackList(data$Feedback)
     })
 
     # Event: Patient wants to start to edit new Feedback
     observeEvent(input$newFeedbackButton,   { 
-      logEvent("Feedback", "New Feedback") 
+      logEvent("Feedback", "Create New Feedback") 
       # show the Feedback Text and Button Area
       hideElement(id = "previousFeedback")
       showElement(id = "newFeedback")
@@ -630,16 +630,20 @@ function(input, output, session) {
     
     # Event: Patients submits the Feedback
     observeEvent(input$feedbackButton,   { 
-      if(nchar(input$feedbackTextarea) > 0) { # only submit Feedback if there is something written
-        logEvent("Feedback", paste("Submitting, final feedback size: ", nchar(input$feedbackTextarea), "characters"))
-        if(sendClinicalImpression(input$feedbackTextarea)) { # successful submission of feedback
-          updateTextAreaInput(session, "feedbackTextarea", value = "") # clear the feedbackTextArea
+      # Only submit Feedback if there is something written
+      n = nchar(input$feedbackTextarea)
+      if(n > 0) { 
+        logEvent("Feedback", paste("Submitting, final feedback size: ", n, "characters"))
+        # Successful submission of feedback
+        if(sendClinicalImpression(input$feedbackTextarea)) { 
+          # Clear the feedbackTextArea
+          updateTextAreaInput(session, "feedbackTextarea", value = "")
           # Update the data$Feedback
           data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
                                                      endTimestamp="2020-02-28T00:00:00Z",
                                                      sample = SAMPLE_DATA)
         }
-      } else {
+      } else { # Log the user pressing submit
         logEvent("Feedback", "Pressed Submit with empty textarea.")
       }
     })

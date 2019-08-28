@@ -9,6 +9,8 @@
 # (See https://shiny.rstudio.com/reference/shiny/1.3.2/renderUI.html).
 #
 
+library(humanize)
+
 #
 # Tab: Recommendations (Tips)
 #
@@ -136,8 +138,20 @@ renderPreviousFeedbackList <- function(f, previousFeedback) {
   t = list()
   
   # Prepend the New Feedback option
-  # - loop over feedback objects
+  # - loop over the rows in f (the feedback objects)
   for(i in 1:nrow(f)) {
+    # About 20 chars can fit in the label.
+
+    # Time-stamp as the label (e.g. "2019-08-22 13:34:10")
+    #label = paste(f$datem[i], f$time[i])
+    
+    # Date + 10 char preview and an ellipse (if note > 10 chars)
+    label = paste(f$datem[i], substring(f$note[i], 1, 10), `if`(str_length(f$note[i]) > 10, "...", ""))
+    
+    # Display timestamp as "time ago..."
+    # NOTE: Discrepency with server-time makes recent feedback seem like it's in the future
+    # label = natural_time(f$timestamp[i])
+    
     # Generates an actionLink with a unique id ("previousFeedback-i"), but not possible to observerEvent("previousFeedback-*")...
     # id = paste("previousFeedback", i, sep="-")
     # t[[i]] <- # append to the tag list, the following tags:
@@ -147,7 +161,7 @@ renderPreviousFeedbackList <- function(f, previousFeedback) {
     onclickjs = paste("Shiny.setInputValue('previousFeedback', '", f$timestamp[i], "', {priority: 'event'});", sep='')
     # And attach that js to an <a> tag:
     t[[i]] <- # append to the tag list, the following tags:
-      tags$a(class="list-group-item", paste(f$datem[i], f$time[i]), onclick = onclickjs)
+      tags$a(class="list-group-item", label, onclick = onclickjs)
   }
   
   # render the list of tags  

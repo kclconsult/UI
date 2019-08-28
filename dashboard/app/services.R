@@ -409,7 +409,6 @@ sendClinicalImpression <- function(note) {
   #
   # Args:
   #   note: (String) Impression details.
-  #   TODO effectiveDateTime: (Optional) Timestamp of (mood) observation, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #
   # Returns:
   #   TRUE upon sucess (FALSE otherwise)
