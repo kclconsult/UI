@@ -12,7 +12,7 @@ Sys.setenv(
   # Study Parameters
   # - start and end time contain the Simualtion Patient Data
   STUDY_START_TIMESTAMP = "2016-12-31 00:00:00",
-  STUDY_END_TIMESTAMP = "2017-02-28 00:00:00",
+  STUDY_END_TIMESTAMP = "2020-02-28 00:00:00",
   # STUDY_TRIAL_PERIOD_DAYS = "",
   # STUDY_CHATBOT_ACTIVE = "0",
   STUDY_PHQ_DAYS_FREQ = "1", # everyday
