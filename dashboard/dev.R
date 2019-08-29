@@ -18,7 +18,7 @@ Sys.setenv(
   PHQ_DAYS_FREQ = "1", # everyday
   #
   RANDOMIZE_RECOMMENDATIONS = "0",
-  USE_SAMPLE_DATA = "1",
+  USE_SAMPLE_DATA = "0",
   # UI
   # ACTIVE_TABS
   DEBUG_PANEL="1"

@@ -3,9 +3,6 @@
 # Backlog
 
 ## Essential
-- [X] Global DEBUG panel at the bottom of the page
-- [X] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
-- [X] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] USE_SAMPLE_DATA environment option
 ---
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
@@ -39,6 +36,9 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Global DEBUG panel at the bottom of the page
+- [X] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
+- [X] DASHBOARD_DEBUG Config to turn on debugging panels
 - [X] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
 - [X] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [X] getRecommendations() -> server-side stub

@@ -13,17 +13,13 @@
 function(input, output, session) {
     # Set-up UI Configuration from Sys.
     # - Debug Panel is shown by default
-    if(DEBUG_PANEL == "0") {
+    if(DEBUG_PANEL) {
       hide(id="debug-panel")
     } 
   
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   
-    # Flag whether to load datasets from /sample-data 
-    # (otherwise load from API)
-    SAMPLE_DATA = FALSE
-    
     # Store app data in a reactiveValue for reactive refreshing
     data = reactiveValues()
     
@@ -37,7 +33,7 @@ function(input, output, session) {
     # end:   2017-06-19 00:00:00
     data$BP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
                                       endTimestamp   = "2017-02-01T00:00:00Z", 
-                                      sample = SAMPLE_DATA)
+                                      sample = USE_SAMPLE_DATA)
     # - Heart Rate
     #
     # Simulation HR available:
@@ -45,7 +41,7 @@ function(input, output, session) {
     # end: 2019-04-09 13:56:13
     data$HR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
                                   endTimestamp   = "2020-04-10T00:00:00Z", 
-                                  sample = SAMPLE_DATA)
+                                  sample = USE_SAMPLE_DATA)
     # - ECG
     # 
     # Only one date entry: 2019-08-06 17:27:25
@@ -59,7 +55,7 @@ function(input, output, session) {
     #
     data$Mood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
                                endTimestamp = "2020-02-28T00:00:00Z", 
-                               sample = SAMPLE_DATA)
+                               sample = USE_SAMPLE_DATA)
 
     # - Feedback (Clinical Impression)
     #
@@ -67,7 +63,7 @@ function(input, output, session) {
     #
     data$Feedback = loadClinicalImpressionData(startTimestamp="2018-08-13T16:26:26Z", 
                                                  endTimestamp="2020-02-28T00:00:00Z",
-                                                 sample = SAMPLE_DATA)
+                                                 sample = USE_SAMPLE_DATA)
 
     # - PHQ (Questionnaire Responses)
     #
@@ -373,7 +369,7 @@ function(input, output, session) {
       output$listRecommendations = renderRecommendations({
         # pass a fresh set of Recommendations data along to render
         tips = loadRecommendations()
-        if(RANDOMIZE_RECOMMENDATIONS == "1") { # if randomize
+        if(RANDOMIZE_RECOMMENDATIONS) { # if randomize
           # use dlpyr::sample_frac for randomizing rows in a table
           sample_frac(tips) # returns randomised sample
         } else {

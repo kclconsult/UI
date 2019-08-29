@@ -10,7 +10,7 @@
 print("Loading System Environment Variables")
 print("------------------------------------")
 
-getEnv <- function(varName, default=NA, required=FALSE) {
+getEnv <- function(varName, default=NA, required=FALSE, asBool=FALSE) {
   value = Sys.getenv(varName, unset=default)
   if(required) { # *REQUIRED*
     if(is.na(required)) {
@@ -21,6 +21,15 @@ getEnv <- function(varName, default=NA, required=FALSE) {
     }
   }
   print(paste(varName,"=",value))
+  if(asBool) { # treat as bool: "1" = TRUE, "0" = FALSE
+    if(value == "1") {
+      print("-> interpreting as Boolean: TRUE")
+      return(TRUE)
+    } else if(value == "0") {
+      print("-> interpreting as Boolean: FALSE")
+      return(FALSE)
+    }
+  }
   value
 }
 
@@ -48,13 +57,13 @@ CA_BUNDLE = getEnv("CURL_CA_BUNDLE", default="")
 STUDY_START_TIMESTAMP = getEnv("STUDY_START_TIMESTAMP", default=Sys.time())
 STUDY_END_TIMESTAMP = getEnv("STUDY_END_TIMESTAMP", default=Sys.time() + as.difftime(17, units="days"))
 STUDY_TRIAL_PERIOD_DAYS = getEnv("STUDY_TRIAL_PERIOD_DAYS", default="3")
-STUDY_CHATBOT_ACTIVE = getEnv("STUDY_CHATBOT_ACTIVE", default="0")
+STUDY_CHATBOT_ACTIVE = getEnv("STUDY_CHATBOT_ACTIVE", default="0", asBool=TRUE)
 STUDY_PHQ_DAYS_FREQ =  getEnv("STUDY_PHQ_DAYS_FREQ", default="21")
 
 # UI Vars
-DEBUG_PANEL = getEnv("DEBUG_PANEL", default="0")
-RANDOMIZE_RECOMMENDATIONS =  getEnv("RANDOMIZE_RECOMMENDATIONS", default="0")
-USE_SAMPLE_DATA = getEnv("USE_SAMPLE_DATA", default="0")
+DEBUG_PANEL = getEnv("DEBUG_PANEL", default="0", asBool=TRUE)
+RANDOMIZE_RECOMMENDATIONS =  getEnv("RANDOMIZE_RECOMMENDATIONS", default="0", asBool=TRUE)
+USE_SAMPLE_DATA = getEnv("USE_SAMPLE_DATA", default="0", asBool=TRUE)
 ACTIVE_TABS = getEnv("ACTIVE_TABS", default="summary,bp,hr,ecg,mood,risk,tips,feedback")
 
 # Done loading
