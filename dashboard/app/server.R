@@ -476,6 +476,11 @@ function(input, output, session) {
       
       # Return to the Mood Grid
       runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+      
+      # Refresh the Mood Data - so the Summary can be updated
+      data$Mood = loadMoodData(startTimestamp = STUDY_START_TIMESTAMP, 
+                               endTimestamp = STUDY_END_TIMESTAMP, 
+                               sample = USE_SAMPLE_DATA)
     })
     
     # Event: Patient rejects selected Mood Image
