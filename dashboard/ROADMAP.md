@@ -3,9 +3,7 @@
 # Backlog
 
 ## Essential
-- [X] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
----
-- [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week
+- [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
@@ -17,6 +15,8 @@
 - [ ] Sample-Data debug options
 ---
 - [ ] Update run.R with pre-flight checks
+- [ ] Global DEBUG panel at the bottom of the page
+- [ ] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
 - [ ] DASHBOARD_DEBUG Config to turn on debugging panels
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Documentation in README.md for Environment Variables
@@ -31,18 +31,18 @@
 
 ## Nice to have
 - [ ] Support icon() in Recommendations
-- [ ] Randomise N Tips
+- [ ] Randomise N Tips.
 - [ ] Bar versus Line Charts
 - [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
-- [ ] Logging service captures poke stream of user
+- [ ] Logging service captures tap stream of user
 - [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
-- [ ] Notification Alerts (dismissable) Overlay (icon and color)
 - [ ] Connectivity Indicators for SummaryBox
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [X] getRecommendations() -> server-side stub
 - [X] Randomise Tip ordering (option - client-side)
 - [X] HTML body for Recommendations

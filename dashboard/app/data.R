@@ -15,6 +15,31 @@ library(tidyverse)
 # converts POSIX times to strings
 library(anytime)
 
+
+#
+# Utilities
+# 
+
+lastData <- function(d, weeks=0, days=0, hours=0) {
+  # Returns the last N days of the dataset.
+  
+  # sort in descending date, time
+  d_desc = arrange(d, desc(datem), desc(time))
+
+  # filter by the last
+  latest_timestamp = as.POSIXct(d_desc$timestamp[1])
+  # subtract weeks, days and hours
+  from_timestamp = latest_timestamp - as.difftime(weeks, unit="weeks")
+  from_timestamp = from_timestamp - as.difftime(days, unit="days")
+  from_timestamp = from_timestamp - as.difftime(hours, unit="hours")
+
+  # Using dplyr::filter to select rows between the timestamps
+  return(dplyr::filter(d_desc, 
+                       dplyr::between(as.POSIXct(timestamp), 
+                                      from_timestamp, 
+                                      latest_timestamp)))
+}
+ 
 #
 # Blood Pressure
 #

@@ -94,6 +94,10 @@ function(input, output, session) {
     observe({ # summarise the PHQ dataset
       summary$PHQ = summarisePHQ(data$PHQ)
     })
+
+    ### Timeline
+    # Store the snapshot of data to display on plots in reactiveValues
+    timeline = reactiveValues()
     
 #####  
     #
@@ -203,21 +207,25 @@ function(input, output, session) {
     })
     
     # Select different time-range events
-    observeEvent(input$selectLastFourHours, {
-      print("Summary: Last Four Hours")
+    observeEvent(input$selectLastFourHoursHR, {
+      logEvent("HRPlot", "Last Four Hours Selected")
+      # lastData from data.R
+      timeline$HR = lastData(data$HR, hours=4) 
     })
     
-    observeEvent(input$selectLastDay, {
-      print("Summary: Last 24 Hours")
+    observeEvent(input$selectLastDayHR, {
+      logEvent("HRPlot", "Last 24 Hours  Selected") 
+      timeline$HR = lastData(data$HR, days=1) 
     })
     
-    observeEvent(input$selectLastMonth, {
-      print("Summary: Last Month")
+    observeEvent(input$selectLastWeekHR, {
+      logEvent("HRPlot", "Last Week Selected") 
+      timeline$HR = lastData(data$HR, weeks=1) 
     })
     
     output$plotHR = renderHRTimeline({
         # from packages/Consult/HRTimeline
-        HRTimeline(dataset = data$HR)
+        HRTimeline(dataset = timeline$HR)
     })
     
 #####
@@ -239,6 +247,19 @@ function(input, output, session) {
       }
     })
   
+    # Select different time-range events
+    observeEvent(input$selectLastFourHoursBP, {
+      logEvent("BPPlot", "Last Four Hours Selected") 
+    })
+    
+    observeEvent(input$selectLastDayBP, {
+      logEvent("BPPlot", "Last 24 Hours  Selected") 
+    })
+    
+    observeEvent(input$selectLastWeekBP, {
+      logEvent("BPPlot", "Last Week Selected") 
+    })
+    
     output$plotBP = renderBPTimeline({
         # from packages/Consult/BPTimeline
         BPTimeline(dataset = data$BP)

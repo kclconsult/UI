@@ -83,10 +83,6 @@ htmlTemplate("www/index.html",
   tabFeedbackLink = actionLink("tabFeedbackLink", "Feedback", href = "#feedback", `data-toggle` = "tab"),
   
   # Tab: Summary
-  # - Selectors as Bootstrip "nav-pills"
-  selectLastFourHours = actionLink("selectLastFourHours", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
-  selectLastDay = actionLink("selectLastDay", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
-  selectLastMonth = actionLink("selectLastMonth", "Last Month", href = "#", `data-toggle` = "pill"),
 
   # - Summary Boxes
   summaryBP   = SummaryBoxOutput("summaryBP"),
@@ -99,13 +95,25 @@ htmlTemplate("www/index.html",
   debugSelectBPAlertText = selectInput("debugSelectBPAlertText", "Select BP Text", c("", "Normal", "Slightly high", "A bit higher than normal")),
 
   # Tab: Heart Rate (HR)
+  # - Selectors as Bootstrip "nav-pills"
+  selectLastFourHoursHR = actionLink("selectLastFourHoursHR", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastDayHR = actionLink("selectLastDayHR", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastWeekHR = actionLink("selectLastWeekHR", "Last Week", href = "#", `data-toggle` = "pill"),
+  # - Consult package Widget
   plotHR = HRTimelineOutput("plotHR"),
   
   # Tab: Blood Pressure (BP)
+  # - Alert Messages for BP
   alertBP =  htmlOutput("alertBP"),
+  # - Selectors as Bootstrip "nav-pills"
+  selectLastFourHoursBP = actionLink("selectLastFourHoursBP", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastDayBP = actionLink("selectLastDayBP", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
+  selectLastWeekBP = actionLink("selectLastWeekBP", "Last Week", href = "#", `data-toggle` = "pill"),
+  # - Consult package Widget
   plotBP = BPTimelineOutput("plotBP"),
   
   # Tab: ECG
+  # - Consult package Widget
   plotECG = ECGTimelineOutput("plotECG"),
 
   # Tab: Risk
