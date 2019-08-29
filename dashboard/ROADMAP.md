@@ -4,12 +4,6 @@
 
 ## Essential
 - [ ] Live Data app life-cycle - how will the data update itself?
-- [X] updateFeedback data to refresh the Feedback listing
----
-- [ ] Update run.R with pre-flight checks
----
-- [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
-- [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
 ---
 - [ ] Update ECG data from API call for sample-data
 - [ ] ECG updated to plot last 1000 lines

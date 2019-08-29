@@ -8,12 +8,12 @@ Sys.setenv(
   # Not Implemented:
   CURL_CA_BUNDLE="",
   # Study Parameters
+  # (Allow for defaults)
   # STUDY_START_TIMESTAMP = "",
   # STUDY_END_TIMESTAMP = "",
-  # STUDY_TRIAL_PERIOD_DAYS = "",
+  # STUDY_TRIAL_PERIOD_DAYS = "3",
   # STUDY_CHATBOT_ACTIVE = "0",
-  #   
-  PHQ_DAYS_FREQ = "1", # everyday
+  # STUDY_PHQ_DAYS_FREQ = "1", # everyday
   RANDOMIZE_RECOMMENDATIONS = "0",
   USE_SAMPLE_DATA = "0",
   # UI
