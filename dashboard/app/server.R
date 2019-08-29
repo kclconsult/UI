@@ -95,7 +95,8 @@ function(input, output, session) {
     #
     # Note: Questionnaire Responses Data prior to "2019-08-22 00:00:00" is incomplete
     #       and causes load errors with the table!!! ("Error in scan: line 1 did not have 17 elements")
-    data$PHQ = loadPHQData(startTimestamp = "2019-08-22 00:00:00",
+    #       PATCH - get PHQ data according to the STUDY_PHQ_DAYS_FREQ
+    data$PHQ = loadPHQData(startTimestamp = Sys.time() - as.difftime(as.double(STUDY_PHQ_DAYS_FREQ), units="days"),
                            endTimestamp   = STUDY_END_TIMESTAMP, 
                            sample = FALSE)
 
@@ -535,6 +536,11 @@ function(input, output, session) {
           runjs(paste("$('input[name=",id,"]').prop('checked', false);", sep='')) # clears the radio input visually
           runjs(paste("Shiny.onInputChange('",id,"', null);", sep='')) # clears the Shiny input$ reactiveVal
         }
+        
+        # Refresh the PHQ Data
+        data$PHQ = loadPHQData(startTimestamp = Sys.time() - as.difftime(as.double(STUDY_PHQ_DAYS_FREQ), units="days"),
+                               endTimestamp   = STUDY_END_TIMESTAMP, 
+                               sample = FALSE)
       }
     })
 
@@ -642,6 +648,11 @@ function(input, output, session) {
         runjs(paste("$('input[name=",id,"]').prop('checked', false);", sep='')) # clears the radio input visually
         runjs(paste("Shiny.onInputChange('",id,"', null);", sep='')) # clears the Shiny input$ reactiveVal
       }
+      
+      # Refresh the PHQ Data
+      data$PHQ = loadPHQData(startTimestamp = Sys.time() - as.difftime(as.double(STUDY_PHQ_DAYS_FREQ), units="days"),
+                             endTimestamp   = STUDY_END_TIMESTAMP, 
+                             sample = FALSE)
     })
   
 #####
