@@ -114,7 +114,7 @@ Show the Debug Panels at the bottom of the Dashboard's Tabs.
 Hide the Debug Panel by specifying a value of "0" or not defining the
 environment variable.
 
-Unset value: "1"
+Unset value: "0"
 
 ### ACTIVE_TABS
 

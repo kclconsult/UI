@@ -11,6 +11,13 @@
 # output - references to output objects to update in client
 # session - live session object for updating input controls
 function(input, output, session) {
+    # Set-up UI Configuration from Sys.
+    # - Debug Panel is shown by default
+    DEBUG_PANEL = Sys.getenv("DEBUG_PANEL", unset="0")
+    if(DEBUG_PANEL == "0") {
+      hide(id="debug-panel")
+    } 
+  
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
   

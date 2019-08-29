@@ -18,7 +18,7 @@ Sys.setenv(
   USE_SAMPLE_DATA = "0",
   # UI
   # ACTIVE_TABS
-  DEBUG_PANEL="1"
+  DEBUG_PANEL="0"
 )
 
 # Load Shiny to run app

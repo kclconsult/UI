@@ -101,12 +101,7 @@
       <div class="col-sm-6">{{ summaryECG }}</div>
       <div class="col-sm-6">{{ summaryMood }}</div>
     </div>
-  	<!-- DEUBG Summary Boxes -->
-  	<div class="debug well">
-  	   <h4>Debug Panel</h4>
-  		   {{ debugSelectBPAlertColor }}
-         {{ debugSelectBPAlertText }}
-    </div>
+
     </div> <!-- /Tab: Summary -->
 
 	<!-- Tab: Heart Rate -->
@@ -302,20 +297,7 @@
               </div>
           </div>
         </div> <!-- /Mood Selected -->
-
       </div> <!-- /Sub-Tab Content -->
-
-	  <div class="debug well">
-      <h4>Debug Panel</h4>
-      <!-- Important to KEEP the "mood-tabs" b/c they are used to switch tabs
-           but they may be hidden from user when DEBUG is on -->
-      <ul id="mood-tabs" class="nav nav-pills">
-        <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
-        <li><a href="#mood-selected" data-toggle="pill">Mood Selected</a></li>
-        <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
-        <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
-      </ul>
-	  </div>
 	</div> <!-- /Tab: Mood -->
 
 		<!-- Tab: Feedback (ClinicalImpressions) -->
@@ -341,6 +323,27 @@
 		  </div>
 		</div> <!-- /Tab: Feedback -->
 	</div> <!-- /Tab panes -->
+
+  <!-- DEBUG_PANEL -->
+  <div id="debug-panel" class="debug well">
+      <h4>Debug Panel</h4>
+      <p><strong>Note:</strong>Debug controls are shown on all Tabs</p>
+
+      <h5>Summary Tab</h5>
+       {{ debugSelectBPAlertColor }}
+       {{ debugSelectBPAlertText }}
+
+       <h5>Mood Tab</h5>
+       <!-- Important to KEEP the "mood-tabs" b/c they are used to switch tabs
+            but they may be hidden from user when DEBUG is on -->
+       <ul id="mood-tabs" class="nav nav-pills">
+         <li class="active"><a href="#mood-grid" data-toggle="pill">Mood Grid</a></li>
+         <li><a href="#mood-selected" data-toggle="pill">Mood Selected</a></li>
+         <li><a href="#phq2" data-toggle="pill">PHQ2</a></li>
+         <li><a href="#phq9" data-toggle="pill">PHQ9</a></li>
+       </ul>
+  </div>
+
 	</div> <!-- /Page Content Container  -->
   </body>
 </html>

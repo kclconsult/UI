@@ -78,7 +78,7 @@
 }
 
 /* Give the Debug Panel some space */
-.debug.well {
+#debug-panel {
   margin-top: 25px;
 }
 

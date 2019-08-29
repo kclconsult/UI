@@ -3,7 +3,12 @@
 # Backlog
 
 ## Essential
-- [X] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
+- [ ] Global DEBUG panel at the bottom of the page
+- [ ] Sample-Data debug options
+- [ ] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
+- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
+---
+- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
@@ -12,13 +17,8 @@
 ---
 - [ ] Synchronise sample-data/
 - [ ] USE_SAMPLE_DATA environment option
-- [ ] Sample-Data debug options
 ---
 - [ ] Update run.R with pre-flight checks
-- [ ] Global DEBUG panel at the bottom of the page
-- [ ] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
-- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
-- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 - [ ] Documentation in README.md for Environment Variables
 ---
 - [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
@@ -42,6 +42,7 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
 - [X] Blood Pressure Alerts from Dialog Manager (from Isabel and Panos)
 - [X] getRecommendations() -> server-side stub
 - [X] Randomise Tip ordering (option - client-side)
