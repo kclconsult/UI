@@ -233,6 +233,11 @@ function(input, output, session) {
     # Event: when HR Tab is selected
     observeEvent(input$tabHRLink, { 
       logEvent("TabChanged", "HR Tab Selected") 
+      
+      # Refresh the HR data
+      data$HR = loadHeartRateData(startTimestamp = STUDY_START_TIMESTAMP, 
+                                  endTimestamp = STUDY_END_TIMESTAMP, 
+                                  sample = USE_SAMPLE_DATA)
     })
     
     # Select different time-range events
@@ -276,6 +281,11 @@ function(input, output, session) {
     observeEvent(input$tabBPLink, { 
       logEvent("TabChanged", "BP Tab Selected") 
 
+      # Refresh BP data
+      data$BP = loadBloodPressureData(startTimestamp = STUDY_START_TIMESTAMP,
+                                      endTimestamp   = STUDY_END_TIMESTAMP, 
+                                      sample = USE_SAMPLE_DATA)
+      
       # only render alert when *not* green      
       if(summary$BP$alert != "green") {
         # Re-renders the Alert Box
@@ -325,6 +335,11 @@ function(input, output, session) {
     # Event: when ECG tab is selected
     observeEvent(input$tabECGLink, { 
       logEvent("TabChanged", "ECG Tab Selected") 
+      
+      # Refresh ECG data
+      data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP, 
+                             endTimestamp = STUDY_END_TIMESTAMP, 
+                             sample = TRUE) # Note: until smaller resolution data, sample for now
     })
     
     output$plotECG = renderECGTimeline({

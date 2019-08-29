@@ -3,10 +3,10 @@
 # Backlog
 
 ## Essential
-- [ ] Live Data app life-cycle - how will the data update itself?
+- [X] Live Data app life-cycle - how will the data update itself?
 ---
-- [ ] Update ECG data from API call for sample-data
-- [ ] ECG updated to plot last 1000 lines
+- [X] Update ECG data from API call for sample-data
+- [X] ECG updated to plot last 100 lines
 ---
 - [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 
