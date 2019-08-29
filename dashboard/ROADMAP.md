@@ -3,9 +3,8 @@
 # Backlog
 
 ## Essential
-- [X] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
 - [ ] Live Data app life-cycle - how will the data update itself?
-- [ ] updateFeedback data to refresh the Feedback listing
+- [X] updateFeedback data to refresh the Feedback listing
 ---
 - [ ] Update run.R with pre-flight checks
 ---

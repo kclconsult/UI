@@ -697,9 +697,9 @@ function(input, output, session) {
           # Clear the feedbackTextArea
           updateTextAreaInput(session, "feedbackTextarea", value = "")
           # Update the data$Feedback
-          data$Feedback = loadClinicalImpressionData(startTimestamp="2019-08-13T16:26:26Z", 
-                                                     endTimestamp="2020-02-28T00:00:00Z",
-                                                     sample = SAMPLE_DATA)
+          data$Feedback = loadClinicalImpressionData(startTimestamp = STUDY_START_TIMESTAMP, 
+                                                     endTimestamp   = STUDY_END_TIMESTAMP,
+                                                     sample = USE_SAMPLE_DATA)
         }
       } else { # Log the user pressing submit
         logEvent("Feedback", "Pressed Submit with empty textarea.")
