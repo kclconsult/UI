@@ -22,7 +22,6 @@ library(shinyjs) # JS add-ons
 
 library(jsonlite)
 
-
 # Shiny Options
 # See: https://rdrr.io/cran/shiny/man/shiny-options.html
 # options(
@@ -34,8 +33,9 @@ library(jsonlite)
 # local package which provides htmlwidgets.
 library(Consult)
 
-# local modules
+# local modules (*note* order matters!*)
 source("version.R")
+source("env.R")
 source("components.R")
 source("services.R")
 source("data.R")

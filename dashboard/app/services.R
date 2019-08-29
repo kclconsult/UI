@@ -16,19 +16,6 @@ library(tidyverse)
 # converts POSIX times to strings
 library(anytime)
 
-# Environment Variables Specific to the services
-
-# - message passer specifics
-MP_PROTOCOL = Sys.getenv("MESSAGE_PASSER_PROTOCOL")
-MP_HOST = Sys.getenv("MESSAGE_PASSER_URL")
-MP_URL = paste(MP_PROTOCOL, MP_HOST, sep = "")
-
-# - certificate authoritys
-CA_BUNDLE = Sys.getenv("CURL_CA_BUNDLE")
-
-# - username (also patient ID) provided by SHINYPROXY
-USERNAME_PATIENT_ID = Sys.getenv("SHINYPROXY_USERNAME")
-
 #
 # Message Passer API 
 #

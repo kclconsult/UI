@@ -13,7 +13,6 @@
 function(input, output, session) {
     # Set-up UI Configuration from Sys.
     # - Debug Panel is shown by default
-    DEBUG_PANEL = Sys.getenv("DEBUG_PANEL", unset="0")
     if(DEBUG_PANEL == "0") {
       hide(id="debug-panel")
     } 
@@ -374,7 +373,7 @@ function(input, output, session) {
       output$listRecommendations = renderRecommendations({
         # pass a fresh set of Recommendations data along to render
         tips = loadRecommendations()
-        if(Sys.getenv("RANDOMIZE_RECOMMENDATIONS", unset="0") == "1") { # if randomize
+        if(RANDOMIZE_RECOMMENDATIONS == "1") { # if randomize
           # use dlpyr::sample_frac for randomizing rows in a table
           sample_frac(tips) # returns randomised sample
         } else {
@@ -397,7 +396,7 @@ function(input, output, session) {
       print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
   
       # Check if past-due next PHQ Time
-      if(phqTimeSince > as.double(Sys.getenv("CONSULT_PHQ_DAYS_FREQ"))) {
+      if(phqTimeSince > as.double("STUDY_PHQ_DAYS_FREQ")) {
         # Shows PHQ2 Tab
         runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
       } else {

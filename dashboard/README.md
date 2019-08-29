@@ -148,7 +148,7 @@ Unset value: "0"
 If value is "1", then load static sample data from the sample-data/ directory
 to demonstrate the app.
 
-Unset value: "1"
+Unset value: "0"
 
 ## PHQ 2/9 Form Logic
 

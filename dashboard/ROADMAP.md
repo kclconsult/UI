@@ -3,10 +3,10 @@
 # Backlog
 
 ## Essential
-- [ ] Global DEBUG panel at the bottom of the page
-- [ ] Sample-Data debug options
-- [ ] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
-- [ ] DASHBOARD_DEBUG Config to turn on debugging panels
+- [X] Global DEBUG panel at the bottom of the page
+- [X] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
+- [X] DASHBOARD_DEBUG Config to turn on debugging panels
+- [ ] USE_SAMPLE_DATA environment option
 ---
 - [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
 ---
@@ -15,11 +15,8 @@
 - [ ] Live Data app life-cycle - how will the data update itself?
 - [ ] updateFeedback data to refresh the Feedback listing
 ---
-- [ ] Synchronise sample-data/
-- [ ] USE_SAMPLE_DATA environment option
----
 - [ ] Update run.R with pre-flight checks
-- [ ] Documentation in README.md for Environment Variables
+- [X] Documentation in README.md for Environment Variables
 ---
 - [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
 - [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
@@ -37,7 +34,7 @@
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
 - [ ] Logging service captures tap stream of user
-- [ ] ClinicalImpressions Notes Appication (Scrollable Sidebar)
+- [ ] ClinicalImpressions Notes Application (Scrollable Sidebar)
 - [ ] Connectivity Indicators for SummaryBox
 - [ ] Badges for Tabs (or InfoBoxes)
 

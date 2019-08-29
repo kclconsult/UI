@@ -1,4 +1,4 @@
-# Development environment variables
+# Production environment variables
 
 Sys.setenv(
   # REQUIRED: 

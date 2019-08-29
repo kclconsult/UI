@@ -15,10 +15,10 @@ Sys.setenv(
   # STUDY_END_TIMESTAMP = "",
   # STUDY_TRIAL_PERIOD_DAYS = "",
   # STUDY_CHATBOT_ACTIVE = "0",
-  #   
   PHQ_DAYS_FREQ = "1", # everyday
+  #
   RANDOMIZE_RECOMMENDATIONS = "0",
-  USE_SAMPLE_DATA = "0",
+  USE_SAMPLE_DATA = "1",
   # UI
   # ACTIVE_TABS
   DEBUG_PANEL="1"
