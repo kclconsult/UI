@@ -3,15 +3,11 @@
 # Backlog
 
 ## Essential
-- [X] ACTIVE_TABS Config via Env Variable and Tabs
----
-- [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
 - [ ] Live Data app life-cycle - how will the data update itself?
 - [ ] updateFeedback data to refresh the Feedback listing
 ---
 - [ ] Update run.R with pre-flight checks
-- [X] Documentation in README.md for Environment Variables
 ---
 - [ ] observeEvent (init=FALSE) - prevent of running observeEvent upon initialisations (i.e. TextArea)
 - [ ] Tab Buttons for Feedback Sidebar (remove runjs code, use data-toggle Bootstrap)
@@ -34,6 +30,9 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
+- [X] Documentation in README.md for Environment Variables
+- [X] ACTIVE_TABS Config via Env Variable and Tabs
 - [X] USE_SAMPLE_DATA environment option
 - [X] Global DEBUG panel at the bottom of the page
 - [X] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG

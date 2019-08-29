@@ -1,20 +1,13 @@
 shiny
-data.table
-DT
-plotly
+shinyjs
 jsonlite
-ggplot2
 dplyr
-scales
-cowplot
-personograph
 tidyverse
-shinydashboard
-RCurl
 anytime
 htmlwidgets
 httr
-shinyjs
+humanize
+devtools
 
 # Install local packages from repo:
 #

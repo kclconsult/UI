@@ -55,46 +55,48 @@ function(input, output, session) {
     # Simulation BP only available:
     # start: 2017-01-01 00:00:00
     # end:   2017-06-19 00:00:00
-    data$BP = loadBloodPressureData(startTimestamp = "2016-12-31T00:00:00Z",
-                                      endTimestamp   = "2017-02-01T00:00:00Z", 
-                                      sample = USE_SAMPLE_DATA)
+    data$BP = loadBloodPressureData(startTimestamp = STUDY_START_TIMESTAMP,
+                                    endTimestamp   = STUDY_END_TIMESTAMP, 
+                                    sample = USE_SAMPLE_DATA)
     # - Heart Rate
     #
     # Simulation HR available:
     # start: 2019-04-04 23:19:39
     # end: 2019-04-09 13:56:13
-    data$HR = loadHeartRateData(startTimestamp = "2019-04-03T00:00:00Z", 
-                                  endTimestamp   = "2020-04-10T00:00:00Z", 
+    data$HR = loadHeartRateData(startTimestamp = STUDY_START_TIMESTAMP, 
+                                  endTimestamp = STUDY_END_TIMESTAMP, 
                                   sample = USE_SAMPLE_DATA)
     # - ECG
     # 
     # Only one date entry: 2019-08-06 17:27:25
     #
-    data$ECG = loadECGData(startTimestamp = "2019-08-06T00:00:00Z", 
-                             endTimestamp   = "2019-08-07T00:00:00Z", 
+    data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP, 
+                             endTimestamp = STUDY_END_TIMESTAMP, 
                              sample = TRUE) # Note: until smaller resolution data, sample for now
     # - Mood
     #
-    # Live Moods
+    # Mood Data is available as submitted
     #
-    data$Mood = loadMoodData(startTimestamp = "2016-02-26T00:00:00Z", 
-                               endTimestamp = "2020-02-28T00:00:00Z", 
+    data$Mood = loadMoodData(startTimestamp = STUDY_START_TIMESTAMP, 
+                               endTimestamp = STUDY_END_TIMESTAMP, 
                                sample = USE_SAMPLE_DATA)
 
     # - Feedback (Clinical Impression)
     #
     # Should be all Clinical Impressions
-    #
-    data$Feedback = loadClinicalImpressionData(startTimestamp="2018-08-13T16:26:26Z", 
-                                                 endTimestamp="2020-02-28T00:00:00Z",
-                                                 sample = USE_SAMPLE_DATA)
+    # 
+    data$Feedback = loadClinicalImpressionData(startTimestamp = STUDY_START_TIMESTAMP, 
+                                               endTimestamp   = STUDY_END_TIMESTAMP,
+                                               sample = USE_SAMPLE_DATA)
 
     # - PHQ (Questionnaire Responses)
     #
-    # Should be all Questionnaire Responses
+    # Questionnaire Responses are available as submitted
     #
-    data$PHQ = loadPHQData(startTimestamp = "2019-08-22T16:26:26Z", 
-                           endTimestamp   = "2020-02-28T00:00:00Z", 
+    # Note: Questionnaire Responses Data prior to "2019-08-22 00:00:00" is incomplete
+    #       and causes load errors with the table!!! ("Error in scan: line 1 did not have 17 elements")
+    data$PHQ = loadPHQData(startTimestamp = "2019-08-22 00:00:00",
+                           endTimestamp   = STUDY_END_TIMESTAMP, 
                            sample = FALSE)
 
     ### Summaries

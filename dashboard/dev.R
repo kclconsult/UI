@@ -11,8 +11,9 @@ Sys.setenv(
   # Not Implemented:
   CURL_CA_BUNDLE="",
   # Study Parameters
-  # STUDY_START_TIMESTAMP = "",
-  # STUDY_END_TIMESTAMP = "",
+  # - start and end time contain the Simualtion Patient Data
+  STUDY_START_TIMESTAMP = "2016-12-31 00:00:00",
+  STUDY_END_TIMESTAMP = "2020-02-28 00:00:00",
   # STUDY_TRIAL_PERIOD_DAYS = "",
   # STUDY_CHATBOT_ACTIVE = "0",
   STUDY_PHQ_DAYS_FREQ = "1", # everyday
@@ -21,7 +22,7 @@ Sys.setenv(
   USE_SAMPLE_DATA = "0", 
   # USE_SAMPLE_DATA = "1", 
   # UI
-  ACTIVE_TABS = "summary,bp,hr,ecg,mood,feedback",
+  ACTIVE_TABS = "summary,bp,hr,ecg,mood,risk,recommendations,feedback",
   DEBUG_PANEL="1"
 )
 

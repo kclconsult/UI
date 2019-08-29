@@ -2,15 +2,22 @@
 
 R packages you will have to install.  On the R console, run:
 
-    > install.packages("jsonlite")
-    > install.packages("htmlwidgets")
-    > install.packages("httr")
-    > install.packages("humanize")
+  > install.packages("shiny")
+  > install.packages("shinyjs")
+  > install.packages("htmlwidgets")
+  > install.packages("jsonlite")
+  > install.packages("httr")
+  > install.packages("dplyr")
+  > install.packages("tidyverse")
+  > install.packages("anytime")
+  > install.packages("humanize")
+  > install.packages("devtools")
 
-Then you will have to install any packages written for this app.
+You will have to install the Consult package.  Run in R in the base of the repo:
 
-ALSO NEED:
-    > install.packages("shinyjs")
+  > library('devtools')
+  > setwd('dashboard/packages/Consult')
+  > devtools::install()
 
 # Running the Consult Shiny UI Dashboard
 
@@ -76,7 +83,12 @@ Here is the example USERNAME used during development of a simulated patient:
 ### STUDY_START_TIMESTAMP
 
 The date that the Patient that the patient starts using the Consult Dashboard.
-This is inclusive of the Trial Period.
+This is inclusive of the Trial Period.  
+
+Format is "%Y-%m-%d %H:%M:%S".
+
+Example:
+  STUDY_START_TIMESTAMP = "2016-12-31 00:00:00",
 
 Unset value: Will default to the start-time of the Dashboard App.
 
@@ -84,6 +96,11 @@ Unset value: Will default to the start-time of the Dashboard App.
 
 The date that the Patient that the patient starts using the Consult Dashboard.
 This is inclusive of the Trial Period.
+
+Format is "%Y-%m-%d %H:%M:%S".
+
+Example:
+  STUDY_END_TIMESTAMP = "2020-02-28 00:00:00",
 
 Unset value: {STUDY_START_TIMESTAMP + 17 Days} Will default to 17 Days from the
 start-time of the Dashboard App.
@@ -97,11 +114,23 @@ Unset value: "3" Will default to 3 Days.
 
 ### STUDY_CHATBOT_ACTIVE
 
-"1" - Chatbot is always Active
+"1" - Chatbot is Active
 "0" - Chatbot is not Active
-"STARTDATE-ENDDATE" - Period when the Chatbot is active
+
+Note that you will have to restart the server in order to switch the chatbot
+is active flag.  Alternatively adding more System Environment Variables will
+work.
 
 Unset value: "0"
+
+## PHQ 2/9 Form Logic
+
+### STUDY_PHQ_DAYS_FREQ
+
+Days since the previous PHQ form submission that need to elapse before the
+next PHQ form is shown on the Mood tab.
+
+Unset value: "21" The form is shown 21 days since the last PHQ form.
 
 ## UI Configuration
 
@@ -149,15 +178,6 @@ If value is "1", then load static sample data from the sample-data/ directory
 to demonstrate the app.
 
 Unset value: "0"
-
-## PHQ 2/9 Form Logic
-
-### PHQ_DAYS_FREQ
-
-Days since the previous PHQ form submission that need to elapse before the
-next PHQ form is shown on the Mood tab.
-
-Unset value: "21" The form is shown 21 days since the last PHQ form.
 
 # File Manifest (TODO - NEEDS Updating)
 

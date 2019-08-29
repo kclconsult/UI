@@ -40,6 +40,23 @@ lastData <- function(d, weeks=0, days=0, hours=0) {
                                       latest_timestamp)))
 }
  
+formatTimestamp <- function(ts) {
+  # Formats an R timestamp to the format compatible to Message Passer
+  # (i.e. as full timestamp (e.g. 2019-02-26T00:00:00Z).)
+  #
+  # Returns: compatible timestamp as a character string
+  
+  if(typeof(ts) == "double") { # POSIXct type of timestamp (what is returned from Sys.time())
+    return(strftime(ts, "%Y-%m-%dT%H:%M:%SZ"))
+  } else if(typeof(ts) == "character") {
+    return(strftime(strptime(ts, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%dT%H:%M:%SZ"))
+  }
+  
+  # return what as given, garbage in garbage out
+  print(paste("ERROR - formatTimestamp - unrecognised type", typeof(ts)))
+  ts
+}
+
 #
 # Blood Pressure
 #
@@ -48,8 +65,8 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Blood Pressure Data for the patient.
   #
   # Args:
-  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   startTimestamp: start time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
+  #   endTimestamp: end time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
   #   sample: use sample-data
   #
   # Returns
@@ -69,7 +86,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     bp <- sampleBloodPressureData()
   } else {   # Load from Observation API
     #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
-    bp = getObservations("85354-9", startTimestamp, endTimestamp)
+    bp = getObservations("85354-9", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
   
   # Rename the columns for the FIHR codes to more explainable ones:
@@ -214,8 +231,8 @@ loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Heart Rate Data for the patient.
   #
   # Args:
-  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp.
+  #   startTimestamp: start time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
+  #   endTimestamp: end time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
   #   sample: use sample-data
   #
   # Returns
@@ -233,7 +250,7 @@ loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     hr <- sampleHeartRateData()
   } else {   # Load from Observation API
     #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-    hr <- getObservations("8867-4", startTimestamp, endTimestamp)
+    hr <- getObservations("8867-4", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
   
   # Rename the columns for the FIHR codes to more explainable ones:
@@ -297,8 +314,8 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads ECG Data for the patient.
   #
   # Args:
-  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   startTimestamp: start time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
+  #   endTimestamp: end time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
   #   sample: Use sample-data
   #
   # Returns
@@ -315,7 +332,7 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     ecg = sampleECGData()
   } else {   # Load from Observation API
     #  ECG code = 131328 (???)
-    ecg_raw <- getObservations("131328", startTimestamp, endTimestamp)
+    ecg_raw <- getObservations("131328", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
 
     # Rename the columns for the FIHR codes to more explainable ones:
     #
@@ -389,8 +406,8 @@ loadMoodData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Loads Mood Finding Data (code: "106131003") for the patient.
   #
   # Args:
-  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   startTimestamp: start time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
+  #   endTimestamp: end time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
   #   sample: use sample-data
   #
   # Returns
@@ -409,7 +426,7 @@ loadMoodData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     mood = sampleMoodData()
   } else {
     # "Mood Finding" code is = "106131003"
-    mood = getObservations("106131003", startTimestamp, endTimestamp)
+    mood = getObservations("106131003", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
   
   # Rename the columns for the FIHR codes to more explainable ones:
@@ -570,7 +587,7 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   #if(sample) { # fake sample-data
   #  phq = samplePHQData()
   #} else {
-  phq = getQuestionnaireResponses(startTimestamp, endTimestamp)
+  phq = getQuestionnaireResponses(formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   phq$timestamp = paste(phq$datem, phq$time, sep=" ")
   #}
   # The fields returned in the recordedPHQ data column:
@@ -682,8 +699,8 @@ loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALS
   # Loads patient clinical impressions (feedback)
   #
   # Args:
-  #   startTimestamp: The start time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
-  #   endTimestamp: The end time of the range of observations to look for, as full timestamp (e.g. 2019-02-26T00:00:00Z).
+  #   startTimestamp: start time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
+  #   endTimestamp: end time of the range of observations to look for, as POSIXct or timestamp character string "%Y-%m-%d %H:%M:%S"
   #   sample: use sample-data (not implemented yet)
   #
   # Returns
@@ -702,7 +719,7 @@ loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALS
   if(sample) { # fake sample-data
     fb = sampleClinicalImpressionData()
   } else {
-    fb = getClinicalImpression(startTimestamp, endTimestamp)
+    fb = getClinicalImpression(formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
   
   # Create timestamp string column
