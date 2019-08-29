@@ -88,7 +88,7 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     #   Blood pressure code = 8534-9 (https://details.loinc.org/LOINC/85354-9.html)
     bp = getObservations("85354-9", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
-  
+
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name | Old Name   | Code      | Details

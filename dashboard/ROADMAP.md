@@ -3,12 +3,6 @@
 # Backlog
 
 ## Essential
-- [X] Live Data app life-cycle - how will the data update itself?
----
-- [X] Update ECG data from API call for sample-data
-- [X] ECG updated to plot last 100 lines
----
-- [ ] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
 
 ## Nice to have
 - [ ] Support icon() in Recommendations
@@ -23,6 +17,10 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] Error Handling and Notification when Message Passer is un-reachable (Log on Server)
+- [X] Live Data app life-cycle - how will the data update itself?
+- [X] Update ECG data from API call for sample-data
+- [X] ECG updated to plot last 100 lines
 - [X] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [X] Documentation in README.md for Environment Variables
 - [X] ACTIVE_TABS Config via Env Variable and Tabs

@@ -52,7 +52,7 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
 
   # TODO - validate input parameters
   # patientID is valid
-  # code is valie
+  # code is valid
   # startTimestamp < endTimestamp
 
   # Build the Message Passer request URL 
@@ -71,10 +71,20 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
   
   # Start measuring call
   start_time = Sys.time() 
-  
+
   # Read.table handles HTTP GET request
-  data <- read.table(requestUrl, header = TRUE)
-    
+  # data <- read.table(requestUrl, header = TRUE)
+  
+  # Error Handling
+  tryCatch( 
+    assign("data", read.table(requestUrl, header = TRUE)),
+    warning = function(w) {
+      print(paste("getObservations: ", w))
+      # TODO - handle No Data
+      # assign("data", NULL)
+    }
+  )
+  
   # Stop measuring call
   end_time = Sys.time()
 
