@@ -17,7 +17,7 @@ Sys.setenv(
   RANDOMIZE_RECOMMENDATIONS = "0",
   USE_SAMPLE_DATA = "0",
   # UI
-  # ACTIVE_TABS
+  ACTIVE_TABS = "summary,bp,hr,ecg,mood,feedback",
   DEBUG_PANEL="0"
 )
 

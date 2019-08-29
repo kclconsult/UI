@@ -64,7 +64,7 @@ STUDY_PHQ_DAYS_FREQ =  getEnv("STUDY_PHQ_DAYS_FREQ", default="21")
 DEBUG_PANEL = getEnv("DEBUG_PANEL", default="0", asBool=TRUE)
 RANDOMIZE_RECOMMENDATIONS =  getEnv("RANDOMIZE_RECOMMENDATIONS", default="0", asBool=TRUE)
 USE_SAMPLE_DATA = getEnv("USE_SAMPLE_DATA", default="0", asBool=TRUE)
-ACTIVE_TABS = getEnv("ACTIVE_TABS", default="summary,bp,hr,ecg,mood,risk,tips,feedback")
+ACTIVE_TABS = getEnv("ACTIVE_TABS", default="summary,bp,hr,ecg,mood,risk,recommendations,feedback")
 
 # Done loading
 print("------------------------------------")

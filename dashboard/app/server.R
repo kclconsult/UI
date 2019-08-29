@@ -11,11 +11,35 @@
 # output - references to output objects to update in client
 # session - live session object for updating input controls
 function(input, output, session) {
-    # Set-up UI Configuration from Sys.
+
+    # Set-up UI Configuration from Environment Variables
     # - Debug Panel is shown by default
     if(DEBUG_PANEL) {
       hide(id="debug-panel")
     } 
+    
+    # - Active Tabs
+    active_tabs = unlist(strsplit(ACTIVE_TABS, split=","))
+    # (values refer to the id of tab elements)
+    for(t in c("summary",
+               "bp",
+               "hr",
+               "ecg",
+               "mood",
+               "risk",
+               "recommendations",
+               "feedback")) {
+      if(t %in% active_tabs) { # show tab
+        # tab is shown by default
+        print(paste("Showing", t, "Tab"))
+      } else {
+        # hides the "consult-<tab>-tab" in the nav bar
+        hide(id=paste("consult-",t,"-tab", sep=""))
+        # hides the div containing the tab
+        hide(id=t)
+        print(paste("hiding", t, "Tab"))
+      }
+    }
   
     # Render the Version String
     output$versionString = renderText(paste("v", DASHBOARD_VERSION, sep=""))
@@ -392,7 +416,7 @@ function(input, output, session) {
       print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
   
       # Check if past-due next PHQ Time
-      if(phqTimeSince > as.double("STUDY_PHQ_DAYS_FREQ")) {
+      if(phqTimeSince > as.double(STUDY_PHQ_DAYS_FREQ)) {
         # Shows PHQ2 Tab
         runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
       } else {

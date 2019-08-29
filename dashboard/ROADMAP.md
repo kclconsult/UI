@@ -3,9 +3,7 @@
 # Backlog
 
 ## Essential
-- [ ] USE_SAMPLE_DATA environment option
----
-- [ ] DASHBOARD_ACTIVE_TABS Config via Env Variable and Tabs
+- [X] ACTIVE_TABS Config via Env Variable and Tabs
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
@@ -36,6 +34,7 @@
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done
+- [X] USE_SAMPLE_DATA environment option
 - [X] Global DEBUG panel at the bottom of the page
 - [X] Move Mood-Tab state out of DEBUG Panel, but at bottom of Mood Tab page and only show during DEBUG
 - [X] DASHBOARD_DEBUG Config to turn on debugging panels

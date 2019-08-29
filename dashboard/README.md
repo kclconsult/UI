@@ -132,10 +132,10 @@ hr | Heart Rate plot
 ecg | ECG plot
 mood | Mood Grid and PHQ2/9 forms
 risk | Risk Graphics  
-tips | Tips (Recommendations)
+recommendations | Recommendations (Tips)
 feedback | Feedback Tab
 
-Unset value: "summary,bp,hr,ecg,mood,risk,tips,feedback"
+Unset value: "summary,bp,hr,ecg,mood,risk,recommendations,feedback"
 
 ### RANDOMIZE_RECOMMENDATIONS
 
