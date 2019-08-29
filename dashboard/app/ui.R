@@ -99,6 +99,7 @@ htmlTemplate("www/index.html",
   selectLastFourHoursHR = actionLink("selectLastFourHoursHR", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
   selectLastDayHR = actionLink("selectLastDayHR", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
   selectLastWeekHR = actionLink("selectLastWeekHR", "Last Week", href = "#", `data-toggle` = "pill"),
+  selectLastMonthHR = actionLink("selectLastMonthHR", "Last Month", href = "#", `data-toggle` = "pill"),
   # - Consult package Widget
   plotHR = HRTimelineOutput("plotHR"),
   
@@ -109,6 +110,7 @@ htmlTemplate("www/index.html",
   selectLastFourHoursBP = actionLink("selectLastFourHoursBP", "Last 4 Hours", href = "#", `data-toggle` = "pill"),
   selectLastDayBP = actionLink("selectLastDayBP", "Last 24 Hours", href = "#", `data-toggle` = "pill"),
   selectLastWeekBP = actionLink("selectLastWeekBP", "Last Week", href = "#", `data-toggle` = "pill"),
+  selectLastMonthBP = actionLink("selectLastMonthBP", "Last Month", href = "#", `data-toggle` = "pill"),
   # - Consult package Widget
   plotBP = BPTimelineOutput("plotBP"),
   

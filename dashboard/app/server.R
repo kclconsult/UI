@@ -211,7 +211,12 @@ function(input, output, session) {
       logEvent("HRPlot", "Last Four Hours Selected")
       # lastData from data.R
       timeline$HR = lastData(data$HR, hours=4) 
-    })
+    },
+    # LastFourHours Button is initially active
+    # This makes it runs when the event is initialized (even when the button is not pressed)
+    # see -> https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html
+    ignoreNULL = FALSE, ignoreInit = FALSE)
+
     
     observeEvent(input$selectLastDayHR, {
       logEvent("HRPlot", "Last 24 Hours  Selected") 
@@ -221,6 +226,11 @@ function(input, output, session) {
     observeEvent(input$selectLastWeekHR, {
       logEvent("HRPlot", "Last Week Selected") 
       timeline$HR = lastData(data$HR, weeks=1) 
+    })
+    
+    observeEvent(input$selectLastMonthsHR, {
+      logEvent("HRPlot", "Last Month Selected") 
+      timeline$HR = lastData(data$HR, weeks=4) 
     })
     
     output$plotHR = renderHRTimeline({
@@ -257,11 +267,20 @@ function(input, output, session) {
     observeEvent(input$selectLastDayBP, {
       logEvent("BPPlot", "Last 24 Hours  Selected") 
       timeline$BP = lastData(data$BP, days=1)
-    })
+    },    
+    # LastFourHours Button is initially active
+    # This makes it runs when the event is initialized (even when the button is not pressed)
+    # see -> https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html
+    ignoreNULL = FALSE, ignoreInit = FALSE)
     
     observeEvent(input$selectLastWeekBP, {
       logEvent("BPPlot", "Last Week Selected") 
-      timeline$BP = lastData(data$BP, week=1)
+      timeline$BP = lastData(data$BP, weeks=1)
+    })
+    
+    observeEvent(input$selectLastMonthBP, {
+      logEvent("BPPlot", "Last Month Selected") 
+      timeline$BP = lastData(data$BP, weeks=4)
     })
     
     output$plotBP = renderBPTimeline({

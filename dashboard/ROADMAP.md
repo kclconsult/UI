@@ -3,7 +3,7 @@
 # Backlog
 
 ## Essential
-- [ ] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
+- [X] Graph Granularity for time - Last 4 Hrs, Last Day, Last Week - of the data that is available
 ---
 - [ ] Env. variable for StartTimestamp (i.e. presumedly the start time of the trial)
 - [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
