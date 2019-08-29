@@ -250,19 +250,23 @@ function(input, output, session) {
     # Select different time-range events
     observeEvent(input$selectLastFourHoursBP, {
       logEvent("BPPlot", "Last Four Hours Selected") 
+      # lastData from data.R
+      timeline$BP = lastData(data$BP, hours=4)
     })
     
     observeEvent(input$selectLastDayBP, {
       logEvent("BPPlot", "Last 24 Hours  Selected") 
+      timeline$BP = lastData(data$BP, days=1)
     })
     
     observeEvent(input$selectLastWeekBP, {
       logEvent("BPPlot", "Last Week Selected") 
+      timeline$BP = lastData(data$BP, week=1)
     })
     
     output$plotBP = renderBPTimeline({
         # from packages/Consult/BPTimeline
-        BPTimeline(dataset = data$BP)
+        BPTimeline(dataset = timeline$BP)
     })
     
 #####
