@@ -3,7 +3,7 @@
 # Backlog
 
 ## Essential
-- [ ] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
+- [X] Activate Live (i.e. latest time) time for EndTimestamp /or/ EndTimeStamp
 - [ ] Live Data app life-cycle - how will the data update itself?
 - [ ] updateFeedback data to refresh the Feedback listing
 ---
