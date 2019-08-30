@@ -179,20 +179,6 @@ to demonstrate the app.
 
 Unset value: "0"
 
-# File Manifest (TODO - NEEDS Updating)
-
-    packages/  <- contains separate R packages which contain htmlwidgets and other library code
-          Consult/  <- R package containing htmlwidget for C3 charts
-    app/       <- the Shiny application
-          ui.R         <- Shiny's ui function definition
-          server.R     <- Shiny's server function definition
-          components.R <- render functions for reactive HTML blocks of code (defined in R)
-          services.R   <- functions to support loading data
-          www/
-              template.html    <- HTML file loaded by ui.R
-              consultStyle.css <- CSS file referenced by template.html
-          sample-data/         <- sample CSV files for data that is provided by Consult backend services
-
 # Development Notes
 
 ## Defining an R package and htmlwidget
