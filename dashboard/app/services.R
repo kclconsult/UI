@@ -140,7 +140,12 @@ getQuestionnaireResponses <- function(startTimestamp, endTimestamp) {
   start_time = Sys.time()
 
   # Read.table handles HTTP GET request
-  data <- read.table( requestUrl, header=TRUE )
+  tryCatch(
+    assign("data", read.table(requestUrl, header = TRUE)),
+    warning = function(w) {
+      print(paste("getQuestionnaireResponses: ", w))
+    }
+  )
 
   if ( url.exists(requestUrl, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
@@ -157,7 +162,7 @@ getQuestionnaireResponses <- function(startTimestamp, endTimestamp) {
     return(NULL)
 
   }
-  
+
 }
 
 
@@ -406,15 +411,29 @@ getClinicalImpression <- function(startTimestamp, endTimestamp) {
   start_time = Sys.time()
 
   # Read.table handles HTTP GET request
-  data <- read.table(requestUrl, header = TRUE)
+  tryCatch(
+    assign("data", read.table(requestUrl, header = TRUE)),
+    warning = function(w) {
+      print(paste("getClinicalImpression: ", w))
+    }
+  )
 
-  # Stop measuring call
-  end_time = Sys.time()
+  if ( url.exists(requestUrl, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
-  # DEBUG timing
-  print(end_time - start_time)
+    # Stop measuring call
+    end_time = Sys.time()
 
-  return(data)
+    # DEBUG timing
+    print(end_time - start_time)
+
+    return(data)
+
+  } else {
+
+    return(NULL)
+
+  }
+
 }
 
 sendClinicalImpression <- function(note) {

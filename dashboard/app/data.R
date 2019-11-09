@@ -645,28 +645,39 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   # time
   # weekday
 
-  # sort in descending date, time
-  phq_desc = arrange(phq, desc(datem), desc(time))
+  if (!is.list(phq)) {
 
-  return(phq)
+    # sort in descending date, time
+    phq_desc = arrange(phq, desc(datem), desc(time))
+    return(phq)
+
+  } else {
+    return(NULL)
+  }
+
 }
 
 summarisePHQ <- function(phq) {
   # Generate a summary for Mood (i.e. the most recent mood)
 
-  # sort in descending date, time
-  phq_desc = arrange(phq, desc(datem), desc(time))
+  if (!is.null(phq)) {
 
-  # Summary is based on the most recent value.
-  n = nrow(phq)
-  timestamp = phq_desc$timestamp[1] # latest mood reading
+    # sort in descending date, time
+    phq_desc = arrange(phq, desc(datem), desc(time))
 
-  # Return summary values
-  list(
-    status = paste(n, "PHQ forms submitted"),
-    timestamp = timestamp,
-    n = n
-  )
+    # Summary is based on the most recent value.
+    n = nrow(phq)
+    timestamp = phq_desc$timestamp[1] # latest mood reading
+
+    # Return summary values
+    list(
+      status = paste(n, "PHQ forms submitted"),
+      timestamp = timestamp,
+      n = n
+    )
+
+  }
+
 }
 
 #
@@ -756,13 +767,20 @@ loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALS
     fb = getClinicalImpression(formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
 
-  # Create timestamp string column
-  fb$timestamp = paste(fb$datem, fb$time, sep=" ")
+  if (!is.null(fb)) {
 
-  # sort in descending date, time
-  fb_desc = arrange(fb, desc(datem), desc(time))
+    # Create timestamp string column
+    fb$timestamp = paste(fb$datem, fb$time, sep=" ")
 
-  return(fb_desc)
+    # sort in descending date, time
+    fb_desc = arrange(fb, desc(datem), desc(time))
+
+    return(fb_desc)
+
+  } else {
+    return(NULL)
+  }
+
 }
 
 sampleClinicalImpressionData <- function() {
