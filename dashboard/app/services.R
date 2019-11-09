@@ -10,14 +10,16 @@ library(httr) # R http lib, see https://cran.r-project.org/web/packages/httr/vig
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
-library(tidyverse) 
+library(tidyverse)
 
 # install.packages("anytime")
 # converts POSIX times to strings
 library(anytime)
 
+library(RCurl)
+
 #
-# Message Passer API 
+# Message Passer API
 #
 # https://github.kcl.ac.uk/pages/consult/message-passer/
 #
@@ -39,7 +41,7 @@ effectiveDateTime <- function(t = Sys.time()) {
 
 getObservations <- function(code, startTimestamp, endTimestamp) {
   # Gets Observations for a patient based on codes (i.e. Blood pressure: 85354-9)
-  # 
+  #
   # GET Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-GetObservations)
   #
   # Args:
@@ -55,43 +57,50 @@ getObservations <- function(code, startTimestamp, endTimestamp) {
   # code is valid
   # startTimestamp < endTimestamp
 
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "Observation", 
-                      USERNAME_PATIENT_ID, 
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "Observation",
+                      USERNAME_PATIENT_ID,
                       code,
                       startTimestamp,
                       endTimestamp,
                       sep = "/")
   # DEBUG url
   print(paste("getObservations:", requestUrl))
-  
+
   # Validate URL with Certificate Authority
   # if(!url.exists(requestUrl, cainfo=CA_BUNDLE)) { # invalid
-  
+
   # Start measuring call
-  start_time = Sys.time() 
+  start_time = Sys.time()
 
   # Read.table handles HTTP GET request
   # data <- read.table(requestUrl, header = TRUE)
-  
+
   # Error Handling
-  tryCatch( 
+  tryCatch(
     assign("data", read.table(requestUrl, header = TRUE)),
     warning = function(w) {
       print(paste("getObservations: ", w))
-      # TODO - handle No Data
-      # assign("data", NULL)
     }
   )
-  
-  # Stop measuring call
-  end_time = Sys.time()
 
-  # DEBUG timing
-  print(end_time - start_time)
+  if ( url.exists(requestUrl, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
-  return(data)
+    # Stop measuring call
+    end_time = Sys.time()
+
+    # DEBUG timing
+    print(end_time - start_time)
+
+    return(data)
+
+  } else {
+
+    return(NULL)
+
+  }
+
 }
 
 #
@@ -133,13 +142,22 @@ getQuestionnaireResponses <- function(startTimestamp, endTimestamp) {
   # Read.table handles HTTP GET request
   data <- read.table( requestUrl, header=TRUE )
 
-  # Stop measuring call
-  end_time = Sys.time()
+  if ( url.exists(requestUrl, cainfo=Sys.getenv("CURL_CA_BUNDLE")) ) {
 
-  # DEBUG timing
-  print( end_time - start_time )
+    # Stop measuring call
+    end_time = Sys.time()
 
-  return( data )
+    # DEBUG timing
+    print(end_time - start_time)
+
+    return(data)
+
+  } else {
+
+    return(NULL)
+
+  }
+  
 }
 
 
@@ -156,10 +174,10 @@ validateKeysInList <- function(k, l, context="") {
   #
   # Returns:
   #    TRUE - if all keys are present, FALSE otherwise
-  
+
   # set of matching question score parameters
   matching = intersect(k, names(l))
-  
+
   # check if all of the questionScores are present
   if(!setequal(k, matching)) {
     warning(paste(context, "-- missing keys:", setdiff(k, matching)))
@@ -193,16 +211,16 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   #
   # chipp/27-aug-2019: PHQ2 answers are strings: Yes = "1" / No = "0". Sending "-1"
   # answers for when PHQ9 is not answered.
-  
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "QuestionnaireResponse", 
+
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "QuestionnaireResponse",
                       "add",
                       sep = "/")
 
   # DEBUG url
   print(paste("sendQuestionnaireResponses:", requestUrl))
-  
+
   # POST parameters data structure with default values:
   body = list(
     "subjectReference" = USERNAME_PATIENT_ID, # Patient id
@@ -214,7 +232,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
     "FeelingDownInitial",     # PHQ2 yes/no for FeelingDown(PHQ2.Q1)
     "LittleInterestInitial"   # PHQ2 yes/no for LittleInterest(PHQ2.Q2)
   )
-  
+
   # PHQ9 Q1-9 Scores parameter names
   questionScores = c(
     "LittleInterest",        # PHQ9 score for LittleInterest (PHQ9.Q1)
@@ -227,23 +245,23 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
     "MovingSpeaking", 	     # PHQ9 score for MovingSpeaking (PHQ9.Q8)
     "ThoughtsHurting"        # PHQ9 score for ThoughtsHurting (PHQ9.Q9)
   )
-  
+
   # Check the Screening Responses are present
   if(!validateKeysInList(screeningResponses, screening, context="sendQuestionnaireResponses")) {
     return(FALSE)
   }
 
   # POST for screening (PHQ2) questions
-  body = append(body, screening) # append screening 
-  
+  body = append(body, screening) # append screening
+
     # Validate and send PHQ9 Form if either screening questions are Yes ("1")
   if((screening$LittleInterestInitial == "1") | (screening$FeelingDownInitial == "1")) {
-  
+
     # check if all of the questionScores are present
     if(!validateKeysInList(questionScores, scores, context="sendQuestionnaireResponses")) {
       return(FALSE)
     }
-    
+
     # validate values for questionScores and accumulate TotalScore
     totalScore = 0
     for(p in questionScores) {
@@ -255,9 +273,9 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
         return(FALSE)
       }
     }
-    
+
     # Parameters for POST request:
-    body = append(body, scores) # append scores 
+    body = append(body, scores) # append scores
     body[["TotalScore"]] = as.character(totalScore)  # sum of all scores for Q1-9
 
     # For Q10, if totalScore > 0, set "Difficulty"
@@ -266,7 +284,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
     } else { # Difficulty not answered "-"
       body[["Difficulty"]] = "-"
     }
-  
+
   } else { # Only send the PHQ2 values and '-1' stub values for the PHQ9 values
     for(p in questionScores) {
       body[[p]] = "-1"
@@ -276,23 +294,23 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   }
 
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
   resp = POST(requestUrl, body = body, encode = "json", verbose())
-  
+
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   # Request Error handling
   # stop_for_status(resp)
   warn_for_status(resp)
-  
+
   # TRUE if sucessful status code (FALSE otherwise)
   status_code(resp) == 200
 }
@@ -303,35 +321,35 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
 
 sendMoodObservation <- function(recordedEmotion) {
   # Add new Patient Mood Finding (code "106131003") Observation resource.
-  # 
+  #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-Observations-Add
   #
   # Note: The Observation-Add API is currently hard-coded *only* to submit these Observations.
   # There is no code parameter and "106131003" is assumed.
-  # 
+  #
   # Args:
-  #   recordedEmotion: (String) Recorded emotion 
+  #   recordedEmotion: (String) Recorded emotion
   #   TODO effectiveDateTime: (Optional) Timestamp of (mood) observation, as full timestamp (e.g. 2019-02-26T00:00:00Z).
   #
   # Returns:
   #   TRUE upon sucess (FALSE otherwise)
 
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "Observation", 
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "Observation",
                       "add",
                       sep = "/")
   # DEBUG url
   print(paste("sendMoodObservation:", requestUrl))
-  
+
   # Parameters for POST request
   body = list("effectiveDateTime" = effectiveDateTime(), # String 	(optional) Timestamp of impression
               "subjectReference" = USERNAME_PATIENT_ID,  # Patient IDs
               "285854004" = recordedEmotion)             # Recorded emotion
-  
+
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
@@ -339,14 +357,14 @@ sendMoodObservation <- function(recordedEmotion) {
 
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   # Request Error handling
   # stop_for_status(resp)
   warn_for_status(resp)
-  
+
   # TRUE if sucessful status code (FALSE otherwise)
   status_code(resp) == 200
 }
@@ -357,7 +375,7 @@ sendMoodObservation <- function(recordedEmotion) {
 
 getClinicalImpression <- function(startTimestamp, endTimestamp) {
   # Gets Clinical Impressions for a patient
-  # 
+  #
   # GET Request:  getClinicalImpression(startTimestamp="2019-08-13T16:26:26Z", endTimestamp="2019-08-15T16:26:26Z")
   #
   # Args:
@@ -366,42 +384,42 @@ getClinicalImpression <- function(startTimestamp, endTimestamp) {
   #
   # Returns:
   #   Table of Clinical Impression Data from the Message Passer Service
-  
+
   # TODO - validate input parameters
   # patientID is valid
   # startTimestamp < endTimestamp
-  
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "ClinicalImpression", 
-                      USERNAME_PATIENT_ID, 
+
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "ClinicalImpression",
+                      USERNAME_PATIENT_ID,
                       startTimestamp,
                       endTimestamp,
                       sep = "/")
   # DEBUG url
   print(paste("getClinicalImpression:", requestUrl))
-  
+
   # Validate URL with Certificate Authority
   # if(!url.exists(requestUrl, cainfo=CA_BUNDLE)) { # invalid
-  
+
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Read.table handles HTTP GET request
   data <- read.table(requestUrl, header = TRUE)
-  
+
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   return(data)
 }
 
 sendClinicalImpression <- function(note) {
   # Add new ClinicalImpression (e.g. GP notes).
-  # 
+  #
   # POST Request: https://github.kcl.ac.uk/pages/consult/message-passer/#api-ClinicalImpressions-Add
   #
   # Args:
@@ -409,39 +427,39 @@ sendClinicalImpression <- function(note) {
   #
   # Returns:
   #   TRUE upon sucess (FALSE otherwise)
-  
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                      "ClinicalImpression", 
+
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                      "ClinicalImpression",
                       "add",
                       sep = "/")
   # DEBUG url
   print(paste("sendClinicalImpression:", requestUrl))
-  
+
   # Parameters for POST request
   body = list(
     effectiveDateTime = effectiveDateTime(), 	# String 	(optional) Timestamp of impression
     subjectReference = USERNAME_PATIENT_ID,   # Patient IDs
     note = note)                              # Impression details
-  
+
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
   resp = POST(requestUrl, body = body, encode = "json", verbose())
-  
+
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   # Request Error handling
   # stop_for_status(resp)
   warn_for_status(resp)
-  
+
   # TRUE if sucessful status code (FALSE otherwise)
   status_code(resp) == 200
 }
@@ -452,34 +470,34 @@ sendClinicalImpression <- function(note) {
 
 getRecommendations <- function() {
   # Gets Recommendations (Tips) for a patient
-  # 
+  #
   # GET Request:
   #
   # Args:
   #
   # Returns:
   #   Table of Recommendations (Tips) from the Message Passer Service
-  
-  # Build the Message Passer request URL 
-  requestUrl <- paste(MP_URL, 
-                    "Recommendations", 
+
+  # Build the Message Passer request URL
+  requestUrl <- paste(MP_URL,
+                    "Recommendations",
                     USERNAME_PATIENT_ID,
                     sep = "/")
   # DEBUG url
   print(paste("getRecommendations:", requestUrl))
-  
+
   # Start measuring call
-  start_time = Sys.time() 
-  
+  start_time = Sys.time()
+
   # Read.table handles HTTP GET request
   data <- read.table(requestUrl, header = TRUE)
-  
+
   # Stop measuring call
   end_time = Sys.time()
-  
+
   # DEBUG timing
   print(end_time - start_time)
-  
+
   return(data)
 }
 
@@ -489,8 +507,8 @@ getRecommendations <- function() {
 
 logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # Logs a Dashboard event on the server.
-  # 
-  # POST Request: 
+  #
+  # POST Request:
   #
   # Args:
   #   eventType - (String) a string for the eventType
@@ -504,7 +522,7 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   print(paste(eventTime, eventType, eventData, sep=" | "))
 
   return(TRUE) # *REMOVE* once fully implemented
-  
+
   ######################################################################
 
   # Build the Message Passer request URL
@@ -539,4 +557,3 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # TRUE if sucessful status code (FALSE otherwise)
   status_code(resp) == 200
 }
-

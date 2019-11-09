@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     libxt-dev \
     libssl-dev \
     libssh2-1-dev \
-    libssl1.0.0
+    libssl1.0.0 \
+    software-properties-common
 
 # system library dependency for the app
 RUN apt-get update && apt-get install -y \
@@ -22,11 +23,13 @@ RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-proje
 
 # install dependencies of the consult app
 RUN R -e "install.packages('Rmpfr', repos='https://cloud.r-project.org/')"
-RUN R -e "install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'tidyverse', 'shinydashboard', 'RCurl', 'anytime'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'tidyverse', 'shinydashboard', 'RCurl', 'anytime', 'shinyjs', 'humanize', 'htmlwidgets', 'httr', 'devtools'), repos='https://cloud.r-project.org/')"
 
 # copy the app to the image
 RUN mkdir /root/dashboard
 COPY ./dashboard /root/dashboard
+
+RUN R -e "devtools::install('/root/dashboard/packages/Consult')"
 
 COPY ./proxy/certs/consult.crt /root/consult.crt
 
@@ -34,4 +37,4 @@ COPY ./Rprofile.site /usr/lib/R/etc/
 
 EXPOSE 3838
 
-CMD ["R", "-e", "shiny::runApp('/root/dashboard')"]
+CMD ["R", "-e", "shiny::runApp('/root/dashboard/app')"]

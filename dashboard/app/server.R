@@ -14,7 +14,7 @@ function(input, output, session) {
 
     # Set-up UI Configuration from Environment Variables
     # - Debug Panel is shown by default
-    if(DEBUG_PANEL) {
+    if(!DEBUG_PANEL) {
       hide(id="debug-panel")
     }
 
@@ -287,12 +287,16 @@ function(input, output, session) {
                                       sample = USE_SAMPLE_DATA)
 
       # only render alert when *not* green
-      if(summary$BP$alert != "green") {
-        # Re-renders the Alert Box
-        output$alertBP = renderAlertBP(
-          alert = summary$BP$alert,
-          alert_text = summary$BP$alert_long_text
-        )
+      if(!is.null(summary$BP$alert)) {
+
+        if(summary$BP$alert != "green") {
+          # Re-renders the Alert Box
+          output$alertBP = renderAlertBP(
+            alert = summary$BP$alert,
+            alert_text = summary$BP$alert_long_text
+          )
+        }
+
       }
     })
 
@@ -428,19 +432,24 @@ function(input, output, session) {
       logEvent( "TabChanged", "Mood Tab Selected" )
 
       # Time difference units will vary depending on the time difference: Specify "days":
-      moodTimeSince = difftime(Sys.time(), summary$Mood$timestamp, units="days")
-      phqTimeSince = difftime(Sys.time(), summary$PHQ$timestamp, units="days")
+      if (!is.null(summary$Mood$timestamp)) {
 
-      print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
+        moodTimeSince = difftime(Sys.time(), summary$Mood$timestamp, units="days")
+        phqTimeSince = difftime(Sys.time(), summary$PHQ$timestamp, units="days")
 
-      # Check if past-due next PHQ Time
-      if(phqTimeSince > as.double(STUDY_PHQ_DAYS_FREQ)) {
-        # Shows PHQ2 Tab
-        runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
-      } else {
-        # Shows Mood Tab
-        runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+        print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
+
+        # Check if past-due next PHQ Time
+        if(phqTimeSince > as.double(STUDY_PHQ_DAYS_FREQ)) {
+          # Shows PHQ2 Tab
+          runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
+        } else {
+          # Shows Mood Tab
+          runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+        }
+
       }
+
     })
 
     # -- Mood Grid Events

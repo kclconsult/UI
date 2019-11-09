@@ -9,7 +9,7 @@
 
 # install.packages("tidyverse")
 #  provides functions such as 'read_delim'
-library(tidyverse) 
+library(tidyverse)
 
 # install.packages("anytime")
 # converts POSIX times to strings
@@ -18,40 +18,47 @@ library(anytime)
 
 #
 # Utilities
-# 
+#
 
 lastData <- function(d, weeks=0, days=0, hours=0) {
   # Returns the last N days of the dataset.
-  
-  # sort in descending date, time
-  d_desc = arrange(d, desc(datem), desc(time))
 
-  # filter by the last
-  latest_timestamp = as.POSIXct(d_desc$timestamp[1])
-  # subtract weeks, days and hours
-  from_timestamp = latest_timestamp - as.difftime(weeks, unit="weeks")
-  from_timestamp = from_timestamp - as.difftime(days, unit="days")
-  from_timestamp = from_timestamp - as.difftime(hours, unit="hours")
+  if (!is.list(d)) {
 
-  # Using dplyr::filter to select rows between the timestamps
-  return(dplyr::filter(d_desc, 
-                       dplyr::between(as.POSIXct(timestamp), 
-                                      from_timestamp, 
-                                      latest_timestamp)))
+    # sort in descending date, time
+    d_desc = arrange(d, desc(datem), desc(time))
+
+    # filter by the last
+    latest_timestamp = as.POSIXct(d_desc$timestamp[1])
+    # subtract weeks, days and hours
+    from_timestamp = latest_timestamp - as.difftime(weeks, unit="weeks")
+    from_timestamp = from_timestamp - as.difftime(days, unit="days")
+    from_timestamp = from_timestamp - as.difftime(hours, unit="hours")
+
+    # Using dplyr::filter to select rows between the timestamps
+    return(dplyr::filter(d_desc,
+                         dplyr::between(as.POSIXct(timestamp),
+                                        from_timestamp,
+                                        latest_timestamp)))
+
+  } else {
+    return(NULL);
+  }
+
 }
- 
+
 formatTimestamp <- function(ts) {
   # Formats an R timestamp to the format compatible to Message Passer
   # (i.e. as full timestamp (e.g. 2019-02-26T00:00:00Z).)
   #
   # Returns: compatible timestamp as a character string
-  
+
   if(typeof(ts) == "double") { # POSIXct type of timestamp (what is returned from Sys.time())
     return(strftime(ts, "%Y-%m-%dT%H:%M:%SZ"))
   } else if(typeof(ts) == "character") {
     return(strftime(strptime(ts, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%dT%H:%M:%SZ"))
   }
-  
+
   # return what as given, garbage in garbage out
   print(paste("ERROR - formatTimestamp - unrecognised type", typeof(ts)))
   ts
@@ -72,15 +79,15 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # Returns
   #   Blood Presure Data set with Summary Statistics
   #   Columns:
-  #     sbp (Number) Systolic blood pressure      
+  #     sbp (Number) Systolic blood pressure
   #     dbp (Number) Diastolic blood pressure
   #     hr  (Number)  Heart rate
   #     datem: Date???
   #     date.month: Month???
   #     time: Time???
-  #     weekday (String) day of the week 
+  #     weekday (String) day of the week
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
-  
+
 
   if(sample) { # Load from sample-data
     bp <- sampleBloodPressureData()
@@ -96,11 +103,11 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   # hr       | c8867h4    | 8867-4    | Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
   # sbp      | c271649006 | 271649006 | Systolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271649006)
   # dbp      | c271650006 | 271650006 | Diastolic blood pressure (http://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=271650006)
-  # 
+  #
 
   # from plots-for-dashboard.html
-  bp_renamed = plyr::rename(bp, c("c8867h4" = "hr", 
-                                  "c271649006" = "sbp", 
+  bp_renamed = plyr::rename(bp, c("c8867h4" = "hr",
+                                  "c271649006" = "sbp",
                                   "c271650006"="dbp"))
 
   # Create timestamp string for plotting
@@ -111,16 +118,16 @@ loadBloodPressureData <- function(startTimestamp, endTimestamp, sample=FALSE) {
 
 sampleBloodPressureData <- function() {
   # Loads Blood Pressure Data from a txt file located in sample-data/
-  # 
+  #
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
-  
-  bp = read_delim("sample-data/bp.txt", delim = " ")  
-  
+
+  bp = read_delim("sample-data/bp.txt", delim = " ")
+
   # lower case the column names
   colnames(bp) = tolower(make.names(colnames(bp)))
-  
-  # Column Names as loaded from bp.txt: 
+
+  # Column Names as loaded from bp.txt:
   #   "c271649006" "c271650006" "c8867h4" "datem" "date.month" "time" "weekday"
 
   return(bp)
@@ -145,7 +152,7 @@ alertBloodPressure <- function(sbp, dbp) {
   #     "doublered" - Double Red Flag
 
   flag = list()
-  
+
   # Flag levels for Systolic Blood Pressure:
   if(sbp > 179) {
     flag$sbp = "doublered"
@@ -167,60 +174,66 @@ alertBloodPressure <- function(sbp, dbp) {
   } else {
     flag$dbp = "green"
   }
-  
+
   # For calculating which bp is more severe
   severity = list("green" = 0,
                   "orange" = 1,
                   "red" = 2,
                   "doublered" = 3)
-  
+
   # sbp is more severe
   if(severity[[flag$sbp]] > severity[[flag$dbp]]) {
       flag$color = flag$sbp
   } else { # dbp is more severe or equal
     flag$color = flag$dbp
   }
-  
+
   return(flag)
 }
 
 summariseBloodPressure <- function(bp) {
-  # Generate a summary for Blood Pressure. 
-  
-  # sort in descending date, time
-  bp_desc = arrange(bp, desc(datem), desc(time))
-  
-  # Summary is based on the most recent value.
-  sbp = bp_desc$sbp[1]
-  dbp = bp_desc$dbp[1]
-  
-  # alert flag
-  flag = alertBloodPressure(sbp=sbp, dbp=dbp)
-  
-  # alert text based on flag
-  alert_text = ""
-  if(flag$color == "green") {
-    alert_text = "Normal"
-    alert_long_text = ""
-  } else if(flag$color == "orange") {
-    alert_text = "Slightly high"
-    alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
-  } else if(flag$color == "red") {
-    alert_text = "A bit higher than normal"
-    alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
-  } else if(flag$color == "doublered") {
-    alert_text = "A bit higher than normal"
-    alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
+
+  if (!is.list(bp)) {
+
+    # Generate a summary for Blood Pressure.
+
+    # sort in descending date, time
+    bp_desc = arrange(bp, desc(datem), desc(time))
+
+    # Summary is based on the most recent value.
+    sbp = bp_desc$sbp[1]
+    dbp = bp_desc$dbp[1]
+
+    # alert flag
+    flag = alertBloodPressure(sbp=sbp, dbp=dbp)
+
+    # alert text based on flag
+    alert_text = ""
+    if(flag$color == "green") {
+      alert_text = "Normal"
+      alert_long_text = ""
+    } else if(flag$color == "orange") {
+      alert_text = "Slightly high"
+      alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
+    } else if(flag$color == "red") {
+      alert_text = "A bit higher than normal"
+      alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
+    } else if(flag$color == "doublered") {
+      alert_text = "A bit higher than normal"
+      alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
+    }
+
+    # Return summary values
+    list(
+      alert           = flag$color,
+      alert_text      = alert_text,
+      alert_long_text = alert_long_text,
+      status          = paste(sbp, "/", dbp,  "mmHG"),
+      timestamp       = bp_desc$datem[1] # latest day is the timestamp
+    )
+
   }
 
-  # Return summary values
-  list(
-    alert           = flag$color,
-    alert_text      = alert_text, 
-    alert_long_text = alert_long_text,
-    status          = paste(sbp, "/", dbp,  "mmHG"),
-    timestamp       = bp_desc$datem[1] # latest day is the timestamp
-  )
 }
 
 #
@@ -237,77 +250,83 @@ loadHeartRateData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   #
   # Returns
   #   Heart Dataset with Summary Statistics contents:
-  #     hr.resting (Number) Heart Rate resting 
-  #     hr (Number) Heart Rate      
+  #     hr.resting (Number) Heart Rate resting
+  #     hr (Number) Heart Rate
   #     activity.freq (Number) ???
   #     datem: (Date) day as a date
   #     date.month: (Date) month as defined by the first day of the month
   #     time: (Date) time of day
-  #     weekday (String) Day of the week 
+  #     weekday (String) Day of the week
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
-  
+
   if(sample) { # Load from sample-data
     hr <- sampleHeartRateData()
   } else {   # Load from Observation API
     #  Heart rate code = 8867-4 (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
     hr <- getObservations("8867-4", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
-  
+
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name      | Old Name | Code    | Details
   # --------------+----------+---------+-------------------------------
   # hr            | c8867h4  | 8867-4  | Heart rate (https://s.details.loinc.org/LOINC/8867-4.html?sections=Comprehensive)
-  # resting       | c40443h4 | ???     | ??? 
+  # resting       | c40443h4 | ???     | ???
   # activity      | c82290h8 | 82290-8 | Activity (https://r.details.loinc.org/LOINC/82290-8.html?sections=Comprehensive)
-  # 
+  #
 
   # from plots-for-dashboard.html
-  hr_renamed = plyr::rename(hr, c("c8867h4" = "hr", 
-                                  "c40443h4" = "resting", 
+  hr_renamed = plyr::rename(hr, c("c8867h4" = "hr",
+                                  "c40443h4" = "resting",
                                   "c82290h8" = "activity"))
 
   # Create timestamp string for plotting
   hr_renamed$timestamp = paste(hr_renamed$datem, hr_renamed$time)
-  
+
   return(hr_renamed)
 }
 
 sampleHeartRateData <- function() {
   # Loads Heart Rate Data from a txt file located in sample-data/
-  # 
+  #
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
-  
-  hr = read_delim("sample-data/hr.txt", delim = " ")  
-  
+
+  hr = read_delim("sample-data/hr.txt", delim = " ")
+
   # lower case the column names
   colnames(hr) = tolower(make.names(colnames(hr)))
-  
-  # Column Names as loaded from hr.txt: 
+
+  # Column Names as loaded from hr.txt:
   #   "c40443h4" "c8867h4" "c82290h8" "datem" "date.month" "time" "weekday"
 
   return(hr)
 }
 
 summariseHeartRate <- function(hr) {
-  # Generate a summary for Heart Rate
-  
-  # sort in descending date, time
-  hr_desc = arrange(hr, desc(datem), desc(time))
-  
-  # Summary is based on the most recent value.
-  hr = hr_desc$hr[1]
 
-  # Return summary values
-  list(
-    status    = paste(hr, " bpm"),
-    timestamp = hr_desc$timestamp[1] # latest hr reading
-  )
+  if (!is.list(hr)) {
+
+    # Generate a summary for Heart Rate
+
+    # sort in descending date, time
+    hr_desc = arrange(hr, desc(datem), desc(time))
+
+    # Summary is based on the most recent value.
+    hr = hr_desc$hr[1]
+
+    # Return summary values
+    list(
+      status    = paste(hr, " bpm"),
+      timestamp = hr_desc$timestamp[1] # latest hr reading
+    )
+
+  }
+
 }
 
 #
-# ECG 
+# ECG
 #
 
 loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
@@ -324,10 +343,10 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   #     datem: (Date) day as a date
   #     date.month: (Date) month as defined by the first day of the month
   #     time: (Date) time of day
-  #     weekday (String) Day of the week 
+  #     weekday (String) Day of the week
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
-  
-  
+
+
   if(sample) { # Load from sample-data
     ecg = sampleECGData()
   } else {   # Load from Observation API
@@ -344,52 +363,52 @@ loadECGData <- function(startTimestamp, endTimestamp, sample=FALSE) {
     # Create timestamp string for plotting
     ecg$timestamp = paste(ecg$datem, ecg$time)
   }
-  
+
   return(ecg)
 }
 
 sampleECGData <- function() {
   # Loads ECG Data from a txt file located in sample-data/
-  # 
+  #
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
-  
-  ecg_raw = read.csv("sample-data/ecg.csv", header=FALSE)  
-  
+
+  ecg_raw = read.csv("sample-data/ecg.csv", header=FALSE)
+
   # No column names in ecg.csv!
   # Note: Sample ECG data file is so strange!
   # No headers, long rows of what appears to be 2-tuples (unixtime, value)
-  
+
   # un-roll the rows into single vector
   ecg_vector = c(t(ecg_raw))
-  
+
   # re-shape vector into 2 column matrix and then converted to table
   ecg <- data.frame(matrix(ecg_vector, ncol=2, byrow=TRUE))
-  
+
   # remove any NA rows from the data
   ecg <- ecg[complete.cases(ecg),]
-  
+
   # name the columns
   colnames(ecg) = c("posixtime", "ecg")
-  
+
   # timestamp column from "posixtime" - concatenating milliseconds
   ecg$timestamp = paste( anytime(ecg$posixtime / 1000), ecg$posixtime %% 1000, sep=".")
-  
+
   return(ecg)
 }
 
 summariseECG <- function(ecg) {
   # Generate a summary for ECG (number of samples)
-  
+
   # sort in descending date, time
   ecg_desc = arrange(ecg, desc(timestamp))
-  
+
   # Summary is based number of samples
   n = length(ecg$ecg)
-  
+
   # "We have a ECG trace data for x% of the time""
   # "There is no ECG or little ECG data collected. Here is a list of what you can we do to collect more readings: reposition patch, connect more often."
-  
+
   # Return summary values
   list(
     status    = paste(n, "samples"),
@@ -414,79 +433,92 @@ loadMoodData <- function(startTimestamp, endTimestamp, sample=FALSE) {
   #   Recorded Mood Dataset for time-period
   #   Columns:
   #     recordedEmotion: String of recorded emotion
-  #     datem: Day of observation, format: "%Y-%m-%d" 
+  #     datem: Day of observation, format: "%Y-%m-%d"
   #     date.month: First day of the month of the observation, format: "%Y-%m-%d"
   #     time: Time of observation, format: "%H:%M:%S"
   #     weekday (String) day of the week, i.e. "Monday"
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
-  
+
   # Load from Observation API
-  # 
+  #
   if(sample) { # fake sample-data
     mood = sampleMoodData()
   } else {
     # "Mood Finding" code is = "106131003"
     mood = getObservations("106131003", formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
-  
+
   # Rename the columns for the FIHR codes to more explainable ones:
   #
   # New Name        | Code       | Details
   # ----------------+------------+-------------------------------
   # recordedEmotion | c285854004 | Recorded Emotion
 
-  # from plots-for-dashboard.html
-  mood_renamed = plyr::rename(mood, c("c285854004" = "recordedEmotion"))
-  
-  # Create timestamp string column
-  mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
-  
-  # sort in descending date, time
-  mood_desc = arrange(mood_renamed, desc(datem), desc(time))
-  
-  return(mood_desc)
+  if ( !is.null(mood) ) {
+
+    # from plots-for-dashboard.html
+    mood_renamed = plyr::rename(mood, c("c285854004" = "recordedEmotion"))
+
+    # Create timestamp string column
+    mood_renamed$timestamp = paste(mood_renamed$datem, mood_renamed$time, sep=" ")
+
+    # sort in descending date, time
+    mood_desc = arrange(mood_renamed, desc(datem), desc(time))
+
+    return(mood_desc)
+
+  } else {
+    return(NULL)
+  }
+
 }
 
 sampleMoodData <- function() {
   # Loads Mood Data from a txt file located in sample-data/
-  # 
+  #
   # Returns:
   #   Compatible Data Table with what is returned from Observation API
-  
-  mood = read_delim("sample-data/mood.txt", delim = " ")  
-  
+
+  mood = read_delim("sample-data/mood.txt", delim = " ")
+
   # lower case the column names
   colnames(mood) = tolower(make.names(colnames(mood)))
-  
-  # Column Names as loaded from mood.txt: 
+
+  # Column Names as loaded from mood.txt:
   #   "c285854004" "datem" "date.month" "time" "weekday"
-  
+
   return(mood)
 }
 
 summariseMood <- function(mood) {
-  # Generate a summary for Mood (i.e. the most recent mood)
-  
-  # sort in descending date, time
-  mood_desc = arrange(mood, desc(datem), desc(time))
-  
-  # Summary is based on the most recent value.
-  # NOTE: using as.character because R defaults to interpresting
-  # the recordedEmotion as a "factor"
-  recordedEmotion = as.character(mood_desc$recordedEmotion[1])
-  timestamp = mood_desc$timestamp[1] # latest mood reading
 
-  # Return summary values
-  list(
-    status = recordedEmotion,
-    timestamp = timestamp
-  )
+  if (!is.null(mood)) {
+
+    # Generate a summary for Mood (i.e. the most recent mood)
+
+    # sort in descending date, time
+    mood_desc = arrange(mood, desc(datem), desc(time))
+
+    # Summary is based on the most recent value.
+    # NOTE: using as.character because R defaults to interpresting
+    # the recordedEmotion as a "factor"
+    recordedEmotion = as.character(mood_desc$recordedEmotion[1])
+    timestamp = mood_desc$timestamp[1] # latest mood reading
+
+    # Return summary values
+    list(
+      status = recordedEmotion,
+      timestamp = timestamp
+    )
+
+  }
+
 }
 
 # Ordering of the moods in the images/pam-resources/
 mood_order = list("afraid" = "1",
                   "tense" = "2",
-                  "excited" = "3", 
+                  "excited" = "3",
                   "delighted" = "4",
                   "frustrated" = "5",
                   "angry" = "6",
@@ -504,7 +536,7 @@ mood_order = list("afraid" = "1",
 # which of the 3 images for a mood is shown when not randomised
 mood_default = list("afraid" = "2",
                     "tense" = "1",
-                    "excited" = "3", 
+                    "excited" = "3",
                     "delighted" = "2",
                     "frustrated" = "2",
                     "angry" = "2",
@@ -522,44 +554,46 @@ mood_default = list("afraid" = "2",
 mood_img_src <- function(mood, randomise = FALSE, medium_size = FALSE) {
   # Returns the image source for a mood, uses the "images/pam-resources".
 
-  # mood *may* take the form "[mood]_[which_image]" (e.g. "angry_3")
-  # or just [mood] (e.g. "angry")
-  mood_split = strsplit(mood, "_")
-  mood = mood_split[[1]][1]
-  which_image = mood_split[[1]][2] # will be NA if not specified
-  
-  # Get the order the mood is in the grid:
-  o = mood_order[[mood]]
+  if(!is.null(mood)) {
+    # mood *may* take the form "[mood]_[which_image]" (e.g. "angry_3")
+    # or just [mood] (e.g. "angry")
+    mood_split = strsplit(mood, "_")
+    mood = mood_split[[1]][1]
+    which_image = mood_split[[1]][2] # will be NA if not specified
 
-  # which of the three mood image options to use:
-  if(is.na(which_image)) {
-    if(randomise) { 
-      # randomly choose: "1", "2", or "3"
-      which_image = as.character(sample(1:3, 1))
-    } else { 
-      # lookup the default image for a particular mood
-      which_image = mood_default[[mood]]
+    # Get the order the mood is in the grid:
+    o = mood_order[[mood]]
+
+    # which of the three mood image options to use:
+    if(is.na(which_image)) {
+      if(randomise) {
+        # randomly choose: "1", "2", or "3"
+        which_image = as.character(sample(1:3, 1))
+      } else {
+        # lookup the default image for a particular mood
+        which_image = mood_default[[mood]]
+      }
     }
+
+    # Using images/mood/pam-resources/images/[o]_[mood]/[o]_[which].jpg
+    paste("images",
+          "mood",
+          "pam-resources",
+          `if`(medium_size, "images-medium", "images"), # `if` is ternary operator in R
+          paste(o, mood, sep="_"),
+          paste(o, "_", which_image, ".jpg", sep=""),
+          sep="/")
   }
-  
-  # Using images/mood/pam-resources/images/[o]_[mood]/[o]_[which].jpg
-  paste("images",
-        "mood",
-        "pam-resources",
-        `if`(medium_size, "images-medium", "images"), # `if` is ternary operator in R
-        paste(o, mood, sep="_"),
-        paste(o, "_", which_image, ".jpg", sep=""),
-        sep="/")
 }
 
 mood_from_img_src <- function(image_src) {
   # Returns a mood string from an image src.
-  # 
-  # For example: 
+  #
+  # For example:
   #   images/mood/pam-resources/images/1_afriad/1_3.jpg
   # is mapped to:
   #   afraid_3
-  # Which specifies the third mood from "afraid" 
+  # Which specifies the third mood from "afraid"
   s = strsplit(image_src, "/")
   # s -> "1_afraid" -> "afraid
   mood = strsplit(s[[1]][5], "_")[[1]][2]
@@ -581,9 +615,9 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   #   Recorded PHQ Dataset for time-period
   #   Columns:
   #     recordedPHQ: String of recorded PHQ questionnaire response data
-  
+
   # Load from QuestionnaireResponse API
-  # 
+  #
   #if(sample) { # fake sample-data
   #  phq = samplePHQData()
   #} else {
@@ -610,23 +644,23 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   # date.month
   # time
   # weekday
-  
+
   # sort in descending date, time
   phq_desc = arrange(phq, desc(datem), desc(time))
-  
+
   return(phq)
 }
 
 summarisePHQ <- function(phq) {
   # Generate a summary for Mood (i.e. the most recent mood)
-  
+
   # sort in descending date, time
   phq_desc = arrange(phq, desc(datem), desc(time))
-  
+
   # Summary is based on the most recent value.
   n = nrow(phq)
   timestamp = phq_desc$timestamp[1] # latest mood reading
-  
+
   # Return summary values
   list(
     status = paste(n, "PHQ forms submitted"),
@@ -648,8 +682,8 @@ loadRecommendations <- function(sample=FALSE) {
   #     icon: String of recorded PHQ questionnaire response data
   #     heading: String of recorded PHQ questionnaire response data
   #     body: String of recorded PHQ questionnaire response data
-  
-  # 
+
+  #
   # ALWAYS RETURN SAMPLE DATA UNTIL Tips API is implemented
   #
   # if(sample) { # fake sample-data
@@ -657,36 +691,36 @@ loadRecommendations <- function(sample=FALSE) {
   # } else {
   #  tips = getRecommendations()
   #}
-  
+
   # Any post-processing of Recommendations / Tips
-  
+
   return(tips)
 }
 
 sampleRecommendations <- function() {
   # List of Recommendations are based on a Array of objects representation from JSON
   # This *may* change depending on what the API service ends up being.
-  
-  recommendationsJSON <- 
+
+  recommendationsJSON <-
     '[
         {
-         "icon":"recommendation", 
+         "icon":"recommendation",
          "heading": "Consider changing your painkiller; there are two options:",
          "body": "<p>Given your medical history and that paracetamol helps with back pain then paracetamol is <i>recommended</i>. It is recommended that you consider paracetamol.</p><p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>"
         },{
-         "icon":"blood-pressure", 
+         "icon":"blood-pressure",
          "heading": "Another recommendation.",
          "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
-         "icon":"mood", 
+         "icon":"mood",
          "heading": "Another recommendation.",
          "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
-         "icon":"summary", 
+         "icon":"summary",
          "heading": "Another recommendation.",
          "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         }]'
-  
+
   # Converted to named-list object from JSON
   fromJSON(recommendationsJSON)
 }
@@ -707,44 +741,43 @@ loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALS
   #   Recorded Clinical Feedback Dataset for time-period
   #   Columns:
   #     note: String of feedback
-  #     datem: Day of observation, format: "%Y-%m-%d" 
+  #     datem: Day of observation, format: "%Y-%m-%d"
   #     date.month: First day of the month of the observation, format: "%Y-%m-%d"
   #     time: Time of observation, format: "%H:%M:%S"
   #     weekday (String) day of the week, i.e. "Monday"
   #     timestamp (String) '%Y-%m-%d %H:%M:%S' formatted timestamp
-  
+
   # Load from Clinical Impression API
-  # 
+  #
 
   if(sample) { # fake sample-data
     fb = sampleClinicalImpressionData()
   } else {
     fb = getClinicalImpression(formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
-  
+
   # Create timestamp string column
   fb$timestamp = paste(fb$datem, fb$time, sep=" ")
-  
+
   # sort in descending date, time
   fb_desc = arrange(fb, desc(datem), desc(time))
-  
+
   return(fb_desc)
 }
 
 sampleClinicalImpressionData <- function() {
   # Loads ClinicalImpression (Feedback) from a txt file located in sample-data/
-  # 
+  #
   # Returns:
   #   Compatible Data Table with what is returned from Clinical Impression API
-  
-  fb = read_delim("sample-data/feedback.txt", delim = " ")  
-  
+
+  fb = read_delim("sample-data/feedback.txt", delim = " ")
+
   # lower case the column names
   colnames(fb) = tolower(make.names(colnames(fb)))
-  
-  # Column Names as loaded from mood.txt: 
+
+  # Column Names as loaded from mood.txt:
   #   "note" "datem" "date.month" "time" "weekday"
-  
+
   return(fb)
 }
-
