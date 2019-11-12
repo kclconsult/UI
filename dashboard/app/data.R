@@ -23,7 +23,7 @@ library(anytime)
 lastData <- function(d, weeks=0, days=0, hours=0) {
   # Returns the last N days of the dataset.
 
-  if (!is.list(d)) {
+  if (length(d) > 1) {
 
     # sort in descending date, time
     d_desc = arrange(d, desc(datem), desc(time))
