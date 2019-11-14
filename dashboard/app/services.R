@@ -304,7 +304,7 @@ sendQuestionnaireResponses <- function(screening, scores=NULL, difficulty=NULL) 
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json", verbose())
+  resp = POST(requestUrl, body = body, encode = "json", verbose(), config = httr::config(cainfo=Sys.getenv("CURL_CA_BUNDLE")))
 
   # Stop measuring call
   end_time = Sys.time()
@@ -358,7 +358,7 @@ sendMoodObservation <- function(recordedEmotion) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json", verbose())
+  resp = POST(requestUrl, body = body, encode = "json", verbose(), config = httr::config(cainfo=Sys.getenv("CURL_CA_BUNDLE")))
 
   # Stop measuring call
   end_time = Sys.time()
@@ -467,7 +467,7 @@ sendClinicalImpression <- function(note) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json", verbose())
+  resp = POST(requestUrl, body = body, encode = "json", verbose(), config = httr::config(cainfo=Sys.getenv("CURL_CA_BUNDLE")))
 
   # Stop measuring call
   end_time = Sys.time()
@@ -561,7 +561,7 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # Send the request
   # - using httr - https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
   # encode = "multipart" does not work, use "form" or "json"
-  resp = POST(requestUrl, body = body, encode = "json", verbose())
+  resp = POST(requestUrl, body = body, encode = "json", verbose(), config = httr::config(cainfo=Sys.getenv("CURL_CA_BUNDLE")))
 
   # Stop measuring call
   end_time = Sys.time()

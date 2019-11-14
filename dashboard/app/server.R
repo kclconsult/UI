@@ -343,7 +343,7 @@ function(input, output, session) {
       # Refresh ECG data
       data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP,
                              endTimestamp = STUDY_END_TIMESTAMP,
-                             sample = TRUE) # Note: until smaller resolution data, sample for now
+                             sample = FALSE) # Note: until smaller resolution data, sample for now
     })
 
     output$plotECG = renderECGTimeline({
