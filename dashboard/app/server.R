@@ -432,7 +432,7 @@ function(input, output, session) {
       logEvent( "TabChanged", "Mood Tab Selected" )
 
       # Time difference units will vary depending on the time difference: Specify "days":
-      if (!is.null(summary$Mood$timestamp)) {
+      if (!is.null(summary$Mood$timestamp) & !is.null(summary$PHQ$timestamp)) {
 
         moodTimeSince = difftime(Sys.time(), summary$Mood$timestamp, units="days")
         phqTimeSince = difftime(Sys.time(), summary$PHQ$timestamp, units="days")
