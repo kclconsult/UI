@@ -540,13 +540,11 @@ logEvent <- function(eventType, eventData, eventTime = Sys.time()) {
   # DEBUG logEvent
   print(paste(eventTime, eventType, eventData, sep=" | "))
 
-  return(TRUE) # *REMOVE* once fully implemented
-
   ######################################################################
 
   # Build the Message Passer request URL
   requestUrl <- paste(MP_URL,
-                      "LogEvent",
+                      "AuditEvent",
                       "add",
                       sep = "/")
   # POST data

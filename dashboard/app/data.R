@@ -47,6 +47,16 @@ lastData <- function(d, weeks=0, days=0, hours=0) {
 
 }
 
+# Average multiple values present in a single cell (e.g. multiple ECG readings for one second).
+averageCell <- function(d, c) {
+
+  average <- unlist(lapply(str_split(d[[c]], " "), function(entry) mean(as.numeric(entry), na.rm=TRUE)))
+  average[length(average)] <- mean(average[-length(average)], na.rm=TRUE)
+  d[[c]]<- average
+  return(d)
+
+}
+
 formatTimestamp <- function(ts) {
   # Formats an R timestamp to the format compatible to Message Passer
   # (i.e. as full timestamp (e.g. 2019-02-26T00:00:00Z).)
@@ -398,23 +408,29 @@ sampleECGData <- function() {
 }
 
 summariseECG <- function(ecg) {
+
   # Generate a summary for ECG (number of samples)
 
-  # sort in descending date, time
-  ecg_desc = arrange(ecg, desc(timestamp))
+  if (!is.list(ecg)) {
 
-  # Summary is based number of samples
-  n = length(ecg$ecg)
+    # sort in descending date, time
+    ecg_desc = arrange(ecg, desc(timestamp))
 
-  # "We have a ECG trace data for x% of the time""
-  # "There is no ECG or little ECG data collected. Here is a list of what you can we do to collect more readings: reposition patch, connect more often."
+    # Summary is based number of samples
+    n = length(ecg$ecg)
 
-  # Return summary values
-  list(
-    status    = paste(n, "samples"),
-    timestamp = ecg_desc$timestamp[1], # latest ecg reading
-    n = n
-  )
+    # "We have a ECG trace data for x% of the time""
+    # "There is no ECG or little ECG data collected. Here is a list of what you can we do to collect more readings: reposition patch, connect more often."
+
+    # Return summary values
+    list(
+      status    = paste(n, "samples"),
+      timestamp = ecg_desc$timestamp[1], # latest ecg reading
+      n = n
+    )
+
+  }
+
 }
 
 #

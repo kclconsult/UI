@@ -35,9 +35,7 @@ HTMLWidgets.widget({
                           value: ["ecg"]
                     },
 
-                    // timestamp format %L microseconds
-                    // https://github.com/d3/d3-time-format/blob/v2.1.3/README.md#timeParse
-                    xFormat: "%Y-%m-%d %H:%M:%S.%L",
+                    xFormat: "%Y-%m-%d %H:%M:%S",
 
                     // remap names
                     names: {
@@ -57,14 +55,14 @@ HTMLWidgets.widget({
 
                       // tick format x-axis
                       tick: {
-                         format: "%Y-%m-%d %H:%M:%S.%L"
+                         format: "%Y-%m-%d %H:%M:%S"
                       }
                     }
                 },
 
                 // hides unused date values
                 legend: {
-                  hide: ["posixtime"]
+                  hide: ["datem", "date.month", "time", "weekday"]
                 }
 
                 // display a subchart - this will be used for brushing in a later stage

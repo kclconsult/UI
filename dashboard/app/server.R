@@ -72,7 +72,7 @@ function(input, output, session) {
     #
     data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP,
                              endTimestamp = STUDY_END_TIMESTAMP,
-                             sample = TRUE) # Note: until smaller resolution data, sample for now
+                             sample = FALSE) # Note: until smaller resolution data, sample for now
     # - Mood
     #
     # Mood Data is available as submitted
@@ -343,13 +343,12 @@ function(input, output, session) {
       # Refresh ECG data
       data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP,
                              endTimestamp = STUDY_END_TIMESTAMP,
-                             sample = FALSE) # Note: until smaller resolution data, sample for now
+                             sample = USE_SAMPLE_DATA)
     })
 
     output$plotECG = renderECGTimeline({
-        # from packages/Consult/ECGTimeline
-        # NOTE: limiting to last 125 data-points b/c of the high-resolution
-        ECGTimeline(dataset = tail(data$ECG, 125))
+      # from packages/Consult/ECGTimeline
+      ECGTimeline(dataset = averageCell(lastData(data$ECG, weeks=1), "ecg"))
     })
 
 #####

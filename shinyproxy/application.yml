@@ -39,7 +39,7 @@ proxy:
       # Use API for data
       USE_SAMPLE_DATA: "0"
       # UI - omit risk and recommendations tabs
-      ACTIVE_TABS: "summary,bp,hr,ecg,mood,feedback"
+      ACTIVE_TABS: "summary,bp,hr,ecg,mood,feedback,recommendations"
       # No visiable debug panel
       DEBUG_PANEL: "0"
     container-network: ui_network
