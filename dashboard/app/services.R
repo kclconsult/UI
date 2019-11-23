@@ -499,8 +499,8 @@ getRecommendations <- function() {
 
   # Build the Message Passer request URL
   requestUrl <- paste(MP_URL,
-                    "Recommendations",
-                    USERNAME_PATIENT_ID,
+                    "tips",
+                    "all",
                     sep = "/")
   # DEBUG url
   print(paste("getRecommendations:", requestUrl))
@@ -509,7 +509,7 @@ getRecommendations <- function() {
   start_time = Sys.time()
 
   # Read.table handles HTTP GET request
-  data <- read.table(requestUrl, header = TRUE)
+  data <- fromJSON(requestUrl)
 
   # Stop measuring call
   end_time = Sys.time()
@@ -517,6 +517,7 @@ getRecommendations <- function() {
   # DEBUG timing
   print(end_time - start_time)
 
+  print(data)
   return(data)
 }
 

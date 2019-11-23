@@ -119,12 +119,12 @@ renderRecommendations <- function(r) {
     t[[i]] <- # append to the tag list, the following tags:
       tags$div(class="media",
         tags$div(class="media-left media-top",
-          tags$img(class="media-object", src=paste("images/recommendations/", r$icon[i], ".png", sep=""))
+          tags$img(class="media-object", src=paste("images/recommendations/", r$image[i], ".png", sep=""))
         ),
         tags$div(class="media-body",
-          tags$h5(class="media-heading", r$heading[i]),
+          tags$h5(class="media-heading", r$title[i]),
           # r$body is rendered as HTML as is:
-          HTML(r$body[i])
+          HTML(r$content[i])
           #######################################################################
           # Previous Implmentation converted a list of strings (r$body[i]) into:
           # <div>

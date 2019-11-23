@@ -710,14 +710,11 @@ loadRecommendations <- function(sample=FALSE) {
   #     heading: String of recorded PHQ questionnaire response data
   #     body: String of recorded PHQ questionnaire response data
 
-  #
-  # ALWAYS RETURN SAMPLE DATA UNTIL Tips API is implemented
-  #
-  # if(sample) { # fake sample-data
+  if(sample) { # fake sample-data
     tips = sampleRecommendations()
-  # } else {
-  #  tips = getRecommendations()
-  #}
+  } else {
+    tips = getRecommendations()
+  }
 
   # Any post-processing of Recommendations / Tips
 
@@ -731,21 +728,21 @@ sampleRecommendations <- function() {
   recommendationsJSON <-
     '[
         {
-         "icon":"recommendation",
-         "heading": "Consider changing your painkiller; there are two options:",
-         "body": "<p>Given your medical history and that paracetamol helps with back pain then paracetamol is <i>recommended</i>. It is recommended that you consider paracetamol.</p><p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>"
+         "image":"bow",
+         "title": "Consider changing your painkiller; there are two options:",
+         "content": "<p>Given your medical history and that paracetamol helps with back pain then paracetamol is <i>recommended</i>. It is recommended that you consider paracetamol.</p><p>Given your medical history and that codeine helps with back pain then codeine is recommended.</p>"
         },{
-         "icon":"blood-pressure",
-         "heading": "Another recommendation.",
-         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
+         "image":"drop",
+         "title": "Another recommendation.",
+         "content": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
-         "icon":"mood",
-         "heading": "Another recommendation.",
-         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
+         "image":"smily",
+         "title": "Another recommendation.",
+         "content": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         },{
-         "icon":"summary",
-         "heading": "Another recommendation.",
-         "body": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
+         "image":"uniform",
+         "title": "Another recommendation.",
+         "content": "<p>Some more details about the recommendation.  It is recommended that you follow this recommendation.</p>"
         }]'
 
   # Converted to named-list object from JSON
