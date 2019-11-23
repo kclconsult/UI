@@ -68,11 +68,11 @@ function(input, output, session) {
                                   sample = USE_SAMPLE_DATA)
     # - ECG
     #
-    # Only one date entry: 2019-08-06 17:27:25
+    # (Sample) Only one date entry: 2019-08-06 17:27:25
     #
     data$ECG = loadECGData(startTimestamp = STUDY_START_TIMESTAMP,
                              endTimestamp = STUDY_END_TIMESTAMP,
-                             sample = FALSE) # Note: until smaller resolution data, sample for now
+                             sample = USE_SAMPLE_DATA)
     # - Mood
     #
     # Mood Data is available as submitted
@@ -128,7 +128,7 @@ function(input, output, session) {
     # Store the snapshot of data to display on plots in reactiveValues
     timeline = reactiveValues()
 
-#####
+    #####
     #
     # Tab: Summary Boxes
     #
@@ -174,7 +174,7 @@ function(input, output, session) {
       #from packages/Consult/SummaryBox
       SummaryBox(title = "Heart Rate",
                  image = "images/summary/heartrate.png",
-                 alert = "blue",
+                 alert = summary$HR$connectivity,
                  status = summary$HR$status,
                  timestamp = summary$HR$timestamp,
                  source = "Home")
@@ -192,7 +192,7 @@ function(input, output, session) {
       #from packages/Consult/SummaryBox
       SummaryBox(title = "ECG",
                  image = "images/summary/ecg.png",
-                 alert = "blue",
+                 alert = summary$ECG$connectivity,
                  status = summary$ECG$status,
                  timestamp = summary$ECG$timestamp,
                  source = "Clinic")
@@ -211,7 +211,7 @@ function(input, output, session) {
       SummaryBox(title = "Mood",
                  # Mood text dictates the summary image:
                  image = mood_img_src(summary$Mood$status),
-                 alert = "blue",
+                 alert = summary$Mood$connectivity,
                  status = "", # don't show the Mood text
                  # status = summary$Mood$status,
                  timestamp = summary$Mood$timestamp,

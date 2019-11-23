@@ -71,7 +71,7 @@ formatTimestamp <- function(ts) {
 
   # return what as given, garbage in garbage out
   print(paste("ERROR - formatTimestamp - unrecognised type", typeof(ts)))
-  ts
+
 }
 
 #
@@ -203,7 +203,7 @@ alertBloodPressure <- function(sbp, dbp) {
 
 summariseBloodPressure <- function(bp) {
 
-  if (!is.list(bp)) {
+  if (!is.null(bp)) {
 
     # Generate a summary for Blood Pressure.
 
@@ -214,23 +214,34 @@ summariseBloodPressure <- function(bp) {
     sbp = bp_desc$sbp[1]
     dbp = bp_desc$dbp[1]
 
-    # alert flag
-    flag = alertBloodPressure(sbp=sbp, dbp=dbp)
+    if (bp_desc$timestamp[1] < (Sys.time() - as.difftime(24, unit="hours"))) {
 
-    # alert text based on flag
-    alert_text = ""
-    if(flag$color == "green") {
-      alert_text = "Normal"
-      alert_long_text = ""
-    } else if(flag$color == "orange") {
-      alert_text = "Slightly high"
-      alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
-    } else if(flag$color == "red") {
-      alert_text = "A bit higher than normal"
-      alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
-    } else if(flag$color == "doublered") {
-      alert_text = "A bit higher than normal"
-      alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
+      alert_text = "";
+      alert_long_text = "";
+      flag = list();
+      flag$color = "grey"
+
+    } else {
+
+      # alert flag
+      flag = alertBloodPressure(sbp=sbp, dbp=dbp)
+
+      # alert text based on flag
+      alert_text = ""
+      if(flag$color == "green") {
+        alert_text = "Normal"
+        alert_long_text = ""
+      } else if(flag$color == "orange") {
+        alert_text = "Slightly high"
+        alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
+      } else if(flag$color == "red") {
+        alert_text = "A bit higher than normal"
+        alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
+      } else if(flag$color == "doublered") {
+        alert_text = "A bit higher than normal"
+        alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
+      }
+
     }
 
     # Return summary values
@@ -315,7 +326,7 @@ sampleHeartRateData <- function() {
 
 summariseHeartRate <- function(hr) {
 
-  if (!is.list(hr)) {
+  if (!is.null(hr)) {
 
     # Generate a summary for Heart Rate
 
@@ -325,10 +336,21 @@ summariseHeartRate <- function(hr) {
     # Summary is based on the most recent value.
     hr = hr_desc$hr[1]
 
+    if (hr_desc$timestamp[1] < (Sys.time() - as.difftime(24, unit="hours"))) {
+
+      connectivity = "grey"
+
+    } else {
+
+      connectivity = "blue"
+
+    }
+
     # Return summary values
     list(
       status    = paste(hr, " bpm"),
-      timestamp = hr_desc$timestamp[1] # latest hr reading
+      timestamp = hr_desc$timestamp[1], # latest hr reading
+      connectivity = connectivity
     )
 
   }
@@ -411,13 +433,23 @@ summariseECG <- function(ecg) {
 
   # Generate a summary for ECG (number of samples)
 
-  if (!is.list(ecg)) {
+  if (!is.null(ecg)) {
 
     # sort in descending date, time
     ecg_desc = arrange(ecg, desc(timestamp))
 
     # Summary is based number of samples
     n = length(ecg$ecg)
+
+    if (ecg_desc$timestamp[1] < (Sys.time() - as.difftime(24, unit="hours"))) {
+
+      connectivity = "grey"
+
+    } else {
+
+      connectivity = "blue"
+
+    }
 
     # "We have a ECG trace data for x% of the time""
     # "There is no ECG or little ECG data collected. Here is a list of what you can we do to collect more readings: reposition patch, connect more often."
@@ -426,7 +458,8 @@ summariseECG <- function(ecg) {
     list(
       status    = paste(n, "samples"),
       timestamp = ecg_desc$timestamp[1], # latest ecg reading
-      n = n
+      n = n,
+      connectivity = connectivity
     )
 
   }
@@ -521,10 +554,21 @@ summariseMood <- function(mood) {
     recordedEmotion = as.character(mood_desc$recordedEmotion[1])
     timestamp = mood_desc$timestamp[1] # latest mood reading
 
+    if (mood_desc$timestamp[1] < (Sys.time() - as.difftime(24, unit="hours"))) {
+
+      connectivity = "grey"
+
+    } else {
+
+      connectivity = "blue"
+
+    }
+
     # Return summary values
     list(
       status = recordedEmotion,
-      timestamp = timestamp
+      timestamp = timestamp,
+      connectivity = connectivity
     )
 
   }
