@@ -508,8 +508,9 @@ getRecommendations <- function() {
   # Start measuring call
   start_time = Sys.time()
 
-  # Read.table handles HTTP GET request
-  data <- fromJSON(requestUrl)
+  # Fix for certificates
+  json <- getURL(requestUrl, cainfo=Sys.getenv("CURL_CA_BUNDLE"))
+  data <- fromJSON(json)
 
   # Stop measuring call
   end_time = Sys.time()
@@ -517,7 +518,6 @@ getRecommendations <- function() {
   # DEBUG timing
   print(end_time - start_time)
 
-  print(data)
   return(data)
 }
 

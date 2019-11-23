@@ -193,7 +193,7 @@ alertBloodPressure <- function(sbp, dbp) {
 
   # sbp is more severe
   if(severity[[flag$sbp]] > severity[[flag$dbp]]) {
-      flag$color = flag$sbp
+    flag$color = flag$sbp
   } else { # dbp is more severe or equal
     flag$color = flag$dbp
   }
@@ -214,35 +214,30 @@ summariseBloodPressure <- function(bp) {
     sbp = bp_desc$sbp[1]
     dbp = bp_desc$dbp[1]
 
+    # alert flag
+    flag = alertBloodPressure(sbp=sbp, dbp=dbp)
+
+    # alert text based on flag
+    alert_text = ""
+    if(flag$color == "green") {
+      alert_text = "Normal"
+      alert_long_text = ""
+    } else if(flag$color == "orange") {
+      alert_text = "Slightly high"
+      alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
+    } else if(flag$color == "red") {
+      alert_text = "A bit higher than normal"
+      alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
+    } else if(flag$color == "doublered") {
+      alert_text = "A bit higher than normal"
+      alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
+    }
+
     if (bp_desc$timestamp[1] < (Sys.time() - as.difftime(24, unit="hours"))) {
 
-      alert_text = "";
-      alert_long_text = "";
-      flag = list();
       flag$color = "grey"
 
-    } else {
-
-      # alert flag
-      flag = alertBloodPressure(sbp=sbp, dbp=dbp)
-
-      # alert text based on flag
-      alert_text = ""
-      if(flag$color == "green") {
-        alert_text = "Normal"
-        alert_long_text = ""
-      } else if(flag$color == "orange") {
-        alert_text = "Slightly high"
-        alert_long_text="Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a slightly high blood pressure is to repeat the readings over one or more weeks. If the slightly high readings persist please contact 111, head to your pharmacy or discuss with your GP. Decisions about changing treatments are usually based on readings taken over several weeks."
-      } else if(flag$color == "red") {
-        alert_text = "A bit higher than normal"
-        alert_long_text = "Your latest blood pressure reading is a bit higher than expected. If you have any concerns contact 111, head to your pharmacy or discuss with your GP."
-      } else if(flag$color == "doublered") {
-        alert_text = "A bit higher than normal"
-        alert_long_text = "Your latest blood pressure reading is a bit higher than expected.\n\nThe most helpful way to respond to a high BP is to repeat the BP reading several times. If it remains at this level, its worth checking with another machine, just to be sure. You can do this by heading to your pharmacy or discussing with your GP."
-      }
-
-    }
+    } 
 
     # Return summary values
     list(
