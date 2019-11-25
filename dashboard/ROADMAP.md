@@ -11,9 +11,9 @@
 - [ ] Day-Night Vertical Grids on plots
 - [ ] PHQ Forms - easier Choice buttons (Checkboxes?) - tap is tough
 - [ ] Tablet: Show who is signed in on Mast
-- [ ] Logging service captures tap stream of user
+- [X] Logging service captures tap stream of user
 - [ ] ClinicalImpressions Notes Application (Scrollable Sidebar)
-- [ ] Connectivity Indicators for SummaryBox
+- [X] Connectivity Indicators for SummaryBox
 - [ ] Badges for Tabs (or InfoBoxes)
 
 ## Done

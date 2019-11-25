@@ -203,7 +203,7 @@ alertBloodPressure <- function(sbp, dbp) {
 
 summariseBloodPressure <- function(bp) {
 
-  if (!is.null(bp)) {
+  if (length(bp) > 1) {
 
     # Generate a summary for Blood Pressure.
 
@@ -237,7 +237,7 @@ summariseBloodPressure <- function(bp) {
 
       flag$color = "grey"
 
-    } 
+    }
 
     # Return summary values
     list(
@@ -321,7 +321,7 @@ sampleHeartRateData <- function() {
 
 summariseHeartRate <- function(hr) {
 
-  if (!is.null(hr)) {
+  if (length(hr) > 1) {
 
     # Generate a summary for Heart Rate
 
@@ -428,7 +428,7 @@ summariseECG <- function(ecg) {
 
   # Generate a summary for ECG (number of samples)
 
-  if (!is.null(ecg)) {
+  if (length(ecg) > 1) {
 
     # sort in descending date, time
     ecg_desc = arrange(ecg, desc(timestamp))
