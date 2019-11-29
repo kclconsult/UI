@@ -700,7 +700,7 @@ loadPHQData <- function(startTimestamp, endTimestamp, sample = FALSE) {
   # time
   # weekday
 
-  if (!is.list(phq)) {
+  if (length(phq) > 1) {
 
     # sort in descending date, time
     phq_desc = arrange(phq, desc(datem), desc(time))
@@ -731,6 +731,13 @@ summarisePHQ <- function(phq) {
       n = n
     )
 
+  } else {
+    # Return summary values
+    list(
+      status = paste(0, "PHQ forms not submitted"),
+      timestamp = Sys.time()-9999999999, # Crude early timestamp
+      n = 0
+    )
   }
 
 }
@@ -819,7 +826,7 @@ loadClinicalImpressionData <- function(startTimestamp, endTimestamp, sample=FALS
     fb = getClinicalImpression(formatTimestamp(startTimestamp), formatTimestamp(endTimestamp))
   }
 
-  if (!is.null(fb)) {
+  if (length(fb) > 1) {
 
     # Create timestamp string column
     fb$timestamp = paste(fb$datem, fb$time, sep=" ")

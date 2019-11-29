@@ -438,17 +438,21 @@ function(input, output, session) {
 
         print(paste( "DEBUG", "time (DAYS) since last phq: ", phqTimeSince, " time since last mood: ", moodTimeSince))
 
-        # Check if past-due next PHQ Time
-        if(phqTimeSince > as.double(STUDY_PHQ_DAYS_FREQ)) {
-          # Shows PHQ2 Tab
-          runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
-        } else {
-          # Shows Mood Tab
-          runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
-        }
+      } else {
+
+        moodTimeSince = 0;
+        phqTimeSince = 0;
 
       }
 
+      # Check if past-due next PHQ Time
+      if(phqTimeSince > as.double(STUDY_PHQ_DAYS_FREQ)) {
+        # Shows PHQ2 Tab
+        runjs("$('#mood-tabs a[href=\"#phq2\"]').tab('show');")
+      } else {
+        # Shows Mood Tab
+        runjs("$('#mood-tabs a[href=\"#mood-grid\"]').tab('show');")
+      }
     })
 
     # -- Mood Grid Events
@@ -561,7 +565,7 @@ function(input, output, session) {
         }
 
         # Refresh the PHQ Data
-        data$PHQ = loadPHQData(startTimestamp = STUDY_START_TIMESTAMP, # Temporarily have fixed PHQ9 start time to ensure dashboard load: Sys.time() - as.difftime(as.double(STUDY_PHQ_DAYS_FREQ), units="days"),
+        data$PHQ = loadPHQData(startTimestamp = Sys.time() - as.difftime(as.double(STUDY_PHQ_DAYS_FREQ), units="days"),
                                endTimestamp   = STUDY_END_TIMESTAMP,
                                sample = FALSE)
       }
