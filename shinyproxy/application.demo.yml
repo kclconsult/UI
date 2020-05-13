@@ -48,7 +48,7 @@ proxy:
 server:
   useForwardHeaders: true
   servlet:
-    context-path: /ui
+    context-path: /consult/ui
 
 logging:
   file:

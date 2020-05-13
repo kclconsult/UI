@@ -22,7 +22,7 @@ proxy:
   - id: dashboard
     display-name: Dashboard
     container-cmd: ["R", "-e", "shiny::runApp('/root/dashboard')"]
-    container-image: consult-kcl/dashboard
+    container-image: kclconsult/dashboard
     container-env:
       MESSAGE_PASSER_URL: danvers # Add port if running on same machine.
       MESSAGE_PASSER_PROTOCOL: https://

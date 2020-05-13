@@ -5,6 +5,7 @@ services:
   proxy:
     build:
       context: ./proxy
+      dockerfile: Dockerfile.demo
     tty: true
     command: ["./wait-for-it.sh", "--timeout=0", "ui_app_1:8080", "--", "nginx", "-g", "daemon off;"]
     depends_on:
@@ -15,6 +16,7 @@ services:
   app:
     build:
       context: shinyproxy
+      dockerfile: Dockerfile.demo
     depends_on:
       - dns
     environment:

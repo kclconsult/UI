@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t consult-kcl/dashboard .
+docker build -t kclconsult/dashboard .
