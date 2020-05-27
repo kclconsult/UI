@@ -19,7 +19,7 @@ proxy:
     container-cmd: ["R", "-e", "shiny::runApp('/root/dashboard/app')"]
     container-image: kclconsult/dashboard
     container-env:
-      MESSAGE_PASSER_URL: danvers # Add port if running on same machine.
+      MESSAGE_PASSER_URL: danvers:3005
       MESSAGE_PASSER_PROTOCOL: https://
       CURL_CA_BUNDLE: /root/consult.crt
       # Study Parameters
