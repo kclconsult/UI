@@ -23,7 +23,6 @@ services:
     extra_hosts:
       - danvers:10.0.1.10
     volumes:
-      # Shinyproxy needs access from its container to the host daemon in order to launch dashboard in a new container. Here, we mount the docker socket in the image (fast, secure local way to connect to the docker daemon), and prompt the use of this connection by removing any docker url information in application.yml. If the IP of the host, and thus its daemon, is known (e.g. it is a docker-machine), or TCP is required (e.g. swarm mode, or remote machine) then TCP connections can be made to the daemon instead, and this can be specified in application(.tcp).yml.
       - /var/run/docker.sock:/var/run/docker.sock
 
   # Uncomment for standalone shiny dashboard:
