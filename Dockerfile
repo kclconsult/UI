@@ -16,14 +16,23 @@ RUN apt-get update && apt-get install -y \
 # system library dependency for the app
 RUN apt-get update && apt-get install -y \
     libmpfr-dev \
-    libxml2-dev
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \ 
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev
 
 # basic shiny functionality
 RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-project.org/')"
 
 # install dependencies of the consult app
 RUN R -e "options(timeout=1200); install.packages(c('BH', 'Rmpfr', 'plyr'), repos='https://cloud.r-project.org/')"
-RUN R -e "options(timeout=1200); install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'tidyverse', 'shinydashboard', 'RCurl', 'anytime', 'shinyjs', 'humanize', 'htmlwidgets', 'httr', 'devtools'), repos='https://cloud.r-project.org/')"
+RUN R -e "options(timeout=1200); install.packages(c('data.table', 'DT', 'plotly', 'jsonlite', 'ggplot2', 'dplyr', 'scales', 'cowplot', 'personograph', 'shinydashboard', 'RCurl', 'anytime', 'shinyjs', 'humanize', 'htmlwidgets', 'httr', 'devtools'), repos='https://cloud.r-project.org/')"
+RUN R -e "require('remotes'); install_version('tidyverse', version='1.3.1', upgrade='never', repos='http://cran.us.r-project.org')"
 
 # copy the app to the image
 RUN mkdir /root/dashboard
