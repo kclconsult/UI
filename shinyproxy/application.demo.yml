@@ -25,9 +25,9 @@ proxy:
       # Study Parameters
       # (Allow for defaults)
       # Start time Defaults to NOW
-      STUDY_START_TIMESTAMP: "2022-01-27 17:07:47 BST" # Temporary start
+      STUDY_START_TIMESTAMP: "2023-01-27 17:07:47 BST" # Temporary start
       # End time Defaults to 17 days from NOW
-      STUDY_END_TIMESTAMP: "2023-01-27 17:07:47 BST" # Temporary end
+      STUDY_END_TIMESTAMP: "2024-01-27 17:07:47 BST" # Temporary end
       # Default is 3
       STUDY_TRIAL_PERIOD_DAYS: "3"
       # Disable Chatbot
